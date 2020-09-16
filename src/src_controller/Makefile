@@ -4,7 +4,7 @@ all: controller
 .PHONY: clean
 
 controller: controller.c
-	@echo "HELLO_C_ATC"
+	@echo "controller"
 	$(CC) -o '$@' '$<'
 
 clean:
