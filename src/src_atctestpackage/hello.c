@@ -1,5 +1,5 @@
 #include <stdio.h>
 
 int main(void) {
-    puts("hello git");
+    puts("hello atc_test_pacckage");
 }
