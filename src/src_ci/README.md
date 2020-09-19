@@ -70,9 +70,6 @@ The next steps are some basic installation questions:
 
 Now we need to setup a few things in Jenkins before creating a new Job.
 
-The whole project uses GitHub as Version-Control-System. Jenkins offers a plugin to connect to the GitHub Plattform.
-
-![JENKINS_GITHUB_PLUGIN](./documentation_images/jenkins_install_github_plugin.png)
 
 #### CREATE SSH CREDENTAILS
 
@@ -131,7 +128,7 @@ In this installation, the name of the new agent is called `buildagent`.
 On the jenkins agent overview page. Our new created agent is marked with a red cross symbol. This is becuase our created agent is not running on any system.
 After a click on the agent `Jenkins->Nodes->buildagent` we can see on the status tab, a small manual how to start the agent.
 
-![JENKINS_CREATE_AGENT](./documentation_images/jenkins_build_agent_3.png)
+![JENKINS_CREATE_AGENT](./documentation_images/jenkins_create_agent_3.png)
 
 The agent can run on the same machine as the master or on any other system. In our case we start the agent on the same server as the jenkins container is running.
 
