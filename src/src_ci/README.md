@@ -150,6 +150,11 @@ A job that requires CUDA can run on this agent.
 
 ![JENKINS_AGENT_LABELS](./documentation_images/jenkins_agent_labels.png)
 
+##### NOTE
+The system on which the new agent runs must have all the software installed to be able to build the software.
+In the case of the buildroot project. A stock ubuntu installation already has all needed software packages installed.
+For debian distributions the `build-essentaial` package is missing and an be installed using
+`$ sudo apt install build-essential`.
 
 #### CREATE JOB (PROJECT)
 
@@ -201,14 +206,39 @@ In this project a interval of 5minutes was used.
 
 ##### Build Steps
 
+
+###### BUILD
 Now everythin is setup. Jenkins can pull the code from a git repository and detect changes automaticly in order to start a build.
 The last thing missing are the steps that jenkins should execute in order to build.
-T
+These steps are called `build step`, and can be specified under the `Build` section.
 
+To build the buildroot project, a filed called `build.sh` was created in the repository. So jenkins has simply to execute this file in a build step.
 
+After clicking on the button `Add build step`, jenkins offers serveral different type of build steps.
+To execute a bash file, the entry `Execute shell` is the right option.
+In the following textbox, it is possible to write bash commands link in a `.sh` file.
+
+The only line we need to sexecute the `build.sh` file is to navigate into the location of the file and execute these.
+
+`$ cd ./src/src_buildroot/buildroot`
+`$ ./build.sh`
+
+![JENKINS_JOB_SETUP_SCM](./documentation_images/jenkins_job_setup_4.png)
+
+###### POST-BUILD
+
+Jenkins 
 
 # HOW TO HANDLE ARTEFACTS
 * what are artefacts
 * using ftp to upload final image
 * tag the git commit thats build
 
+
+
+### CONCLUSION CONTINIOUS INTEGRATION WITH JENKINS
+
+* easy setup with docker
+* simple to use and setup
+* perfect for long build tasks buildroot
+* setup is usable for more project in the future 
