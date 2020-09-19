@@ -4,6 +4,7 @@
 
 
 ### ADVANTAGES IN THIS PROJECT
+
 For debugging and testing, building, checking the result, doing these step manually is okay.
 But after the basic setup is working, the next task is to automate this tasks.
 Especially, becuase the build process of buildroot can take serveral hours and the development pc is working hard to accomplish this task.
@@ -18,7 +19,7 @@ The end result should be:
 
 In the case of building an sd card image for the embedded system, a manual step is needed to get the build files from the CI system running. So the CI can not publish the artefact to a production system. A better solution in this task is, to notify the developer that a build is succeed.
 
-
+In this chapter we are getting to setup the jenkins software and create a configuration for the buildroot project in order to build the images for the embedded system automaticly.
 
 ### WHAT IS JENKINS
 
@@ -27,7 +28,7 @@ In the case of building an sd card image for the embedded system, a manual step 
 For this setup, the server is a virtual machine hosted on AWS (Amazon Web Service). Here is used a `AWS EC2 t3.2xlarge` instance.
 This instance type offers 8 cpu threads and 32GiB of RAM. The Harddrive-Storage is here not important, the network troughput too.
 As virtual machine base image (OS), we choose Amazon Linux which is based on Debian Linux.
-It has a basic setup and preinstall applications like Docker and it is also hardened about remote root access.
+It has a basic setup and ships with preinstalled applications like Docker, it is also hardened about remote root access.
 
 This virtual machine is used to host the Jenkins Master, Build-Agents and the ATC_Server.
 
@@ -158,16 +159,53 @@ Now the basic jenkins setup is complete and the next step is to setup a project.
 
 For this simple job, to build our buildroot image, a `Freestyle project` was chosen.
 
-Now w
+The configuration page offers several different options for customizin the new project.
+for this project we are only using a minimal subset of the possibilities jenkins offers.
+
+##### Source Code Management
+
+The first settings we have to change is the `Source Code Management` setting. The sourcecode of this project, is located in a git repository.
+In order that jenkins find the sourcecode we have to make the following changes:
+
+* `Git`
+* `Repository URL`, the URL of the git repository.
+* `Credentials`, select the SSH Credentials we have created earlier. 
+* `Branches to build`, the branch to checkout. In our case the buildroot sourcecode is located in the `*/buildroot` branch.
+
+![JENKINS_JOB_SETUP_SCM](./documentation_images/jenkins_job_setup_2.png)
+
+##### Build Triggers
+
+This options let us choose, when jenkins should start building the project.
+There are several options, depensing on the type of project.
+For example the option `Build after other project` is suitable, if the current project depends on an other projects build result.
+With this option its also possible to setup a build pipeline.
+
+* 1. build a library X
+* 2. build the software based on this library X
+* 3. deploy softwa to a production environment
+
+The option `Build peridically` is a good option for long build tasks. Building the project always at the same time.
+For example building a whole big project everyday at night, so the result is finished on the next day.
+
+For this project, we want to build everytime a change was made in the git repository. Jenkins offer use two options for this
+
+* `Webhook trigger`, gets notified from the git server about changes
+* `Poll SCM`, poll the git repository every set timeinterval for changes
+
+The `Webhook trigger` is the better solution for big repositories, because the `Poll SCM` method polls the complete repository in an interval, which cuases overhead.
+The advantage of the `Poll SCM` method is that there is no setup required. Only the time interval for the polling has to be set.
+In this project a interval of 5minutes was used.
+
+![JENKINS_JOB_SETUP_SCM](./documentation_images/jenkins_job_setup_3.png)
+
+##### Build Steps
+
+Now everythin is setup. Jenkins can pull the code from a git repository and detect changes automaticly in order to start a build.
+The last thing missing are the steps that jenkins should execute in order to build.
+T
 
 
-#### JENKINS BUILD AGENT
-* build server
-* docker
-* persisten storage
-
-* setup project; autobuild project
-* trigger build with git
 
 # HOW TO HANDLE ARTEFACTS
 * what are artefacts
