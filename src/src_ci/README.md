@@ -65,14 +65,14 @@ The next steps are some basic installation questions:
 * Install recommended plugins
 * Setup a user account
 
-![JENKINS_STARTPAGE](./documenation_images/jenkins_startpage.png)
+![JENKINS_STARTPAGE](./documentation_images/jenkins_startpage.png)
 
 
 Now we need to setup a few things in Jenkins before creating a new Job.
 
 The whole project uses GitHub as Version-Control-System. Jenkins offers a plugin to connect to the GitHub Plattform.
 
-![JENKINS_GITHUB_PLUGIN](./documentation_image/jenkins_install_github_plugin.png)
+![JENKINS_GITHUB_PLUGIN](./documentation_images/jenkins_install_github_plugin.png)
 
 #### CREATE SSH CREDENTAILS
 
