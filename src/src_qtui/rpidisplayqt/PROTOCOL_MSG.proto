@@ -1,0 +1,14 @@
+message gui2backend_msg
+{
+    required string event = -1;
+    required string type = -1;
+    required string value = "";
+}
+
+message backend2gui_msg
+{
+    required bool ack = false;
+    required string event = -1;
+    required string type = -1;
+    required string value = "";
+}

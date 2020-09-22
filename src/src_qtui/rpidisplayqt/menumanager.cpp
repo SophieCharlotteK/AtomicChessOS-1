@@ -1,8 +1,46 @@
 #include "menumanager.h"
 
+
 MenuManager::MenuManager()
 {
 qInfo() <<"MenuManager constructor called";
+
+
+ //        zmq_push = zsock_new_push ("inproc://example");
+ //       zmq_pull = zsock_new_pull ("inproc://example");
+  // zstr_send (push, "Hello, World ZEROMQ");
+
+ //  char *string = zstr_recv (pull);
+ //  qInfo() << string;
+  // zstr_free (&string);
+    
+
+
+}
+
+MenuManager::~MenuManager(){
+    qInfo() << "DETRUCTOR CALLED";
+    
+}
+
+
+//void MenuManager::send_gui_event(guiinterface::GUI_EVENT _event){
+ //   if(!zmq_push){
+  //      show_error("zmq_push is null");
+   //     return;
+   // }
+
+  //  QString tmp = guiinterface::Event2String(_event);
+   // qInfo() << tmp;
+   // zstr_send (zmq_push, tmp.toStdString().c_str());
+//}
+
+
+
+
+void MenuManager::show_error(QString _err){
+    qInfo() << _err;
+    //TODO SHWITCH TO ERR VIEW
 }
 
 
@@ -12,6 +50,8 @@ qInfo() <<"lb_settings_btn";
 
 void MenuManager::ls_login_btn(){
 qInfo() <<"ls_login_btn";
+
+guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
 

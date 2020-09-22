@@ -1,0 +1,11 @@
+prefix=/home/marcel/Desktop/atcOS_QT/src/src_qtui/host/install
+exec_prefix=/home/marcel/Desktop/atcOS_QT/src/src_qtui/host/install
+libdir=/home/marcel/Desktop/atcOS_QT/src/src_qtui/host/install/lib
+includedir=/home/marcel/Desktop/atcOS_QT/src/src_qtui/host/install/include
+
+Name: Protocol Buffers
+Description: Google's Data Interchange Format
+Version: 3.13.0.0
+Libs: -L${libdir} -lprotobuf -lpthread
+Cflags: -I${includedir} -lpthread
+Conflicts: protobuf-lite

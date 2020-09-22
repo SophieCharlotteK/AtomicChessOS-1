@@ -4,6 +4,13 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QDebug> //FOR WRITING TO THE APPLICATION OUTPUT CONSOLE WITH qInfo
+
+
+
+#include <QString>
+
+
+#include "guicommunicator.h"
 class MenuManager: public QObject
 {
     Q_OBJECT
@@ -11,6 +18,7 @@ class MenuManager: public QObject
 public:
     MenuManager(QObject* _parent);
     MenuManager();
+    ~MenuManager();
 signals:
 
     //void setBestChanged();
@@ -24,6 +32,8 @@ public slots:
     void mm_player_list_btn();
     void mm_search_for_players_toggled(bool _state);
 private:
+    void show_error(QString _err);
+    guicommunicator guiconnection;
 
 };
 

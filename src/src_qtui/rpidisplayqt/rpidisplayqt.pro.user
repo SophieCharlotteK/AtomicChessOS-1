@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.0, 2020-09-17T02:21:15. -->
+<!-- Written by QtCreator 4.13.0, 2020-09-22T15:12:47. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -357,7 +357,7 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">1</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">rpidisplayqt (on RPI)2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">rpidisplayqt (on RPI)</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">RemoteLinuxRunConfiguration:/home/marcel/Desktop/atcOS_QT/src/src_qtui/rpidisplayqt/rpidisplayqt.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/marcel/Desktop/atcOS_QT/src/src_qtui/rpidisplayqt/rpidisplayqt.pro</value>
     <value type="int" key="RemoteLinux.EnvironmentAspect.Version">1</value>

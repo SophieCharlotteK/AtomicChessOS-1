@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.VirtualKeyboard 2.1
 import QtQuick.Layouts 1.11
 //IMPORT THE C++ BACKEND
 import MenuManager 1.0
@@ -101,7 +100,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: true
+        visible: false
         Rectangle {
             id: mm_searching_for_players_box
             x: 478
@@ -203,7 +202,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: false
+        visible: true
         DelayButton {
             id: ls_login_btn
             x: 272
