@@ -114,11 +114,13 @@ Rectangle {
             y: 31
             width: 260
             height: 343
+            visible: true
             color: "#48b3ff"
             Switch {
                 id: sfp_searchenable_button
                 x: 14
                 y: 91
+                visible: true
                 text: qsTr("SEARCHING FOR GAME")
                 Connections {
                     target: sfp_searchenable_button
@@ -234,7 +236,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: true
+        visible: false
         Grid {
             id: ss_manual_function_buttons_grid
             x: 0
@@ -254,6 +256,12 @@ Rectangle {
                 width: 200
                 height: 80
                 text: qsTr("SCAN BOARD")
+                Connections {
+                    target: ss_scan_board_btn
+                    function onClicked(_mouse){
+                        main_menu.sm_scan_board_btn()
+                    }
+                }
             }
 
             Button {
@@ -261,6 +269,12 @@ Rectangle {
                 width: 200
                 height: 80
                 text: qsTr("INIT BOARD")
+                Connections {
+                    target: ss_init_board_btn
+                    function onClicked(_mouse){
+                        main_menu.sm_init_btn()
+                    }
+                }
             }
 
             Button {
@@ -268,6 +282,16 @@ Rectangle {
                 width: 200
                 height: 80
                 text: qsTr("LOGOUT")
+                Connections {
+                    target: ss_log_out_btn
+                    function onClicked(_mouse){
+                        main_menu.sm_logout_btn()
+                        mm_container.visible = false
+                        ls_container.visible = true
+                        ss_container.visible = false
+
+                    }
+                }
             }
         }
 
@@ -291,7 +315,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0;active3dScene:"-1"}D{i:10;invisible:true}D{i:22;invisible:true}
+    D{i:0;active3dScene:"-1"}
 }
 ##^##*/
 

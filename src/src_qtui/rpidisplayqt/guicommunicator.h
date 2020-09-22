@@ -22,12 +22,15 @@ class guicommunicator
 public:
 
 enum class GUI_ELEMENT{
-   BEGIN_BTN = 0,
-   MATCHMAKING_BTN = 1,
-   INITFIELD_BTN = 2,
-   ATC_LOGO_BTN = 3,
+    BEGIN_BTN = 0,
+    MATCHMAKING_BTN = 1,
+    INITFIELD_BTN = 2,
+    ATC_LOGO_BTN = 3,
     CLOUD_LOGO_BTN = 4,
-    OPEN_SETTINGS_BTN = 5
+    OPEN_SETTINGS_BTN = 5,
+    LOGOUT_BTN = 6,
+    INIT_BTN = 7,
+    SCAN_BOARD_BTN = 8,
 };
 
 

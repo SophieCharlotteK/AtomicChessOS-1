@@ -45,39 +45,52 @@ void MenuManager::show_error(QString _err){
 
 
 void MenuManager::lb_settings_btn(){
-qInfo() <<"lb_settings_btn";
+    qInfo() <<"lb_settings_btn";
 };
 
 void MenuManager::ls_login_btn(){
-qInfo() <<"ls_login_btn";
-guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    qInfo() <<"ls_login_btn";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
 
 void MenuManager::sm_open_settings_btn(){
     qInfo() <<"sm_open_settings_btn";
-   // guiconnection.createEvent(guicommunicator::GUI_ELEMENT::OPEN_SETTINGS_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
 
 
+void MenuManager::sm_logout_btn(){
+    qInfo() << "sm_logout_btn";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::LOGOUT_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+}
 
-
+void MenuManager::sm_init_btn(){
+    qInfo() << "sm_init_btn";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::INIT_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    
+}
+void MenuManager::sm_scan_board_btn(){
+    qInfo() << "sm_scan_board_btn";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    
+}
 void MenuManager::mm_start_ai_btn(){
     qInfo() <<"start_ai";
 }
 
 void MenuManager::mm_player_list_btn(){
-qInfo() << "goto_search_player_view";
+    qInfo() << "goto_search_player_view";
 }
 
 
 void MenuManager::mm_search_for_players_toggled(bool _state){
-qInfo() << "search_for_players_toggled";
-if(_state){
-    qInfo() <<"1";
-}else{
-qInfo() << "0";
-}
-
+    qInfo() << "search_for_players_toggled";
+    if(_state){
+        qInfo() <<"1";
+        guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MATCHMAKING_BTN, guicommunicator::GUI_VALUE_TYPE::ENABLED);
+    }else{
+        qInfo() << "0";
+        guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MATCHMAKING_BTN, guicommunicator::GUI_VALUE_TYPE::DISBALED);
+    }
 }
