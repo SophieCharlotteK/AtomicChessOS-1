@@ -54,6 +54,11 @@ guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicat
 }
 
 
+void MenuManager::sm_open_settings_btn(){
+    qInfo() <<"sm_open_settings_btn";
+   // guiconnection.createEvent(guicommunicator::GUI_ELEMENT::OPEN_SETTINGS_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+}
+
 
 
 

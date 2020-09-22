@@ -5,7 +5,7 @@
 #include "PROTOCOL_MSG.pb.h"
 #include <czmq.h>
 #include <string>
-
+#include <queue>
 
 
 //SOME DEBUGGING AND LOGGIN
@@ -16,22 +16,22 @@
 #else
     #include "loguru-master/loguru.hpp"
 #endif
+
 class guicommunicator
 {
 public:
 
 enum class GUI_ELEMENT{
-    UNKNOWN = -1,
    BEGIN_BTN = 0,
    MATCHMAKING_BTN = 1,
    INITFIELD_BTN = 2,
-
-   BEGIN_MATCH_WITH_PLAYER
+   ATC_LOGO_BTN = 3,
+    CLOUD_LOGO_BTN = 4,
+    OPEN_SETTINGS_BTN = 5
 };
 
 
 enum class GUI_VALUE_TYPE{
-     UNKNOWN = -1,
     CLICKED = 0,
     SELECTED = 1,
     USER_INPUT_STRING = 2,
@@ -48,29 +48,36 @@ enum class GUI_VALUE_TYPE{
 
 };
 
-
+    //KEEP IN SYNC WITH THE PROTOCOL_MSG.proto
     struct GUI_EVENT{
+        GUI_ELEMENT event;
+        GUI_VALUE_TYPE type;
+        std::string value;
+        int ack;
+        int ispageswitchevent;
 
+        bool is_event_valid;
     };
+
 
     guicommunicator();
     ~guicommunicator();
 
-    void createEvent(GUI_ELEMENT _element, GUI_VALUE_TYPE _type);
-    void createEvent(GUI_ELEMENT _element, GUI_VALUE_TYPE _type, std::string _value);
-    
+
+    void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value); //sends a event though ZeroMQ using protocol buffer
+    //DERIVATIONS FRom createEvent
+    void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type);
     #ifdef USES_QT
-    void createEvent(GUI_ELEMENT _element, GUI_VALUE_TYPE _type, QString _value);
+    void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value);
     #endif
 
     void debug_output(std::string _msg);
-
+    void debug_event(GUI_EVENT _event);
 private:
      zsock_t* zmq_push = nullptr;
      zsock_t* zmq_pull = nullptr;
 
-    void sendEvent(std::string); //SENDS DATATA TO BACKEND USING ZeroMQ
-
+    GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
 
 };
 

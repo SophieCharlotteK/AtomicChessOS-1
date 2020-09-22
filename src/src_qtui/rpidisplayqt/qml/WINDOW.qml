@@ -77,6 +77,13 @@ Rectangle {
                 fillMode: Image.PreserveAspectFit
                 source: "noun_Settings_56313.png"
             }
+            Connections {
+                target: hb_settings_button
+                function onClicked(_mouse){
+                    ss_container.visible = true
+                    main_menu.lb_settings_btn()
+                }
+            }
         }
 
         Image {
@@ -227,7 +234,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: false
+        visible: true
         Grid {
             id: ss_manual_function_buttons_grid
             x: 0
@@ -264,87 +271,16 @@ Rectangle {
             }
         }
 
-        Grid {
-            id: ss_manual_movement_btn_grid
-            x: 362
-            y: 8
-            width: 430
-            height: 429
-            spacing: 15
-            padding: 2
-            horizontalItemAlignment: Grid.AlignHCenter
-            verticalItemAlignment: Grid.AlignVCenter
-            rows: 8
-            columns: 8
-
-            Button {
-                id: button
-                width: 40
-                height: 40
-                text: qsTr("A1")
-            }
-
-            Button {
-                id: button1
-                width: 40
-                height: 40
-                text: qsTr("B1")
-            }
-
-            Button {
-                id: button2
-                width: 40
-                height: 40
-                text: qsTr("C1")
-            }
-
-            Button {
-                id: button3
-                width: 40
-                height: 40
-                text: qsTr("D1")
-            }
-
-            Button {
-                id: button4
-                width: 40
-                height: 40
-                text: qsTr("E1")
-            }
-
-            Button {
-                id: button5
-                width: 40
-                height: 40
-                text: qsTr("F1")
-            }
-
-            Button {
-                id: button6
-                width: 40
-                height: 40
-                text: qsTr("G1")
-            }
-
-            Button {
-                id: button7
-                width: 40
-                height: 40
-                text: qsTr("H1")
-            }
-
-            Button {
-                id: button8
-                width: 40
-                height: 40
-                text: qsTr("A2")
-            }
-
-            Button {
-                id: button9
-                width: 40
-                height: 40
-                text: qsTr("B2")
+        Button {
+            id: sm_back_btn
+            x: 686
+            y: 363
+            text: qsTr("BACK")
+            Connections {
+                target: sm_back_btn
+                function onClicked(_mouse){
+                    ss_container.visible = false
+                }
             }
         }
     }
@@ -355,7 +291,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0;active3dScene:"-1"}D{i:9;invisible:true}D{i:24;invisible:true}
+    D{i:0;active3dScene:"-1"}D{i:10;invisible:true}D{i:22;invisible:true}
 }
 ##^##*/
 

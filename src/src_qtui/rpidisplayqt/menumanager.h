@@ -31,6 +31,9 @@ public slots:
     void mm_start_ai_btn();
     void mm_player_list_btn();
     void mm_search_for_players_toggled(bool _state);
+
+    //------ SETTINGS MENU ---- //
+    void sm_open_settings_btn();
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;
