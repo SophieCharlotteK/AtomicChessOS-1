@@ -2,16 +2,23 @@
 #define GUICOMMUNICATOR_H
 
 #include "magic_enum-master/include/magic_enum.hpp"
+#include "PROTOCOL_MSG.pb.h"
 #include <czmq.h>
 #include <string>
 
+
+
+//SOME DEBUGGING AND LOGGIN
+//ON QT USE THE QT STUFF
 #ifdef USES_QT
-#include <QString>
+    #include <QString>
+    #include<QDebug>
+#else
+    #include "loguru-master/loguru.hpp"
 #endif
 class guicommunicator
 {
 public:
-
 
 enum class GUI_ELEMENT{
     UNKNOWN = -1,
@@ -42,6 +49,9 @@ enum class GUI_VALUE_TYPE{
 };
 
 
+    struct GUI_EVENT{
+
+    };
 
     guicommunicator();
     ~guicommunicator();
@@ -52,6 +62,9 @@ enum class GUI_VALUE_TYPE{
     #ifdef USES_QT
     void createEvent(GUI_ELEMENT _element, GUI_VALUE_TYPE _type, QString _value);
     #endif
+
+    void debug_output(std::string _msg);
+
 private:
      zsock_t* zmq_push = nullptr;
      zsock_t* zmq_pull = nullptr;

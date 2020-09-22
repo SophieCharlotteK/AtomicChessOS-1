@@ -2,7 +2,7 @@ QT += quick \
     widgets
 
 # USING C++ 17 IS REQUIRED
-CONFIG += c++17
+CONFIG += c++17 debug
 QMAKE_CXXFLAGS += -std=c++17
 
 
@@ -14,7 +14,9 @@ DEFINES += USES_QT
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    PROTOCOL_MSG.pb.cc \
     guicommunicator.cpp \
+    loguru-master/loguru.cpp \
     main.cpp \
     menumanager.cpp
 
@@ -34,11 +36,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    PROTOCOL_MSG.pb.h \
     guicommunicator.h \
+    loguru-master/loguru.hpp \
     magic_enum-master/include/magic_enum.hpp \
     menumanager.h $$PWD/czmq/include/czmq.h
 
-LIBS += -lzmq
+LIBS += -lzmq -pthread -lprotobuf -lpthread
 
 DISTFILES += \
     PROTOCOL_MSG.proto

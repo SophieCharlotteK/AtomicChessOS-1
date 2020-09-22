@@ -1,14 +1,10 @@
-message gui2backend_msg
-{
-    required string event = -1;
-    required string type = -1;
-    required string value = "";
-}
+syntax = "proto2";
+package protocolmsg;
 
-message backend2gui_msg
-{
-    required bool ack = false;
-    required string event = -1;
-    required string type = -1;
-    required string value = "";
+message gui2backend_msg {
+  required int32 event = 1 [default = -1];
+  required int32 type = 2 [default = -1];
+  optional string value = 3 [default = ""];
+  optional int32 ack = 4 [default = -1];
+  optional int32 ispageswitchevent = 5 [default = -1];
 }

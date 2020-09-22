@@ -50,7 +50,6 @@ qInfo() <<"lb_settings_btn";
 
 void MenuManager::ls_login_btn(){
 qInfo() <<"ls_login_btn";
-
 guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
