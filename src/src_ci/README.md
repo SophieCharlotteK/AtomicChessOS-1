@@ -126,6 +126,18 @@ In this installation, the name of the new agent is called `buildagent`.
 
 ![JENKINS_CREATE_AGENT](./documentation_images/jenkins_build_agent_2.png)
 
+
+
+##### SITENOTE JENKINS VERSION >= 2.249.1
+ In this version its is possible, that Jenkins can automaticly depoly and agent on a system. It uses a SSH connection into the system and setup and install a new agent. The process is very easy, its only nessessary to setup the ssh username/password or keyfile for the system with the jenkins credential manager. (See chapter CREATE SSH CREDENTAILS).
+
+![JENKINS_CREATE_AGENT](./documentation_images/jenkins_ssg_agnet_deploy.png)
+
+The following steps, describes the tradiitional method for deploying a agent, using the downloaded agetn software and run it manually.
+With the SSH deploy method, these steps can be skipped.
+
+##### END SIDENOTE
+
 On the jenkins agent overview page. Our new created agent is marked with a red cross symbol. This is becuase our created agent is not running on any system.
 After a click on the agent `Jenkins->Nodes->buildagent` we can see on the status tab, a small manual how to start the agent.
 
