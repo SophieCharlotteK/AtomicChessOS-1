@@ -8,6 +8,8 @@ import MenuManager 1.0
 
 Rectangle {
     id: window
+    objectName: "window"
+
     width: 800
     height: 480
     color: "#0074c4"
@@ -15,6 +17,8 @@ Rectangle {
 
     MenuManager{
         id:main_menu
+        objectName: "mainmenu"
+
     }
 
 
@@ -102,6 +106,7 @@ Rectangle {
 
     Rectangle {
         id: mm_container
+        objectName: "mm_container"
         x: 0
         y: 69
         width: 800
@@ -206,6 +211,7 @@ Rectangle {
 
     Rectangle {
         id: ls_container
+        objectName: "ls_container"
         x: 0
         y: 69
         width: 800

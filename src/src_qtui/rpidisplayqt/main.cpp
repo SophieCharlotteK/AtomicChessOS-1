@@ -24,6 +24,21 @@ int main(int argc, char *argv[])
     if(!view.errors().empty()){
            return -1;
     }
+
+
+
+
+
     view.show();
+
+    QObject *object = view.rootObject();
+    qInfo() <<object->objectName();
+    QObject *rect = object->findChild<QObject*>("mainmenu");
+    if (rect){
+        qInfo()<< rect->objectName();
+           rect->setParent(object);
+    }
+
+
     return app.exec();
 }

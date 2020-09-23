@@ -9,6 +9,10 @@
 
 #include <QString>
 
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QQmlContext>
 
 #include "guicommunicator.h"
 class MenuManager: public QObject
@@ -19,6 +23,9 @@ public:
     MenuManager(QObject* _parent);
     MenuManager();
     ~MenuManager();
+
+    static QQuickView* v;
+
 signals:
 
     //void setBestChanged();

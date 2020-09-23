@@ -1,6 +1,10 @@
 #include "menumanager.h"
 
 
+MenuManager::MenuManager(QObject* _parent){
+    qInfo() <<_parent->objectName();
+}
+
 MenuManager::MenuManager()
 {
 qInfo() <<"MenuManager constructor called";
@@ -9,6 +13,11 @@ qInfo() <<"MenuManager constructor called";
 QTimer *timer = new QTimer(this);
  connect(timer, &QTimer::timeout, this, &MenuManager::updateProgress);
  timer->start(500);
+
+
+
+
+
 
 guiconnection.start_recieve_thread();
 
@@ -23,10 +32,21 @@ void MenuManager::updateProgress()
     //SWITCH MAIN MENU REQUEST
     if(ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED){
         qInfo()<< "change view to mm";
-        QObject recht1 = this->findChild<QObject>("ls_container");
-        recht1.setProperty("visible",false);
-        QObject recht = this->findChild<QObject>("mm_container");
-        recht.setProperty("visible",true);
+
+        QObject* recht1 = this->parent()->findChild<QObject*>("ls_container");
+        if(recht1){
+        recht1->setProperty("visible",false);
+        }else{
+           qInfo()<< "recht1 is null";
+        }
+        QObject* recht2 = this->parent()->findChild<QObject*>("mm_container");
+        if(recht2){
+        recht2->setProperty("visible",true);
+        }else{
+           qInfo()<< "recht2 is null";
+        }
+       // QObject* recht = this->findChild<QObject*>("mm_container");
+       // recht->setProperty("visible",true);
 
     }
 
