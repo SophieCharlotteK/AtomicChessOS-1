@@ -3,7 +3,7 @@
 guicommunicator::guicommunicator()
 {
     zmq_push = zsock_new_push ("inproc://example");
-    zmq_pull = zsock_new_pull ("inproc://example");
+
 
 //INIT LOGGIN
 //   loguru::add_file("guicommunicator.log", loguru::Append, loguru::Verbosity_MAX);
@@ -47,11 +47,16 @@ void guicommunicator::debug_event(GUI_EVENT _event){
 }
 
 guicommunicator::GUI_EVENT guicommunicator::parseEvent(std::string _event){
+        guicommunicator::GUI_EVENT event;
+        //CHECK STRING
+        if(_event.empty()){
+            debug_output("event string is empty");
+            event.is_event_valid =false;
+            return event;
+        }
         //PARSE STRING TO PROTOBUF
         protocolmsg::gui2backend_msg message;
         message.ParseFromString(_event);
-
-        guicommunicator::GUI_EVENT event;
 
         //CHECK IF PARSING FAILED
         if(!message.IsInitialized()){
@@ -101,9 +106,9 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 
     std::string tmp;
     message.SerializeToString(&tmp);
-    debug_output(tmp);
+   // debug_output(tmp);
 
-    debug_event(parseEvent(tmp));
+ //   debug_event(parseEvent(tmp));
     //SEND OVER ZEROMQ
     if(!zmq_push){
            debug_output("zmq_push is null");
@@ -111,6 +116,100 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
     }
     zstr_send (zmq_push, tmp.c_str());
 }
+
+
+
+void guicommunicator::start_recieve_thread(){
+    //  std::thread t1(recieve_thread_function, this);
+      // receieve_thread = &t1;
+     //  debug_output("started thread");
+
+    #ifdef USES_QT
+    update_thread = QThread::create([this]{ this->recieve_thread_function(this); });
+    update_thread->start();
+    #else
+    //  std::thread t1(recieve_thread_function, this);
+      // receieve_thread = &t1;
+     //  debug_output("started thread");
+    #endif
+
+
+
+}
+
+void guicommunicator::stop_recieve_thread(){
+     #ifdef USES_QT
+    update_thread->terminate();
+    #endif
+    //if(receieve_thread == nullptr){
+    //    debug_output("receieve_thread is null");
+    //    return;
+    //}
+    //receieve_thread->join();
+
+}
+
+guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event(){
+    GUI_EVENT tmp;
+    tmp.is_event_valid = false;
+    update_thread_mutex.lock();
+    //IF A NEW GUI EVENT EXITS GET THEM WITH A THREAD LOCK
+    if(!gui_update_event_queue.empty()){
+        tmp = gui_update_event_queue.front();
+        gui_update_event_queue.pop();
+    }
+    update_thread_mutex.unlock();
+    if(tmp.is_event_valid){
+
+        debug_output("GOT AN EVENT FROM RECIEVE THREAD");
+        debug_event(tmp);
+}
+    return tmp;
+}
+
+void guicommunicator::recieve_thread_function(guicommunicator* _this){
+     _this->zmq_pull = zsock_new_pull ("inproc://example");
+    bool thread_running = true;
+    std::string tmp = "";
+    while(thread_running){
+
+    tmp =_this->czmq_getmessage();
+    //GOT AN MESSAGE
+    if(!tmp.empty()){
+        //LOCK RESSOURCES = QUEUE
+        if(_this->update_thread_mutex.tryLock()){
+            //PARSE EVENT
+            guicommunicator::GUI_EVENT ev = _this->parseEvent(tmp);
+            if(ev.is_event_valid){
+              _this->gui_update_event_queue.push( ev);
+            }
+
+            //UNLOCK MUTEX
+            _this->update_thread_mutex.unlock();
+        }
+    }
+    //_this->debug_output(".");
+    }
+}
+
+
+std::string guicommunicator::czmq_getmessage(){
+        //READ FROM ZeroMQ
+        std::string tmp = "";
+        char *string = zstr_recv (zmq_pull);
+        if(!string){return "";}
+        tmp = std::string(string);
+        debug_output(tmp);
+        zstr_free (&string);
+            return tmp;
+}
+
+
+
+
+
+
+
 
 
 //ADDING SOME VARIATIONS OF createEvent

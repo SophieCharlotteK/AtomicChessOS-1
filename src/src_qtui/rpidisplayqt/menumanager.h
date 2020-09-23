@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QDebug> //FOR WRITING TO THE APPLICATION OUTPUT CONSOLE WITH qInfo
-
-
+#include <QTimer> // FOR REFRESH INTERVAL
+#include <QThread>
 
 #include <QString>
 
@@ -42,6 +42,8 @@ private:
     void show_error(QString _err);
     guicommunicator guiconnection;
 
+
+    void updateProgress();
 };
 
 #endif // MAINMENU_H

@@ -221,7 +221,7 @@ class gui2backend_msg PROTOBUF_FINAL :
   std::string* _internal_mutable_value();
   public:
 
-  // required int32 event = 1 [default = -1];
+  // optional int32 event = 1 [default = -1];
   bool has_event() const;
   private:
   bool _internal_has_event() const;
@@ -234,7 +234,7 @@ class gui2backend_msg PROTOBUF_FINAL :
   void _internal_set_event(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // required int32 type = 2 [default = -1];
+  // optional int32 type = 2 [default = -1];
   bool has_type() const;
   private:
   bool _internal_has_type() const;
@@ -277,9 +277,6 @@ class gui2backend_msg PROTOBUF_FINAL :
  private:
   class _Internal;
 
-  // helper for ByteSizeLong()
-  size_t RequiredFieldsByteSizeFallback() const;
-
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -303,7 +300,7 @@ class gui2backend_msg PROTOBUF_FINAL :
 #endif  // __GNUC__
 // gui2backend_msg
 
-// required int32 event = 1 [default = -1];
+// optional int32 event = 1 [default = -1];
 inline bool gui2backend_msg::_internal_has_event() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -331,7 +328,7 @@ inline void gui2backend_msg::set_event(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:protocolmsg.gui2backend_msg.event)
 }
 
-// required int32 type = 2 [default = -1];
+// optional int32 type = 2 [default = -1];
 inline bool gui2backend_msg::_internal_has_type() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;

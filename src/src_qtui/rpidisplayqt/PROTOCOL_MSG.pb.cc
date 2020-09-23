@@ -65,8 +65,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_PROTOCOL_5fMSG_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\022PROTOCOL_MSG.proto\022\013protocolmsg\"w\n\017gui"
-  "2backend_msg\022\021\n\005event\030\001 \002(\005:\002-1\022\020\n\004type\030"
-  "\002 \002(\005:\002-1\022\017\n\005value\030\003 \001(\t:\000\022\017\n\003ack\030\004 \001(\005:"
+  "2backend_msg\022\021\n\005event\030\001 \001(\005:\002-1\022\020\n\004type\030"
+  "\002 \001(\005:\002-1\022\017\n\005value\030\003 \001(\t:\000\022\017\n\003ack\030\004 \001(\005:"
   "\002-1\022\035\n\021ispageswitchevent\030\005 \001(\005:\002-1"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_PROTOCOL_5fMSG_2eproto_deps[1] = {
@@ -107,9 +107,6 @@ class gui2backend_msg::_Internal {
   }
   static void set_has_ispageswitchevent(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
-  }
-  static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000006) ^ 0x00000006) != 0;
   }
 };
 
@@ -198,7 +195,7 @@ const char* gui2backend_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // required int32 event = 1 [default = -1];
+      // optional int32 event = 1 [default = -1];
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           _Internal::set_has_event(&has_bits);
@@ -206,7 +203,7 @@ const char* gui2backend_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required int32 type = 2 [default = -1];
+      // optional int32 type = 2 [default = -1];
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           _Internal::set_has_type(&has_bits);
@@ -271,13 +268,13 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required int32 event = 1 [default = -1];
+  // optional int32 event = 1 [default = -1];
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_event(), target);
   }
 
-  // required int32 type = 2 [default = -1];
+  // optional int32 type = 2 [default = -1];
   if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_type(), target);
@@ -313,57 +310,37 @@ failure:
   return target;
 }
 
-size_t gui2backend_msg::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:protocolmsg.gui2backend_msg)
-  size_t total_size = 0;
-
-  if (_internal_has_event()) {
-    // required int32 event = 1 [default = -1];
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_event());
-  }
-
-  if (_internal_has_type()) {
-    // required int32 type = 2 [default = -1];
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_type());
-  }
-
-  return total_size;
-}
 size_t gui2backend_msg::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:protocolmsg.gui2backend_msg)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000006) ^ 0x00000006) == 0) {  // All required fields are present.
-    // required int32 event = 1 [default = -1];
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_event());
-
-    // required int32 type = 2 [default = -1];
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_type());
-
-  } else {
-    total_size += RequiredFieldsByteSizeFallback();
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional string value = 3 [default = ""];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_value());
-  }
+  if (cached_has_bits & 0x0000001fu) {
+    // optional string value = 3 [default = ""];
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_value());
+    }
 
-  if (cached_has_bits & 0x00000018u) {
+    // optional int32 event = 1 [default = -1];
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_event());
+    }
+
+    // optional int32 type = 2 [default = -1];
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_type());
+    }
+
     // optional int32 ack = 4 [default = -1];
     if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
@@ -446,7 +423,6 @@ void gui2backend_msg::CopyFrom(const gui2backend_msg& from) {
 }
 
 bool gui2backend_msg::IsInitialized() const {
-  if (_Internal::MissingRequiredFields(_has_bits_)) return false;
   return true;
 }
 

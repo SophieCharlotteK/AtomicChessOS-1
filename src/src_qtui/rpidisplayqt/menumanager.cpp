@@ -6,36 +6,38 @@ MenuManager::MenuManager()
 qInfo() <<"MenuManager constructor called";
 
 
- //        zmq_push = zsock_new_push ("inproc://example");
- //       zmq_pull = zsock_new_pull ("inproc://example");
-  // zstr_send (push, "Hello, World ZEROMQ");
+QTimer *timer = new QTimer(this);
+ connect(timer, &QTimer::timeout, this, &MenuManager::updateProgress);
+ timer->start(500);
 
- //  char *string = zstr_recv (pull);
- //  qInfo() << string;
-  // zstr_free (&string);
-    
-
+guiconnection.start_recieve_thread();
 
 }
+
+void MenuManager::updateProgress()
+{
+    guicommunicator::GUI_EVENT ev=  guiconnection.get_gui_update_event();
+
+    if(!ev.is_event_valid){return;}
+
+    //SWITCH MAIN MENU REQUEST
+    if(ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED){
+        qInfo()<< "change view to mm";
+        QObject recht1 = this->findChild<QObject>("ls_container");
+        recht1.setProperty("visible",false);
+        QObject recht = this->findChild<QObject>("mm_container");
+        recht.setProperty("visible",true);
+
+    }
+
+}
+
 
 MenuManager::~MenuManager(){
     qInfo() << "DETRUCTOR CALLED";
-    
+    //update_thread->terminate();
+    guiconnection.stop_recieve_thread();
 }
-
-
-//void MenuManager::send_gui_event(guiinterface::GUI_EVENT _event){
- //   if(!zmq_push){
-  //      show_error("zmq_push is null");
-   //     return;
-   // }
-
-  //  QString tmp = guiinterface::Event2String(_event);
-   // qInfo() << tmp;
-   // zstr_send (zmq_push, tmp.toStdString().c_str());
-//}
-
-
 
 
 void MenuManager::show_error(QString _err){
@@ -51,6 +53,7 @@ void MenuManager::lb_settings_btn(){
 void MenuManager::ls_login_btn(){
     qInfo() <<"ls_login_btn";
     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    guiconnection.get_gui_update_event();
 }
 
 

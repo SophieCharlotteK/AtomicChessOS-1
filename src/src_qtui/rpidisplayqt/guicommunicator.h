@@ -6,13 +6,17 @@
 #include <czmq.h>
 #include <string>
 #include <queue>
-
+#include <mutex>
+#include <iostream>
+#include <thread>
 
 //SOME DEBUGGING AND LOGGIN
 //ON QT USE THE QT STUFF
 #ifdef USES_QT
     #include <QString>
     #include<QDebug>
+    #include <QThread>
+    #include <QMutex>
 #else
     #include "loguru-master/loguru.hpp"
 #endif
@@ -76,12 +80,32 @@ enum class GUI_VALUE_TYPE{
 
     void debug_output(std::string _msg);
     void debug_event(GUI_EVENT _event);
+
+    void start_recieve_thread();
+    void stop_recieve_thread();
+
+
+    GUI_EVENT get_gui_update_event();
 private:
      zsock_t* zmq_push = nullptr;
      zsock_t* zmq_pull = nullptr;
 
-    GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
+#ifdef USES_QT
+      QThread* update_thread = nullptr;
+      QMutex update_thread_mutex;
+#else
+    std::thread* update_thread = nullptr;
+    std::pthread_mutex_t update_thread_mutex;
+#endif
 
+    std::queue<GUI_EVENT> gui_update_event_queue;
+
+
+     std::string czmq_getmessage();//THREADSAFE
+
+     GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
+
+     static void recieve_thread_function(guicommunicator* _this);
 };
 
 #endif // GUICOMMUNICATOR_H
