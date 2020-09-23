@@ -38,7 +38,7 @@ The setup of the jenkins software is very easy though the usage of Docker.
 Jenkins offers a Docker-Image which can be installed though the `docker-cli`:
 
 * `$ docker --version`, checks if docker is installed.
-* `$ docker container run --name jenkins-blueocean --env DOCKER_HOST=tcp://docker:2376 -v $(pwd)/jenkins_conf:/var/jenkins_home -p 8080:8080 -p 50000:50000 --restart always jenkinsci/blueocean`, pull docker image and start a new container using this image.
+* `$ docker container run --name jenkins-blueocean --network host --env DOCKER_HOST=tcp://docker:2376 -v $(pwd)/jenkins_conf:/var/jenkins_home -p 8080:8080 -p 50000:50000 --restart always jenkinsci/blueocean`, pull docker image and start a new container using this image.
 
 
 ##### SITENOTE CONTAINER MANAGEMENT
@@ -120,6 +120,17 @@ Select in the `Kind` drop-down menu `SSH Username with private key`, and paste t
 
 #### CREATE AGENT
 
+##### SITENOTE SYSTEM REQUIREMENTS
+
+Its possible to check if java version > 8 is on the system installed.
+
+`$ java -version`
+
+Otherwise it can be installed, using the apt package manager (Ubuntu/Debian).
+
+`$ sudo apt install openjdk-14-jdk -y`
+
+##### END SITENOTE
 Before we can create a new job or project, its nessessary to create a build agent.
 At this point we can only create one permanent agent. So the setup process is easy, simply clock thought the setup dialog.
 In this installation, the name of the new agent is called `buildagent`.
