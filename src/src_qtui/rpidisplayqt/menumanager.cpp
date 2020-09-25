@@ -23,6 +23,32 @@ guiconnection.start_recieve_thread();
 
 }
 
+
+void MenuManager::set_visible_element(QString _name, bool _state){
+
+    QObject* recht1 = this->parent()->findChild<QObject*>(_name);
+    if(recht1){
+        recht1->setProperty("visible",_state);
+    }else{
+        qInfo()<< "cant get element" << _name;
+    }
+
+}
+void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
+
+
+    set_visible_element("mm_container",false);
+    set_visible_element("ls_container",false);
+    set_visible_element("ss_container",false);
+
+    switch (_screen) {
+        case guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN:{set_visible_element("mm_container",true);break;}
+        case guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN:{set_visible_element("ls_container",true);break;}
+        case guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN:{set_visible_element("ss_container",true);break;}
+        default:break;
+    }
+}
+
 void MenuManager::updateProgress()
 {
     guicommunicator::GUI_EVENT ev=  guiconnection.get_gui_update_event();
@@ -30,24 +56,8 @@ void MenuManager::updateProgress()
     if(!ev.is_event_valid){return;}
 
     //SWITCH MAIN MENU REQUEST
-    if(ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED){
-        qInfo()<< "change view to mm";
-
-        QObject* recht1 = this->parent()->findChild<QObject*>("ls_container");
-        if(recht1){
-        recht1->setProperty("visible",false);
-        }else{
-           qInfo()<< "recht1 is null";
-        }
-        QObject* recht2 = this->parent()->findChild<QObject*>("mm_container");
-        if(recht2){
-        recht2->setProperty("visible",true);
-        }else{
-           qInfo()<< "recht2 is null";
-        }
-       // QObject* recht = this->findChild<QObject*>("mm_container");
-       // recht->setProperty("visible",true);
-
+    if(ev.event == guicommunicator::GUI_ELEMENT::SWITCH_MENU){
+        switch_menu(ev.type);
     }
 
 }

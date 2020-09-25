@@ -48,8 +48,8 @@ public slots:
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;
-
-
+    void switch_menu(guicommunicator::GUI_VALUE_TYPE _screen);
+    void set_visible_element(QString _name, bool _state);
     void updateProgress();
 };
 

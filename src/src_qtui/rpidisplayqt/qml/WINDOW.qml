@@ -24,6 +24,7 @@ Rectangle {
 
     Rectangle {
         id: hb_container
+        objectName: "hb_container"
         x: 0
         y: 0
         width: 800
@@ -237,6 +238,7 @@ Rectangle {
 
     Rectangle {
         id: ss_container
+        objectName: "ss_container"
         x: 0
         y: 68
         width: 800
