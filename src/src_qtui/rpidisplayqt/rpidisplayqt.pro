@@ -6,8 +6,8 @@ CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 
 //WORKAROUND FOR BUILDROOT COMPILE https://stackoverflow.com/questions/51196806/tell-qmake-std-c17-qmake-cxxflags-overridden
-CONFIG += c++1z
-#QMAKE_CXXFLAG  += c++1z
+#CONFIG += c++1z
+QMAKE_CXXFLAG  += c++1z
 
 
 DEFINES += USES_QT
