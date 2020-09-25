@@ -10,6 +10,9 @@
 #include <iostream>
 #include <thread>
 
+
+
+#define USES_QT
 //SOME DEBUGGING AND LOGGIN
 //ON QT USE THE QT STUFF
 #ifdef USES_QT
@@ -86,6 +89,7 @@ enum class GUI_VALUE_TYPE{
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value); //sends a event though ZeroMQ using protocol buffer
     //DERIVATIONS FRom createEvent
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type);
+
     #ifdef USES_QT
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value);
     #endif
