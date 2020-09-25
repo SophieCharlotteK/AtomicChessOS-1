@@ -12,7 +12,7 @@
 
 
 
-#define USES_QT
+
 //SOME DEBUGGING AND LOGGIN
 //ON QT USE THE QT STUFF
 #ifdef USES_QT
