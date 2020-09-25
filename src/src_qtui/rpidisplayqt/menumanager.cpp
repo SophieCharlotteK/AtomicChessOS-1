@@ -82,7 +82,8 @@ void MenuManager::lb_settings_btn(){
 
 void MenuManager::ls_login_btn(){
     qInfo() <<"ls_login_btn";
-    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
+    //guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
     guiconnection.get_gui_update_event();
 }
 
