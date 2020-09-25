@@ -2,7 +2,7 @@ QT += quick \
     widgets
 
 # USING C++ 17 IS REQUIRED
-CONFIG += c++17 debug
+CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 
 
