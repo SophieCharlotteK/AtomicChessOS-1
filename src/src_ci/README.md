@@ -258,6 +258,17 @@ Jenkins
 * tag the git commit thats build
 
 
+#### BUILD RESULT OVERVIEW
+
+After successful setup of the job.
+The last build status is shown on the job overview page.
+
+![JOB_STATUS](./documentation_images/jenkins_build_result.PNG)
+
+The blue dot indicated that the job was sucessful, a red dot that something failed.
+By clicking on the job number, the complete job log output, runtime, artefacts are shown.
+
+
 
 ### CONCLUSION CONTINIOUS INTEGRATION WITH JENKINS
 
