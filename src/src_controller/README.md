@@ -61,3 +61,16 @@ Afer building the sources into an executable, the final binaries will be copied 
 The embedded system is flashed with tha latest image build by buildroot.
 
 In order to setup the VisualGDB Project, its nessessary that the embedded device can be accessed over SSH.
+
+
+
+
+## THIRD PARTY LIBRARIES
+
+The ATC_Controller software uses serveral different third party libraries, escacially for http requests and json parsing.
+* `https://github.com/nlohmann/json#serialization--deserialization`, json parsing.
+* `https://github.com/sisterniccy/LibPiSPI`, SPI communication for the embedded system.
+* `https://github.com/yhirose/cpp-httplib`, http/https requests.
+* `https://github.com/Neargye/magic_enum`, enum handling.
+
+A copy of the used versions, are located in the controller software directory.
