@@ -116,7 +116,8 @@ private:
       QMutex update_thread_mutex;
 #else
     std::thread* update_thread = nullptr;
-    std::pthread_mutex_t update_thread_mutex;
+    std::mutex update_thread_mutex;
+	
 #endif
 
     std::queue<GUI_EVENT> gui_update_event_queue;

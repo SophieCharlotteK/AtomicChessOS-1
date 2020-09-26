@@ -177,7 +177,12 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this){
     //GOT AN MESSAGE
     if(!tmp.empty()){
         //LOCK RESSOURCES = QUEUE
+#ifdef USES_QT
         if(_this->update_thread_mutex.tryLock()){
+#else
+		if(_this->update_thread_mutex.try_lock()){
+#endif
+
             //PARSE EVENT
             guicommunicator::GUI_EVENT ev = _this->parseEvent(tmp);
             if(ev.is_event_valid){

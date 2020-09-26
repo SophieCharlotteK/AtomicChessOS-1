@@ -15,7 +15,7 @@ OBJCOPY := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/outp
 PREPROCESSOR_MACROS := DEBUG=1
 INCLUDE_DIRS := cpp-httplib-master
 LIBRARY_DIRS := 
-LIBRARY_NAMES := 
+LIBRARY_NAMES := protobuf
 ADDITIONAL_LINKER_INPUTS := 
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
