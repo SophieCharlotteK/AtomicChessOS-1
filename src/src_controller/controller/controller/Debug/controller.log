@@ -1,0 +1,4 @@
+﻿  VisualGDB: C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller => /tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller: 1 files copied (150 bytes), 5 files are up-to-date.
+  VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller" on prodevmo@192.168.178.125 (SSH)
+  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -ggdb -ffunction-sections -O0   -DDEBUG=1  -c controller.cpp -o Debug/controller.o -MD -MF Debug/controller.dep
+  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -o Debug/controller -Wl,-gc-sections    -Wl,--start-group Debug/controller.o   -Wl,--rpath='$ORIGIN'   -Wl,--end-group
