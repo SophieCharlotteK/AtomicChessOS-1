@@ -5,11 +5,11 @@
 BINARYDIR := Debug
 
 #Toolchain
-CC := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-gcc
-CXX := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++
+CC := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-gcc
+CXX := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-g++
 LD := $(CXX)
-AR := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-ar
-OBJCOPY := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-objcopy
+AR := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-ar
+OBJCOPY := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1

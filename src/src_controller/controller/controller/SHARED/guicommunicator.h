@@ -1,7 +1,12 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
+#ifdef USES_QT
 #include "magic_enum-master/include/magic_enum.hpp"
+#else
+#include "../magic_enum-master/include/magic_enum.hpp"
+#endif
+
 #include "PROTOCOL_MSG.pb.h"
 #include <czmq.h>
 #include <string>
@@ -21,7 +26,7 @@
     #include <QThread>
     #include <QMutex>
 #else
-    #include "loguru-master/loguru.hpp"
+    #include "../loguru-master/loguru.hpp"
 #endif
 
 class guicommunicator

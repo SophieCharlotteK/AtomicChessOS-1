@@ -39,6 +39,15 @@
     <ClCompile Include="LibPiSPI-master\LibPiSPI\PiSPI.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="SHARED\guicommunicator.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\PROTOCOL_MSG.pb.cc">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="loguru-master\loguru.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -51,6 +60,15 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="LibPiSPI-master\LibPiSPI\PiSPI.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\guicommunicator.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="loguru-master\loguru.hpp">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

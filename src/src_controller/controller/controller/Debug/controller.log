@@ -1,19 +1,137 @@
-﻿EXEC : warning : Stderr line received 'tar: cpp-httplib-master/cmake: time stamp 2020-09-27 02:01:47 is 7199.428890852 s in the future'
-EXEC : warning : Stderr line received 'tar: cpp-httplib-master/example: time stamp 2020-09-27 02:01:47 is 7199.427464906 s in the future'
-EXEC : warning : Stderr line received 'tar: cpp-httplib-master/test/gtest: time stamp 2020-09-27 02:01:47 is 7199.315558955 s in the future'
-EXEC : warning : Stderr line received 'tar: cpp-httplib-master/test: time stamp 2020-09-27 02:01:47 is 7199.305766381 s in the future'
-EXEC : warning : Stderr line received 'tar: cpp-httplib-master: time stamp 2020-09-27 02:01:47 is 7199.305733454 s in the future'
-EXEC : warning : Stderr line received 'tar: LibPiSPI-master/LibPiSPI: time stamp 2020-09-27 02:01:47 is 7199.304846478 s in the future'
-EXEC : warning : Stderr line received 'tar: LibPiSPI-master/Test: time stamp 2020-09-27 02:01:47 is 7199.304730158 s in the future'
-EXEC : warning : Stderr line received 'tar: LibPiSPI-master: time stamp 2020-09-27 02:01:47 is 7199.30470391 s in the future'
-EXEC : warning : Stderr line received 'tar: magic_enum-master/example: time stamp 2020-09-27 02:01:47 is 7199.299920385 s in the future'
-EXEC : warning : Stderr line received 'tar: magic_enum-master/include: time stamp 2020-09-27 02:01:47 is 7199.299606681 s in the future'
-EXEC : warning : Stderr line received 'tar: magic_enum-master/test/3rdparty/Catch2: time stamp 2020-09-27 02:01:47 is 7199.243078285 s in the future'
-EXEC : warning : Stderr line received 'tar: magic_enum-master/test/3rdparty: time stamp 2020-09-27 02:01:47 is 7199.243026492 s in the future'
-EXEC : warning : Stderr line received 'tar: magic_enum-master/test: time stamp 2020-09-27 02:01:47 is 7199.240621877 s in the future'
-EXEC : warning : Stderr line received 'tar: magic_enum-master: time stamp 2020-09-27 02:01:47 is 7199.240594313 s in the future'
+﻿EXEC : warning : Stderr line received 'tar: cpp-httplib-master/cmake: time stamp 2020-09-27 02:57:44 is 7199.603630409 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master/example: time stamp 2020-09-27 02:57:44 is 7199.602481624 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master/test/gtest: time stamp 2020-09-27 02:57:44 is 7199.489531854 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master/test: time stamp 2020-09-27 02:57:44 is 7199.482424437 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master: time stamp 2020-09-27 02:57:44 is 7199.482377756 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni/czmq-jni/android: time stamp 2020-09-27 02:57:44 is 7199.482219879 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni/czmq-jni/src/main/c: time stamp 2020-09-27 02:57:44 is 7199.458531741 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni/czmq-jni/src/main: time stamp 2020-09-27 02:57:44 is 7199.458486019 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni/czmq-jni/src: time stamp 2020-09-27 02:57:44 is 7199.458465834 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni/czmq-jni: time stamp 2020-09-27 02:57:44 is 7199.458446593 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni/msvc: time stamp 2020-09-27 02:57:44 is 7199.458274638 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/jni: time stamp 2020-09-27 02:57:44 is 7199.458249958 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/nodejs: time stamp 2020-09-27 02:57:44 is 7199.427513512 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/qml/src: time stamp 2020-09-27 02:57:44 is 7199.385765038 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/qml: time stamp 2020-09-27 02:57:44 is 7199.385697255 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/qt/selftest: time stamp 2020-09-27 02:57:44 is 7199.385570417 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/qt/src: time stamp 2020-09-27 02:57:44 is 7199.347578607 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings/qt: time stamp 2020-09-27 02:57:44 is 7199.347527468 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/bindings: time stamp 2020-09-27 02:57:44 is 7199.347506456 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/builds/cmake/Modules: time stamp 2020-09-27 02:57:44 is 7199.34671824 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/builds/cmake: time stamp 2020-09-27 02:57:44 is 7199.346693947 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/builds/gyp: time stamp 2020-09-27 02:57:44 is 7199.346593466 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/builds/mingw32: time stamp 2020-09-27 02:57:44 is 7199.346507524 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/builds/msvc: time stamp 2020-09-27 02:57:44 is 7199.344234507 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/builds: time stamp 2020-09-27 02:57:44 is 7199.344213217 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/doc: time stamp 2020-09-27 02:57:44 is 7199.342347716 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/examples/security: time stamp 2020-09-27 02:57:44 is 7199.340065896 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/examples: time stamp 2020-09-27 02:57:44 is 7199.340039125 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/include: time stamp 2020-09-27 02:57:44 is 7199.307963762 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/issues: time stamp 2020-09-27 02:57:44 is 7199.307824764 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/src/foreign/sha1: time stamp 2020-09-27 02:57:44 is 7199.303722733 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/src/foreign/slre: time stamp 2020-09-27 02:57:44 is 7199.303263886 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/src/foreign: time stamp 2020-09-27 02:57:44 is 7199.303239398 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master/src: time stamp 2020-09-27 02:57:44 is 7199.213498725 s in the future'
+EXEC : warning : Stderr line received 'tar: czmq-master: time stamp 2020-09-27 02:57:44 is 7199.213449406 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/src: time stamp 2020-09-27 02:57:44 is 7199.211677567 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty/benchmark/cmake/Modules: time stamp 2020-09-27 02:57:44 is 7199.208996436 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty/benchmark/cmake: time stamp 2020-09-27 02:57:44 is 7199.208602974 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty/benchmark/include/benchmark: time stamp 2020-09-27 02:57:44 is 7199.204437678 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty/benchmark/include: time stamp 2020-09-27 02:57:44 is 7199.204406848 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty/benchmark/src: time stamp 2020-09-27 02:57:44 is 7199.18742298 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty/benchmark: time stamp 2020-09-27 02:57:44 is 7199.187384449 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks/thirdparty: time stamp 2020-09-27 02:57:44 is 7199.187364561 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/benchmarks: time stamp 2020-09-27 02:57:44 is 7199.1873455 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/cmake: time stamp 2020-09-27 02:57:44 is 7199.187243312 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc/docset: time stamp 2020-09-27 02:57:44 is 7199.18658087 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc/examples: time stamp 2020-09-27 02:57:44 is 7199.16727298 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc/mkdocs/docs/integration/conan: time stamp 2020-09-27 02:57:44 is 7199.16625171 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc/mkdocs/docs/integration: time stamp 2020-09-27 02:57:44 is 7199.166155161 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc/mkdocs/docs: time stamp 2020-09-27 02:57:44 is 7199.166130736 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc/mkdocs: time stamp 2020-09-27 02:57:44 is 7199.16597276 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/doc: time stamp 2020-09-27 02:57:44 is 7199.165948918 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/detail/conversions: time stamp 2020-09-27 02:57:44 is 7199.157696355 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/detail/input: time stamp 2020-09-27 02:57:44 is 7199.140632063 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/detail/iterators: time stamp 2020-09-27 02:57:44 is 7199.134745725 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/detail/meta: time stamp 2020-09-27 02:57:44 is 7199.126053718 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/detail/output: time stamp 2020-09-27 02:57:44 is 7199.116869148 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/detail: time stamp 2020-09-27 02:57:44 is 7199.116751027 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/thirdparty/hedley: time stamp 2020-09-27 02:57:44 is 7199.081563118 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann/thirdparty: time stamp 2020-09-27 02:57:44 is 7199.081518516 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include/nlohmann: time stamp 2020-09-27 02:57:44 is 7199.08149826 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/include: time stamp 2020-09-27 02:57:44 is 7199.081479315 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/single_include/nlohmann: time stamp 2020-09-27 02:57:44 is 7199.002254185 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/single_include: time stamp 2020-09-27 02:57:44 is 7199.00220438 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_add_subdirectory/project: time stamp 2020-09-27 02:57:45 is 7200.001135155 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_add_subdirectory: time stamp 2020-09-27 02:57:45 is 7200.001108636 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_fetch_content/project: time stamp 2020-09-27 02:57:45 is 7200.00041103 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_fetch_content: time stamp 2020-09-27 02:57:45 is 7200.000373678 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_import/project: time stamp 2020-09-27 02:57:45 is 7200.000014023 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_import: time stamp 2020-09-27 02:57:45 is 7199.999991309 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_import_minver/project: time stamp 2020-09-27 02:57:45 is 7199.997822809 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_import_minver: time stamp 2020-09-27 02:57:45 is 7199.997759488 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_target_include_directories/project: time stamp 2020-09-27 02:57:45 is 7199.99717124 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/cmake_target_include_directories: time stamp 2020-09-27 02:57:45 is 7199.997137885 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/src: time stamp 2020-09-27 02:57:45 is 7199.861554231 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/doctest: time stamp 2020-09-27 02:57:45 is 7199.840604424 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/fifo_map: time stamp 2020-09-27 02:57:45 is 7199.839369302 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer/afl: time stamp 2020-09-27 02:57:45 is 7199.839226557 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer/standalone: time stamp 2020-09-27 02:57:45 is 7199.819625402 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer/test/no-coverage: time stamp 2020-09-27 02:57:45 is 7199.813067671 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer/test/ubsan: time stamp 2020-09-27 02:57:45 is 7199.805525306 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer/test/uninstrumented: time stamp 2020-09-27 02:57:45 is 7199.805390853 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer/test: time stamp 2020-09-27 02:57:45 is 7199.805294142 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/Fuzzer: time stamp 2020-09-27 02:57:45 is 7199.805270262 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty/imapdl: time stamp 2020-09-27 02:57:45 is 7199.805052691 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test/thirdparty: time stamp 2020-09-27 02:57:45 is 7199.805026285 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/test: time stamp 2020-09-27 02:57:45 is 7199.805005205 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/third_party/macro_builder: time stamp 2020-09-27 02:57:45 is 7199.80487856 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop/third_party: time stamp 2020-09-27 02:57:45 is 7199.804854308 s in the future'
+EXEC : warning : Stderr line received 'tar: json-develop: time stamp 2020-09-27 02:57:44 is 7198.804832315 s in the future'
+EXEC : warning : Stderr line received 'tar: LibPiSPI-master/LibPiSPI: time stamp 2020-09-27 02:57:45 is 7199.803747452 s in the future'
+EXEC : warning : Stderr line received 'tar: LibPiSPI-master/Test: time stamp 2020-09-27 02:57:45 is 7199.803629715 s in the future'
+EXEC : warning : Stderr line received 'tar: LibPiSPI-master: time stamp 2020-09-27 02:57:45 is 7199.803605181 s in the future'
+EXEC : warning : Stderr line received 'tar: loguru-master/glog_bench: time stamp 2020-09-27 02:57:45 is 7199.800195321 s in the future'
+EXEC : warning : Stderr line received 'tar: loguru-master/glog_example: time stamp 2020-09-27 02:57:45 is 7199.799908008 s in the future'
+EXEC : warning : Stderr line received 'tar: loguru-master/loguru_bench: time stamp 2020-09-27 02:57:45 is 7199.792591075 s in the future'
+EXEC : warning : Stderr line received 'tar: loguru-master/loguru_example: time stamp 2020-09-27 02:57:45 is 7199.792318583 s in the future'
+EXEC : warning : Stderr line received 'tar: loguru-master/test: time stamp 2020-09-27 02:57:45 is 7199.789806174 s in the future'
+EXEC : warning : Stderr line received 'tar: loguru-master: time stamp 2020-09-27 02:57:45 is 7199.789779701 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/example: time stamp 2020-09-27 02:57:45 is 7199.788935579 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/include: time stamp 2020-09-27 02:57:45 is 7199.782185521 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/test/3rdparty/Catch2: time stamp 2020-09-27 02:57:45 is 7199.731900192 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/test/3rdparty: time stamp 2020-09-27 02:57:45 is 7199.731848388 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/test: time stamp 2020-09-27 02:57:45 is 7199.726561401 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master: time stamp 2020-09-27 02:57:45 is 7199.726515047 s in the future'
+EXEC : warning : Stderr line received 'tar: SHARED: time stamp 2020-09-27 02:57:45 is 7199.721771817 s in the future'
 EXEC : VisualGDB warning : The target's clock might be out-of-sync with this computer's clock. Use the Tools->VisualGDB->SSH Host Manager->Host-wide Settings to configure the timestamp offset.
-  VisualGDB: C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller => /tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller: 37 files copied (2225KB), 2 files are up-to-date.
+  VisualGDB: C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller => /tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller: 790 files copied (9500KB), 2 files are up-to-date.
   VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller" on prodevmo@192.168.178.125 (SSH)
-  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -ggdb -ffunction-sections -O0  -Icpp-httplib-master -DDEBUG=1  -c controller.cpp -o Debug/controller.o -MD -MF Debug/controller.dep
-  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -o Debug/controller -Wl,-gc-sections    -Wl,--start-group Debug/controller.o Debug/PiSPI.o   -Wl,--rpath='$ORIGIN'   -Wl,--end-group
+  /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-g++ -ggdb -ffunction-sections -O0 -std=c++17  -Icpp-httplib-master -DDEBUG=1  -c SHARED/guicommunicator.cpp -o Debug/guicommunicator.o -MD -MF Debug/guicommunicator.dep
+  C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller\SHARED\guicommunicator.cpp(1):
+C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller\SHARED\guicommunicator.h(119,10): error : ‘pthread_mutex_t’ in namespace ‘std’ does not name a type
+    119 |     std::pthread_mutex_t update_thread_mutex;
+        |          ^~~~~~~~~~~~~~~
+  SHARED/guicommunicator.cpp: In member function ‘guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event()’:
+C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller\SHARED\guicommunicator.cpp(155,5): error : ‘update_thread_mutex’ was not declared in this scope; did you mean ‘update_thread’?
+    155 |     update_thread_mutex.lock();
+        |     ^~~~~~~~~~~~~~~~~~~
+        |     update_thread
+  SHARED/guicommunicator.cpp: In static member function ‘static void guicommunicator::recieve_thread_function(guicommunicator*)’:
+C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller\SHARED\guicommunicator.cpp(180,19): error : ‘class guicommunicator’ has no member named ‘update_thread_mutex’; did you mean ‘update_thread’?
+    180 |         if(_this->update_thread_mutex.tryLock()){
+        |                   ^~~~~~~~~~~~~~~~~~~
+        |                   update_thread
+C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller\SHARED\guicommunicator.cpp(188,20): error : ‘class guicommunicator’ has no member named ‘update_thread_mutex’; did you mean ‘update_thread’?
+    188 |             _this->update_thread_mutex.unlock();
+        |                    ^~~~~~~~~~~~~~~~~~~
+        |                    update_thread
+  make: *** [Makefile:241: Debug/guicommunicator.o] Error 1
+  -------------------------------------------------------------
+  Command exited with code 2
+  Executable: make
+  Arguments:  CONFIG=Debug
+  Directory: /tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller
+VisualGDB : error : Command-line action failed
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MakeFile.Targets(46,5): error MSB3073: Der Befehl "C:\Windows\System32\chcp.com 65001 >NUL 
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MakeFile.Targets(46,5): error MSB3073:  "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller\controller.vcxproj" "/solution:C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller.sln"  "/config:Debug" "/platform:Win32"" wurde mit dem Code 1 beendet.
