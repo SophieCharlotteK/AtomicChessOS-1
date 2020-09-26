@@ -9,6 +9,12 @@ The controller is the main system on the embedded device that controls the hardw
 * Communication with the UI running on the device
 * Chess Figure Movement Algorithm
 
+
+For this software component, we are using a Windows and Visual Studi environment for developing the software.
+Our embedded system is a linux device, so we have to build the application for the linux environment running on the emmbedded device.
+For this task, the prevously build buildroot toolchain is used.
+A software plugin called VisualGDB for Visual Studio, enable Visual Studio to use the linux toolchain over a remote linux system, in order to build and deploy the application.
+
 ## REQUIREMENTS
 
 * windows pc for development
@@ -16,6 +22,7 @@ The controller is the main system on the embedded device that controls the hardw
 * embedded system for deployment
 
 ## SETUP A PROJECT USING VISUAL STUDIO AND VisualGDB
+
 
 ### REQUIREMENTS
 
