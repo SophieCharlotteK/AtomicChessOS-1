@@ -9,14 +9,39 @@ This branch contains the QT5 User Interface which is running on the RaspberryPi 
 
 ## TASK OF THE UI
 
+## FEATURES WHAT CAN THE USER DO
+
+### MENU STRUCTURE
+
+### MOCKUP
+
+### USING QtDesignStudio
+* from mockup to qml stuff
+
+
+
+
 ## WHY QT
 
 
-## MENU STRUCTURE
+### PROJECT SETUP
 
-## FEATURES WHAT CAN THE USER DO
+#### TOOLCHAIN SETUP
+#### DEVICE SETUP
 
-##HOW ITS BUILD
-*qtdesign studio mockup
-* qml 
-* c++ backend...
+### QML COMPONENTS
+
+### C++ BACKEBD
+
+
+#### INTER PROCESS COMMUNICATION
+
+###### ZeroMQ
+
+###### Protobuf
+
+### DEPLOYMENT
+* using buildroot pacakge
+ 
+
+
