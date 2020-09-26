@@ -14,9 +14,9 @@ OBJCOPY := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/outp
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1
 INCLUDE_DIRS := cpp-httplib-master
-LIBRARY_DIRS := 
-LIBRARY_NAMES := protobuf
-ADDITIONAL_LINKER_INPUTS := 
+LIBRARY_DIRS := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/target/usr/lib/
+LIBRARY_NAMES := 
+ADDITIONAL_LINKER_INPUTS := -pthread -lprotobuf -lpthread -lzmq
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
 

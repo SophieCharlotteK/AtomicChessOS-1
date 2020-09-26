@@ -1,6 +1,6 @@
 #include <iostream>
 #include "httplib.h"
-
+#include "SHARED/guicommunicator.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -17,5 +17,9 @@ int main(int argc, char *argv[])
 	}
 	char sz[] = "Hello, World!";
 	cout << sz << endl;
+	
+	
+	guicommunicator gui;
+	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
 	return 0;
 }

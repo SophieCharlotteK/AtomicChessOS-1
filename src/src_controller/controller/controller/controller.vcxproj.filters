@@ -71,5 +71,8 @@
     <ClInclude Include="loguru-master\loguru.hpp">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="czmq-master\include\czmq.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

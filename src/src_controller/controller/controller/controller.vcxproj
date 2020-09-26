@@ -65,6 +65,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cpp-httplib-master\httplib.h" />
+    <ClInclude Include="czmq-master\include\czmq.h" />
     <ClInclude Include="LibPiSPI-master\LibPiSPI\PiSPI.h" />
     <ClInclude Include="loguru-master\loguru.hpp" />
     <ClInclude Include="magic_enum-master\include\magic_enum.hpp" />
