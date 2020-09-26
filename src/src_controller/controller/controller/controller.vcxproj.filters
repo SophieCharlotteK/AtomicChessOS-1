@@ -36,5 +36,22 @@
     <None Include="controller-Release.vgdbsettings">
       <Filter>VisualGDB settings</Filter>
     </None>
+    <ClCompile Include="LibPiSPI-master\LibPiSPI\PiSPI.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="magic_enum-master\include\magic_enum.hpp">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp-httplib-master\httplib.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="LibPiSPI-master\LibPiSPI\PiSPI.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

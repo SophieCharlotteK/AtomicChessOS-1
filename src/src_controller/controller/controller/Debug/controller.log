@@ -1,4 +1,19 @@
-﻿  VisualGDB: C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller => /tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller: 1 files copied (150 bytes), 5 files are up-to-date.
+﻿EXEC : warning : Stderr line received 'tar: cpp-httplib-master/cmake: time stamp 2020-09-27 02:01:47 is 7199.428890852 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master/example: time stamp 2020-09-27 02:01:47 is 7199.427464906 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master/test/gtest: time stamp 2020-09-27 02:01:47 is 7199.315558955 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master/test: time stamp 2020-09-27 02:01:47 is 7199.305766381 s in the future'
+EXEC : warning : Stderr line received 'tar: cpp-httplib-master: time stamp 2020-09-27 02:01:47 is 7199.305733454 s in the future'
+EXEC : warning : Stderr line received 'tar: LibPiSPI-master/LibPiSPI: time stamp 2020-09-27 02:01:47 is 7199.304846478 s in the future'
+EXEC : warning : Stderr line received 'tar: LibPiSPI-master/Test: time stamp 2020-09-27 02:01:47 is 7199.304730158 s in the future'
+EXEC : warning : Stderr line received 'tar: LibPiSPI-master: time stamp 2020-09-27 02:01:47 is 7199.30470391 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/example: time stamp 2020-09-27 02:01:47 is 7199.299920385 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/include: time stamp 2020-09-27 02:01:47 is 7199.299606681 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/test/3rdparty/Catch2: time stamp 2020-09-27 02:01:47 is 7199.243078285 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/test/3rdparty: time stamp 2020-09-27 02:01:47 is 7199.243026492 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master/test: time stamp 2020-09-27 02:01:47 is 7199.240621877 s in the future'
+EXEC : warning : Stderr line received 'tar: magic_enum-master: time stamp 2020-09-27 02:01:47 is 7199.240594313 s in the future'
+EXEC : VisualGDB warning : The target's clock might be out-of-sync with this computer's clock. Use the Tools->VisualGDB->SSH Host Manager->Host-wide Settings to configure the timestamp offset.
+  VisualGDB: C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller => /tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller: 37 files copied (2225KB), 2 files are up-to-date.
   VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/c/Users/prodevmo/Desktop/AtomicChessOS/src/src_controller/controller/controller" on prodevmo@192.168.178.125 (SSH)
-  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -ggdb -ffunction-sections -O0   -DDEBUG=1  -c controller.cpp -o Debug/controller.o -MD -MF Debug/controller.dep
-  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -o Debug/controller -Wl,-gc-sections    -Wl,--start-group Debug/controller.o   -Wl,--rpath='$ORIGIN'   -Wl,--end-group
+  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -ggdb -ffunction-sections -O0  -Icpp-httplib-master -DDEBUG=1  -c controller.cpp -o Debug/controller.o -MD -MF Debug/controller.dep
+  /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++ -o Debug/controller -Wl,-gc-sections    -Wl,--start-group Debug/controller.o Debug/PiSPI.o   -Wl,--rpath='$ORIGIN'   -Wl,--end-group

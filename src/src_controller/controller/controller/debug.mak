@@ -13,7 +13,7 @@ OBJCOPY := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1
-INCLUDE_DIRS := 
+INCLUDE_DIRS := cpp-httplib-master
 LIBRARY_DIRS := 
 LIBRARY_NAMES := 
 ADDITIONAL_LINKER_INPUTS := 

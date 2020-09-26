@@ -44,13 +44,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0002\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0003\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0001\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0002\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0003\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0001\include;cpp-httplib-master;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
     <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
     <NMakeOutput>$(ProjectDir)controller-Debug.vgdbsettings</NMakeOutput>
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0002\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0003\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0000\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0001\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
@@ -64,12 +64,16 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cpp-httplib-master\httplib.h" />
+    <ClInclude Include="LibPiSPI-master\LibPiSPI\PiSPI.h" />
+    <ClInclude Include="magic_enum-master\include\magic_enum.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="controller.cpp" />
+    <ClCompile Include="LibPiSPI-master\LibPiSPI\PiSPI.cpp" />
     <None Include="Makefile" />
     <None Include="debug.mak" />
     <None Include="release.mak" />
