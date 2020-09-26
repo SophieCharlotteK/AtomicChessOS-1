@@ -799,6 +799,9 @@
 #ifndef __UDQ_FBIT__
 #define __UDQ_FBIT__ 64
 #endif
+#ifndef DEBUG
+#define DEBUG 1
+#endif
 #ifndef __INT8_TYPE__
 #define __INT8_TYPE__ signed char
 #endif
@@ -1429,28 +1432,25 @@
 #ifndef __ATOMIC_RELEASE
 #define __ATOMIC_RELEASE 3
 #endif
-#ifndef DEBUG
-#define DEBUG 1
-#endif
 #endif
 
 // --- Include directories begin --- //
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0/arm-buildroot-linux-gnueabihf
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0/backward
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include-fixed
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include
-///home/prodevmo/Desktop/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0/arm-buildroot-linux-gnueabihf
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0/backward
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include-fixed
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
+//cpp-httplib-master
 // --- Include directories end --- //
 
 
 // --- Library directories begin --- //
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/
-///home/prodevmo/Desktop/host/bin/../lib/gcc/
-///home/prodevmo/Desktop/host/bin/../lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/lib/
-///home/prodevmo/Desktop/host/arm-buildroot-linux-gnueabihf/sysroot/lib/
-///home/prodevmo/Desktop/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/lib/
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/lib/
+///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/
 // --- Library directories begin --- //
 
 #pragma clang diagnostic pop
