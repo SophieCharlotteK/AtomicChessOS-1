@@ -72,5 +72,5 @@ The ATC_Controller software uses serveral different third party libraries, escac
 * `https://github.com/sisterniccy/LibPiSPI`, SPI communication for the embedded system.
 * `https://github.com/yhirose/cpp-httplib`, http/https requests.
 * `https://github.com/Neargye/magic_enum`, enum handling.
-
+* `https://github.com/emilk/loguru`
 A copy of the used versions, are located in the controller software directory.
