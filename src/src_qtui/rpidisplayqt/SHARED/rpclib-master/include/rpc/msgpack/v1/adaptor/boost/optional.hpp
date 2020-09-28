@@ -10,9 +10,9 @@
 #ifndef MSGPACK_V1_TYPE_BOOST_OPTIONAL_HPP
 #define MSGPACK_V1_TYPE_BOOST_OPTIONAL_HPP
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/check_container_size.hpp"
+#include "../../../versioning.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
+#include "../../../adaptor/check_container_size.hpp"
 
 // To suppress warning on Boost.1.58.0
 #if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)) || defined(__clang__)

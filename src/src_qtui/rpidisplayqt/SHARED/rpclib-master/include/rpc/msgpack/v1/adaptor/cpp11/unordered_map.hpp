@@ -9,10 +9,9 @@
 //
 #ifndef MSGPACK_V1_TYPE_CPP11_UNORDERED_MAP_HPP
 #define MSGPACK_V1_TYPE_CPP11_UNORDERED_MAP_HPP
-
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/check_container_size.hpp"
+#include "../../../versioning.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
+#include "../../../adaptor/check_container_size.hpp"
 
 #include <unordered_map>
 

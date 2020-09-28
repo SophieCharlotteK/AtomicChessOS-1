@@ -10,9 +10,9 @@
 #ifndef MSGPACK_V1_CPP03_MSGPACK_TUPLE_DECL_HPP
 #define MSGPACK_V1_CPP03_MSGPACK_TUPLE_DECL_HPP
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/object.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
+#include "../../../versioning.hpp"
+#include "../../../object.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
 
 namespace clmdep_msgpack {
 

@@ -12,9 +12,9 @@
 
 #if __cplusplus >= 201703
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/check_container_size.hpp"
+#include "../../../versioning.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
+#include "../../../adaptor/check_container_size.hpp"
 
 #include <optional>
 

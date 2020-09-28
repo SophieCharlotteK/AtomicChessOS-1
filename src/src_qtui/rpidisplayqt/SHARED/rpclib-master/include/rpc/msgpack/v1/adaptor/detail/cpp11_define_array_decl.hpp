@@ -10,8 +10,8 @@
 #ifndef MSGPACK_V1_CPP11_DEFINE_ARRAY_DECL_HPP
 #define MSGPACK_V1_CPP11_DEFINE_ARRAY_DECL_HPP
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
+#include "../../../versioning.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
 
 namespace clmdep_msgpack {
 /// @cond

@@ -12,12 +12,12 @@
 
 #if defined(MSGPACK_USE_BOOST)
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/check_container_size.hpp"
-#include "rpc/msgpack/adaptor/boost/string_ref.hpp"
-#include "rpc/msgpack/adaptor/ext.hpp"
-#include "rpc/msgpack/adaptor/raw.hpp"
+#include "../../../versioning.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
+#include "../../../adaptor/check_container_size.hpp"
+#include "../../../adaptor/boost/string_ref.hpp"
+#include "../../../adaptor/ext.hpp"
+#include "../../../adaptor/raw.hpp"
 
 #include <string>
 #include <vector>

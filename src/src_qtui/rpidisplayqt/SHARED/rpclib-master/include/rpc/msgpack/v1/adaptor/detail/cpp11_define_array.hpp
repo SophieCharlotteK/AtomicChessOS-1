@@ -10,7 +10,7 @@
 #ifndef MSGPACK_V1_CPP11_DEFINE_ARRAY_HPP
 #define MSGPACK_V1_CPP11_DEFINE_ARRAY_HPP
 
-#include "rpc/msgpack/v1/adaptor/detail/cpp11_define_array_decl.hpp"
+#include "cpp11_define_array_decl.hpp"
 
 #include <tuple>
 

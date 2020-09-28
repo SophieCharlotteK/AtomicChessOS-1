@@ -11,10 +11,10 @@
 #ifndef MSGPACK_V1_TYPE_CPP11_ARRAY_HPP
 #define MSGPACK_V1_TYPE_CPP11_ARRAY_HPP
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/check_container_size.hpp"
-#include "rpc/msgpack/meta.hpp"
+#include "../../../versioning.hpp"
+#include "../../../adaptor/adaptor_base.hpp"
+#include "../../../adaptor/check_container_size.hpp"
+#include "../../../meta.hpp"
 
 #include <array>
 
