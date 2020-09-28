@@ -9,16 +9,16 @@
 #
 # /* See http://www.boost.org for most recent version. */
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
+# include "../config/config.hpp"
 #
 # if MSGPACK_PP_CONFIG_FLAGS() & MSGPACK_PP_CONFIG_DMC()
-#     include <rpc/msgpack/preprocessor/detail/dmc/auto_rec.hpp>
+#     include "dmc/auto_rec.hpp
 # else
 #
 # ifndef MSGPACK_PREPROCESSOR_DETAIL_AUTO_REC_HPP
 # define MSGPACK_PREPROCESSOR_DETAIL_AUTO_REC_HPP
 #
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
+# include "../control/iif.hpp"
 #
 # /* MSGPACK_PP_AUTO_REC */
 #

@@ -14,11 +14,11 @@
 # ifndef MSGPACK_PREPROCESSOR_DEBUG_ASSERT_HPP
 # define MSGPACK_PREPROCESSOR_DEBUG_ASSERT_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/expr_iif.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
-# include <rpc/msgpack/preprocessor/logical/not.hpp>
-# include <rpc/msgpack/preprocessor/tuple/eat.hpp>
+# include "../config/config.hpp"
+# include "../control/expr_iif.hpp"
+# include "../control/iif.hpp"
+# include "../logical/not.hpp"
+# include "../tuple/eat.hpp"
 #
 # /* MSGPACK_PP_ASSERT */
 #

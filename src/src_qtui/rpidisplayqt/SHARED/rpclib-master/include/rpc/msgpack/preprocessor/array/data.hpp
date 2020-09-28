@@ -12,8 +12,8 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_DATA_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_DATA_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "../config/config.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_ARRAY_DATA */
 #

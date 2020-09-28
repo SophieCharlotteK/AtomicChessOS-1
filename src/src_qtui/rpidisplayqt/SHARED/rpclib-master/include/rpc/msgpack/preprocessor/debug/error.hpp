@@ -12,8 +12,8 @@
 # ifndef MSGPACK_PREPROCESSOR_DEBUG_ERROR_HPP
 # define MSGPACK_PREPROCESSOR_DEBUG_ERROR_HPP
 #
-# include <rpc/msgpack/preprocessor/cat.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
+# include "../cat.hpp"
+# include "../config/config.hpp"
 #
 # /* MSGPACK_PP_ERROR */
 #

@@ -13,10 +13,10 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_TO_TUPLE_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_TO_TUPLE_HPP
 #
-# include <rpc/msgpack/preprocessor/array/data.hpp>
-# include <rpc/msgpack/preprocessor/array/size.hpp>
-# include <rpc/msgpack/preprocessor/control/if.hpp>
-#
+# include "../array/data.hpp"
+# include "../array/size.hpp"
+# include "../control/if.hpp"
+
 # /* MSGPACK_PP_ARRAY_TO_TUPLE */
 #
 #    define MSGPACK_PP_ARRAY_TO_TUPLE(array) \

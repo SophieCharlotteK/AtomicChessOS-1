@@ -12,8 +12,8 @@
 # ifndef MSGPACK_PREPROCESSOR_DETAIL_IS_UNARY_HPP
 # define MSGPACK_PREPROCESSOR_DETAIL_IS_UNARY_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/detail/check.hpp>
+# include "../config/config.hpp"
+# include "check.hpp"
 #
 # /* MSGPACK_PP_IS_UNARY */
 #

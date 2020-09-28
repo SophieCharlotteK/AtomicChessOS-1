@@ -12,10 +12,10 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_REVERSE_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_REVERSE_HPP
 #
-# include <rpc/msgpack/preprocessor/array/data.hpp>
-# include <rpc/msgpack/preprocessor/array/size.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/tuple/reverse.hpp>
+# include "../array/data.hpp"
+# include "../array/size.hpp"
+# include "../config/config.hpp"
+# include "../tuple/reverse.hpp"
 #
 # /* MSGPACK_PP_ARRAY_REVERSE */
 #

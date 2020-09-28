@@ -12,7 +12,7 @@
 # ifndef MSGPACK_PREPROCESSOR_CONTROL_EXPR_IIF_HPP
 # define MSGPACK_PREPROCESSOR_CONTROL_EXPR_IIF_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
+# include "../config/config.hpp"
 #
 # /* MSGPACK_PP_EXPR_IIF */
 #

@@ -12,11 +12,11 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_DETAIL_GET_DATA_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_DETAIL_GET_DATA_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/tuple/rem.hpp>
-# include <rpc/msgpack/preprocessor/control/if.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
-# include <rpc/msgpack/preprocessor/facilities/is_1.hpp>
+# include "../../config/config.hpp"
+# include "../../tuple/rem.hpp"
+# include "../../control/if.hpp"
+# include "../../control/iif.hpp"
+# include "../../facilities/is_1.hpp"
 #
 # /* MSGPACK_PP_ARRAY_DETAIL_GET_DATA */
 #

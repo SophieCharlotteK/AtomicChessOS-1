@@ -12,10 +12,10 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_ELEM_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_ELEM_HPP
 #
-# include <rpc/msgpack/preprocessor/array/data.hpp>
-# include <rpc/msgpack/preprocessor/array/size.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "../array/data.hpp"
+# include "../array/size.hpp"
+# include "../config/config.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_ARRAY_ELEM */
 #

@@ -14,9 +14,9 @@
 # ifndef MSGPACK_PREPROCESSOR_CONTROL_IF_HPP
 # define MSGPACK_PREPROCESSOR_CONTROL_IF_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
-# include <rpc/msgpack/preprocessor/logical/bool.hpp>
+# include "../config/config.hpp"
+# include "iif.hpp"
+# include "../logical/bool.hpp"
 #
 # /* MSGPACK_PP_IF */
 #

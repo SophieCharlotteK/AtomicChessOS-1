@@ -12,15 +12,15 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_INSERT_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_INSERT_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic/inc.hpp>
-# include <rpc/msgpack/preprocessor/array/elem.hpp>
-# include <rpc/msgpack/preprocessor/array/push_back.hpp>
-# include <rpc/msgpack/preprocessor/array/size.hpp>
-# include <rpc/msgpack/preprocessor/comparison/not_equal.hpp>
-# include <rpc/msgpack/preprocessor/control/deduce_d.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
-# include <rpc/msgpack/preprocessor/control/while.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "../arithmetic/inc.hpp"
+# include "../array/elem.hpp"
+# include "../array/push_back.hpp"
+# include "../array/size.hpp"
+# include "../comparison/not_equal.hpp"
+# include "../control/deduce_d.hpp"
+# include "../control/iif.hpp"
+# include "../control/while.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_ARRAY_INSERT */
 #

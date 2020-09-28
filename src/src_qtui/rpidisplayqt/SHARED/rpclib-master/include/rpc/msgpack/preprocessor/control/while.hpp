@@ -14,13 +14,13 @@
 # ifndef MSGPACK_PREPROCESSOR_CONTROL_WHILE_HPP
 # define MSGPACK_PREPROCESSOR_CONTROL_WHILE_HPP
 #
-# include <rpc/msgpack/preprocessor/cat.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/debug/error.hpp>
-# include <rpc/msgpack/preprocessor/detail/auto_rec.hpp>
-# include <rpc/msgpack/preprocessor/list/fold_left.hpp>
-# include <rpc/msgpack/preprocessor/list/fold_right.hpp>
-# include <rpc/msgpack/preprocessor/logical/bitand.hpp>
+# include "../cat.hpp"
+# include "../config/config.hpp"
+# include "../debug/error.hpp"
+# include "../detail/auto_rec.hpp"
+# include "../list/fold_left.hpp"
+# include "../list/fold_right.hpp"
+# include "../logical/bitand.hpp"
 #
 # /* MSGPACK_PP_WHILE */
 #
@@ -39,13 +39,13 @@
 # define MSGPACK_PP_WHILE_F(d, _) 0
 #
 # if MSGPACK_PP_CONFIG_FLAGS() & MSGPACK_PP_CONFIG_EDG()
-#    include <rpc/msgpack/preprocessor/control/detail/edg/while.hpp>
+#    include "detail/edg/while.hpp"
 # elif MSGPACK_PP_CONFIG_FLAGS() & MSGPACK_PP_CONFIG_MSVC()
-#    include <rpc/msgpack/preprocessor/control/detail/msvc/while.hpp>
+#    include "detail/msvc/while.hpp"
 # elif MSGPACK_PP_CONFIG_FLAGS() & MSGPACK_PP_CONFIG_DMC()
-#    include <rpc/msgpack/preprocessor/control/detail/dmc/while.hpp>
+#    include "detail/dmc/while.hpp"
 # else
-#    include <rpc/msgpack/preprocessor/control/detail/while.hpp>
+#    include "detail/while.hpp"
 # endif
 #
 # define MSGPACK_PP_WHILE_257(p, o, s) MSGPACK_PP_ERROR(0x0001)

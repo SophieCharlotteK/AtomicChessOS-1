@@ -12,15 +12,15 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_REPLACE_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_REPLACE_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic/inc.hpp>
-# include <rpc/msgpack/preprocessor/array/elem.hpp>
-# include <rpc/msgpack/preprocessor/array/push_back.hpp>
-# include <rpc/msgpack/preprocessor/comparison/not_equal.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/deduce_d.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
-# include <rpc/msgpack/preprocessor/control/while.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "../arithmetic/inc.hpp"
+# include "../array/elem.hpp"
+# include "../array/push_back.hpp"
+# include "../comparison/not_equal.hpp"
+# include "../config/config.hpp"
+# include "../control/deduce_d.hpp"
+# include "../control/iif.hpp"
+# include "../control/while.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_ARRAY_REPLACE */
 #
