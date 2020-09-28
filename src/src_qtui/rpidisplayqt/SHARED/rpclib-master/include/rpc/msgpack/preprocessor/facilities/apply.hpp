@@ -12,10 +12,10 @@
 # ifndef MSGPACK_PREPROCESSOR_FACILITIES_APPLY_HPP
 # define MSGPACK_PREPROCESSOR_FACILITIES_APPLY_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/expr_iif.hpp>
-# include <rpc/msgpack/preprocessor/detail/is_unary.hpp>
-# include <rpc/msgpack/preprocessor/tuple/rem.hpp>
+# include "../config/config.hpp"
+# include "../control/expr_iif.hpp"
+# include "../detail/is_unary.hpp"
+# include "../tuple/rem.hpp"
 #
 # /* MSGPACK_PP_APPLY */
 #
