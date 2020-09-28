@@ -14,7 +14,7 @@
 #include <QQuickView>
 #include <QQmlContext>
 
-#include "guicommunicator.h"
+#include "SHARED/guicommunicator.h"
 class MenuManager: public QObject
 {
     Q_OBJECT
