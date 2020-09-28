@@ -4,7 +4,7 @@
 #define THIS_SESSION_H_HTS95N7G
 
 #include <atomic>
-#include "rpc/config.h"
+#include "config.h"
 
 namespace rpc {
 

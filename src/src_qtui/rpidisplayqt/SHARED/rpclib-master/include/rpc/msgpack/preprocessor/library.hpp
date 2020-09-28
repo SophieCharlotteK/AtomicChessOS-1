@@ -13,25 +13,25 @@
 # ifndef MSGPACK_PREPROCESSOR_LIBRARY_HPP
 # define MSGPACK_PREPROCESSOR_LIBRARY_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic.hpp>
-# include <rpc/msgpack/preprocessor/array.hpp>
-# include <rpc/msgpack/preprocessor/cat.hpp>
-# include <rpc/msgpack/preprocessor/comparison.hpp>
-# include <rpc/msgpack/preprocessor/config/limits.hpp>
-# include <rpc/msgpack/preprocessor/control.hpp>
-# include <rpc/msgpack/preprocessor/debug.hpp>
-# include <rpc/msgpack/preprocessor/facilities.hpp>
-# include <rpc/msgpack/preprocessor/iteration.hpp>
-# include <rpc/msgpack/preprocessor/list.hpp>
-# include <rpc/msgpack/preprocessor/logical.hpp>
-# include <rpc/msgpack/preprocessor/punctuation.hpp>
-# include <rpc/msgpack/preprocessor/repetition.hpp>
-# include <rpc/msgpack/preprocessor/selection.hpp>
-# include <rpc/msgpack/preprocessor/seq.hpp>
-# include <rpc/msgpack/preprocessor/slot.hpp>
-# include <rpc/msgpack/preprocessor/stringize.hpp>
-# include <rpc/msgpack/preprocessor/tuple.hpp>
-# include <rpc/msgpack/preprocessor/variadic.hpp>
-# include <rpc/msgpack/preprocessor/wstringize.hpp>
+# include "arithmetic.hpp"
+# include "array.hpp"
+# include "cat.hpp"
+# include "comparison.hpp"
+# include "config/limits.hpp"
+# include "control.hpp"
+# include "debug.hpp"
+# include "facilities.hpp"
+# include "iteration.hpp"
+# include "list.hpp"
+# include "logical.hpp"
+# include "punctuation.hpp"
+# include "repetition.hpp"
+# include "selection.hpp"
+# include "seq.hpp"
+# include "slot.hpp"
+# include "stringize.hpp"
+# include "tuple.hpp"
+# include "variadic.hpp"
+# include "wstringize.hpp"
 #
 # endif

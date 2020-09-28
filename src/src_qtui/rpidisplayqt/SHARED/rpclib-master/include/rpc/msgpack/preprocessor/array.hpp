@@ -13,20 +13,20 @@
 # ifndef MSGPACK_PREPROCESSOR_ARRAY_HPP
 # define MSGPACK_PREPROCESSOR_ARRAY_HPP
 #
-# include <rpc/msgpack/preprocessor/array/data.hpp>
-# include <rpc/msgpack/preprocessor/array/elem.hpp>
-# include <rpc/msgpack/preprocessor/array/enum.hpp>
-# include <rpc/msgpack/preprocessor/array/insert.hpp>
-# include <rpc/msgpack/preprocessor/array/pop_back.hpp>
-# include <rpc/msgpack/preprocessor/array/pop_front.hpp>
-# include <rpc/msgpack/preprocessor/array/push_back.hpp>
-# include <rpc/msgpack/preprocessor/array/push_front.hpp>
-# include <rpc/msgpack/preprocessor/array/remove.hpp>
-# include <rpc/msgpack/preprocessor/array/replace.hpp>
-# include <rpc/msgpack/preprocessor/array/reverse.hpp>
-# include <rpc/msgpack/preprocessor/array/size.hpp>
-# include <rpc/msgpack/preprocessor/array/to_list.hpp>
-# include <rpc/msgpack/preprocessor/array/to_seq.hpp>
-# include <rpc/msgpack/preprocessor/array/to_tuple.hpp>
+# include "array/data.hpp"
+# include "array/elem.hpp"
+# include "array/enum.hpp"
+# include "array/insert.hpp"
+# include "array/pop_back.hpp"
+# include "array/pop_front.hpp"
+# include "array/push_back.hpp"
+# include "array/push_front.hpp"
+# include "array/remove.hpp"
+# include "array/replace.hpp"
+# include "array/reverse.hpp"
+# include "array/size.hpp"
+# include "array/to_list.hpp"
+# include "array/to_seq.hpp"
+# include "array/to_tuple.hpp"
 #
 # endif

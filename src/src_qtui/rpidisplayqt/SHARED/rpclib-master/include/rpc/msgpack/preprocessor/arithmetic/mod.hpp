@@ -14,9 +14,9 @@
 # ifndef MSGPACK_PREPROCESSOR_ARITHMETIC_MOD_HPP
 # define MSGPACK_PREPROCESSOR_ARITHMETIC_MOD_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic/detail/div_base.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "detail/div_base.hpp"
+# include "../config/config.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_MOD */
 #

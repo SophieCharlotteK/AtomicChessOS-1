@@ -3,11 +3,11 @@
 #ifndef SERVER_H_S0HB5KXY
 #define SERVER_H_S0HB5KXY
 
-#include "rpc/config.h"
-#include "rpc/msgpack.hpp"
-#include "rpc/dispatcher.h"
+#include "config.h"
+#include "msgpack.hpp"
+#include "dispatcher.h"
 
-#include "rpc/detail/pimpl.h"
+#include "detail/pimpl.h"
 
 namespace rpc {
 

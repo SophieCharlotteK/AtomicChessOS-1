@@ -5,10 +5,10 @@
 
 #include <memory>
 
-#include "rpc/config.h"
-#include "rpc/msgpack.hpp"
+#include "config.h"
+#include "msgpack.hpp"
 
-#include "rpc/detail/util.h"
+#include "detail/util.h"
 
 namespace rpc {
 

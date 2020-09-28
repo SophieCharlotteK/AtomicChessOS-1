@@ -14,10 +14,10 @@
 # ifndef MSGPACK_PREPROCESSOR_ARITHMETIC_SUB_HPP
 # define MSGPACK_PREPROCESSOR_ARITHMETIC_SUB_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic/dec.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/while.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "dec.hpp"
+# include "../config/config.hpp"
+# include "../control/while.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_SUB */
 #

@@ -8,16 +8,16 @@
 #include <memory>
 #include <unordered_map>
 
-#include "rpc/config.h"
-#include "rpc/msgpack.hpp"
+#include "config.h"
+#include "msgpack.hpp"
 
-#include "rpc/detail/call.h"
-#include "rpc/detail/func_tools.h"
-#include "rpc/detail/func_traits.h"
-#include "rpc/detail/log.h"
-#include "rpc/detail/not.h"
-#include "rpc/detail/response.h"
-#include "rpc/detail/make_unique.h"
+#include "detail/call.h"
+#include "detail/func_tools.h"
+#include "detail/func_traits.h"
+#include "detail/log.h"
+#include "detail/not.h"
+#include "detail/response.h"
+#include "detail/make_unique.h"
 
 namespace rpc {
 
