@@ -4,9 +4,9 @@
 #define CALL_H_ZXFACADH
 
 #include <tuple>
-#include "rpc/detail/func_tools.h"
-#include "rpc/detail/invoke.h"
-#include "rpc/detail/is_specialization_of.h"
+#include "func_tools.h"
+#include "invoke.h"
+#include "is_specialization_of.h"
 
 namespace rpc {
 namespace detail {

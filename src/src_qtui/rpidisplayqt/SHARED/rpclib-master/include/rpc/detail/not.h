@@ -3,7 +3,7 @@
 #ifndef NOT_H_0MEGQWII
 #define NOT_H_0MEGQWII
 
-#include "rpc/detail/bool.h"
+#include "bool.h"
 
 namespace rpc {
 namespace detail {

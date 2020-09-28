@@ -3,9 +3,9 @@
 #ifndef FUNC_TOOLS_H_9FNRD4G2
 #define FUNC_TOOLS_H_9FNRD4G2
 
-#include "rpc/detail/invoke.h"
-#include "rpc/detail/all.h"
-#include "rpc/detail/any.h"
+#include "invoke.h"
+#include "all.h"
+#include "any.h"
 
 namespace rpc {
 namespace detail {

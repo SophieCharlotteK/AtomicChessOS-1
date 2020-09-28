@@ -7,12 +7,12 @@
 #include <memory>
 #include <vector>
 
-#include "rpc/config.h"
-#include "rpc/msgpack.hpp"
+#include "../config.h"
+#include "../msgpack.hpp"
 
-#include "rpc/dispatcher.h"
-#include "rpc/detail/async_writer.h"
-#include "rpc/detail/log.h"
+#include "../dispatcher.h"
+#include "async_writer.h"
+#include "log.h"
 
 namespace rpc {
 

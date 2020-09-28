@@ -3,7 +3,7 @@
 #ifndef FUNC_TRAITS_H_HWIWA6G0
 #define FUNC_TRAITS_H_HWIWA6G0
 
-#include "rpc/detail/bool.h"
+#include "bool.h"
 
 namespace rpc {
 namespace detail {

@@ -3,7 +3,7 @@
 #ifndef IF_H_1OW9DR7G
 #define IF_H_1OW9DR7G
 
-#include "rpc/detail/invoke.h"
+#include "invoke.h"
 
 namespace rpc {
 namespace detail {

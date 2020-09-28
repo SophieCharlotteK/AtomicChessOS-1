@@ -3,9 +3,9 @@
 #ifndef ANY_H_4G3QUOAN
 #define ANY_H_4G3QUOAN
 
-#include "rpc/detail/invoke.h"
-#include "rpc/detail/if.h"
-#include "rpc/detail/bool.h"
+#include "invoke.h"
+#include "if.h"
+#include "bool.h"
 
 namespace rpc {
 namespace detail {

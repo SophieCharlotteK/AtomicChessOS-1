@@ -3,7 +3,7 @@
 #ifndef IS_SPECIALIZATION_OF_H_OPZTARVG
 #define IS_SPECIALIZATION_OF_H_OPZTARVG
 
-#include "rpc/detail/bool.h"
+#include "bool.h"
 
 namespace rpc {
 namespace detail {

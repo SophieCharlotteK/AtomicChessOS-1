@@ -3,9 +3,9 @@
 #ifndef RESPONSE_H_MVRZEKPX
 #define RESPONSE_H_MVRZEKPX
 
-#include "rpc/detail/log.h"
-#include "rpc/detail/make_unique.h"
-#include "rpc/msgpack.hpp"
+#include "log.h"
+#include "make_unique.h"
+#include "../msgpack.hpp"
 
 namespace rpc {
 namespace detail {

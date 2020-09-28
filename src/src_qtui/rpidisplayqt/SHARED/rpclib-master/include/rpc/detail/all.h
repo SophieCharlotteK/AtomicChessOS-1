@@ -3,9 +3,9 @@
 #ifndef ALL_H_H8MAAYCG
 #define ALL_H_H8MAAYCG
 
-#include "rpc/detail/invoke.h"
-#include "rpc/detail/if.h"
-#include "rpc/detail/bool.h"
+#include "invoke.h"
+#include "if.h"
+#include "bool.h"
 
 namespace rpc {
 namespace detail {

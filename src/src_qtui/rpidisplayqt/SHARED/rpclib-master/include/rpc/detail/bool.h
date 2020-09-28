@@ -3,7 +3,7 @@
 #ifndef BOOL_H_QLG6S5XZ
 #define BOOL_H_QLG6S5XZ
 
-#include "rpc/detail/constant.h"
+#include "constant.h"
 
 namespace rpc {
 namespace detail {
