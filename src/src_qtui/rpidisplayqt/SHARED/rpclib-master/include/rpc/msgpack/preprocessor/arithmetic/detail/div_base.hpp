@@ -14,13 +14,13 @@
 # ifndef MSGPACK_PREPROCESSOR_ARITHMETIC_DETAIL_DIV_BASE_HPP
 # define MSGPACK_PREPROCESSOR_ARITHMETIC_DETAIL_DIV_BASE_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic/inc.hpp>
-# include <rpc/msgpack/preprocessor/arithmetic/sub.hpp>
-# include <rpc/msgpack/preprocessor/comparison/less_equal.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/while.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
-# include <rpc/msgpack/preprocessor/tuple/rem.hpp>
+# include "../inc.hpp"
+# include "../sub.hpp"
+# include "../../comparison/less_equal.hpp"
+# include "../../config/config.hpp"
+# include "../../control/while.hpp"
+# include "../../tuple/elem.hpp"
+# include "../../tuple/rem.hpp"
 #
 # /* MSGPACK_PP_DIV_BASE */
 #

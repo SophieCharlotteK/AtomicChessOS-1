@@ -16,9 +16,9 @@
 
 #if BOOST_VERSION >= 106100
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/v2/create_object_visitor.hpp"
-#include "rpc/msgpack/v2/x3_parse.hpp"
+#include "../versioning.hpp"
+#include "../v2/create_object_visitor.hpp"
+#include "../v2/x3_parse.hpp"
 
 namespace clmdep_msgpack {
 

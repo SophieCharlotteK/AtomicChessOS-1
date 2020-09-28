@@ -10,7 +10,7 @@
 #ifndef MSGPACK_TYPE_BOOST_MSGPACK_VARIANT_DECL_HPP
 #define MSGPACK_TYPE_BOOST_MSGPACK_VARIANT_DECL_HPP
 
-#include "rpc/msgpack/v1/adaptor/boost/msgpack_variant_decl.hpp"
-#include "rpc/msgpack/v2/adaptor/boost/msgpack_variant_decl.hpp"
+#include "../../v1/adaptor/boost/msgpack_variant_decl.hpp"
+#include "../../v2/adaptor/boost/msgpack_variant_decl.hpp"
 
 #endif // MSGPACK_TYPE_BOOST_MSGPACK_VARIANT_DECL_HPP

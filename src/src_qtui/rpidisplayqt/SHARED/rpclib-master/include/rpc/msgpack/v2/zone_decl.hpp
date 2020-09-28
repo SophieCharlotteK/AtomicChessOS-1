@@ -13,7 +13,7 @@
 #include "../cpp_config.hpp"
 
 #if defined(MSGPACK_USE_CPP03)
-#include "rpc/msgpack/v2/detail/cpp03_zone_decl.hpp"
+#include "../v2/detail/cpp03_zone_decl.hpp"
 #else  // MSGPACK_USE_CPP03
 #include "detail/cpp11_zone_decl.hpp"
 #endif // MSGPACK_USE_CPP03
