@@ -44,7 +44,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;cpp-httplib-master;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;cpp-httplib-master;czmq-master\issues;mqtt_cpp-master\include;rpclib-master\include;SHARED\rpclib-master\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -65,12 +65,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cpp-httplib-master\httplib.h" />
-    <ClInclude Include="czmq-master\include\czmq.h" />
     <ClInclude Include="LibPiSPI-master\LibPiSPI\PiSPI.h" />
     <ClInclude Include="loguru-master\loguru.hpp" />
-    <ClInclude Include="magic_enum-master\include\magic_enum.hpp" />
     <ClInclude Include="SHARED\guicommunicator.h" />
+    <ClInclude Include="SHARED\magic_enum-master\include\magic_enum.hpp" />
     <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h" />
+    <ClInclude Include="SHARED\rpclib-master\include\rpc\client.h" />
+    <ClInclude Include="SHARED\rpclib-master\include\rpc\server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -86,5 +87,8 @@
     <None Include="release.mak" />
     <None Include="controller-Debug.vgdbsettings" />
     <None Include="controller-Release.vgdbsettings" />
+    <None Include="SHARED\rpclib-master\include\rpc\client.inl" />
+    <None Include="SHARED\rpclib-master\include\rpc\dispatcher.inl" />
+    <None Include="SHARED\rpclib-master\include\rpc\this_handler.inl" />
   </ItemGroup>
 </Project>

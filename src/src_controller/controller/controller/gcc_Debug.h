@@ -1497,6 +1497,10 @@
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
 //cpp-httplib-master
+//czmq-master\issues
+//mqtt_cpp-master\include
+//rpclib-master\include
+//SHARED\rpclib-master\include
 // --- Include directories end --- //
 
 

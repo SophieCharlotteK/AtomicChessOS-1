@@ -1,13 +1,10 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
-#ifdef USES_QT
 #include "magic_enum-master/include/magic_enum.hpp"
-#include <czmq.h>
-#else
-#include "../magic_enum-master/include/magic_enum.hpp"
-#include "../czmq-master/include/czmq.h"
-#endif
+#include "rpclib-master/include/rpc/client.h"
+#include "rpclib-master/include/rpc/server.h"
+
 
 #include "PROTOCOL_MSG.pb.h"
 
@@ -16,6 +13,11 @@
 #include <mutex>
 #include <iostream>
 #include <thread>
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 
 
@@ -30,6 +32,20 @@
 #else
     #include "../loguru-master/loguru.hpp"
 #endif
+
+
+#ifdef USES_QT
+#define RPC_PORT 8000
+#define RPC_URL "127.0.0.1"
+#define RPC_FKT_NAME "rpc_callback"
+#else
+#define RPC_PORT 8000
+#define RPC_URL "127.0.0.1",
+#define RPC_FKT_NAME "rpc_callback"
+#endif
+
+
+
 
 class guicommunicator
 {
@@ -102,7 +118,7 @@ enum class GUI_VALUE_TYPE{
     #endif
 
     void debug_output(std::string _msg);
-    void debug_event(GUI_EVENT _event);
+    void debug_event(GUI_EVENT _event, bool _rec);
 
     void start_recieve_thread();
     void stop_recieve_thread();
@@ -110,8 +126,9 @@ enum class GUI_VALUE_TYPE{
 
     GUI_EVENT get_gui_update_event();
 private:
-     zsock_t* zmq_push = nullptr;
-     zsock_t* zmq_pull = nullptr;
+	  //zmq::context_t zmqctx;
+	// zsock_t* zmq_pull = nullptr;
+	
 
 #ifdef USES_QT
       QThread* update_thread = nullptr;
@@ -123,9 +140,11 @@ private:
 #endif
 
     std::queue<GUI_EVENT> gui_update_event_queue;
-
-
-     std::string czmq_getmessage();//THREADSAFE
+    
+	std::string rpc_callback(std::string _msg);
+	
+	bool thread_running = false;
+	rpc::server* ptrsrv = nullptr;
 
      GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
 
