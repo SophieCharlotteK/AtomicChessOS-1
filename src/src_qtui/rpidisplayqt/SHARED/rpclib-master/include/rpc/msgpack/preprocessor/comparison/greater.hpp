@@ -14,8 +14,8 @@
 # ifndef MSGPACK_PREPROCESSOR_COMPARISON_GREATER_HPP
 # define MSGPACK_PREPROCESSOR_COMPARISON_GREATER_HPP
 #
-# include <rpc/msgpack/preprocessor/comparison/less.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
+# include "less.hpp"
+# include "../config/config.hpp"
 #
 # /* MSGPACK_PP_GREATER */
 #

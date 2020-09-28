@@ -14,9 +14,9 @@
 # ifndef MSGPACK_PREPROCESSOR_COMPARISON_NOT_EQUAL_HPP
 # define MSGPACK_PREPROCESSOR_COMPARISON_NOT_EQUAL_HPP
 #
-# include <rpc/msgpack/preprocessor/cat.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
+# include "../cat.hpp"
+# include "../config/config.hpp"
+# include "../control/iif.hpp"
 #
 # /* MSGPACK_PP_NOT_EQUAL */
 #

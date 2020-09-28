@@ -14,12 +14,12 @@
 # ifndef MSGPACK_PREPROCESSOR_COMPARISON_LESS_HPP
 # define MSGPACK_PREPROCESSOR_COMPARISON_LESS_HPP
 #
-# include <rpc/msgpack/preprocessor/comparison/less_equal.hpp>
-# include <rpc/msgpack/preprocessor/comparison/not_equal.hpp>
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/control/iif.hpp>
-# include <rpc/msgpack/preprocessor/logical/bitand.hpp>
-# include <rpc/msgpack/preprocessor/tuple/eat.hpp>
+# include "less_equal.hpp"
+# include "not_equal.hpp"
+# include "../config/config.hpp"
+# include "../control/iif.hpp"
+# include "../logical/bitand.hpp"
+# include "../tuple/eat.hpp"
 #
 # /* MSGPACK_PP_LESS */
 #
