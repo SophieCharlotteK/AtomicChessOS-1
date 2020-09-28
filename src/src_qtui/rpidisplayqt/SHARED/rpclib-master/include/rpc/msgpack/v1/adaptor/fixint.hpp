@@ -10,7 +10,7 @@
 #ifndef MSGPACK_V1_TYPE_FIXINT_HPP
 #define MSGPACK_V1_TYPE_FIXINT_HPP
 
-#include "rpc/msgpack/v1/adaptor/fixint_decl.hpp"
+#include "fixint_decl.hpp"
 
 namespace clmdep_msgpack {
 

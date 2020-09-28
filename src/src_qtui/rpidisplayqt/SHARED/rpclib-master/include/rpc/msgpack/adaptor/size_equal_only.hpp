@@ -10,8 +10,8 @@
 #ifndef MSGPACK_TYPE_SIZE_EQUAL_ONLY_HPP
 #define MSGPACK_TYPE_SIZE_EQUAL_ONLY_HPP
 
-#include "rpc/msgpack/adaptor/size_equal_only_decl.hpp"
+#include "size_equal_only_decl.hpp"
 
-#include "rpc/msgpack/v1/adaptor/size_equal_only.hpp"
+#include "../v1/adaptor/size_equal_only.hpp"
 
 #endif // MSGPACK_TYPE_SIZE_EQUAL_ONLYL_HPP

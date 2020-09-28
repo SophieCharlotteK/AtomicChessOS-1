@@ -10,8 +10,8 @@
 #ifndef MSGPACK_TYPE_FIXINT_HPP
 #define MSGPACK_TYPE_FIXINT_HPP
 
-#include "rpc/msgpack/adaptor/fixint_decl.hpp"
+#include "fixint_decl.hpp"
 
-#include "rpc/msgpack/v1/adaptor/fixint.hpp"
+#include "../v1/adaptor/fixint.hpp"
 
 #endif // MSGPACK_TYPE_FIXINT_HPP

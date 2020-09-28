@@ -10,10 +10,10 @@
 #ifndef MSGPACK_V1_TYPE_CHAR_PTR_HPP
 #define MSGPACK_V1_TYPE_CHAR_PTR_HPP
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/object_fwd.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/check_container_size.hpp"
+#include "../../versioning.hpp"
+#include "../../object_fwd.hpp"
+#include "../../adaptor/adaptor_base.hpp"
+#include "../../adaptor/check_container_size.hpp"
 
 #include <cstring>
 

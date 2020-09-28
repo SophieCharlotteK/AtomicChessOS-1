@@ -10,8 +10,8 @@
 #ifndef MSGPACK_V1_TYPE_MAP_HPP
 #define MSGPACK_V1_TYPE_MAP_HPP
 
-#include "rpc/msgpack/v1/adaptor/map_decl.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
+#include "map_decl.hpp"
+#include "../../adaptor/adaptor_base.hpp"
 
 #include <map>
 #include <vector>

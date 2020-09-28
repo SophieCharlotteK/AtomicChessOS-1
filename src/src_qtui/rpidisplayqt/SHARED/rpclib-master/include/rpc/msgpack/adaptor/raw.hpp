@@ -10,8 +10,8 @@
 #ifndef MSGPACK_TYPE_RAW_HPP
 #define MSGPACK_TYPE_RAW_HPP
 
-#include "rpc/msgpack/adaptor/raw_decl.hpp"
+#include "raw_decl.hpp"
 
-#include "rpc/msgpack/v1/adaptor/raw.hpp"
+#include "../v1/adaptor/raw.hpp"
 
 #endif // MSGPACK_TYPE_RAW_HPP

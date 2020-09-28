@@ -10,7 +10,7 @@
 #ifndef MSGPACK_CHECK_CONTAINER_SIZE_DECL_HPP
 #define MSGPACK_CHECK_CONTAINER_SIZE_DECL_HPP
 
-#include "rpc/msgpack/v1/adaptor/check_container_size_decl.hpp"
-#include "rpc/msgpack/v2/adaptor/check_container_size_decl.hpp"
+#include "../v1/adaptor/check_container_size_decl.hpp"
+#include "../v2/adaptor/check_container_size_decl.hpp"
 
 #endif // MSGPACK_CHECK_CONTAINER_SIZE_DECL_HPP

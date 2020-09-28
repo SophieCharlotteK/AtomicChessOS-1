@@ -10,9 +10,9 @@
 #ifndef MSGPACK_TYPE_MAP_HPP
 #define MSGPACK_TYPE_MAP_HPP
 
-#include "rpc/msgpack/adaptor/map_decl.hpp"
+#include "map_decl.hpp"
 
-#include "rpc/msgpack/v1/adaptor/map.hpp"
+#include "../v1/adaptor/map.hpp"
 
 
 #endif // MSGPACK_TYPE_MAP_HPP

@@ -10,9 +10,9 @@
 #ifndef MSGPACK_V1_TYPE_SIZE_EQUAL_ONLY_DECL_HPP
 #define MSGPACK_V1_TYPE_SIZE_EQUAL_ONLY_DECL_HPP
 
-#include "rpc/msgpack/versioning.hpp"
-#include "rpc/msgpack/adaptor/adaptor_base.hpp"
-#include "rpc/msgpack/adaptor/msgpack_tuple.hpp"
+#include "../../versioning.hpp"
+#include "../../adaptor/adaptor_base.hpp"
+#include "../../adaptor/msgpack_tuple.hpp"
 
 namespace clmdep_msgpack {
 

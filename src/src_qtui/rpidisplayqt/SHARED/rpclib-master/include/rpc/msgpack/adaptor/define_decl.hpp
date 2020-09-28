@@ -18,12 +18,12 @@
 #define MSGPACK_PP_VARIADICS
 #endif
 
-#include <rpc/msgpack/preprocessor.hpp>
+#include "../preprocessor.hpp"
 
-#include "rpc/msgpack/versioning.hpp"
+#include "../versioning.hpp"
 
 // for MSGPACK_ADD_ENUM
-#include "rpc/msgpack/adaptor/int.hpp"
+#include "int.hpp"
 
 #define MSGPACK_DEFINE_ARRAY(...) \
     template <typename Packer> \
