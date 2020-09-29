@@ -2,8 +2,9 @@
 #define GUICOMMUNICATOR_H
 
 #include "magic_enum-master/include/magic_enum.hpp"
-#include "rpclib-master/include/rpc/client.h"
-#include "rpclib-master/include/rpc/server.h"
+//#include "rpclib-master/include/rpc/client.h"
+//nclude "rpclib-master/include/rpc/server.h"
+
 
 
 #include "PROTOCOL_MSG.pb.h"
