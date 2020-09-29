@@ -1,7 +1,11 @@
 QT += quick virtualkeyboard
 
-CONFIG += c++11
 
+DEFINES += USES_QT
+
+
+CONFIG += c++17
+QMAKE_CXXFLAGS += -std=c++17
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Refer to the documentation for the
@@ -14,7 +18,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        SHARED/PROTOCOL_MSG.pb.cc \
+        SHARED/guicommunicator.cpp \
+        main.cpp \
+        menumanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,3 +35,13 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    SHARED/PROTOCOL_MSG.pb.h \
+    SHARED/guicommunicator.h \
+    SHARED/magic_enum-master/include/magic_enum.hpp \
+    menumanager.h
+
+LIBS += -pthread -lprotobuf -lpthread
+DISTFILES += SHARED/PROTOCOL_MSG.proto \
+    SHARED/compile_protobuffer.sh

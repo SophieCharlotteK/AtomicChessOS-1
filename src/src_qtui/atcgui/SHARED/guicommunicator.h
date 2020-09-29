@@ -22,7 +22,6 @@
 
 
 
-#define RCP_LOOPBACK
 
 //SOME DEBUGGING AND LOGGIN
 //ON QT USE THE QT STUFF
@@ -32,7 +31,7 @@
     #include <QThread>
     #include <QMutex>
 #else
-    #include "../loguru-master/loguru.hpp"
+
 #endif
 
 /*
