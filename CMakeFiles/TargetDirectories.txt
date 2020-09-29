@@ -1,0 +1,7 @@
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/install/strip.dir
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/edit_cache.dir
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/rpc.dir
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/install.dir
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/rebuild_cache.dir
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/list_install_components.dir
+/home/marcel/Desktop/atc_rpclib/CMakeFiles/install/local.dir
