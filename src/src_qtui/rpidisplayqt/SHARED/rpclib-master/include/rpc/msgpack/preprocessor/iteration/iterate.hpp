@@ -12,13 +12,13 @@
 # ifndef MSGPACK_PREPROCESSOR_ITERATION_ITERATE_HPP
 # define MSGPACK_PREPROCESSOR_ITERATION_ITERATE_HPP
 #
-# include <rpc/msgpack/preprocessor/arithmetic/dec.hpp>
-# include <rpc/msgpack/preprocessor/arithmetic/inc.hpp>
-# include <rpc/msgpack/preprocessor/array/elem.hpp>
-# include <rpc/msgpack/preprocessor/array/size.hpp>
-# include <rpc/msgpack/preprocessor/cat.hpp>
-# include <rpc/msgpack/preprocessor/slot/slot.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "../arithmetic/dec.hpp"
+# include "../arithmetic/inc.hpp"
+# include "../array/elem.hpp"
+# include "../array/size.hpp"
+# include "../cat.hpp"
+# include "../slot/slot.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_ITERATION_DEPTH */
 #

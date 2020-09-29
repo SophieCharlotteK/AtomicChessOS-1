@@ -12,9 +12,9 @@
 # ifndef MSGPACK_PREPROCESSOR_ITERATION_LOCAL_HPP
 # define MSGPACK_PREPROCESSOR_ITERATION_LOCAL_HPP
 #
-# include <rpc/msgpack/preprocessor/config/config.hpp>
-# include <rpc/msgpack/preprocessor/slot/slot.hpp>
-# include <rpc/msgpack/preprocessor/tuple/elem.hpp>
+# include "../config/config.hpp"
+# include "../slot/slot.hpp"
+# include "../tuple/elem.hpp"
 #
 # /* MSGPACK_PP_LOCAL_ITERATE */
 #
