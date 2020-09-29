@@ -246,10 +246,10 @@ install(FILES
 #
 if(NOT MSVC)  # Don't install pkg-config files when building with MSVC
   # Variables for pkg-config files
-  set(prefix "${CMAKE_INSTALL_PREFIX}")
+  set(prefix "${@D}")
   set(exec_prefix "")
-  set(libdir "${CMAKE_INSTALL_PREFIX}/lib")
-  set(includedir "${CMAKE_INSTALL_PREFIX}/include")
+  set(libdir "${@D}/lib")
+  set(includedir "${@D}/include")
   set(rpclib_version ${PROJECT_VERSION})
   get_target_property(rpclib_cflags ${PROJECT_NAME} COMPILE_OPTIONS)
   string(REPLACE ";" " " rpclib_cflags "${rpclib_cflags}") # Convert list to string
