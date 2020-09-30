@@ -45,10 +45,10 @@ void guicommunicator::debug_event(GUI_EVENT _event, bool _rec) {
 	debug_output("RAW: " + std::to_string((int)_event.event) + " " + std::to_string((int)_event.type) + " " + _event.value);
 	//https://stackoverflow.com/questions/47525238/why-is-there-no-implicit-conversion-from-stdstring-view-to-stdstring
 	std::string e = "";
-    //e += magic_enum::enum_name(_event.event);
+    e += magic_enum::enum_name(_event.event);
 	debug_output("EVENT: " + e);
 	e = "";
-    //e += magic_enum::enum_name(_event.type);
+    e += magic_enum::enum_name(_event.type);
 	debug_output("TYPE: " + e);
 	e = "";
 	debug_output("VALUE: " + _event.value);
@@ -75,7 +75,6 @@ guicommunicator::GUI_EVENT guicommunicator::parseEvent(std::string _event) {
 
 	//CHECK IF PARSING FAILED
 	if(!message.IsInitialized()) {
-
 		debug_output("message not initilized");
 		event.is_event_valid = false;
 		return event;
@@ -86,20 +85,20 @@ guicommunicator::GUI_EVENT guicommunicator::parseEvent(std::string _event) {
 
 
 	//PARSE EVENT BACK
-    //auto e = magic_enum::enum_cast<GUI_ELEMENT>(message.event());
-    //if (e.has_value()) {
-    //	event.event = e.value();
-    //}
+    auto e = magic_enum::enum_cast<GUI_ELEMENT>(message.event());
+    if (e.has_value()) {
+        event.event = e.value();
+    }
 
 	//PARSE TYPE BACK
-    //auto t = magic_enum::enum_cast<GUI_VALUE_TYPE>(message.type());
-    //if (t.has_value()) {
-    //	event.type = t.value();
-    //}
+    auto t = magic_enum::enum_cast<GUI_VALUE_TYPE>(message.type());
+    if (t.has_value()) {
+        event.type = t.value();
+    }
 	//PARSE OTHER BACK
-    //event.value = message.value();
+    event.value = message.value();
 
-    //event.ack = message.ack();
+    event.ack = message.ack();
 
 	event.ispageswitchevent = message.ispageswitchevent();
 

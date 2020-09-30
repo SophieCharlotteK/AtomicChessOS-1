@@ -1,10 +1,9 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
-//#include "magic_enum-master/include/magic_enum.hpp"
+#include "magic_enum-master/include/magic_enum.hpp"
 //#include "SHARED/_MODIFIED_rpclib-master/include/rpc/client.h"
 //#include "SHARED/_MODIFIED_rpclib-master/include/rpc/server.h"
-//nclude "r /include/rpc/server.h"
 
 
 
@@ -22,7 +21,7 @@
 
 #include "SHARED/cpp-httplib-master/httplib.h"
 
-//#include "rpclib-master/include/rpc/server.h"
+
 
 
 //SOME DEBUGGING AND LOGGIN
