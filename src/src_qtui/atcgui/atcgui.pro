@@ -23,7 +23,10 @@ SOURCES += \
         main.cpp \
         menumanager.cpp
 
-RESOURCES += qml.qrc
+INCLUDEPATH += $$PWD/SHARED/rpclib-master/include
+INCLUDEPATH += $$PWD/SHARED/rpclib-master/dependencies/include
+RESOURCES += qml.qrc \
+    qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -38,7 +41,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     SHARED/PROTOCOL_MSG.pb.h \
+    SHARED/cpp-httplib-master/httplib.h \
     SHARED/guicommunicator.h \
+    SHARED/json-master/include/tao/json.hpp \
     SHARED/magic_enum-master/include/magic_enum.hpp \
     menumanager.h
 

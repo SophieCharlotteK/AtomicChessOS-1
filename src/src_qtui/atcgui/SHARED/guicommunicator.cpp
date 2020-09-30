@@ -3,10 +3,10 @@
 guicommunicator::guicommunicator()
 {
 	
-//	rpc::server srv(RPC_PORT);
-//	srv.bind(RPC_FKT_NAME, &guicommunicator::rpc_callback);
-//	ptrsrv = &srv;
-//	srv.async_run();
+//    rpc::server srv(RPC_PORT);
+//    srv.bind(RPC_FKT_NAME, &guicommunicator::rpc_callback);
+//    ptrsrv = &srv;
+//    srv.async_run();
 	
 	debug_output("guicommunicator started");
 }
@@ -200,9 +200,13 @@ std::string guicommunicator::rpc_callback(std::string _msg)
 
 
 void guicommunicator::recieve_thread_function(guicommunicator* _this) {
-    
-	
-	
+    using namespace httplib;
+
+    _this->svr.Get("/hi", [](const Request& req, Response& res) {
+       res.set_content("Hello World!", "text/plain");
+     });
+
+    _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
 	while (_this->thread_running) {
 	
 	}

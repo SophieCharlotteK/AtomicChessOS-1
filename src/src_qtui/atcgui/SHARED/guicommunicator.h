@@ -20,7 +20,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "SHARED/cpp-httplib-master/httplib.h"
 
+//#include "rpclib-master/include/rpc/server.h"
 
 
 //SOME DEBUGGING AND LOGGIN
@@ -34,7 +36,22 @@
 
 #endif
 
+#define USE_WEBSERVER_AS_IPC
+
+#ifdef USE_WEBSERVER_AS_IPC
+#define WEBSERVER_BIND_ADDR "0.0.0.0" //NOTE CHANGE TO LOCALHOST
+#ifdef USES_QT
+#define WEBSERVER_STAUTS_PORT 8000
+#define EVENT_CLIENT_PORT 8001
+#else
+#define WEBSERVER_STAUTS_PORT 8001
+#define EVENT_CLIENT_PORT 8000
+#endif
+
+#endif
 /*
+#define RPC_LOOPBACK
+
 #ifdef USES_QT
 #define RPC_PORT 8000
 #define RPC_URL "127.0.0.1"
@@ -146,6 +163,8 @@ private:
 	
 	bool thread_running = false;
     //rpc::server* ptrsrv = nullptr;
+    httplib::Server svr;
+
 
      GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
 
