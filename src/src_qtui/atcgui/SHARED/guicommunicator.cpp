@@ -276,3 +276,9 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 		guicommunicator::createEvent(_event, _type, _value.toStdString());
 	}
 #endif
+
+
+void guicommunicator::show_error_message_on_gui(std::string _err)
+{
+	createEvent(guicommunicator::GUI_ELEMENT::ERROR, guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE, _err);
+}
