@@ -92,10 +92,10 @@ void MenuManager::updateProgress()
     }
 
     if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL){
-        set_label_text("is_container","is_hwid_text",QString::fromStdString(ev.value));
+        set_label_text("is_container","is_hwid_label",QString::fromStdString(ev.value));
     }
     if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
-        set_label_text("is_container","is_sessionid_text",QString::fromStdString(ev.value));
+        set_label_text("is_container","is_sessionid_label",QString::fromStdString(ev.value));
     }
 
 }
@@ -121,11 +121,14 @@ void MenuManager::lb_settings_btn(){
 
 void MenuManager::ls_login_btn(){
     qInfo() <<"ls_login_btn";
-    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
-    //guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    //guiconnection.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 
 }
 
+void MenuManager::is_open_is_screen_btn(){
+    MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN);
+}
 
 void MenuManager::sm_open_settings_btn(){
     qInfo() <<"sm_open_settings_btn";
@@ -150,10 +153,12 @@ void MenuManager::sm_scan_board_btn(){
 }
 void MenuManager::mm_start_ai_btn(){
     qInfo() <<"start_ai";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
 void MenuManager::mm_player_list_btn(){
     qInfo() << "goto_search_player_view";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MAINMENU_PLAYER_LIST_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
 
@@ -161,9 +166,9 @@ void MenuManager::mm_search_for_players_toggled(bool _state){
     qInfo() << "search_for_players_toggled";
     if(_state){
         qInfo() <<"1";
-        guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MATCHMAKING_BTN, guicommunicator::GUI_VALUE_TYPE::ENABLED);
+        guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN, guicommunicator::GUI_VALUE_TYPE::ENABLED);
     }else{
         qInfo() << "0";
-        guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MATCHMAKING_BTN, guicommunicator::GUI_VALUE_TYPE::DISBALED);
+        guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN, guicommunicator::GUI_VALUE_TYPE::DISBALED);
     }
 }

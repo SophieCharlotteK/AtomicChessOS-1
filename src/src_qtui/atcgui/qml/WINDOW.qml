@@ -17,7 +17,7 @@ Rectangle {
 
     MenuManager{
         id:main_menu
-    //    objectName: "mainmenu"
+        //    objectName: "mainmenu"
     }
 
 
@@ -56,17 +56,6 @@ Rectangle {
             lineHeightMode: Text.ProportionalHeight
         }
 
-        Image {
-            id: hb_atc_icon
-            x: 8
-            y: 4
-            width: 61
-            height: 61
-            fillMode: Image.PreserveAspectFit
-            source: "noun_Chess_1376847.png"
-
-        }
-
         Button {
             id: hb_settings_button
             x: 731
@@ -101,6 +90,30 @@ Rectangle {
             fillMode: Image.PreserveAspectFit
             source: "noun_Cloud_offline.png"
 
+
+        }
+
+        Button {
+            id: hb_atc_button
+            x: 8
+            y: 4
+            width: 61
+            height: 61
+
+            Image {
+                id: hb_atc_icon
+                x: 0
+                y: 0
+                width: 61
+                height: 61
+                fillMode: Image.PreserveAspectFit
+                source: "noun_Chess_1376847.png"
+
+            }
+
+            Connections {
+                target: hb_atc_button
+            }
 
         }
 
@@ -336,6 +349,26 @@ Rectangle {
                     main_menu.go_menu_back()
                 }
             }
+        }
+
+        Text {
+            id: is_hwid_label
+            objectName: "is_hwid_label"
+            x: 358
+            y: 54
+            color: "#ffffff"
+            text: qsTr("HWID")
+            font.pixelSize: 30
+        }
+
+        Text {
+            id: is_sessionid_label
+            objectName: "is_sessionid_label"
+            x: 319
+            y: 155
+            color: "#ffffff"
+            text: qsTr("SESSION_ID")
+            font.pixelSize: 30
         }
     }
 
