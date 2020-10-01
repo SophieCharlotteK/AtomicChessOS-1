@@ -1,9 +1,11 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
+#define GUICOMMUNICATOR_VERSION "1.2.3"
+
+
 #include "magic_enum-master/include/magic_enum.hpp"
-#include "rpclib-master/include/rpc/client.h"
-#include "rpclib-master/include/rpc/server.h"
+
 
 
 #include "PROTOCOL_MSG.pb.h"
@@ -18,7 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+#include "SHARED/cpp-httplib-master/httplib.h"
+#include "SHARED/json-master/include/tao/json.hpp"
 
 
 
@@ -30,18 +33,27 @@
     #include <QThread>
     #include <QMutex>
 #else
-    #include "../loguru-master/loguru.hpp"
+
 #endif
 
+#define USE_WEBSERVER_AS_IPC
 
+#ifdef USE_WEBSERVER_AS_IPC
+
+#define WEBSERVER_BIND_ADDR "0.0.0.0" //NOTE CHANGE TO LOCALHOST
 #ifdef USES_QT
-#define RPC_PORT 8000
-#define RPC_URL "127.0.0.1"
-#define RPC_FKT_NAME "rpc_callback"
+#define WEBSERVER_STAUTS_PORT 8000
+#define EVENT_CLIENT_PORT L"8001" // 1
+#define EVENT_URL_COMPLETE "http://127.0.0.1:8001" //1
 #else
-#define RPC_PORT 8000
-#define RPC_URL "127.0.0.1",
-#define RPC_FKT_NAME "rpc_callback"
+#define WEBSERVER_STAUTS_PORT 8001 //1
+#define EVENT_CLIENT_PORT L"8000"
+#define EVENT_URL_COMPLETE "http://127.0.0.1:8000"
+#endif
+
+#define EVENT_URL_SETEVENT "/status"
+#define EVENT_URL_VERSION "/version"
+
 #endif
 
 
@@ -53,7 +65,7 @@ public:
 
 enum class GUI_ELEMENT{
     BEGIN_BTN = 0,
-    MATCHMAKING_BTN = 1,
+    QI_START_EVENT = 1,
     INITFIELD_BTN = 2,
     ATC_LOGO_BTN = 3,
     CLOUD_LOGO_BTN = 4,
@@ -61,35 +73,50 @@ enum class GUI_ELEMENT{
     LOGOUT_BTN = 6,
     INIT_BTN = 7,
     SCAN_BOARD_BTN = 8,
-    SWITCH_MENU = 9
+    SWITCH_MENU = 9,
+
+
+
+    INFOSCREEN_HWID_LABEL = 10,
+    INFOSCREEN_SESSIONID_LABEL = 11,
+    INFOSCREEN_RANK_LABEL = 12,
+    INFOSCREEN_RESERVED_1 = 13,
+    INFOSCREEN_RESERVED_2 = 14,
+
+    MAINMENU_START_AI_MATCH_BTN = 15,
+    MAINMENU_MATCHMAKING_BTN = 16,
+    MAINMENU_PLAYER_LIST_BTN = 17,
+	ERROR = 18
 };
 
 
 enum class GUI_VALUE_TYPE{
-    CLICKED = 0,
-    SELECTED = 1,
-    USER_INPUT_STRING = 2,
-    USER_INPUT_NUMBER = 3,
-    ENABLED = 4,
-    DISBALED = 5,
+	CLICKED = 0,
+	SELECTED = 1,
+	USER_INPUT_STRING = 2,
+	USER_INPUT_NUMBER = 3,
+	ENABLED = 4,
+	DISBALED = 5,
 
 
-    //SPECIAL TYPES
-    AVARIABLED_PLAYERS_ARRAY = 6, //DATA FOR AVARIABLE PLAYER ARRAY VIEW
-    CHESS_MOVE = 7, //IS A C
-    SWITCH_SCREEN = 8,
-    PLAYER_ID = 9, // THE PLAYER ID USED ON BEGIN_MATCH_WITH_PLAYER ELEMENT
+	//SPECIAL TYPES
+	AVARIABLED_PLAYERS_ARRAY = 6,   //DATA FOR AVARIABLE PLAYER ARRAY VIEW
+	CHESS_MOVE = 7,   //IS A C
+	SWITCH_SCREEN = 8,
+	PLAYER_ID = 9,   // THE PLAYER ID USED ON BEGIN_MATCH_WITH_PLAYER ELEMENT
 
-    RES1 = 10,
-    RE2 = 11,
-    RES3 =12,
-    //MENUS
-    LOGIN_SCREEN = 13,
-    MAIN_MENU_SCREEN = 14,
-    SETTINGS_SCREEN= 15,
-    PLAYER_SEARCH_SCREEN = 16,
-    GAME_SCREEN = 17,
-    CREDIT_SCREEN = 18
+	RES1 = 10,
+	RE2 = 11,
+	RES3 = 12,
+	//MENUS
+	LOGIN_SCREEN = 13,
+	MAIN_MENU_SCREEN = 14,
+	SETTINGS_SCREEN = 15,
+	PLAYER_SEARCH_SCREEN = 16,
+	GAME_SCREEN = 17,
+	CREDIT_SCREEN = 18,
+	INFO_SCREEN = 19,
+	ERROR_MESSAGE = 20
 
 };
 
@@ -125,6 +152,7 @@ enum class GUI_VALUE_TYPE{
 
 
     GUI_EVENT get_gui_update_event();
+     bool check_guicommunicator_version();
 private:
 	  //zmq::context_t zmqctx;
 	// zsock_t* zmq_pull = nullptr;
@@ -144,11 +172,17 @@ private:
 	std::string rpc_callback(std::string _msg);
 	
 	bool thread_running = false;
-	rpc::server* ptrsrv = nullptr;
+    //rpc::server* ptrsrv = nullptr;
+    httplib::Server svr;
 
-     GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
+    GUI_EVENT last_event_from_webserver;
+    GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
 
+    void enqueue_event(GUI_EVENT _ev);
+     std::string event_to_json(GUI_EVENT _ev);
      static void recieve_thread_function(guicommunicator* _this);
+
+
 };
 
 #endif // GUICOMMUNICATOR_H

@@ -36,54 +36,31 @@
     <None Include="controller-Release.vgdbsettings">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="LibPiSPI-master\LibPiSPI\PiSPI.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\guicommunicator.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="SHARED\PROTOCOL_MSG.pb.cc">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="loguru-master\loguru.cpp">
+    <ClCompile Include="SHARED\loguru-master\loguru.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="BackendConnector.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
-    <None Include="SHARED\rpclib-master\include\rpc\client.inl">
-      <Filter>Header files</Filter>
-    </None>
-    <None Include="SHARED\rpclib-master\include\rpc\dispatcher.inl">
-      <Filter>Header files</Filter>
-    </None>
-    <None Include="SHARED\rpclib-master\include\rpc\this_handler.inl">
-      <Filter>Header files</Filter>
-    </None>
+    <None Include="SHARED\PROTOCOL_MSG.proto" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cpp-httplib-master\httplib.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="LibPiSPI-master\LibPiSPI\PiSPI.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="SHARED\guicommunicator.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="loguru-master\loguru.hpp">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\magic_enum-master\include\magic_enum.hpp">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\rpclib-master\include\rpc\client.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\rpclib-master\include\rpc\server.h">
+    <ClInclude Include="BackendConnector.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -40,17 +40,17 @@
         <string>*.ii</string>
         <string>*.ipp</string>
         <string>*.ino</string>
-        <string>*.in</string>
-        <string>*.*</string>
+        <string>*.proto</string>
       </FileMasks>
       <TransferNewFilesOnly>true</TransferNewFilesOnly>
       <IncludeSubdirectories>true</IncludeSubdirectories>
+      <SelectedDirectories />
       <DeleteDisappearedFiles>true</DeleteDisappearedFiles>
       <ApplyGlobalExclusionList>true</ApplyGlobalExclusionList>
       <Extension>
         <Direction>Outgoing</Direction>
         <SkipMountPoints>false</SkipMountPoints>
-        <OverwriteTrigger>Stat</OverwriteTrigger>
+        <OverwriteTrigger>LocalCache</OverwriteTrigger>
       </Extension>
     </MainSourceTransferCommand>
     <AllowChangingHostForMainCommands>false</AllowChangingHostForMainCommands>
