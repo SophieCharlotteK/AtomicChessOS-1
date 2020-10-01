@@ -154,7 +154,12 @@ enum class GUI_VALUE_TYPE{
     GUI_EVENT get_gui_update_event();
      bool check_guicommunicator_version();
 	
+#ifdef USES_QT
+	
+#else
 	void show_error_message_on_gui(std::string _err);
+#endif
+	
 private:
 	  //zmq::context_t zmqctx;
 	// zsock_t* zmq_pull = nullptr;
