@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	if (gamebackend.check_connection())
 	{
 		LOG_F(ERROR, "gamebackend - check connection failed");
-		gui.createEvent(guicommunicator::GUI_ELEMENT::ERROR, guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE, "Cant connect to game server. (ERR01) [" + config.Get("NetworkSettings", "ATCBackendURL", "http://marcelochsendorf.com:3001") + "]");
+		gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + config.Get("NetworkSettings", "ATCBackendURL", "http://marcelochsendorf.com:3001") + "]");
 	}
 	
 	
