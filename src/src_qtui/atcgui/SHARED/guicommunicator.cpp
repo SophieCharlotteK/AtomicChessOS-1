@@ -213,7 +213,6 @@ void guicommunicator::enqueue_event(GUI_EVENT _ev){
 
 void guicommunicator::recieve_thread_function(guicommunicator* _this) {
     using namespace httplib;
-    qInfo()<< "thread started";
 
     //REGISTER WEBSERVER EVENTS
     _this->svr.Get("/", [](const Request& req, Response& res) {
