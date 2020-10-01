@@ -32,6 +32,7 @@ signals:
 public slots:
     // ----- HEADLINE BAR ---- //
     void lb_settings_btn();
+    void lb_info_btn();
     // ----- LOGIN/START ----//
     void ls_login_btn();
     //------ MAIN MENU ---- //
@@ -45,12 +46,22 @@ public slots:
     void sm_init_btn();
     void sm_logout_btn();
     void sm_scan_board_btn();
+
+
+    //----- GENERAL ----//
+    void go_menu_back();
+
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;
     void switch_menu(guicommunicator::GUI_VALUE_TYPE _screen);
+    void switch_menu(QString _screen);
     void set_visible_element(QString _name, bool _state);
     void updateProgress();
+    QString last_menu_opened = "";
+    QString current_menu_opened = "";
+
+    void set_label_text(QString _container_name, QString _labelname,QString _text);
 };
 
 #endif // MAINMENU_H

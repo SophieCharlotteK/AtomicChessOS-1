@@ -14,7 +14,7 @@ QTimer *timer = new QTimer(this);
  connect(timer, &QTimer::timeout, this, &MenuManager::updateProgress);
  timer->start(500);
 
-
+ MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 
 
 
@@ -23,6 +23,20 @@ guiconnection.start_recieve_thread();
 
 }
 
+
+void MenuManager::set_label_text(QString _container_name, QString _labelname,QString _text){
+    QObject* recht1 = this->parent()->findChild<QObject*>(_container_name);
+    if(recht1){
+        QObject* recht2 = recht1->findChild<QObject*>(_labelname);
+        if(recht2){
+            recht2->setProperty("text",_text);
+        }else{
+            qInfo()<< "cant get element" << "is_container";
+        }
+    }else{
+        qInfo()<< "cant get element" << "is_container";
+    }
+}
 
 void MenuManager::set_visible_element(QString _name, bool _state){
 
@@ -34,17 +48,34 @@ void MenuManager::set_visible_element(QString _name, bool _state){
     }
 
 }
-void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
 
 
+void MenuManager::go_menu_back(){
+switch_menu(last_menu_opened);
+}
+
+void MenuManager::lb_info_btn(){
+    MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN);
+}
+
+void MenuManager::switch_menu(QString _screen){
+
+    last_menu_opened = current_menu_opened;
+    current_menu_opened = _screen;
     set_visible_element("mm_container",false);
     set_visible_element("ls_container",false);
     set_visible_element("ss_container",false);
+    set_visible_element("is_container",false);
 
+    set_visible_element(_screen,true);
+}
+
+void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
     switch (_screen) {
-        case guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN:{set_visible_element("mm_container",true);break;}
-        case guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN:{set_visible_element("ls_container",true);break;}
-        case guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN:{set_visible_element("ss_container",true);break;}
+        case guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN:{switch_menu("mm_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN:{switch_menu("ls_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN:{switch_menu("ss_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN:{switch_menu("is_container");break;}
         default:break;
     }
 }
@@ -58,6 +89,13 @@ void MenuManager::updateProgress()
     //SWITCH MAIN MENU REQUEST
     if(ev.event == guicommunicator::GUI_ELEMENT::SWITCH_MENU){
         switch_menu(ev.type);
+    }
+
+    if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL){
+        set_label_text("is_container","is_hwid_text",QString::fromStdString(ev.value));
+    }
+    if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
+        set_label_text("is_container","is_sessionid_text",QString::fromStdString(ev.value));
     }
 
 }
@@ -77,12 +115,13 @@ void MenuManager::show_error(QString _err){
 
 
 void MenuManager::lb_settings_btn(){
-    qInfo() <<"lb_settings_btn";
+    //qInfo() <<"lb_settings_btn";
+   // MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 };
 
 void MenuManager::ls_login_btn(){
     qInfo() <<"ls_login_btn";
-    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
     //guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 
 }

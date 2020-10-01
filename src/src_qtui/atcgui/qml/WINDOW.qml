@@ -17,8 +17,7 @@ Rectangle {
 
     MenuManager{
         id:main_menu
-        objectName: "mainmenu"
-
+    //    objectName: "mainmenu"
     }
 
 
@@ -33,11 +32,13 @@ Rectangle {
 
         Text {
             id: hb_headline_text
+            objectName: "hb_headline_text"
             x: 318
             y: 18
             width: 164
             height: 34
             text: qsTr("MAIN MENU")
+            visible: true
             lineHeightMode: Text.ProportionalHeight
             fontSizeMode: Text.FixedSize
             font.pixelSize: 30
@@ -218,7 +219,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: true
+        visible: false
         DelayButton {
             id: ls_login_btn
             x: 272
@@ -294,9 +295,6 @@ Rectangle {
                     target: ss_log_out_btn
                     function onClicked(_mouse){
                         main_menu.sm_logout_btn()
-                        mm_container.visible = false
-                        ls_container.visible = true
-                        ss_container.visible = false
 
                     }
                 }
@@ -311,7 +309,31 @@ Rectangle {
             Connections {
                 target: sm_back_btn
                 function onClicked(_mouse){
-                    ss_container.visible = false
+                    main_menu.go_menu_back()
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: is_container
+        x: 0
+        y: 68
+        width: 800
+        height: 411
+        color: "#197ab7"
+        visible: true
+        objectName: "is_container"
+
+        Button {
+            id: is_back_btn
+            x: 686
+            y: 363
+            text: qsTr("BACK")
+            Connections {
+                target: is_back_btn
+                function onClicked(_mouse){
+                    main_menu.go_menu_back()
                 }
             }
         }
@@ -321,9 +343,11 @@ Rectangle {
 
 }
 
+
+
+
 /*##^##
 Designer {
     D{i:0;active3dScene:"-1"}
 }
 ##^##*/
-
