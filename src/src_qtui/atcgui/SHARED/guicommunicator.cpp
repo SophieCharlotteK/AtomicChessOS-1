@@ -122,26 +122,27 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 	message.SerializeToString(&tmp);
  
 	debug_event(parseEvent(tmp), false);
-	//SEND OVER RPC
-	
-    //rpc::client rpc(RPC_URL, RPC_PORT);
-    //std ::string res = rpc.call("rpc_to_backend", tmp).as<std::string>();
-	
-//	if (!res.empty())
-//	{
-//		GUI_EVENT ev =	parseEvent(res);
-    //	if (ev.is_event_valid)
-        //{
-//			gui_update_event_queue.push(ev);
-    //	}
-//	}
-    httplib::Client cli(EVENT_URL_COMPLETE);
 
+    //MAKE REQUEST
+    httplib::Client cli(EVENT_URL_COMPLETE);
     cli.Post(EVENT_URL_SETEVENT,tmp,"text/plain");
-   
-	
+
 }
 
+bool guicommunicator::check_guicommunicator_version(){
+
+            httplib::Client cli(EVENT_URL_COMPLETE);
+            httplib::Result res =  cli.Get(EVENT_URL_VERSION);
+            if(GUICOMMUNICATOR_VERSION == res->body){
+                debug_output("CHECK VERSION OK");
+                debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
+                return true;
+            }else{
+                debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
+                return false;
+            }
+
+}
 
 
 void guicommunicator::start_recieve_thread() {
@@ -153,7 +154,7 @@ void guicommunicator::start_recieve_thread() {
 #else
 	std::thread t1(recieve_thread_function, this);
 	t1.detach();
-	
+
 	update_thread = &t1;     
 #endif
 	debug_output("GUI_COM THREAD STARTED");
@@ -222,6 +223,12 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
     _this->svr.Get(EVENT_URL_SETEVENT, [_this](const Request& req, Response& res) {
        res.set_content(_this->event_to_json(_this->last_event_from_webserver),"application/json");
      });
+
+    _this->svr.Get(EVENT_URL_VERSION, [_this](const Request& req, Response& res) {
+       res.set_content(GUICOMMUNICATOR_VERSION,"text/plain");
+     });
+
+
 
     _this->svr.Post(EVENT_URL_SETEVENT, [_this](const Request& req, Response& res) {
 

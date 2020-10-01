@@ -1,6 +1,9 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
+#define GUICOMMUNICATOR_VERSION "1.2.2"
+
+
 #include "magic_enum-master/include/magic_enum.hpp"
 //#include "SHARED/_MODIFIED_rpclib-master/include/rpc/client.h"
 //#include "SHARED/_MODIFIED_rpclib-master/include/rpc/server.h"
@@ -43,7 +46,7 @@
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
 #define EVENT_CLIENT_PORT L"8001" // 1
-#define EVENT_URL_COMPLETE "http://127.0.0.1:8001"
+#define EVENT_URL_COMPLETE "http://127.0.0.1:8001" //1
 #else
 #define WEBSERVER_STAUTS_PORT 8001 //1
 #define EVENT_CLIENT_PORT L"8000"
@@ -51,7 +54,7 @@
 #endif
 
 #define EVENT_URL_SETEVENT "/status"
-
+#define EVENT_URL_VERSION "/version"
 
 #endif
 
@@ -149,6 +152,7 @@ enum class GUI_VALUE_TYPE{
 
 
     GUI_EVENT get_gui_update_event();
+     bool check_guicommunicator_version();
 private:
 	  //zmq::context_t zmqctx;
 	// zsock_t* zmq_pull = nullptr;
@@ -177,6 +181,8 @@ private:
     void enqueue_event(GUI_EVENT _ev);
      std::string event_to_json(GUI_EVENT _ev);
      static void recieve_thread_function(guicommunicator* _this);
+
+
 };
 
 #endif // GUICOMMUNICATOR_H
