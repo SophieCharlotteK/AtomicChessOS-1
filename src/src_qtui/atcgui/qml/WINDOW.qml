@@ -113,6 +113,9 @@ Rectangle {
 
             Connections {
                 target: hb_atc_button
+                function onClicked(_mouse){
+                    main_menu.is_open_is_screen_btn()
+                }
             }
 
         }
@@ -335,7 +338,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: true
+        visible: false
         objectName: "is_container"
 
         Button {

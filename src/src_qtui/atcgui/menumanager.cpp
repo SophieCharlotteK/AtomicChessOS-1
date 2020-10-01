@@ -14,13 +14,14 @@ QTimer *timer = new QTimer(this);
  connect(timer, &QTimer::timeout, this, &MenuManager::updateProgress);
  timer->start(500);
 
- MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+
 
 
 
 
 guiconnection.start_recieve_thread();
 
+guiconnection.createEvent(guicommunicator::GUI_ELEMENT::QI_START_EVENT,guicommunicator::GUI_VALUE_TYPE::ENABLED);
 }
 
 
@@ -121,7 +122,6 @@ void MenuManager::lb_settings_btn(){
 
 void MenuManager::ls_login_btn(){
     qInfo() <<"ls_login_btn";
-    //guiconnection.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 
 }

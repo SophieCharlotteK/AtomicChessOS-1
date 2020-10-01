@@ -42,29 +42,19 @@
 #define WEBSERVER_BIND_ADDR "0.0.0.0" //NOTE CHANGE TO LOCALHOST
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
-#define EVENT_CLIENT_PORT L"8000" // 1
+#define EVENT_CLIENT_PORT L"8001" // 1
+#define EVENT_URL_COMPLETE "http://127.0.0.1:8001"
 #else
-#define WEBSERVER_STAUTS_PORT 8000 //1
+#define WEBSERVER_STAUTS_PORT 8001 //1
 #define EVENT_CLIENT_PORT L"8000"
+#define EVENT_URL_COMPLETE "http://127.0.0.1:8000"
 #endif
 
 #define EVENT_URL_SETEVENT "/status"
-#define EVENT_URL_COMPLETE "http://127.0.0.1:8000"
+
 
 #endif
-/*
-#define RPC_LOOPBACK
 
-#ifdef USES_QT
-#define RPC_PORT 8000
-#define RPC_URL "127.0.0.1"
-#define RPC_FKT_NAME "rpc_callback"
-#else
-#define RPC_PORT 8000
-#define RPC_URL "127.0.0.1",
-#define RPC_FKT_NAME "rpc_callback"
-#endif
-*/
 
 
 
@@ -74,7 +64,7 @@ public:
 
 enum class GUI_ELEMENT{
     BEGIN_BTN = 0,
-    RESERVED_1 = 1,
+    QI_START_EVENT = 1,
     INITFIELD_BTN = 2,
     ATC_LOGO_BTN = 3,
     CLOUD_LOGO_BTN = 4,
