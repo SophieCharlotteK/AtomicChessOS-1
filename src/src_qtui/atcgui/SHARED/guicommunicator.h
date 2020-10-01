@@ -20,7 +20,7 @@
 #include <stdlib.h>
 
 #include "SHARED/cpp-httplib-master/httplib.h"
-
+#include "SHARED/json-master/include/tao/json.hpp"
 
 
 
@@ -38,14 +38,18 @@
 #define USE_WEBSERVER_AS_IPC
 
 #ifdef USE_WEBSERVER_AS_IPC
+
 #define WEBSERVER_BIND_ADDR "0.0.0.0" //NOTE CHANGE TO LOCALHOST
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
-#define EVENT_CLIENT_PORT 8001
+#define EVENT_CLIENT_PORT L"8000" // 1
 #else
-#define WEBSERVER_STAUTS_PORT 8001
-#define EVENT_CLIENT_PORT 8000
+#define WEBSERVER_STAUTS_PORT 8000 //1
+#define EVENT_CLIENT_PORT L"8000"
 #endif
+
+#define EVENT_URL_SETEVENT "/status"
+#define EVENT_URL_COMPLETE "http://127.0.0.1:8000"
 
 #endif
 /*
@@ -164,9 +168,11 @@ private:
     //rpc::server* ptrsrv = nullptr;
     httplib::Server svr;
 
+    GUI_EVENT last_event_from_webserver;
+    GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
 
-     GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
-
+    void enqueue_event(GUI_EVENT _ev);
+     std::string event_to_json(GUI_EVENT _ev);
      static void recieve_thread_function(guicommunicator* _this);
 };
 

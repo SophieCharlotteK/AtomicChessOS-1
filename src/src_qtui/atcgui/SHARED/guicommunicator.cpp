@@ -111,8 +111,8 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 	//POPULATE THE PROTOBUF MESSAGE
 	protocolmsg::gui2backend_msg message;
 	//SET FIEDLS IM MESSAGE
-    //message.set_event(magic_enum::enum_integer(_event));
-    //message.set_type(magic_enum::enum_integer(_type));
+    message.set_event(magic_enum::enum_integer(_event));
+    message.set_type(magic_enum::enum_integer(_type));
 	message.set_value(_value);
 
 	//   message.set_ispageswitchevent(0);
@@ -135,7 +135,9 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 //			gui_update_event_queue.push(ev);
     //	}
 //	}
-	
+    httplib::Client cli(EVENT_URL_COMPLETE);
+
+    cli.Post(EVENT_URL_SETEVENT,tmp,"text/plain");
    
 	
 }
@@ -197,20 +199,57 @@ std::string guicommunicator::rpc_callback(std::string _msg)
 	
 }
 
+std::string guicommunicator::event_to_json(GUI_EVENT _ev){
+
+    return "{}";
+};
+
+void guicommunicator::enqueue_event(GUI_EVENT _ev){
+    update_thread_mutex.lock();
+    gui_update_event_queue.push(_ev);
+    update_thread_mutex.unlock();
+}
 
 void guicommunicator::recieve_thread_function(guicommunicator* _this) {
     using namespace httplib;
+    qInfo()<< "thread started";
 
-    _this->svr.Get("/hi", [](const Request& req, Response& res) {
-       res.set_content("Hello World!", "text/plain");
+    //REGISTER WEBSERVER EVENTS
+    _this->svr.Get("/", [](const Request& req, Response& res) {
+       res.set_content("<html><body>ATC_GUI WEBSERVER. <br>USE /status for last event.<br>USE /status as POST with the EVENT String to update the ui. </body><html>", "text/html");
      });
 
+    _this->svr.Get(EVENT_URL_SETEVENT, [_this](const Request& req, Response& res) {
+       res.set_content(_this->event_to_json(_this->last_event_from_webserver),"application/json");
+     });
+
+    _this->svr.Post(EVENT_URL_SETEVENT, [_this](const Request& req, Response& res) {
+
+        if(req.body.empty()){
+            res.set_content("{\"status\"\"body_is_empty\", \"err\":true}", "application/json");
+            return;
+        }
+
+         GUI_EVENT ev = _this->parseEvent(req.body);
+         _this->last_event_from_webserver = ev;
+//        _this->debug_event(ev,false);
+         if(!ev.is_event_valid){
+             res.set_content("{\"status\"\"event_invalid\",\"err\":true}", "application/json");
+             return;
+         }
+
+       _this->enqueue_event(ev);
+       res.set_content("{\"status\"\"success\",\"err\":false}", "application/json");
+       return;
+     });
+
+    //START WEBSERVER
     _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
+
 	while (_this->thread_running) {
 	
 	}
-	
-	
+    _this->svr.stop();
 	}
 
 
