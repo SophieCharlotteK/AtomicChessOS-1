@@ -9,36 +9,58 @@ This branch contains the QT5 User Interface which is running on the RaspberryPi 
 
 ## TASK OF THE UI
 
-## FEATURES WHAT CAN THE USER DO
+* simple editable
+* provide simple menu structure with max two menu layers
+* player browser
+* start game /stop game
 
-### MENU STRUCTURE
+### MENUS
 
-### MOCKUP
 
-### USING QtDesignStudio
-* from mockup to qml stuff
 
+### MOCKUPS
 
 
 
 ## WHY QT
 
 
+### USING QtDesignStudio
+* from mockup to qml stuff
+* easy drag&drop icons
+* unique naming of object
+* 
+
+
+
+
 ### PROJECT SETUP
+
 
 #### TOOLCHAIN SETUP
 #### DEVICE SETUP
 
-### QML COMPONENTS
+### IMPORT QML COMPONENTS
+* create qt qml prject
+* import qml from design studio
 
 ### C++ BACKEBD
-
+*interaction beween qml action guicommunication
+* timer for polling
 
 #### INTER PROCESS COMMUNICATION
+* function gui manager
 
-###### ZeroMQ
 
-###### Protobuf
+##### Protobuf
+* message types
+* needed information
+* generation of the .proto file to cpp code
+* location of the files in shared folder
+##### Webserver
+* advantage for debugging
+* zeromq not wokring
+
 
 ### DEPLOYMENT
 * using buildroot pacakge
