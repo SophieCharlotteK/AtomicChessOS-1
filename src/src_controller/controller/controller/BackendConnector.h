@@ -13,7 +13,7 @@ class BackendConnector
 {
 	
 public:
-	BackendConnector(std::string _backend_base_url);
+	BackendConnector(std::string _backend_base_url, std::string _hwid);
 	~BackendConnector();
 
 	bool check_connection();
