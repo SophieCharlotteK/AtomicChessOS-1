@@ -20,8 +20,23 @@ This branch contains the QT5 User Interface which is running on the RaspberryPi 
 
 ### MOCKUPS
 
+For the first mockups, the tool `Balsamique Mockup 3` was used to create a wireframe model of the menus.
+Though the requirement that the userinterface should be simple to create and operate, only simple GUI element was used (like buttons, labels, icons).
+So the userinterface can be adapted in every other UI framework too.
+It also habe to be simple to use for the user and every menu should only present the most important elements.
 
+The UI conzept offers the users to do the following things:
 
+* Start a random game
+* Start a game with selected user
+* Overview of game progress and state
+* Abort game
+ 
+After deciding which elements are necessary to map this functionality, a simple mockup of the user interface was created.
+
+![MOCKUP_MAIN_MENU](./documentation_images/MAINMENU.png)
+
+For example, this is the mockup of the MainMenu. It allowes the player, to start a random game, get the players list and a spinning indicator was used to show the state of the game search funktion.
 ## WHY QT
 
 
