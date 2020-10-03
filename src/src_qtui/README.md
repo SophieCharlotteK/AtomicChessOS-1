@@ -37,6 +37,20 @@ After deciding which elements are necessary to map this functionality, a simple 
 ![MOCKUP_MAIN_MENU](./documentation_images/MAINMENU.png)
 
 For example, this is the mockup of the MainMenu. It allowes the player, to start a random game, get the players list and a spinning indicator was used to show the state of the game search funktion.
+
+The gearbox icon, redirects the user to the settings menu. This menu offers basic options to interact with the table.
+In a normal usage situation this settings menu is not important, but it is mostly used for maintenance.
+The settings menu is accessable in every other menu and the back button, redirects the user back to the last menu showed before opening the settings menu.
+
+![MOCKUP_MAIN_MENU](./documentation_images/SETTINGS.png)
+
+Also a general information menu was added, which shows the table software version, its hardware id (used for communcation with the cloud backend).
+For debug reasons the last internal errormessage can be shown here.
+
+![MOCKUP_MAIN_MENU](./documentation_images/INFO.png)
+
+
+
 ## WHY QT
 
 
