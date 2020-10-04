@@ -105,6 +105,8 @@ The QML file can now be loaded into a `Qt Quick - Application` project inside of
 ## Qt Creator
 In `Qt Creator` the whole programming of the backend took place. Connection the events of the elements with a C++ backend which connects over the the `Inter Process Communication` with the rest of the system.
 
+
+## QML `objectName` ATTRIBUTE
 It is also possible to edit the QML code and add new QML components inside of `Qt Creator`, which offers also a QML visual editor.
 Here all object which are designed to be changed with C++ code, become a unique name. This happens inside of the QML code with the `objectName` attribute.
 
@@ -135,6 +137,15 @@ void MenuManager::set_visible_element(QString _name, bool _state){
     }
 }
 ```
+## QML C++ BACKEND
+
+### USING BACKEND IN QML
+* creating normal class
+* register in main.cpp
+* import in qml
+
+
+### SWITCHING BETWEEN MENUS
 
 The `visible` attributes of an element, defines if the element is visible on the ui or not.
 In the case of the UI for this project. Each menu is placed inside of an container.
@@ -179,9 +190,15 @@ void leave_menu_to_previous(e){
             current_menu = previous_menus.pop();
             switch_menu(current_menu);
 }
+```
 
 
+### EVENTS
+* buttons
+* how to call event from qml
 
+
+### INTER PROCESS COMMUNICATION
 
 
 With the `Qt`
