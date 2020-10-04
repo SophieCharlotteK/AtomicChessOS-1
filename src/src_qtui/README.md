@@ -57,7 +57,7 @@ Button {
 
 
 
-### MOCKUPS
+### MOCKUP
 
 For the first mockups, the tool `Balsamique Mockup 3` was used to create a wireframe model of the menus.
 Though the requirement that the userinterface should be simple to create and operate, only simple GUI element was used (like buttons, labels, icons).
@@ -99,12 +99,58 @@ It also supports live preview of the design as an running application, no compil
 The software uses a simple drag&drop system for elements, like buttons, labels and self designed components. The element can be placed on a empty screen to build the ui from the ground up. It also provides integration for the `QtQuickControl II` component presets, which includes some more advance ui element like the animated spinner or progress bars.
 
 While building the UI in the software, the equivalent QML code is generated which corresponds in an `.qml` file.
-The QML file can now be loaded into a `Qt Quick - Application` inside of the `Qt Creator` software. 
+The QML file can now be loaded into a `Qt Quick - Application` project inside of the `Qt Creator` software. 
+
+
+## Qt Creator
 In `Qt Creator` the whole programming of the backend took place. Connection the events of the elements with a C++ backend which connects over the the `Inter Process Communication` with the rest of the system.
 
 It is also possible to edit the QML code and add new QML components inside of `Qt Creator`, which offers also a QML visual editor.
+Here all object which are designed to be changed with C++ code, become a unique name. This happens inside of the QML code with the `objectName` attribute.
 
+For example the content of the version label on the info menu should be changeable, so its gets a unique name with 
+```qml
+Text {
+            id: is_hwid_label
+            objectName: "is_hwid_label"
+            x: 358
+            y: 54
+            color: "#ffffff"
+            text: qsTr("HWID")
+            font.pixelSize: 30
+        }
+```
 
+With the `objectName` attribute set, it is possible modify other attributes inside of the element.
+In the following C++ function is taken from the `menumanager.cpp` which is the C++ backend class between the QML and the `Inter Process Communication`.
+The funktion changes the visible attribute of an element, which is searched with the `objectName` attribute.
+
+```c++
+void MenuManager::set_visible_element(QString _name, bool _state){
+    QObject* obj = this->parent()->findChild<QObject*>(_name);
+    if(obj){
+        obj->setProperty("visible",_state);
+    }else{
+        qInfo()<< "cant get element" << _name;
+    }
+}
+```
+
+The `visible` attributes of an element, defines if the element is visible on the ui or not.
+In the case of the UI for this project. Each menu is placed inside of an container.
+If the user open a specific menu, all other menus will be hidden by setting the `visible` attribute to `false`, ecept of the target menu.
+
+For this purpose each menu container has its own `objectName` attribute.
+
+* `mm_container`, is the main menu container
+* `ss_container`, is the settings menu container
+* `ls_container`, is the start screen container
+
+To finally switch the a menu the function `switch_menu(QString _container_name)` can be used, for simple menu switching.
+
+```c++
+switch_menu("ls_container"); //SHOW LOGIN MENU
+```
 
 
 
@@ -115,11 +161,6 @@ With the `Qt`
 
 
 
-### USING QtDesignStudio
-* from mockup to qml stuff
-* easy drag&drop icons
-* unique naming of object
-* 
 
 
 
