@@ -282,6 +282,8 @@ Button {
             }
         }
 ```
+[SIGNALS_SLOTS_QT](https://doc.qt.io/qt-5/signalsandslots.html)
+
 
 ### GET EVENTS FROM QML COMPONENTS | REACT TO BUTTONS
 With the `public slots` modifiers above, its is now possible to react to event from components.
