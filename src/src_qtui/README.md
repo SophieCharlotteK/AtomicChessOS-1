@@ -154,11 +154,12 @@ The QML file can now be loaded into a `Qt Quick - Application` project inside of
 ## Qt Creator
 
 * works without QtCreator but offers features espacially for editing C++ and QML files together
-
+### PROJECT SETUP
+* simply clicking ok; but choose qmake
 ### TOOLCHAIN SETUP
-
-
-
+* path setup
+### DEVICE SETUP
+* nothing todo here
 
 
 
@@ -281,7 +282,7 @@ Button {
         }
 ```
 
-### EVENTS
+### GET EVENTS FROM QML COMPONENTS | REACT TO BUTTONS
 With the `public slots` modifiers above, its is now possible to react to event from components.
 For example if the user presses the login button.
 In the `mainmenu` class, for each action is a function declared, mostly for buttons an their `onClick` event.
@@ -303,10 +304,20 @@ public slots:
 
 Every functions triggers a event, which are send to the rest of the system by using the `Inter Process Communication` class.
 
-
+```c++
+void MenuManager::ls_login_btn(){
+    qInfo() <<"ls_login_btn"; //DEBUG MESSAGE
+    
+    //CREATE EVENT WITH ACTION TYPE (GUI_ELEMENT::BEGIN_BTN) AND THE TYPE OF EVENT (GUI_VALUE_TYPE::CLICKED)
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::BEGIN_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+}
+```
 
 
 ### MODIFY QML COMPONENTS | SWITCHING BETWEEN MENUS
+
+Now its possible to react to user events, but the other direction, to send events to the gui is also needed.
+To display the current gamestate or switching between menus.
 
 The `visible` attributes of an element, defines if the element is visible on the ui or not.
 In the case of the UI for this project. Each menu is placed inside of an container.
@@ -325,7 +336,6 @@ This functionally comes handy, for the settings menu, which can be opened from e
 ```c++
 switch_menu("ls_container"); //SHOW LOGIN MENU
 switch_menu("ss_container"); //SHOW SETTINGS MENU
-
 switch_menu(last_menu_opened); //SWITCH BACK TO LOGIN MENU (= PREVIOUS MENU)
 ```
 
@@ -355,37 +365,10 @@ void leave_menu_to_previous(e){
 
 
 
-
-
 ### INTER PROCESS COMMUNICATION
 
-
-With the `Qt`
-
-
-
-
-
-
-
-
-
-
-### PROJECT SETUP
-
-
-#### DEVICE SETUP
-
-### IMPORT QML COMPONENTS
-* create qt qml prject
-* import qml from design studio
-
-### C++ BACKEBD
-*interaction beween qml action guicommunication
-* timer for polling
-
-#### INTER PROCESS COMMUNICATION
-* function gui manager
+* function
+* offered function
 
 
 ##### Protobuf
@@ -400,6 +383,8 @@ With the `Qt`
 
 ### DEPLOYMENT
 * using buildroot pacakge
+* simply use qmake to gerneate makefile
+* and run makefile in buildroot
  
 
 
