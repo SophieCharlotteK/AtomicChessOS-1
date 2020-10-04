@@ -370,8 +370,95 @@ void leave_menu_to_previous(e){
 
 ### INTER PROCESS COMMUNICATION
 
-* function
-* offered function
+
+
+The whole `Inter Process Communication` acronym `IPC` functionallity was implemented in `guicommunicator` class, which is located in the `SHARED` folder.
+
+The `guicommunicator` offers a bidirectional communication between processes, which is needed for communcation between the UI and the controller software.
+There a already implementations for such a behavior like `gRPC`, `librpc` or message queues like `ZeroMQ`.
+
+??
+TYPES
+??
+
+For this project a own implementation for the `IPC` concept was created. One reason for that was the integration into the buildroot system.
+`gRPC` has a bug in the package compilation with buildroot.
+A issue on the `libabseil-cpp` library GitHubPage, was opended.
+
+![ISSUE](./documenation_images/grpc_issue.png)
+
+An alternative to `gRPC` is the `ZeroMQ` library, which offers a lightweight message queue concept.
+Buildroot offers libraries for building the `ZeroMQ` message broker and different client libraries `libzqm`.
+Both packages are build into the toolchain.
+
+`ZeroMQ` is designed for performance message transportation (10.000 message in 15ms) ,which is not needed for this project.
+
+[ZeroMQ_PERFORMANCE](http://wiki.zeromq.org/area:results)
+
+The `guicommunicator` class offers two methods for the message transport:
+
+* `ZeroMQ`, by using the define `USE_ZMQ_AS_IPC`
+* `Webserver`, by using the define `USE_WEBSERVER_AS_IPC`
+
+The webserver method is implemented by using a http client and webserver instance for each direction.
+This method was used, because the UI was designed before the other software parts.
+So as other 'process' a simple http client can be used.
+
+
+The codebase is for the UI and the Control apllication is the same.
+There are some differences, Qt uses its own string type `QString` and uses other debug features `QDebug()`.
+For this cases defines are used to implement the same function for both the Qt version and non Qt version.
+The deine `USE_QT` is set in the project settings of the Qt project.
+
+```c++
+//SHARED/guicommunicator.h
+#ifdef USES_QT
+            #include <QString>
+            #include<QDebug>
+            #include <QThread>
+            #include <QMutex>
+#else
+            #include <string>
+            #include <mutex>
+            #include <iostream>
+            #include <thread>
+#endif
+```
+
+Also in the implementation of the functions, the define was used.
+
+```c++
+//SHARED/guicommunicator.cpp
+	void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type) {
+		guicommunicator::createEvent(_event, _type, (std::string)"");
+	}
+#ifdef USES_QT 
+	void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value) {
+		guicommunicator::createEvent(_event, _type, _value.toStdString());
+	}
+#endif
+```
+
+
+The `guicommunicator` class offers two main methods:
+
+* `createEvent(_event, _type, _value)`, to send a event to the other process.
+* `GUI_EVENT get_gui_update_event()`, which returns the received events
+
+The library uses a thread for sending and received message packets, so start and stop methods are implemented.
+The calling of this methods are only necessary if the instance of class want to receive messages.
+
+* `start_receive_thread`, start receive thread.
+* `stop_receive_thread`, stop receive thread.
+
+After receiving a message (from webserver or `ZeroMQ`), the message will be checked and converted into the `GUI_EVENT` struct.
+Allo received messaged will. be queued up into an queue datastructure and can pulled of the queue by using the `get_gui_update_event` method.
+The insertion and reading of the queue, is secured with an binary semaphor to avoid a condition race in the critical section.
+The critical section is in this case, the read/write access to the queue.
+
+
+
+
 
 
 ##### Protobuf
@@ -389,5 +476,5 @@ void leave_menu_to_previous(e){
 * simply use qmake to gerneate makefile
 * and run makefile in buildroot
  
-
+## CONCLUSION
 
