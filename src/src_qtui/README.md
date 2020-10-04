@@ -157,7 +157,28 @@ switch_menu("ss_container"); //SHOW SETTINGS MENU
 switch_menu(last_menu_opened); //SWITCH BACK TO LOGIN MENU (= PREVIOUS MENU)
 ```
 
+For this menu structure it is sufficient to store only the previous menu.
+For deeper menu structures with more layers, a stack datastructure ca be used to navigate back multible times.
 
+```c++
+QStack<QString> previous_menus;
+QString current_menu = "";
+
+//ENTER MENU
+void enter_menu(QString _name){
+            previous_menus.push(current_menu)
+            current_menu = _name;
+            switch_menu(current_menu);
+}
+
+void leave_menu_to_previous(e){
+            if(previous_menus.isEmpty()){
+                        QInfo() << "cant goto previouse menu";
+                        return;
+            }
+            current_menu = previous_menus.pop();
+            switch_menu(current_menu);
+}
 
 
 
