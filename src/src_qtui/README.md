@@ -456,7 +456,10 @@ Allo received messaged will. be queued up into an queue datastructure and can pu
 The insertion and reading of the queue, is secured with an binary semaphor to avoid a condition race in the critical section.
 The critical section is in this case, the read/write access to the queue.
 
+* TYPES OF EVENTS
 
+
+* PACKING OF THE MESSAGES -> protobuf
 
 
 
