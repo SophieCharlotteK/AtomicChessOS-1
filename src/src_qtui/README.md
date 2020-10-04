@@ -3,8 +3,17 @@
 
 # BRANCH - QTUI
 
+
+
 This branch contains the QT5 User Interface which is running on the RaspberryPi Display.
 
+
+## REQUIREMENTS
+For this chapter the following requirements must be met:
+
+* Crossplattform toolchain and target images is build. The `/buildroot/output/host` folder is accessable on the development system.
+* Embedded device is flashed with the image and reachable over SSH.
+* `Qt Creator >= 4.10` and `Qt Design Studio` is installed on the development system (`>= Ubuntu 16.04`).
 
 
 ## TASK OF THE UI
@@ -17,13 +26,18 @@ The main purpose of the ui is the management of a gameand should not stand in
 
 ### MENUS
 
-## WHY QT
+
+
+## Qt
+
+### WHY Qt
 
 ### QML
 
 
-The simplest type used in the UI, is a simple text label.
-Every element begins with the type name of the qml component `Text {`.
+#### QML COMPONENTS
+
+Every element begins with the type name of the qml component `Text {`, in this case its a label component.
 The following block can contain at least a `id` attribute, but can have many more attributes.
 The most common attributes are the  position on the screen `x`, `y` and a size `width`, `height`.
 These attributes are automaticly added, if an element is created with the visual editor in `Qt Creator` or `Qt Design Studio`.
@@ -53,7 +67,21 @@ For example, the button can emit the `onClick` event, if the user clicked on the
 A eventlistener can be registered in a `Connections {` block.
 This block needs a `target` attribute, which value is the `id` of the element, the events should be processed.
 
+The eventlistener itself is a function, which has the name of the event `onClick`.
+The systax is JavaScript based and a small subset of the JavaScript language in functions is supported.
 
+```js
+onClick: {
+            var arr = ["My", "Label"] //JS ARRAY
+            hb_label.text = arr[0] + arr[1] //ACCESSING ATTRIBUTE OF AN OTHER QML ELEMENT
+            console.log("CLICKED!") //JS EXPRESSION
+        }
+```
+A complete QML Javascript refrence guide can be found on the Qt 5 Site.
+[QML_JS_REFERENCE](https://doc.qt.io/qt-5/qtqml-javascript-expressions.html)
+
+The goal of our button example is if the user clicked on the button, the label with id `hb_label` should be displayed.
+Also a function from an other QML Componente should be called, in this example the `main_menu` component is our C++ backend.
 
 
 
@@ -65,12 +93,12 @@ Button {
             width: 61
             height: 61
             text: qsTr("BUTTON NAME")
-            
+            //REGISTER EVENT HANDLERS
             Connections {
                 target: hb_settings_button      //FOR WHICH ELEMENT ID IS THE CONNECTION             
                 function onClicked(_mouse){     //EVENT HANDLER FOR THE CLICK EVENT
                     hb_label.visible = true     //MODIFY OTHER QML ELEMENTS
-                    main_menu.lb_settings_btn() //CALL A C++ BACKEND FUNCTION ()
+                    main_menu.lb_settings_btn() //CALL A C++ BACKEND FUNCTION (main_menu is the QML instance of the C++ backend)
                 }
             }
         }
@@ -125,6 +153,14 @@ The QML file can now be loaded into a `Qt Quick - Application` project inside of
 
 ## Qt Creator
 In `Qt Creator` the whole programming of the backend took place. Connection the events of the elements with a C++ backend which connects over the the `Inter Process Communication` with the rest of the system.
+
+### TOOLCHAIN SETUP
+
+
+
+
+
+
 
 
 ## QML `objectName` ATTRIBUTE
@@ -236,7 +272,6 @@ With the `Qt`
 ### PROJECT SETUP
 
 
-#### TOOLCHAIN SETUP
 #### DEVICE SETUP
 
 ### IMPORT QML COMPONENTS
