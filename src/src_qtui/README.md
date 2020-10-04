@@ -152,7 +152,8 @@ The QML file can now be loaded into a `Qt Quick - Application` project inside of
 
 
 ## Qt Creator
-In `Qt Creator` the whole programming of the backend took place. Connection the events of the elements with a C++ backend which connects over the the `Inter Process Communication` with the rest of the system.
+
+* works without QtCreator but offers features espacially for editing C++ and QML files together
 
 ### TOOLCHAIN SETUP
 
@@ -181,7 +182,7 @@ Text {
 ```
 
 With the `objectName` attribute set, it is possible modify other attributes inside of the element.
-In the following C++ function is taken from the `menumanager.cpp` which is the C++ backend class between the QML and the `Inter Process Communication`.
+In the following C++ function is taken from the `menumanager.cpp` which is the C++ backend class between the QML and the `InterProcessCommunication`.
 The funktion changes the visible attribute of an element, which is searched with the `objectName` attribute.
 
 ```c++
@@ -197,13 +198,12 @@ void MenuManager::set_visible_element(QString _name, bool _state){
 ## QML C++ BACKEND
 
 
-As mentioned above, the UI is controlled by a C++ backend, it connects the QML UI with the `Inter Process Communication Class`.
+As mentioned above, the UI is controlled by a C++ backend, it connects the QML UI with the `InterProcessCommunication` class.
 This backend can be used as a normal QML Component, but allowes all C++ feature can be used to control the UI.
 The backend is a normal C++ Class, but it have to inherited from `QObject`.
 
 ```c++
 #include <QObject>
-
 class MenuManager: public QObject
 {
 ```
@@ -250,7 +250,7 @@ Rectangle {
 Now every function inside of the UI can call functions in the C++ backend by using the ID `main_menu.<FUNCTION>()`.
 
 
-### ACCESS MODIFIERT TO WORK WITH THE UI
+### ACCESS MODIFIERS TO WORK WITH THE UI
 In the headerfile `menumanager.h` function can be declared with the access modifiers, for example`public` or `private`.
 In the Qt C++ there are also other modifiers avariable, espacially for connecting with QML.
 
@@ -266,7 +266,6 @@ public slots:
 For example the obve delcared function `trigger_login_event_button` should be called with a button in the QML UI is pressed by the user.
 
 ```qml
-
 Button {
             id: hb_button
             ... //OTHER ATTRIBUTES
@@ -276,19 +275,38 @@ Button {
                 function onClicked(_mouse){     //EVENT HANDLER FOR THE CLICK EVENT
                     
                     main_menu.trigger_login_event_button() //CALL A C++ BACKEND FUNCTION (main_menu is the QML instance of the C++ backend)
+                    
                 }
             }
         }
 ```
 
+### EVENTS
+With the `public slots` modifiers above, its is now possible to react to event from components.
+For example if the user presses the login button.
+In the `mainmenu` class, for each action is a function declared, mostly for buttons an their `onClick` event.
 
-### USING BACKEND IN QML
-* creating normal class
-* register in main.cpp
-* import in qml
+```c++
+class MenuManager: public QObject
+{
+...
+...
+
+public slots:
+// ----- HEADLINE BAR ---- //
+    void lb_settings_btn();         //ONCLICK EVENT FOR SETTINGS ICON
+    void lb_info_btn();             //ONCLICK EVENT FOR INFO ICON                     
+    // ----- LOGIN/START ----//
+    void ls_login_btn();            //ONCLICK EVENT FOR START BUTTON                       
+    ...
+```
+
+Every functions triggers a event, which are send to the rest of the system by using the `Inter Process Communication` class.
 
 
-### SWITCHING BETWEEN MENUS
+
+
+### MODIFY QML COMPONENTS | SWITCHING BETWEEN MENUS
 
 The `visible` attributes of an element, defines if the element is visible on the ui or not.
 In the case of the UI for this project. Each menu is placed inside of an container.
@@ -336,9 +354,7 @@ void leave_menu_to_previous(e){
 ```
 
 
-### EVENTS
-* buttons
-* how to call event from qml
+
 
 
 ### INTER PROCESS COMMUNICATION
