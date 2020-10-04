@@ -9,6 +9,7 @@ This branch contains the QT5 User Interface which is running on the RaspberryPi 
 
 ## TASK OF THE UI
 
+The main purpose of the ui is the management of a gameand should not stand in 
 * simple editable
 * provide simple menu structure with max two menu layers
 * player browser
@@ -18,38 +19,58 @@ This branch contains the QT5 User Interface which is running on the RaspberryPi 
 
 ## WHY QT
 
-### QUICKGUIDE QML
+### QML
+
+
+The simplest type used in the UI, is a simple text label.
+Every element begins with the type name of the qml component `Text {`.
+The following block can contain at least a `id` attribute, but can have many more attributes.
+The most common attributes are the  position on the screen `x`, `y` and a size `width`, `height`.
+These attributes are automaticly added, if an element is created with the visual editor in `Qt Creator` or `Qt Design Studio`.
+
+In case of the label, some additional attributes are nedded.
+The `text` attribute, sets the visibal text of the label and the font size can be changed with the `font.pixelSize` attributes.
 
 ```qml
-Text {
-            id: hb_headline_text
-            objectName: "hb_headline_text"
-            x: 318
-            y: 18
-            width: 164
+Text {                                          //QML TYPE, Text means label                                          
+            id: hb_label                        //ID OF THE ELEMENT
+            objectName: "hb_label"              //NAME TO ACCESS THE LABELS ATTRIBUTES IN C++ BACKEND
+            x: 318                              //POSITION IN SCREEN COORDIANTES
+            y: 18                   
+            width: 164                          //SIZE
             height: 34
-            text: qsTr("MAIN MENU")
-            visible: true            
-            font.pixelSize: 30
+            text: qsTr("MAIN MENU")             //VISIBLE TEXT
+            visible: true                       // HIDE| SHOW ELEMENT
+            font.pixelSize: 30                  //FONTSIZE OF THE TEXT
         }
 ```
 
 
+The next element which is heavily used in the UI for the project, is a simple button.
+In addition to the already shown attributes, a new section called `Connections` was added to the element.
+Most of the qml types can emit events, if a state of the element changes.
+For example, the button can emit the `onClick` event, if the user clicked on the button.
+A eventlistener can be registered in a `Connections {` block.
+This block needs a `target` attribute, which value is the `id` of the element, the events should be processed.
+
+
+
+
+
 ```qml
 Button {
-            id: hb_settings_button
+            id: hb_button
             x: 731
             y: 4
             width: 61
             height: 61
-
             text: qsTr("BUTTON NAME")
             
             Connections {
-                target: hb_settings_button
-                function onClicked(_mouse){
-                    ss_container.visible = true
-                    main_menu.lb_settings_btn()
+                target: hb_settings_button      //FOR WHICH ELEMENT ID IS THE CONNECTION             
+                function onClicked(_mouse){     //EVENT HANDLER FOR THE CLICK EVENT
+                    hb_label.visible = true     //MODIFY OTHER QML ELEMENTS
+                    main_menu.lb_settings_btn() //CALL A C++ BACKEND FUNCTION ()
                 }
             }
         }
