@@ -173,6 +173,10 @@ void guicommunicator::stop_recieve_thread() {
 	debug_output("GUI_COM THREAD STOPPED");
 }
 
+
+guicommunicator::GUI_EVENT guicommunicator::get_event(){
+	return guicommunicator::get_gui_update_event();
+}
 guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 	GUI_EVENT tmp;
 	tmp.is_event_valid = false;
