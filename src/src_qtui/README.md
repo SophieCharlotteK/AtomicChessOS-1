@@ -196,6 +196,92 @@ void MenuManager::set_visible_element(QString _name, bool _state){
 ```
 ## QML C++ BACKEND
 
+
+As mentioned above, the UI is controlled by a C++ backend, it connects the QML UI with the `Inter Process Communication Class`.
+This backend can be used as a normal QML Component, but allowes all C++ feature can be used to control the UI.
+The backend is a normal C++ Class, but it have to inherited from `QObject`.
+
+```c++
+#include <QObject>
+
+class MenuManager: public QObject
+{
+```
+
+After creating the class files `menumanager.h` and `menumanager.cpp`, the last step is to register the new created class as a usable QML component.
+This happend in the `main.cpp` file directly after bevore loading the QML file with the `qmlRegisterType` function call.
+
+
+```c++
+#include "menumanager.h"
+int main(int argc, char *argv[])
+{
+            QGuiApplication app(argc, argv);
+            QWindow window;
+            window.setBaseSize(QSize(800,480));
+            ...
+            ...
+            
+            //REGISTER THE TYPE MenuManager WITH THE NAME MenuManager AND VERSION 1.0 AS QML TYPE WITH NAME MenuManager           
+            qmlRegisterType<MenuManager>("MenuManager",1,0,"MenuManager");
+            
+            //LOAD QML FILE AND DISPLAY IT
+            QQuickView view;
+            view.engine()->addImportPath("qrc:/qml/imports");
+            view.setSource(QUrl("qrc:/qml/WINDOW.qml"));
+            ...
+            ...
+```
+
+The last step required is to use the new created QML type in the QML file `WINDOW.qml` of the UI.
+
+```qml
+Rectangle {
+    id: window
+    objectName: "window"
+    width: 800
+    height: 480
+
+    //CREATE AN ELEMENT OF QML TYPE MenuManager    
+    MenuManager{
+        id:main_menu
+    }
+```
+Now every function inside of the UI can call functions in the C++ backend by using the ID `main_menu.<FUNCTION>()`.
+
+
+### ACCESS MODIFIERT TO WORK WITH THE UI
+In the headerfile `menumanager.h` function can be declared with the access modifiers, for example`public` or `private`.
+In the Qt C++ there are also other modifiers avariable, espacially for connecting with QML.
+
+The mainly used modifier for this project is the `public slots` modifiert. Each function declared in this section can be called from the QML side.
+
+```c++
+class MenuManager: public QObject
+{
+public slots:
+            void trigger_login_event_button(); //call if login button is pressed
+```
+
+For example the obve delcared function `trigger_login_event_button` should be called with a button in the QML UI is pressed by the user.
+
+```qml
+
+Button {
+            id: hb_button
+            ... //OTHER ATTRIBUTES
+            //REGISTER EVENT HANDLERS
+            Connections {
+                target: hb_settings_button      //FOR WHICH ELEMENT ID IS THE CONNECTION             
+                function onClicked(_mouse){     //EVENT HANDLER FOR THE CLICK EVENT
+                    
+                    main_menu.trigger_login_event_button() //CALL A C++ BACKEND FUNCTION (main_menu is the QML instance of the C++ backend)
+                }
+            }
+        }
+```
+
+
 ### USING BACKEND IN QML
 * creating normal class
 * register in main.cpp
