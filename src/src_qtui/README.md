@@ -147,10 +147,19 @@ For this purpose each menu container has its own `objectName` attribute.
 * `ls_container`, is the start screen container
 
 To finally switch the a menu the function `switch_menu(QString _container_name)` can be used, for simple menu switching.
+It also poulates a variable called `last_menu_opened`, this stores the menu name the user comes from and makes its possible to switch back to the previous menu.
+This functionally comes handy, for the settings menu, which can be opened from every other menu and by closing the settings menu the user redirect back to the prevous menu.
 
 ```c++
 switch_menu("ls_container"); //SHOW LOGIN MENU
+switch_menu("ss_container"); //SHOW SETTINGS MENU
+
+switch_menu(last_menu_opened); //SWITCH BACK TO LOGIN MENU (= PREVIOUS MENU)
 ```
+
+
+
+
 
 
 
