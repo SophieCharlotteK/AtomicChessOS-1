@@ -152,6 +152,7 @@ enum class GUI_VALUE_TYPE{
 
 
     GUI_EVENT get_gui_update_event();
+	GUI_EVENT get_event();
      bool check_guicommunicator_version();
 	
 	void show_error_message_on_gui(std::string _err);
