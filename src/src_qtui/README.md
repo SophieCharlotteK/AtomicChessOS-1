@@ -156,10 +156,11 @@ The QML file can now be loaded into a `Qt Quick - Application` project inside of
 * works without QtCreator but offers features espacially for editing C++ and QML files together
 ### PROJECT SETUP
 * simply clicking ok; but choose qmake
+* generate main.cpp with qml loading code ; and a basic qml file 
 ### TOOLCHAIN SETUP
 * path setup
 ### DEVICE SETUP
-* nothing todo here
+* add device with ip address
 
 
 
