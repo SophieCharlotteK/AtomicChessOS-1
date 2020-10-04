@@ -16,6 +16,45 @@ This branch contains the QT5 User Interface which is running on the RaspberryPi 
 
 ### MENUS
 
+## WHY QT
+
+### QUICKGUIDE QML
+
+```qml
+Text {
+            id: hb_headline_text
+            objectName: "hb_headline_text"
+            x: 318
+            y: 18
+            width: 164
+            height: 34
+            text: qsTr("MAIN MENU")
+            visible: true            
+            font.pixelSize: 30
+        }
+```
+
+
+```qml
+Button {
+            id: hb_settings_button
+            x: 731
+            y: 4
+            width: 61
+            height: 61
+
+            text: qsTr("BUTTON NAME")
+            
+            Connections {
+                target: hb_settings_button
+                function onClicked(_mouse){
+                    ss_container.visible = true
+                    main_menu.lb_settings_btn()
+                }
+            }
+        }
+```
+
 
 
 ### MOCKUPS
@@ -73,7 +112,7 @@ With the `Qt`
 
 
 
-## WHY QT
+
 
 
 ### USING QtDesignStudio
