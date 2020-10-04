@@ -55,7 +55,8 @@ After creating the mockups, `Qt Design Studio` was used to convert the Mockup in
 ### Qt Design Studio
 
 `Qt` offers several different tool to create a user interface. In this case the `Qt Design Studio`, was used in the first step of implementing the UI form the mockup. It has some advantages over the `Qt Creator`, reagarding the design workflow. It is for example possible to direclty import Adobe Photoshop files, this feature was used for the creation of the icons used in the interface. No manually export of the icon from Adobe Photoshop and reimporting into Qt was needed.
- 
+It also supports live preview of the design as an running application, no compilation needed for reviewing the UI.
+
 The software uses a simple drag&drop system for elements, like buttons, labels and self designed components. The element can be placed on a empty screen to build the ui from the ground up. It also provides integration for the `QtQuickControl II` component presets, which includes some more advance ui element like the animated spinner or progress bars.
 
 While building the UI in the software, the equivalent QML code is generated which corresponds in an `.qml` file.
