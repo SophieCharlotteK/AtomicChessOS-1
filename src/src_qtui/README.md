@@ -188,6 +188,7 @@ In the following C++ function is taken from the `menumanager.cpp` which is the C
 The funktion changes the visible attribute of an element, which is searched with the `objectName` attribute.
 
 ```c++
+//menumanager.cpp
 void MenuManager::set_visible_element(QString _name, bool _state){
     QObject* obj = this->parent()->findChild<QObject*>(_name);
     if(obj){
@@ -205,6 +206,7 @@ This backend can be used as a normal QML Component, but allowes all C++ feature 
 The backend is a normal C++ Class, but it have to inherited from `QObject`.
 
 ```c++
+//menumanager.h
 #include <QObject>
 class MenuManager: public QObject
 {
@@ -215,6 +217,7 @@ This happend in the `main.cpp` file directly after bevore loading the QML file w
 
 
 ```c++
+//menumanager.h
 #include "menumanager.h"
 int main(int argc, char *argv[])
 {
@@ -238,6 +241,7 @@ int main(int argc, char *argv[])
 The last step required is to use the new created QML type in the QML file `WINDOW.qml` of the UI.
 
 ```qml
+//qml/WINDOW.qml
 Rectangle {
     id: window
     objectName: "window"
@@ -259,6 +263,7 @@ In the Qt C++ there are also other modifiers avariable, espacially for connectin
 The mainly used modifier for this project is the `public slots` modifiert. Each function declared in this section can be called from the QML side.
 
 ```c++
+//menumanager.h
 class MenuManager: public QObject
 {
 public slots:
@@ -268,6 +273,7 @@ public slots:
 For example the obve delcared function `trigger_login_event_button` should be called with a button in the QML UI is pressed by the user.
 
 ```qml
+qml/WINDOW.qml
 Button {
             id: hb_button
             ... //OTHER ATTRIBUTES
@@ -291,6 +297,7 @@ For example if the user presses the login button.
 In the `mainmenu` class, for each action is a function declared, mostly for buttons an their `onClick` event.
 
 ```c++
+//menumanager.h
 class MenuManager: public QObject
 {
 ...
@@ -308,6 +315,7 @@ public slots:
 Every functions triggers a event, which are send to the rest of the system by using the `Inter Process Communication` class.
 
 ```c++
+//menumanager.cpp
 void MenuManager::ls_login_btn(){
     qInfo() <<"ls_login_btn"; //DEBUG MESSAGE
     
@@ -346,6 +354,7 @@ For this menu structure it is sufficient to store only the previous menu.
 For deeper menu structures with more layers, a stack datastructure ca be used to navigate back multible times.
 
 ```c++
+//menumanager.cpp
 QStack<QString> previous_menus;
 QString current_menu = "";
 
