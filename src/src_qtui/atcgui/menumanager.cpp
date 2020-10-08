@@ -20,7 +20,7 @@ QTimer *timer = new QTimer(this);
 
 
 guiconnection.start_recieve_thread();
-guiconnection.check_guicommunicator_version();
+//guiconnection.check_guicommunicator_version();
 guiconnection.createEvent(guicommunicator::GUI_ELEMENT::QI_START_EVENT,guicommunicator::GUI_VALUE_TYPE::ENABLED);
 }
 

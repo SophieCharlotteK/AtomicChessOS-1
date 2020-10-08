@@ -172,7 +172,6 @@ private:
 	std::string rpc_callback(std::string _msg);
 	
 	bool thread_running = false;
-    //rpc::server* ptrsrv = nullptr;
     httplib::Server svr;
 
     GUI_EVENT last_event_from_webserver;
