@@ -236,7 +236,7 @@ Rectangle {
         height: 411
         color: "#197ab7"
         visible: false
-        DelayButton {
+        Button {
             id: ls_login_btn
             x: 272
             y: 147

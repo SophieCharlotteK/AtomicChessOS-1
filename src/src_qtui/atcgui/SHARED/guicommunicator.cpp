@@ -175,6 +175,10 @@ void guicommunicator::stop_recieve_thread() {
 	debug_output("GUI_COM THREAD STOPPED");
 }
 
+
+guicommunicator::GUI_EVENT guicommunicator::get_event(){
+	return guicommunicator::get_gui_update_event();
+}
 guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 	GUI_EVENT tmp;
 	tmp.is_event_valid = false;
@@ -215,7 +219,6 @@ void guicommunicator::enqueue_event(GUI_EVENT _ev){
 
 void guicommunicator::recieve_thread_function(guicommunicator* _this) {
     using namespace httplib;
-    qInfo()<< "thread started";
 
     //REGISTER WEBSERVER EVENTS
     _this->svr.Get("/", [](const Request& req, Response& res) {
@@ -279,3 +282,9 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 		guicommunicator::createEvent(_event, _type, _value.toStdString());
 	}
 #endif
+
+
+void guicommunicator::show_error_message_on_gui(std::string _err)
+{
+	createEvent(guicommunicator::GUI_ELEMENT::ERROR, guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE, _err);
+}
