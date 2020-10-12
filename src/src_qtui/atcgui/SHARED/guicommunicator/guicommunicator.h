@@ -1,10 +1,10 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
-#define GUICOMMUNICATOR_VERSION "1.2.3"
+#define GUICOMMUNICATOR_VERSION "1.2.4"
 
 
-#include "magic_enum-master/include/magic_enum.hpp"
+#include "../magic_enum-master/include/magic_enum.hpp"
 
 
 
@@ -20,8 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "SHARED/cpp-httplib-master/httplib.h"
-#include "SHARED/json-master/include/tao/json.hpp"
+#include "../cpp-httplib-master/httplib.h"
+#include "../json-master/include/tao/json.hpp"
 
 
 

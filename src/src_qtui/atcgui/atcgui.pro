@@ -17,17 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-        SHARED/PROTOCOL_MSG.pb.cc \
-        SHARED/guicommunicator.cpp \
-        main.cpp \
-        menumanager.cpp
+SOURCES += SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
+    SHARED/guicommunicator/guicommunicator.cpp \
+    main.cpp \
+    menumanager.cpp
 
 INCLUDEPATH += $$PWD/SHARED/rpclib-master/include
 INCLUDEPATH += $$PWD/SHARED/rpclib-master/dependencies/include
-RESOURCES += qml.qrc \
-    qml.qrc
-
+RESOURCES += qml.qrc
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -40,13 +37,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    SHARED/PROTOCOL_MSG.pb.h \
     SHARED/cpp-httplib-master/httplib.h \
-    SHARED/guicommunicator.h \
+    SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
+    SHARED/guicommunicator/guicommunicator.h \
     SHARED/json-master/include/tao/json.hpp \
     SHARED/magic_enum-master/include/magic_enum.hpp \
     menumanager.h
 
 LIBS += -pthread -lprotobuf -lpthread
-DISTFILES += SHARED/PROTOCOL_MSG.proto \
-    SHARED/compile_protobuffer.sh
+
+DISTFILES += \
+    SHARED/guicommunicator/PROTOCOL_MSG.proto
+
