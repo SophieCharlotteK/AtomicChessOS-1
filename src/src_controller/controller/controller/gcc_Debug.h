@@ -1489,7 +1489,6 @@
 #endif
 
 // --- Include directories begin --- //
-//.
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0/arm-buildroot-linux-gnueabihf
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include/c++/9.3.0/backward
@@ -1497,12 +1496,6 @@
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include-fixed
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
-//cpp-httplib-master
-//czmq-master\issues
-//mqtt_cpp-master\include
-//rpclib-master\include
-//SHARED\rpclib-master\include
-//SHARED\cpp-httplib-master
 // --- Include directories end --- //
 
 

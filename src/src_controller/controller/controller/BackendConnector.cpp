@@ -17,6 +17,6 @@ BackendConnector::BackendConnector(std::string _backend_base_url, std::string _h
 	: backend_base_url()
 {
 	backend_base_url = _backend_base_url;
-	hwid = _hwid
+	hwid = _hwid;
 	
 }

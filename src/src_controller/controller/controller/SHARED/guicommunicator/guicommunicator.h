@@ -1,10 +1,10 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
-#define GUICOMMUNICATOR_VERSION "1.2.3"
+#define GUICOMMUNICATOR_VERSION "1.2.4"
 
 
-#include "magic_enum-master/include/magic_enum.hpp"
+#include "../magic_enum-master/include/magic_enum.hpp"
 
 
 
@@ -20,8 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "SHARED/cpp-httplib-master/httplib.h"
-#include "SHARED/json-master/include/tao/json.hpp"
+#include "../cpp-httplib-master/httplib.h"
+#include "../json-master/include/tao/json.hpp"
 
 
 
@@ -80,7 +80,7 @@ enum class GUI_ELEMENT{
     INFOSCREEN_HWID_LABEL = 10,
     INFOSCREEN_SESSIONID_LABEL = 11,
     INFOSCREEN_RANK_LABEL = 12,
-    INFOSCREEN_RESERVED_1 = 13,
+    INFOSCREEN_VERSION = 13,
     INFOSCREEN_RESERVED_2 = 14,
 
     MAINMENU_START_AI_MATCH_BTN = 15,
@@ -152,14 +152,10 @@ enum class GUI_VALUE_TYPE{
 
 
     GUI_EVENT get_gui_update_event();
+	GUI_EVENT get_event();
      bool check_guicommunicator_version();
 	
-#ifdef USES_QT
-	
-#else
 	void show_error_message_on_gui(std::string _err);
-#endif
-	
 private:
 	  //zmq::context_t zmqctx;
 	// zsock_t* zmq_pull = nullptr;
@@ -179,7 +175,6 @@ private:
 	std::string rpc_callback(std::string _msg);
 	
 	bool thread_running = false;
-    //rpc::server* ptrsrv = nullptr;
     httplib::Server svr;
 
     GUI_EVENT last_event_from_webserver;

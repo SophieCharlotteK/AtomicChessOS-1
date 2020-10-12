@@ -130,7 +130,6 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 }
 
 bool guicommunicator::check_guicommunicator_version(){
-
             httplib::Client cli(EVENT_URL_COMPLETE);
             httplib::Result res =  cli.Get(EVENT_URL_VERSION);
             if(GUICOMMUNICATOR_VERSION == res->body){
@@ -141,7 +140,6 @@ bool guicommunicator::check_guicommunicator_version(){
                 debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
                 return false;
             }
-
 }
 
 
@@ -149,8 +147,12 @@ void guicommunicator::start_recieve_thread() {
   
 	thread_running = true;
 #ifdef USES_QT
-	update_thread = QThread::create([this]{ this->recieve_thread_function(this); });
-	update_thread->start();
+    update_thread = QThread::create([this]{ this->recieve_thread_function(this); });
+    update_thread->start();
+
+    if(update_thread->isRunning()){
+        debug_output("GUI_COM THREAD isRunning confirmed");
+    }
 #else
 	std::thread t1(recieve_thread_function, this);
 	t1.detach();
@@ -173,6 +175,10 @@ void guicommunicator::stop_recieve_thread() {
 	debug_output("GUI_COM THREAD STOPPED");
 }
 
+
+guicommunicator::GUI_EVENT guicommunicator::get_event(){
+	return guicommunicator::get_gui_update_event();
+}
 guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 	GUI_EVENT tmp;
 	tmp.is_event_valid = false;
@@ -197,7 +203,7 @@ guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 
 std::string guicommunicator::rpc_callback(std::string _msg)
 {
-	
+	return "";
 }
 
 std::string guicommunicator::event_to_json(GUI_EVENT _ev){

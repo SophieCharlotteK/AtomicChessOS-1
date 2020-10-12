@@ -19,6 +19,7 @@ public:
 	bool check_connection();
 private:
 	std::string backend_base_url;
+	std::string hwid;
 	
 };
 #endif

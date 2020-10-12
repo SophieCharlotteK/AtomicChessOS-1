@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator.cpp SHARED/loguru-master/loguru.cpp SHARED/PROTOCOL_MSG.pb.cc
+SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/loguru-master/loguru.cpp SHARED/PROTOCOL_MSG.pb.cc
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -229,7 +229,7 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated. Remove this line to suppress auto-generation of file rules.
 
 
-$(BINARYDIR)/guicommunicator.o : SHARED/guicommunicator.cpp $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/guicommunicator.o : SHARED/guicommunicator/guicommunicator.cpp $(all_make_files) |$(BINARYDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 

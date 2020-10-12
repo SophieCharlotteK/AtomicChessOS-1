@@ -36,9 +36,6 @@
     <None Include="controller-Release.vgdbsettings">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="SHARED\guicommunicator.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\PROTOCOL_MSG.pb.cc">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -48,19 +45,22 @@
     <ClCompile Include="BackendConnector.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp">
+      <Filter>Header files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
     <None Include="SHARED\PROTOCOL_MSG.proto" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SHARED\guicommunicator.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="BackendConnector.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\guicommunicator\guicommunicator.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

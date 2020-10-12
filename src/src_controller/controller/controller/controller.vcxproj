@@ -44,7 +44,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;cpp-httplib-master;czmq-master\issues;mqtt_cpp-master\include;rpclib-master\include;SHARED\rpclib-master\include;SHARED\cpp-httplib-master;$(ProjectDir);$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -69,7 +69,7 @@
   <ItemGroup>
     <ClCompile Include="BackendConnector.cpp" />
     <ClCompile Include="controller.cpp" />
-    <ClCompile Include="SHARED\guicommunicator.cpp" />
+    <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp" />
     <ClCompile Include="SHARED\loguru-master\loguru.cpp" />
     <ClCompile Include="SHARED\PROTOCOL_MSG.pb.cc" />
     <None Include="Makefile" />
@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackendConnector.h" />
-    <ClInclude Include="SHARED\guicommunicator.h" />
+    <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
     <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h" />
   </ItemGroup>
 </Project>

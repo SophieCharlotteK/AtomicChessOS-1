@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := controller.cpp SHARED/guicommunicator.cpp SHARED/loguru-master/loguru.cpp SHARED/PROTOCOL_MSG.pb.cc
+SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator.cpp SHARED/loguru-master/loguru.cpp SHARED/PROTOCOL_MSG.pb.cc
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
