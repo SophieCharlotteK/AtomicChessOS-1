@@ -373,6 +373,49 @@ Rectangle {
             text: qsTr("SESSION_ID")
             font.pixelSize: 30
         }
+
+        Text {
+            id: is_version_label
+            objectName: "is_version_label"
+            x: 319
+            y: 223
+            color: "#ffffff"
+            text: qsTr("ATCOS_VERSION")
+            font.pixelSize: 30
+        }
+    }
+
+    Rectangle {
+        id: es_container
+        x: 0
+        y: 69
+        width: 800
+        height: 411
+        color: "#197ab7"
+        objectName: "er_container"
+        Button {
+            id: es_back_btn
+            x: 686
+            y: 363
+            text: qsTr("BACK")
+            Connections {
+                target: es_back_btn
+                function onClicked(_mouse){
+                    main_menu.go_menu_back()
+                }
+            }
+        }
+
+        Text {
+            id: es_lasterr_label
+            x: 358
+            y: 54
+            color: "#ffffff"
+            text: qsTr("ERROR")
+            objectName: "es_lasterr_label"
+            font.pixelSize: 30
+        }
+        visible: false
     }
 
 

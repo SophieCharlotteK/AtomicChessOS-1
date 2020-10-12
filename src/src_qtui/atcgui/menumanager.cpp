@@ -67,6 +67,7 @@ void MenuManager::switch_menu(QString _screen){
     set_visible_element("ls_container",false);
     set_visible_element("ss_container",false);
     set_visible_element("is_container",false);
+    set_visible_element("es_container",false);
 
     set_visible_element(_screen,true);
 }
@@ -77,6 +78,7 @@ void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
         case guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN:{switch_menu("ls_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN:{switch_menu("ss_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN:{switch_menu("is_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE:{switch_menu("es_container");break;}
         default:break;
     }
 }
@@ -97,6 +99,15 @@ void MenuManager::updateProgress()
     }
     if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
         set_label_text("is_container","is_sessionid_label",QString::fromStdString(ev.value));
+    }
+
+    if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION){
+        set_label_text("is_container","is_version_label",QString::fromStdString(ev.value));
+    }
+
+    if(ev.event == guicommunicator::GUI_ELEMENT::ERROR){
+        switch_menu(ev.type);
+        set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
     }
 
 }
