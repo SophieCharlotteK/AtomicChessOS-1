@@ -83,6 +83,7 @@ Rectangle {
 
         Image {
             id: hb_connection_icon
+            objectName: "hb_connection_icon"
             x: 671
             y: 4
             width: 61

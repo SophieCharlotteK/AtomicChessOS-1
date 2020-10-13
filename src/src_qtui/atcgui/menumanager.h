@@ -65,6 +65,7 @@ private:
     QString current_menu_opened = "";
 
     void set_label_text(QString _container_name, QString _labelname,QString _text);
+    void set_icon_image(QString _container_name, QString _image_name, QString _path);
 };
 
 #endif // MAINMENU_H

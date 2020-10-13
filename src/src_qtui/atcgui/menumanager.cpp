@@ -24,6 +24,19 @@ guiconnection.start_recieve_thread();
 guiconnection.createEvent(guicommunicator::GUI_ELEMENT::QI_START_EVENT,guicommunicator::GUI_VALUE_TYPE::ENABLED);
 }
 
+void MenuManager::set_icon_image(QString _container_name, QString _image_name, QString _path){
+    QObject* recht1 = this->parent()->findChild<QObject*>(_container_name);
+    if(recht1){
+        QObject* recht2 = recht1->findChild<QObject*>(_image_name);
+        if(recht2){
+            recht2->setProperty("source",_path);
+        }else{
+            qInfo()<< "cant get element" << _image_name;
+        }
+    }else{
+        qInfo()<< "cant get element" << _container_name;
+    }
+}
 
 void MenuManager::set_label_text(QString _container_name, QString _labelname,QString _text){
     QObject* recht1 = this->parent()->findChild<QObject*>(_container_name);
@@ -32,10 +45,10 @@ void MenuManager::set_label_text(QString _container_name, QString _labelname,QSt
         if(recht2){
             recht2->setProperty("text",_text);
         }else{
-            qInfo()<< "cant get element" << "is_container";
+            qInfo()<< "cant get element" << _labelname;
         }
     }else{
-        qInfo()<< "cant get element" << "is_container";
+        qInfo()<< "cant get element" << _container_name;
     }
 }
 
@@ -107,6 +120,15 @@ void MenuManager::updateProgress()
 
     if(ev.event == guicommunicator::GUI_ELEMENT::ERROR){
         switch_menu(ev.type);
+        set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
+    }
+
+    if(ev.event == guicommunicator::GUI_ELEMENT::NETWORK_STATUS){
+        if(ev.type == guicommunicator::GUI_VALUE_TYPE::ONLINE){
+            set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_online.png");
+        }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::OFFLINE){
+            set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_offline.png");
+        }
         set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
     }
 
