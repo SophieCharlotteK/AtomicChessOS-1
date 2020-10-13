@@ -22,8 +22,7 @@ SOURCES += SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
     main.cpp \
     menumanager.cpp
 
-INCLUDEPATH += $$PWD/SHARED/rpclib-master/include
-INCLUDEPATH += $$PWD/SHARED/rpclib-master/dependencies/include
+
 RESOURCES += qml.qrc
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
