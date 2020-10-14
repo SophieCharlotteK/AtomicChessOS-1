@@ -203,7 +203,7 @@ guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 
 std::string guicommunicator::rpc_callback(std::string _msg)
 {
-	return "";
+	
 }
 
 std::string guicommunicator::event_to_json(GUI_EVENT _ev){

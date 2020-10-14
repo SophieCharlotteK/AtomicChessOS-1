@@ -44,7 +44,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;SHARED\cpp-httplib-master;SHARED\json-develop\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -70,18 +70,29 @@
     <ClCompile Include="BackendConnector.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp" />
+    <ClCompile Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.cc" />
+    <ClCompile Include="SHARED\json11-master\json11.cpp" />
+    <ClCompile Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.cpp" />
     <ClCompile Include="SHARED\loguru-master\loguru.cpp" />
-    <ClCompile Include="SHARED\PROTOCOL_MSG.pb.cc" />
+    <ClCompile Include="TMC5160.cpp" />
     <None Include="Makefile" />
     <None Include="debug.mak" />
     <None Include="release.mak" />
     <None Include="controller-Debug.vgdbsettings" />
     <None Include="controller-Release.vgdbsettings" />
+    <None Include="SHARED\json11-master\json11.pc.in" />
     <None Include="SHARED\PROTOCOL_MSG.proto" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackendConnector.h" />
+    <ClInclude Include="SHARED\cpp-httplib-master\httplib.h" />
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
-    <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h" />
+    <ClInclude Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.h" />
+    <ClInclude Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.h" />
+    <ClInclude Include="TMC5160.h" />
+    <ClInclude Include="TMC5160_REGISTERS.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="USER_DATA\atccontrollerconfig.ini" />
   </ItemGroup>
 </Project>

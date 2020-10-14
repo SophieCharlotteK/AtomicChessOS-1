@@ -36,9 +36,6 @@
     <None Include="controller-Release.vgdbsettings">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="SHARED\PROTOCOL_MSG.pb.cc">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\loguru-master\loguru.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -48,20 +45,48 @@
     <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp">
       <Filter>Header files</Filter>
     </ClCompile>
+    <ClCompile Include="TMC5160.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.cc">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\json11-master\json11.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
     <None Include="SHARED\PROTOCOL_MSG.proto" />
+    <None Include="SHARED\json11-master\json11.pc.in" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SHARED\PROTOCOL_MSG.pb.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="BackendConnector.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="TMC5160.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TMC5160_REGISTERS.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\cpp-httplib-master\httplib.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="USER_DATA\atccontrollerconfig.ini" />
   </ItemGroup>
 </Project>

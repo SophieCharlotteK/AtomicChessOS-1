@@ -6,7 +6,6 @@
       <Directories />
       <PathStyle>RemoteUnix</PathStyle>
     </CustomSourceDirectories>
-    <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
     <BuildHost>
       <HostName>192.168.178.125</HostName>
       <Transport>SSH</Transport>
@@ -42,6 +41,7 @@
         <string>*.ipp</string>
         <string>*.ino</string>
         <string>*.proto</string>
+        <string>*.ini</string>
       </FileMasks>
       <TransferNewFilesOnly>true</TransferNewFilesOnly>
       <IncludeSubdirectories>true</IncludeSubdirectories>
@@ -60,9 +60,32 @@
     <RemoveRemoteDirectoryOnClean>true</RemoveRemoteDirectoryOnClean>
     <SkipDeploymentTests>false</SkipDeploymentTests>
     <MainSourceDirectoryForLocalBuilds>$(ProjectDir)</MainSourceDirectoryForLocalBuilds>
+    <SynchronizedDirectories>
+      <SynchronizedDirectory>
+        <TransferAction>
+          <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
+          <LocalDirectory>$(ProjectDir)\USER_DATA</LocalDirectory>
+          <RemoteDirectory>$(TargetDir)</RemoteDirectory>
+          <FileMasks>
+            <string>*.ini</string>
+          </FileMasks>
+          <TransferNewFilesOnly>false</TransferNewFilesOnly>
+          <IncludeSubdirectories>true</IncludeSubdirectories>
+          <SelectedDirectories />
+          <DeleteDisappearedFiles>false</DeleteDisappearedFiles>
+          <ApplyGlobalExclusionList>true</ApplyGlobalExclusionList>
+          <Extension>
+            <Direction>Outgoing</Direction>
+            <SkipMountPoints>false</SkipMountPoints>
+            <OverwriteTrigger>Always</OverwriteTrigger>
+          </Extension>
+        </TransferAction>
+        <Triggers>ProjectLoad Build Debug</Triggers>
+        <UniqueID>ab1f9e9e-234f-484e-a805-4a21869e4d4e</UniqueID>
+      </SynchronizedDirectory>
+    </SynchronizedDirectories>
   </Project>
   <Build xsi:type="com.visualgdb.build.make">
-    <BuildLogMode xsi:nil="true" />
     <ToolchainID>
       <ID>com.sysprogs.toolchain.default-gcc</ID>
       <Version>
@@ -143,24 +166,19 @@
       <EnableAsyncExecutionMode>false</EnableAsyncExecutionMode>
       <EnableNonStopMode>false</EnableNonStopMode>
       <MaxBreakpointLimit>0</MaxBreakpointLimit>
-      <EnableVerboseMode>true</EnableVerboseMode>
     </AdditionalGDBSettings>
     <LaunchGDBSettings xsi:type="GDBLaunchParametersNewInstance">
       <DebuggedProgram>$(TargetPath)</DebuggedProgram>
       <GDBServerPort>2000</GDBServerPort>
       <ProgramArguments />
-      <ArgumentEscapingMode>Auto</ArgumentEscapingMode>
     </LaunchGDBSettings>
     <GenerateCtrlBreakInsteadOfCtrlC>false</GenerateCtrlBreakInsteadOfCtrlC>
-    <SuppressArgumentVariablesCheck>false</SuppressArgumentVariablesCheck>
     <DeploymentTargetPath>/tmp/$(TargetFileName)</DeploymentTargetPath>
     <X11WindowMode>Local</X11WindowMode>
     <KeepConsoleAfterExit>false</KeepConsoleAfterExit>
     <RunGDBUnderSudo>false</RunGDBUnderSudo>
-    <DeploymentMode>Auto</DeploymentMode>
+    <DeploymentMode>Always</DeploymentMode>
     <DeployWhenLaunchedWithoutDebugging>true</DeployWhenLaunchedWithoutDebugging>
-    <StripDebugSymbolsDuringDeployment>false</StripDebugSymbolsDuringDeployment>
     <SuppressTTYCreation>false</SuppressTTYCreation>
-    <IndexDebugSymbols>false</IndexDebugSymbols>
   </Debug>
 </VisualGDBProjectSettings2>
