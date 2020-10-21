@@ -207,11 +207,16 @@ int main(int argc, char *argv[])
 		}
 		
 		//HANDLE GAME STATE 
-		
+		if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+		{
+//			motorA.goto_position(1203);
+		}
 		
 		//HANDLE BACKEND EVETNS
 		//CHECK CONNECTION IN INTERVAL
 		//CHECK LOGINSTATE IN INTERVAL
+		
+		
 		
 	}
 	

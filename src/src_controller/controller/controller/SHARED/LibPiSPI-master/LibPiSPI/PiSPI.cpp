@@ -99,9 +99,9 @@ bool PiSPI::Write(uint8_t reg, uint8_t * pData, size_t length)
 	spi.len = sizeof(reg) + length;
 	spi.cs_change = 0;
 	
-	PiSPI::mutexSPI[this->_u8Channel].lock();
+	//PiSPI::mutexSPI[this->_u8Channel].lock();
 	retVal = ioctl(this->_iFD, SPI_IOC_MESSAGE(1), &spi);
-	PiSPI::mutexSPI[this->_u8Channel].unlock();
+	//PiSPI::mutexSPI[this->_u8Channel].unlock();
 
 	return retVal != -1;
 }
@@ -119,9 +119,9 @@ bool PiSPI::Write(uint8_t * pData, size_t length)
 	spi.len = length;
 	spi.cs_change = 0;
 
-	PiSPI::mutexSPI[this->_u8Channel].lock();
+	//PiSPI::mutexSPI[this->_u8Channel].lock();
 	retVal = ioctl(this->_iFD, SPI_IOC_MESSAGE(1), &spi);
-	PiSPI::mutexSPI[this->_u8Channel].unlock();
+	//PiSPI::mutexSPI[this->_u8Channel].unlock();
 
 	return retVal != -1;
 }
@@ -147,9 +147,9 @@ bool PiSPI::Read(uint8_t reg, uint8_t * pData, size_t length)
 	spi[1].len = length;
 	spi[1].cs_change = 0;
 
-	PiSPI::mutexSPI[this->_u8Channel].lock();
+	//PiSPI::mutexSPI[this->_u8Channel].lock();
 	retVal = ioctl(this->_iFD, SPI_IOC_MESSAGE(2), &spi[0]);
-	PiSPI::mutexSPI[this->_u8Channel].unlock();
+	//PiSPI::mutexSPI[this->_u8Channel].unlock();
 
 	return retVal != -1;
 }
@@ -167,9 +167,9 @@ bool PiSPI::Read(uint8_t * pData, size_t length)
 	spi.len = length;
 	spi.cs_change = 0;
 
-	PiSPI::mutexSPI[this->_u8Channel].lock();
+	//PiSPI::mutexSPI[this->_u8Channel].lock();
 	retVal = ioctl(this->_iFD, SPI_IOC_MESSAGE(1), &spi);
-	PiSPI::mutexSPI[this->_u8Channel].unlock();
+	//PiSPI::mutexSPI[this->_u8Channel].unlock();
 
 	return retVal != -1;
 }
@@ -187,9 +187,9 @@ bool PiSPI::SyncReadWrite(uint8_t* pData, size_t length)
 	spi.len = length;
 	spi.cs_change = 0;
 
-	PiSPI::mutexSPI[this->_u8Channel].lock();
+//	PiSPI::mutexSPI[this->_u8Channel].lock();
 	retVal = ioctl(this->_iFD, SPI_IOC_MESSAGE(1), &spi);
-	PiSPI::mutexSPI[this->_u8Channel].unlock();
+//	PiSPI::mutexSPI[this->_u8Channel].unlock();
 	return retVal != -1;
 }
 

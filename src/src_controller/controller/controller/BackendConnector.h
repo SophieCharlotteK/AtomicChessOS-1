@@ -10,7 +10,7 @@
 #include "SHARED/json11-master/json11.hpp"
 #include "SHARED/loguru-master/loguru.hpp"
 
-
+//IF A SESSION ID IS SET AND NOT NULL START HEARTBEAR THREAD
 
 class BackendConnector
 {

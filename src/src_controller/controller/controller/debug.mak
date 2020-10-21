@@ -15,7 +15,7 @@ OBJCOPY := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/outp
 PREPROCESSOR_MACROS := DEBUG=1
 INCLUDE_DIRS := SHARED/cpp-httplib-master SHARED/json-develop/include
 LIBRARY_DIRS := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/target/usr/lib/
-LIBRARY_NAMES := protobuf
+LIBRARY_NAMES := c rt crypt m
 ADDITIONAL_LINKER_INPUTS := -pthread -lpthread -ldl -lprotobuf
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
