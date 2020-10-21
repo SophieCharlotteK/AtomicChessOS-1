@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/LibPiSPI-master/LibPiSPI/PiSPI.cpp SHARED/loguru-master/loguru.cpp TMC5160.cpp
+SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/LibPiSPI-master/LibPiSPI/PiSPI.cpp SHARED/loguru-master/loguru.cpp TMC5160.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -235,6 +235,10 @@ $(BINARYDIR)/guicommunicator.o : SHARED/guicommunicator/guicommunicator.cpp $(al
 
 $(BINARYDIR)/PROTOCOL_MSG.pb.o : SHARED/guicommunicator/PROTOCOL_MSG.pb.cc $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/json11.o : SHARED/json11-master/json11.cpp $(all_make_files) |$(BINARYDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 
 $(BINARYDIR)/PiSPI.o : SHARED/LibPiSPI-master/LibPiSPI/PiSPI.cpp $(all_make_files) |$(BINARYDIR)

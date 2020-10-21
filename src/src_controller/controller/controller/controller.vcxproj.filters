@@ -48,13 +48,25 @@
     <ClCompile Include="TMC5160.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.cc">
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="SHARED\json11-master\json11.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcNet.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,16 +85,25 @@
     <ClInclude Include="TMC5160.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="TMC5160_REGISTERS.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcNet.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

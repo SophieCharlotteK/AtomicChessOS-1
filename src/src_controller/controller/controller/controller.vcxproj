@@ -72,8 +72,12 @@
     <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp" />
     <ClCompile Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.cc" />
     <ClCompile Include="SHARED\json11-master\json11.cpp" />
-    <ClCompile Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.cpp" />
     <ClCompile Include="SHARED\loguru-master\loguru.cpp" />
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcNet.c" />
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPi.c" />
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.c" />
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.c" />
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c" />
     <ClCompile Include="TMC5160.cpp" />
     <None Include="Makefile" />
     <None Include="debug.mak" />
@@ -88,9 +92,12 @@
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h" />
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
     <ClInclude Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.h" />
-    <ClInclude Include="SHARED\LibPiSPI-master\LibPiSPI\PiSPI.h" />
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcNet.h" />
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPi.h" />
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.h" />
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.h" />
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h" />
     <ClInclude Include="TMC5160.h" />
-    <ClInclude Include="TMC5160_REGISTERS.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="USER_DATA\atccontrollerconfig.ini" />
