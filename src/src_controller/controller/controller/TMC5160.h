@@ -154,11 +154,11 @@ private:
 	const int SPI_SPEED = 1000000;
 	const int SPI_MODE = 3;
 	const uint8_t SPI_BPW = 8;
-	const int CS_GPIO_NUMBER_MOTOR_0 = 10;  //USING GPIO 10 = CE_0
-	const int DRVEN_GPIO_NUMBER_MOTOR_0 = 0;
+	const int CS_GPIO_NUMBER_MOTOR_0 = 0;  //USING GPIO 10 = CE_0
+	const int DRVEN_GPIO_NUMBER_MOTOR_0 = 24;
 	
-	const int CS_GPIO_NUMBER_MOTOR_1 = 11;  //USING GPIO 10 = CE_0
-	const int DRVEN_GPIO_NUMBER_MOTOR_1 = 2;
+	const int CS_GPIO_NUMBER_MOTOR_1 = 2;  //USING GPIO 10 = CE_0
+	const int DRVEN_GPIO_NUMBER_MOTOR_1 = 25;
 	int CS_GPIO = -1;
 	int DRVEN_GPIO = 0;
 
