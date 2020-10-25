@@ -13,9 +13,9 @@
       <UserName>prodevmo</UserName>
     </BuildHost>
     <DeploymentHost>
-      <HostName>192.168.178.126</HostName>
+      <HostName>192.168.178.127</HostName>
       <Transport>SSH</Transport>
-      <UserName>pi</UserName>
+      <UserName>root</UserName>
     </DeploymentHost>
     <MainSourceTransferCommand>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>

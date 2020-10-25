@@ -148,7 +148,7 @@ private:
 	int position_offset = 0; //postion offset used by the postion of the endstop
 	//GPIO SETTINGS
 	const int MOTOR_ENABLE_MOTOR_0 = 0;
-	const int MOTOR_ENABLE_MOTOR_1 = 0;
+	const int MOTOR_ENABLE_MOTOR_1 = 2;
 
 	//SPI SETTINGS
 	const int SPI_SPEED = 1000000;
