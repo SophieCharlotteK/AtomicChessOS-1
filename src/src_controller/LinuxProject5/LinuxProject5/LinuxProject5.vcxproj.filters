@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{8facff3e-ec31-45b1-88c6-4da3d612c94c}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{ac726ed7-f45e-497b-95cf-dbd703ced0d8}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{da299a0f-43e2-495b-9b93-266d078592d0}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{fe84adb9-4a9d-4a6f-b0b8-9d31f6fce560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{e0c78085-ea73-4cf4-abed-d0d14b480901}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LinuxProject5.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="LinuxProject5-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="LinuxProject5-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <ClCompile Include="TMC5160.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcNet.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcSerial.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\piHiPri.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\piThread.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\pseudoPins.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\softPwm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\softServo.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\softTone.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringSerial.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringShift.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="SHARED\WiringPi-master\wiringPi\COPYING.LESSER" />
+    <None Include="SHARED\WiringPi-master\wiringPi\Makefile" />
+    <None Include="SHARED\WiringPi-master\wiringPi\noMoreStatic" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TMC5160.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TMC5160_REGISTERS.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcNet.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcSerial.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\pseudoPins.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\softPwm.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\softServo.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\softTone.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringSerial.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringShift.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
