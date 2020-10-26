@@ -15,7 +15,11 @@
 #include <chrono>
 #include <thread>
 #include <math.h>
+#include <iostream>
 
+#include "SPICommunication.h"
+
+#include "SHARED/WiringPi-master/wiringPi/wiringPi.h"
 
 #define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
@@ -28,6 +32,8 @@
 #define BITMASK_FLIP(x,y) ((x) ^= (y))
 #define BITMASK_CHECK_ALL(x,y) (!(~(x) & (y)))
 #define BITMASK_CHECK_ANY(x,y) ((x) & (y))
+
+
 class TMC5160 {
 
 
@@ -37,8 +43,7 @@ public:
 	enum MOTOR_ID
 	{
 		MOTOR_0,
-		   //CS0
-		MOTOR_1 //CS1
+		MOTOR_1
 	};
 	TMC5160(MOTOR_ID _id);
 
@@ -146,21 +151,16 @@ private:
 	int spm = 1140; //THIS IS THE STEPS PER MM FOR THE GT2 20 TEETH 6mm pulley
 	int current_postion = 0;
 	int position_offset = 0; //postion offset used by the postion of the endstop
+
 	//GPIO SETTINGS
-	const int MOTOR_ENABLE_MOTOR_0 = 0;
-	const int MOTOR_ENABLE_MOTOR_1 = 0;
+	const int CS_GPIO_NUMBER_MOTOR_0 = 0;  //USING GPIO 10 = CE_0
+	const int DRVEN_GPIO_NUMBER_MOTOR_0 = 24;
 
-	//SPI SETTINGS
-	const int SPI_SPEED = 1000000;
-	const int SPI_MODE = 3;
-	const uint8_t SPI_BPW = 8;
-	const int CS_GPIO_NUMBER_MOTOR_0 = 24;  //USING GPIO 10 = CE_0
-	const int DRVEN_GPIO_NUMBER_MOTOR_0 = 2;
+	const int CS_GPIO_NUMBER_MOTOR_1 = 2;  //USING GPIO 10 = CE_0
+	const int DRVEN_GPIO_NUMBER_MOTOR_1 = 25;
 
-	const int CS_GPIO_NUMBER_MOTOR_1 = 25;  //USING GPIO 10 = CE_0
-	const int DRVEN_GPIO_NUMBER_MOTOR_1 = 3;
-	int CS_GPIO = -1;
-	int DRVEN_GPIO = 0;
+	SPICommunication::SPI_DEVICE SPI_CS_DEVICE; //stores the id of the cs pin mapping
+	int DRVEN_GPIO = 0; //ACTUALLITY USED GPIO FOR DRV_EN PIN
 
 	//TMC5160 RAMP PARAMETERS
 	int RAMP_VSTART = 1;
