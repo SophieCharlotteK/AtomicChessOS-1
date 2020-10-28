@@ -22,7 +22,7 @@ public:
     enum SPI_DEVICE{
         MOTOR_0 = 0,
         MOTOR_1 = 1,
-        MAGNET_CONTROLLER = 3,
+        IO_CONTROLLER = 3,
         RESERVED_1 = 4,
         RESERVED_2 = 5
     };
