@@ -1,33 +1,33 @@
 #include "TMC5160.h"
-#include "SHARED/WiringPi-master/wiringPi/wiringPi.h"
-#include "SHARED/WiringPi-master/wiringPi/wiringPiSPI.h"
-#include <iostream>
 
 TMC5160::TMC5160(MOTOR_ID _id) {
+	_motor_id = _id; //SAVE MOTOR ID INSTANCE
+	//INIT WIRING PI FOR GPIO OF THE DRIVE ENABLE
 	wiringPiSetup();
-	int fd = wiringPiSPISetup(0, SPI_SPEED);
-	if (fd < 0) {
-		std::cout << "ERROR ----SPI FD IS" << fd << std::endl;
-	}
-	else {
-		std::cout << "SPI FD IS " << fd << std::endl;
-	}
 	
+	//GET SPI COMMUNICATION CLASS WIRRTEN FOR THIS PROJECT
+	if(!SPICommunication::getInstance()->isInitialised()){
+		if(SPICommunication::getInstance()->lastErrorCode() != 0){
+			return;
+		}
+	}
+	//REGIER CS PINS
 	
 	if (_id == MOTOR_ID::MOTOR_0) {
-		CS_GPIO = CS_GPIO_NUMBER_MOTOR_0;
+		SPI_CS_DEVICE = SPICommunication::SPI_DEVICE::MOTOR_0;
+		SPICommunication::getInstance()->register_cs_gpio(SPI_CS_DEVICE, CS_GPIO_NUMBER_MOTOR_1);
 		DRVEN_GPIO = DRVEN_GPIO_NUMBER_MOTOR_0;
-
 	}
 	else  if (_id == MOTOR_ID::MOTOR_1) {
-		CS_GPIO = CS_GPIO_NUMBER_MOTOR_1;
+		SPI_CS_DEVICE = SPICommunication::SPI_DEVICE::MOTOR_1;
+		SPICommunication::getInstance()->register_cs_gpio(SPI_CS_DEVICE, CS_GPIO_NUMBER_MOTOR_1);	
 		DRVEN_GPIO = DRVEN_GPIO_NUMBER_MOTOR_1;
 	}
 	
+//	std::cout << "CS GOPO IS " << CS_GPIO  << std::endl;
+	std::cout << "DRV EN GOIO " << DRVEN_GPIO << std::endl;
 	
-	//SETUP CS PIN
-	pinMode(CS_GPIO, OUTPUT);
-	digitalWrite(CS_GPIO, HIGH); //CS TO HIGH TO DISABLE CHIP
+	
 	
 	//SETUP DRVENPIN
 	pinMode(DRVEN_GPIO, OUTPUT);
@@ -147,21 +147,23 @@ void TMC5160::reset_ramp_defaults() {
 int TMC5160::read(int _address)
 {
 	const size_t DATA_LEN = 5;
-	uint8_t address_buffer[] = { 0, 0, 0, 0, 0 };
+	uint8_t write_buffer[] = { 0, 0, 0, 0, 0 };
 	uint8_t read_buffer[] = { 0, 0, 0, 0, 0 };
 	int value = 0;
 	int res = 0;
-	address_buffer[0] = _address & 0x7F;
+	write_buffer[0] = _address & 0x7F;
 	read_buffer[0] = _address & 0x7F;
-	digitalWrite(CS_GPIO, LOW);
-	res = wiringPiSPIDataRW(0, address_buffer, DATA_LEN);
-	digitalWrite(CS_GPIO, HIGH);
+	//digitalWrite(CS_GPIO, LOW);
+	res = SPICommunication::getInstance()->spi_send(SPI_CS_DEVICE ,write_buffer, DATA_LEN);
+	//res = wiringPiSPIDataRW(0, write_buffer, DATA_LEN);
+	//digitalWrite(CS_GPIO, HIGH);
 	//It will look like [address, 0, 0, 0, 0]
-	    digitalWrite(CS_GPIO, LOW);
-	res = wiringPiSPIDataRW(0, read_buffer, DATA_LEN);
-	digitalWrite(CS_GPIO, HIGH);
+	 //   digitalWrite(CS_GPIO, LOW);
+	 res = SPICommunication::getInstance()->spi_send(SPI_CS_DEVICE ,read_buffer, DATA_LEN);
+	//res = wiringPiSPIDataRW(0, read_buffer, DATA_LEN);
+	//digitalWrite(CS_GPIO, HIGH);
 	//# Parse data returned from SPI transfer/read
-	//read_buffer =address_buffer;
+	//read_buffer =write_buffer;
 	value = read_buffer[1];
 	value = value << 8;
 	value |= read_buffer[2];
@@ -190,10 +192,11 @@ int TMC5160::write(int _address, int _data)
 	write_buffer[4] = 0xFF & _data;
 	
 	//WRITE DATA OVER SPI; SET CS PIN LOW BEFORE WRITING
-	digitalWrite(CS_GPIO, LOW);
-	int res = wiringPiSPIDataRW(0, write_buffer, DATA_LEN);
+	//digitalWrite(CS_GPIO, LOW);
+	//int res = wiringPiSPIDataRW(0, write_buffer, DATA_LEN);
+	int res = SPICommunication::getInstance()->spi_send(SPI_CS_DEVICE ,write_buffer, DATA_LEN);
 	//SET CS PIN TO HIGH TO DEACTIVATE CHIP
-	digitalWrite(CS_GPIO, HIGH);
+	//digitalWrite(CS_GPIO, HIGH);
 	return res;
 
 }
