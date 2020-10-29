@@ -69,6 +69,15 @@
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="IOController.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChessPiece.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPICommunication.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -104,6 +113,15 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="IOController.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessPiece.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPICommunication.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

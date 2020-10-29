@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h1>ATC - FIGURE UNIQUE ID GENERATOR</h2>
+
+
+        <h2>SETTINGS</h2>
+        <form>
+            <p>FIGURE TYPE</p>
+            <fieldset>
+                <input type="radio" id="k" name="type" value="k" onchange="calc()">
+                <label for="k"> KINGHT</label>
+                <input type="radio" id="q" name="type" value="q" onchange="calc()">
+                <label for="q"> QUEEN</label>
+                <input type="radio" id="r" name="type" value="r" onchange="calc()">
+                <label for="r"> ROOK</label>
+                <input type="radio" id="b" name="type" value="b" onchange="calc()">
+                <label for="b"> BISHOP</label>
+                <input type="radio" id="n" name="type" value="n" onchange="calc()">
+                <label for="n"> KNOGHT</label>
+                <input type="radio" id="p" name="type" value="p" onchange="calc()" checked>
+                <label for="p"> PAWN</label>
+            </fieldset>
+
+
+            <p>FIGURE COLOR</p>
+            <fieldset>
+                <input type="radio" id="b" name="color" value="b" onchange="calc()" checked>
+                <label for="b"> BLACK</label>
+                <input type="radio" id="w" name="color" value="w" onchange="calc()">
+                <label for="w"> WHITE</label>
+
+            </fieldset>
+        </form>
+
+
+        <h2>RESULT</h2>
+
+        <table id="restable">
+        </table>
+        <script>
+            var figures = {
+                "k": {
+                    "count": 2,
+                    "typeno": [0, 0, 1]
+                },
+                "q": {
+                    "count": 2,
+                    "typeno": [0, 1, 0]
+                },
+                "r": {
+                    "count": 2,
+                    "typeno": [0, 1, 1]
+                },
+                "b": {
+                    "count": 2,
+                    "typeno": [1, 0, 0]
+                },
+                "n": {
+                    "count": 2,
+                    "typeno": [1, 0, 1]
+                },
+                "p": {
+                    "count": 2,
+                    "typeno": [1, 1, 1]
+                }
+            }
+
+            function clac() {
+                var resarr = [0, 0, 0, 0, 0, 0, 0, 0];
+                var table_res_arr = [];
+                var fid = "";
+                var fids = document.getElementsByName("type");
+                for (var i = 0; i < fids.length; i++) {
+                    if (fids[i].checked)
+                        fid = fids[i].value;
+                }
+                console.log(fid);
+
+                var figcount = 0;
+                if (fid != "") {
+                    var fd = figures[fid];
+                    if (fd) {
+                        figcount = fd.count;
+
+                        for (var i = 1; i < 4; + i++) {
+                            resarr[i] = fd.typeno[i - 1];
+                        }
+                        console.log(resarr);
+                    }
+                    console.log(fd);
+                } else {
+                    return;
+                }
+
+
+                var col = "";
+                var cols = document.getElementsByName("color");
+                for (var i = 0; i < cols.length; i++) {
+                    if (cols[i].checked)
+                        col = cols[i].value;
+                }
+                console.log(col);
+                if (col == "b") {
+                    resarr[0] = 1;
+                }
+                console.log(resarr);
+
+
+                for (let index = 0; index < figcount; index++) {
+                    var st = (index).toString(2).split('').map(function(s) {
+                        return parseInt(s);
+                    });
+                    console.log(st);
+                    if (st[3] == undefined) {
+                        st[3] = 0;
+                    }
+                    if (st[2] == undefined) {
+                        st[2] = 0;
+                    }
+                    if (st[1] == undefined) {
+                        st[1] = 0;
+                    }
+                    if (st[0] == undefined) {
+                        st[0] = 0;
+                    }
+                    resarr[4] = st[3];
+                    resarr[5] = st[2];
+                    resarr[6] = st[1];
+                    resarr[7] = st[0];
+                    table_res_arr.push();
+                    console.log(resarr);
+                }
+            }
+
+            clac();
+        </script>
+
+</body>
+
+
+
+</html>

@@ -35,7 +35,7 @@ public:
     bool isInitialised();
 
 
-    int spi_send(SPICommunication::SPI_DEVICE _device ,uint8_t* _data, int _len);
+    int spi_write(SPICommunication::SPI_DEVICE _device ,uint8_t* _data, int _len);
     bool register_cs_gpio(SPICommunication::SPI_DEVICE _device, int _gpio_number);
 
     

@@ -154,12 +154,12 @@ int TMC5160::read(int _address)
 	write_buffer[0] = _address & 0x7F;
 	read_buffer[0] = _address & 0x7F;
 	//digitalWrite(CS_GPIO, LOW);
-	res = SPICommunication::getInstance()->spi_send(SPI_CS_DEVICE ,write_buffer, DATA_LEN);
+	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE ,write_buffer, DATA_LEN);
 	//res = wiringPiSPIDataRW(0, write_buffer, DATA_LEN);
 	//digitalWrite(CS_GPIO, HIGH);
 	//It will look like [address, 0, 0, 0, 0]
 	 //   digitalWrite(CS_GPIO, LOW);
-	 res = SPICommunication::getInstance()->spi_send(SPI_CS_DEVICE ,read_buffer, DATA_LEN);
+	 res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, read_buffer, DATA_LEN);
 	//res = wiringPiSPIDataRW(0, read_buffer, DATA_LEN);
 	//digitalWrite(CS_GPIO, HIGH);
 	//# Parse data returned from SPI transfer/read

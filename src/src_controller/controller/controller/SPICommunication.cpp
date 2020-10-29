@@ -5,10 +5,10 @@
 #include "SPICommunication.h"
 
 
-static SPICommunication* SPICommunication::getInstance()
+ SPICommunication* SPICommunication::getInstance()
 {
     {
-        std::lock_guard<std::mutex> lck (mtx);
+	    std::lock_guard<std::mutex> lck(acces_lock_mutex);
         if (instance == nullptr)
         {
             instance = new SPICommunication();
@@ -42,20 +42,16 @@ int SPICommunication::lastErrorCode(){
     return tmp;
 }
 
-int SPICommunication::spi_send(SPICommunication::SPI_DEVICE _device, uint8_t* _data, int _len){
-
-    int res = 0;
-    disable_device(_device);
-    wiringPiSPIDataRW(0, _data, _len);
-    enable_device(_device);
-    //deaktivate alle cs pins bis auf device
-    //sende
-    //deaktiviere alle
-return res;
-}
 
 int SPICommunication::spi_write(SPICommunication::SPI_DEVICE _device, uint8_t* _data, int _len){
-return 0;
+	int res = 0;
+	disable_device(_device);
+	wiringPiSPIDataRW(0, _data, _len);
+	enable_device(_device);
+	//deaktivate alle cs pins bis auf device
+	//sende
+	//deaktiviere alle
+	return res;
 }
 
 
@@ -70,7 +66,7 @@ void SPICommunication::disable_devices(){
 
 disable_device(SPICommunication::SPI_DEVICE::MOTOR_0);
 disable_device(SPICommunication::SPI_DEVICE::MOTOR_1);
-disable_device(SPICommunication::SPI_DEVICE::MAGNET_CONTROLLER);
+disable_device(SPICommunication::SPI_DEVICE::IO_CONTROLLER);
 disable_device(SPICommunication::SPI_DEVICE::RESERVED_1);
 disable_device(SPICommunication::SPI_DEVICE::RESERVED_2);
 

@@ -68,7 +68,9 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="BackendConnector.cpp" />
+    <ClCompile Include="ChessPiece.cpp" />
     <ClCompile Include="controller.cpp" />
+    <ClCompile Include="IOController.cpp" />
     <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp" />
     <ClCompile Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.cc" />
     <ClCompile Include="SHARED\json11-master\json11.cpp" />
@@ -78,6 +80,7 @@
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c" />
+    <ClCompile Include="SPICommunication.cpp" />
     <ClCompile Include="TMC5160.cpp" />
     <None Include="Makefile" />
     <None Include="debug.mak" />
@@ -89,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackendConnector.h" />
+    <ClInclude Include="ChessPiece.h" />
+    <ClInclude Include="IOController.h" />
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h" />
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
     <ClInclude Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.h" />
@@ -97,6 +102,7 @@
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiI2C.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h" />
+    <ClInclude Include="SPICommunication.h" />
     <ClInclude Include="TMC5160.h" />
   </ItemGroup>
   <ItemGroup>

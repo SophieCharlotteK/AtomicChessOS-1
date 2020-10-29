@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/LibPiSPI-master/LibPiSPI/PiSPI.cpp SHARED/loguru-master/loguru.cpp TMC5160.cpp
+SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c TMC5160.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -241,10 +241,26 @@ $(BINARYDIR)/json11.o : SHARED/json11-master/json11.cpp $(all_make_files) |$(BIN
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 
-$(BINARYDIR)/PiSPI.o : SHARED/LibPiSPI-master/LibPiSPI/PiSPI.cpp $(all_make_files) |$(BINARYDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
-
-
 $(BINARYDIR)/loguru.o : SHARED/loguru-master/loguru.cpp $(all_make_files) |$(BINARYDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/drcNet.o : SHARED/WiringPi-master/wiringPi/drcNet.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/wiringPi.o : SHARED/WiringPi-master/wiringPi/wiringPi.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/wiringPiI2C.o : SHARED/WiringPi-master/wiringPi/wiringPiI2C.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/wiringPiSPI.o : SHARED/WiringPi-master/wiringPi/wiringPiSPI.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/wpiExtensions.o : SHARED/WiringPi-master/wiringPi/wpiExtensions.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 

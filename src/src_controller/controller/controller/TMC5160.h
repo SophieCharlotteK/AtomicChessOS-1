@@ -88,9 +88,9 @@ public:
 	
 	RAMP_STATUS get_ramp_stauts();
 	
-	void enable_motor();
-	void disable_motor();
-	void default_settings();
+	void enable_motor(); //ENABLES THE DRV_EN INPUT OF THE MOTOR DRIVER
+	void disable_motor();//SIABLED THE DRV_EN INPUT OF THE MOTOR DRIVER
+	void default_settings(); //RESTORES AND WRITES THE DEFAULT RAMP PARAMETERS AND SET THE DRIVER TO POSITION MODE
 	void set_VSTART(int _value);
 	void set_A1(int _value);
 	void set_V1(int _value);
@@ -99,18 +99,17 @@ public:
 	void set_DMAX(int _value);
 	void set_D1(int _value);
 	void set_VSTOP(int _value);
-	void write_ramp_params();
-	void reset_ramp_defaults();
-	void enable_switch(REF_SWITCH _direction, bool _enable, bool _automatic_stop, bool _invert_button_level);
-	int get_latched_position();
-	int get_velocity();
-	void go_to(int _position);
-	void calibrate_home(int _direction);
-	void move_velocity(VELOCITY_DIRECTION _dir, int  _v_max, int _a_max);
-	void stop_motor();
-	void hold_mode();
-	void position_mode();
-	void get_ramp_status();
+	void write_ramp_params(); //WRITES THE RAMP PARAMETERS TO THE MOTOR DRIVER
+	void reset_ramp_defaults(); // RESET THE RAMP PARAMETERS
+	void enable_switch(REF_SWITCH _direction, bool _enable, bool _automatic_stop, bool _invert_button_level); //ENABLE THE REF_L / REF_R INPUTS AND CONFIGURE THEM TO BE A HARD ENDSTP
+	int get_latched_position(); //GET THE LAST MOTOR POSITION; WHEN A SWITCH WAS TRIGGRED
+	int get_velocity(); //GET CURRENT MOTOR VELOCITY
+	void go_to(int _position); //MOVE MOTOR TO STEPS POSTION //ABSOLUTE
+	void move_velocity(VELOCITY_DIRECTION _dir, int  _v_max, int _a_max); //ENABLE CONTONOUS MOTOR ROATION WITH A GIVEN SPEED; USED FOR  HOMING
+	void stop_motor(); //STOP MOTOR
+	void hold_mode(); //STOP MOTOR; LET MOTOR DRIVER ACITAVED
+	void position_mode(); //SET MOTOR DRIVER INTO POSITION MODE (SEE GOTO FUNCTION)
+
 	int read(int _address);
 	int write(int _address, int _data);
 	

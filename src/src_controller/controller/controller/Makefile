@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp controller.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c TMC5160.cpp
+SOURCEFILES := BackendConnector.cpp ChessPiece.cpp controller.cpp IOController.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp TMC5160.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
