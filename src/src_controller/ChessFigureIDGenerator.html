@@ -5,7 +5,8 @@
 
     <h1>ATC - FIGURE UNIQUE ID GENERATOR</h2>
 
-
+        <h2>DESCRIPTION</h2>
+        This page generates the figure id data for the NFC tag of each figure.
         <h2>SETTINGS</h2>
         <form>
             <p>FIGURE TYPE</p>
@@ -38,7 +39,7 @@
 
         <h2>RESULT</h2>
 
-        <table id="restable">
+        <table id="restable" style="width:50%">
         </table>
         <script>
             var figures = {
@@ -67,6 +68,8 @@
                     "typeno": [1, 1, 1]
                 }
             }
+
+
 
             function clac() {
                 var resarr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -108,7 +111,7 @@
                 }
                 console.log(resarr);
 
-
+                var html = "<tr><th>No</th><th>DATA</th><th>NDEF_RECORD_CONTENT</th></tr>";
                 for (let index = 0; index < figcount; index++) {
                     var st = (index).toString(2).split('').map(function(s) {
                         return parseInt(s);
@@ -132,7 +135,15 @@
                     resarr[7] = st[0];
                     table_res_arr.push();
                     console.log(resarr);
+                    var ndefcontent = 0;
+                    html += "<tr><td>" + (index + 1).toString() + "</td><td>" + resarr + "</td><td>" + ndefcontent + "</td></tr>";
                 }
+
+
+
+
+                console.log(html);
+                document.getElementById("restable").innerHTML = html;
             }
 
             clac();
