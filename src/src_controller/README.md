@@ -91,5 +91,20 @@ Only one byte is stored in the record of the text record and so only 10bytes are
 
 For reading the NFC tag with the PN532, the program only reads the first NDEF record and parses the text record data to get the figure type. With this system it is possible to expand the system further and store more data on the NFC tag, by adding more NDEF records.
 
+On the controller side two functions were created to generate the unique ids and read them back.
+
+```c++
+  ChessPiece::FIGURE fig;
+	fig.figure_number = 1;
+	fig.color = ChessPiece::COLOR_BLACK;
+	fig.type = ChessPiece::TYPE_KNIGHT;
+  
+  //GENERATE ID FROM STRUCT
+  uint8_t UNIQUE_ID = ChessPiece::figure2NDEF(fig);
+  
+  //PARSE UNIQUE_ID BACK TO A STRUCT
+  ChessPiece::FIGURE back = ChessPiece::NDEF2Figure(UNIQUE_ID);
+  
+````
 * IMAGE
 
