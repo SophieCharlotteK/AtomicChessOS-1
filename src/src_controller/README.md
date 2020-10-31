@@ -69,8 +69,17 @@ In order to setup the VisualGDB Project, its nessessary that the embedded device
 
 The ATC_Controller software uses serveral different third party libraries, escacially for http requests and json parsing.
 * `https://github.com/nlohmann/json#serialization--deserialization`, json parsing.
-* `https://github.com/sisterniccy/LibPiSPI`, SPI communication for the embedded system.
 * `https://github.com/yhirose/cpp-httplib`, http/https requests.
 * `https://github.com/Neargye/magic_enum`, enum handling.
 * `https://github.com/emilk/loguru`
 A copy of the used versions, are located in the controller software directory.
+
+
+
+# CLASS OVERVIEW
+
+## MOTOR DRIVER
+## BOARD CLASS
+
+## CHESS PIECE
+### NFC TAG CONTENT GENERATOR
