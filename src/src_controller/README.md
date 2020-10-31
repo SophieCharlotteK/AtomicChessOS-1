@@ -83,7 +83,7 @@ A copy of the used versions, are located in the controller software directory.
 
 ## CHESS PIECE
 ### NFC TAG CONTENT GENERATOR
-Each figures NFC tag is ued to identify the figure. For easy usage of the NFC tag, it is formatted into the NDEF format, so its simply possible to program the NFC tags with an mobile phone. The tag contains a ndef `text record` with a string to identifiy the type of figure, color and a counting number. A combination of all three attributes make the figures id unique to the system. For the automatic unique ID generation, a html page `ChessFigureIDGenerator.html` was created to automaticliy generate all ID for a complete chess board.
+Each figures NFC tag is ued to identify the figure. For easy usage of the NFC tag, it is formatted into the NDEF format, so its simply possible to program the NFC tags with an mobile phone. The tag contains a ndef `text record` with a string to identifiy the type of figure (three bits), color (one bit) and a counting number (four bits). A combination of all three attributes make the figures id unique to the system. For the automatic unique ID generation, a html page `ChessFigureIDGenerator.html` was created to automaticliy generate all ID for a complete chess board.
 Only one byte is stored in the record of the text record and so only 10bytes are used on the NFC tag.
 
 * MSB [7,6,5,4,3,2,1,0] LSB 
