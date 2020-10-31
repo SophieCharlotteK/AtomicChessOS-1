@@ -11,26 +11,26 @@
         <form>
             <p>FIGURE TYPE</p>
             <fieldset>
-                <input type="radio" id="k" name="type" value="k" onchange="calc()">
+                <input type="radio" id="k" name="type" value="k" onClick="calc()">
                 <label for="k"> KINGHT</label>
-                <input type="radio" id="q" name="type" value="q" onchange="calc()">
+                <input type="radio" id="q" name="type" value="q" onClick="calc()">
                 <label for="q"> QUEEN</label>
-                <input type="radio" id="r" name="type" value="r" onchange="calc()">
+                <input type="radio" id="r" name="type" value="r" onClick="calc()">
                 <label for="r"> ROOK</label>
-                <input type="radio" id="b" name="type" value="b" onchange="calc()">
+                <input type="radio" id="b" name="type" value="b" onClick="calc()">
                 <label for="b"> BISHOP</label>
-                <input type="radio" id="n" name="type" value="n" onchange="calc()">
-                <label for="n"> KNOGHT</label>
-                <input type="radio" id="p" name="type" value="p" onchange="calc()" checked>
+                <input type="radio" id="n" name="type" value="n" onClick="calc()">
+                <label for="n"> KNIGHT</label>
+                <input type="radio" id="p" name="type" value="p" onClick="calc()" checked>
                 <label for="p"> PAWN</label>
             </fieldset>
 
 
             <p>FIGURE COLOR</p>
             <fieldset>
-                <input type="radio" id="b" name="color" value="b" onchange="calc()" checked>
+                <input type="radio" id="b" name="color" value="b" onClick="calc()" checked>
                 <label for="b"> BLACK</label>
-                <input type="radio" id="w" name="color" value="w" onchange="calc()">
+                <input type="radio" id="w" name="color" value="w" onClick="calc()">
                 <label for="w"> WHITE</label>
 
             </fieldset>
@@ -64,14 +64,14 @@
                     "typeno": [1, 0, 1]
                 },
                 "p": {
-                    "count": 2,
+                    "count": 8,
                     "typeno": [1, 1, 1]
                 }
-            }
+            };
 
 
 
-            function clac() {
+            function calc() {
                 var resarr = [0, 0, 0, 0, 0, 0, 0, 0];
                 var table_res_arr = [];
                 var fid = "";
@@ -136,7 +136,13 @@
                     table_res_arr.push();
                     console.log(resarr);
                     var ndefcontent = 0;
-                    html += "<tr><td>" + (index + 1).toString() + "</td><td>" + resarr + "</td><td>" + ndefcontent + "</td></tr>";
+                    for (let c = 0; c < resarr.length; c++) {
+                        if (resarr[resarr.length - c - 1] == 1) {
+                            ndefcontent += Math.pow(2, c);
+                        }
+
+                    }
+                    html += "<tr><td>" + (index + 1).toString() + "</td><td>" + resarr + " =[" + ndefcontent + "]</td><td>=" + String.fromCharCode(ndefcontent) + "=</td></tr>";
                 }
 
 
@@ -146,7 +152,7 @@
                 document.getElementById("restable").innerHTML = html;
             }
 
-            clac();
+            calc();
         </script>
 
 </body>
