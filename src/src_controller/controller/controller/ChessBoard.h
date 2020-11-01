@@ -59,22 +59,28 @@ public:
 		
 	};
 	
+	enum BOARD_PRESET {
+		BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION = 0,
+		BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION = 1
+	};
 	
-	ChessBoard(ConfigParser& _configparser);
+	
+	
+	ChessBoard(ConfigParser& _configparser) ;
 	~ChessBoard();
 	
 	std::string board2FEN(ChessBoard::BOARD_TPYE _type); //RETURNS A FEN REPRESENTATION OF THE BOARD
 	void boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board); //LOADS A BOARD BY FEN
 	void syncRealWithTargetBoard(); ///SNYC THE RealBoard with the Target board and move the figures
 	void printBoard(); ///PRINT BOARD TO CONSOLE CURRENT AND TARGET
-	BOARD_ERROR scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);  ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
+	ChessBoard::BOARD_ERROR scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);   ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
 	
 	std::list<ChessPiece> compareBoards(); ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
 	
-	BOARD_ERROR initBoard();  //INIT THE MECHANICS AND SCANS THE BOARD
+	ChessBoard::BOARD_ERROR initBoard();   //INIT THE MECHANICS AND SCANS THE BOARD
 	
-	
-	BOARD_ERROR makeMoveSync(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to, bool _with_scan, bool _directly, bool _occupy_check);     //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
+	void loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset);
+	ChessBoard::BOARD_ERROR makeMoveSync(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to, bool _with_scan, bool _directly, bool _occupy_check);      //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
 	
 	
 private:

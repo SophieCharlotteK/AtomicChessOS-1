@@ -87,7 +87,7 @@ public:
 		bool status_stop_l;
 	};
 	
-	RAMP_STATUS get_ramp_stauts();
+	TMC5160::RAMP_STATUS get_ramp_stauts();
 	
 	void enable_motor(); //ENABLES THE DRV_EN INPUT OF THE MOTOR DRIVER
 	void disable_motor();//SIABLED THE DRV_EN INPUT OF THE MOTOR DRIVER
@@ -102,12 +102,12 @@ public:
 	void set_VSTOP(int _value);
 	void write_ramp_params(); //WRITES THE RAMP PARAMETERS TO THE MOTOR DRIVER
 	void reset_ramp_defaults(); // RESET THE RAMP PARAMETERS
-	void enable_switch(REF_SWITCH _direction, bool _enable, bool _automatic_stop, bool _invert_button_level); //ENABLE THE REF_L / REF_R INPUTS AND CONFIGURE THEM TO BE A HARD ENDSTP
+	void enable_switch(TMC5160::REF_SWITCH _direction, bool _enable, bool _automatic_stop, bool _invert_button_level);  //ENABLE THE REF_L / REF_R INPUTS AND CONFIGURE THEM TO BE A HARD ENDSTP
 	int get_latched_position(); //GET THE LAST MOTOR POSITION; WHEN A SWITCH WAS TRIGGRED
 	int get_velocity(); //GET CURRENT MOTOR VELOCITY
 	void go_to(int _position); //MOVE MOTOR TO STEPS POSTION //ABSOLUTE
-	void move_velocity(VELOCITY_DIRECTION _dir, int  _v_max, int _a_max); //ENABLE CONTONOUS MOTOR ROATION WITH A GIVEN SPEED; USED FOR  HOMING
-	void move_velocity(VELOCITY_DIRECTION _dir, TRAVEL_SPEED_PRESET _preset);
+	void move_velocity(TMC5160::VELOCITY_DIRECTION _dir, int  _v_max, int _a_max);  //ENABLE CONTONOUS MOTOR ROATION WITH A GIVEN SPEED; USED FOR  HOMING
+	void move_velocity(TMC5160::VELOCITY_DIRECTION _dir, TMC5160::TRAVEL_SPEED_PRESET _preset);
 	void stop_motor(); //STOP MOTOR
 	void hold_mode(); //STOP MOTOR; LET MOTOR DRIVER ACITAVED
 	void position_mode(); //SET MOTOR DRIVER INTO POSITION MODE (SEE GOTO FUNCTION)
@@ -115,7 +115,7 @@ public:
 	int read(int _address);
 	int write(int _address, int _data);
 	
-	void debugprint_ramstatus(RAMP_STATUS _rmp);
+	void debugprint_ramstatus(TMC5160::RAMP_STATUS _rmp);
 	
 	bool is_target_position_reached();
 	void wait_for_target_position_reached();
@@ -139,11 +139,11 @@ public:
 	bool atc_home_async();
 	void atc_home_async_reset();
 	
-	void atc_set_speed_preset(TRAVEL_SPEED_PRESET _preset);
+	void atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET _preset);
 private:
 	int two_complement(int _value, int _bits = 32);
 	int steps_to_mm(int _steps); ///SET THE STEPS PER MM MANUALLY
-	MOTOR_ID _motor_id;
+	TMC5160::MOTOR_ID _motor_id;
 	bool atc_home_process_status = 0; ///SET TO ZERO AND CALL atc_home_async; this variable is used for the statemachine
 	//ATC HOME SETTINGS
 	const int HOME_SPEED_VELOCITY = 100000;
