@@ -8,15 +8,10 @@
     </CustomSourceDirectories>
     <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
     <BuildHost>
-      <HostName>192.168.178.125</HostName>
-      <Transport>SSH</Transport>
-      <UserName>prodevmo</UserName>
-    </BuildHost>
-    <DeploymentHost>
       <HostName>192.168.178.131</HostName>
       <Transport>SSH</Transport>
       <UserName>pi</UserName>
-    </DeploymentHost>
+    </BuildHost>
     <MainSourceTransferCommand>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
       <RemoteHost>

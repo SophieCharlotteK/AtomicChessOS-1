@@ -194,7 +194,7 @@ int TMC5160::write(int _address, int _data)
 	//WRITE DATA OVER SPI; SET CS PIN LOW BEFORE WRITING
 	//digitalWrite(CS_GPIO, LOW);
 	//int res = wiringPiSPIDataRW(0, write_buffer, DATA_LEN);
-	int res = SPICommunication::getInstance()->spi_send(SPI_CS_DEVICE ,write_buffer, DATA_LEN);
+	int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE ,write_buffer, DATA_LEN);
 	//SET CS PIN TO HIGH TO DEACTIVATE CHIP
 	//digitalWrite(CS_GPIO, HIGH);
 	return res;

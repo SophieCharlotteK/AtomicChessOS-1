@@ -1,6 +1,12 @@
 #pragma once
 #ifndef __CHESSPIECE_H__
 #define __CHESSPIECE_H__
+
+#define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
+#define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
+#define BIT_FLIP(a,b) ((a) ^= (1ULL<<(b)))
+#define BIT_CHECK(a,b) (!!((a) & (1ULL<<(b))))        // '!!' to make sure this returns 0 or 1
+
 class ChessPiece
 {
 public:
@@ -26,17 +32,17 @@ public:
 	/// COLOR, TYPE COMBINED WITH THE FIGURE ID
 	struct FIGURE
 	{
-		ChessPiece::COLOR _color;
-		ChessPiece::TYPE _type;
+		ChessPiece::COLOR color;
+		ChessPiece::TYPE type;
 		///THE UPCOUNTING NUMBER OF THE FIGURE TO DETERMN THE PARK POSITION, THE NUMBER IS ONLY UNIQUE COMBINED WITH THE OTHER
 		int figure_number;
 		///THIS IS THE UNIQUE ID OF THE FIGURE HWICH IS ALSO WRITTEN ON THE NFC TAG
-		uint8_t  unique_id;
+		unsigned char  unique_id;
 		
 	};
 	
-	uint8_t figure2NDEF(ChessPiece::FIGURE _figure);
-	ChessPiece::FIGURE NDEF2Figure(uint8_t _ndef_id);
+	static unsigned char figure2NDEF(ChessPiece::FIGURE _figure);
+	static ChessPiece::FIGURE NDEF2Figure(unsigned char _ndef_id);
 };
 #endif
 

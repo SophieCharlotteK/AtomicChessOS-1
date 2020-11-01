@@ -16,6 +16,7 @@
 
 #include "TMC5160.h"
 #include "BackendConnector.h"
+#include "ChessPiece.h"
 using namespace std;
 
 //!Reads the system HWID File from the location
@@ -40,7 +41,6 @@ void signal_callback_handler(int signum)
 	mainloop_running = signum;
 	//exit(signum);
 }
-
 
 std::string get_interface_mac_address(const string& _ifname) {
 	ifstream iface("/sys/class/net/" + _ifname + "/address");
@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
 	//REGISTER SIGNAL HANDLER
 	signal(SIGINT, signal_callback_handler);
 	//SETUP LOGGER
+	/*
 	loguru::init(argc, argv);
 	loguru::add_file("./log.log", loguru::Append, loguru::Verbosity_MAX);
 	loguru::g_stderr_verbosity = 1;
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	LOG_F(INFO, config.Get("NetworkSettings", "ATCBackendURL", "http://marcelochsendorf.com:3001").c_str());	
-		
+	*/
 	
 	//TMC5160 motorA = TMC5160(TMC5160::MOTOR_ID::MOTOR_0);
 	
@@ -97,7 +98,28 @@ int main(int argc, char *argv[])
 	
 	
 	
+	ChessPiece::FIGURE fig;
+	fig.figure_number = 1;
+	fig.color = ChessPiece::COLOR_BLACK;
+	fig.type = ChessPiece::TYPE_KNIGHT;
 	
+	unsigned char UNIQUE_ID = ChessPiece::figure2NDEF(fig);
+	
+	ChessPiece::FIGURE back = ChessPiece::NDEF2Figure(UNIQUE_ID);
+	
+	int i = 0;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*	
 	LOG_F(INFO, "guicommunicator startig ipc thread");
 	guicommunicator gui;
 	gui.start_recieve_thread();
@@ -219,6 +241,6 @@ int main(int argc, char *argv[])
 		
 		
 	}
-	
+	*/
 	return 0;
 }
