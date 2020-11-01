@@ -39,7 +39,7 @@
             <p>FIGURE TYPE</p>
             <fieldset>
                 <input type="radio" id="k" name="type" value="k" onClick="calc()">
-                <label for="k"> KINGHT</label>
+                <label for="k"> KING</label>
                 <input type="radio" id="q" name="type" value="q" onClick="calc()">
                 <label for="q"> QUEEN</label>
                 <input type="radio" id="r" name="type" value="r" onClick="calc()">
@@ -92,7 +92,7 @@
                 },
                 "p": {
                     "count": 8,
-                    "typeno": [1, 1, 1]
+                    "typeno": [1, 1, 0]
                 }
             };
 
@@ -174,7 +174,7 @@
                         }
 
                     }
-                    html += "<tr><td>" + (index + 1).toString() + "</td><td>" + resarr + " =[" + ndefcontent + "]</td><td>=" + String.fromCharCode(ndefcontent) + "=</td></tr>";
+                    html += "<tr><td>" + (index + 0).toString() + "</td><td>" + resarr + " =[" + ndefcontent + "]</td><td>=" + String.fromCharCode(ndefcontent) + "=</td></tr>";
                 }
 
 
