@@ -39,7 +39,8 @@ class TMC5160 {
 
 public:
 	~TMC5160();
-
+	
+	const int DEFAULT_STEPS_PER_MM = 1140;
 	enum MOTOR_ID
 	{
 		MOTOR_0,
@@ -106,6 +107,7 @@ public:
 	int get_velocity(); //GET CURRENT MOTOR VELOCITY
 	void go_to(int _position); //MOVE MOTOR TO STEPS POSTION //ABSOLUTE
 	void move_velocity(VELOCITY_DIRECTION _dir, int  _v_max, int _a_max); //ENABLE CONTONOUS MOTOR ROATION WITH A GIVEN SPEED; USED FOR  HOMING
+	void move_velocity(VELOCITY_DIRECTION _dir, TRAVEL_SPEED_PRESET _preset);
 	void stop_motor(); //STOP MOTOR
 	void hold_mode(); //STOP MOTOR; LET MOTOR DRIVER ACITAVED
 	void position_mode(); //SET MOTOR DRIVER INTO POSITION MODE (SEE GOTO FUNCTION)
@@ -140,16 +142,16 @@ public:
 	void atc_set_speed_preset(TRAVEL_SPEED_PRESET _preset);
 private:
 	int two_complement(int _value, int _bits = 32);
-	int steps_to_mm(int _steps);
+	int steps_to_mm(int _steps); ///SET THE STEPS PER MM MANUALLY
 	MOTOR_ID _motor_id;
-	bool atc_home_process_status = 0; //SET TO ZERO AND CALL atc_home_async; this variable is used for the statemachine
+	bool atc_home_process_status = 0; ///SET TO ZERO AND CALL atc_home_async; this variable is used for the statemachine
 	//ATC HOME SETTINGS
 	const int HOME_SPEED_VELOCITY = 100000;
 	
 	//RESOLUTION SETTINGS
-	int spm = 1140; //THIS IS THE STEPS PER MM FOR THE GT2 20 TEETH 6mm pulley
+	int spm = 1140; ///THIS IS THE STEPS PER MM FOR THE GT2 20 TEETH 6mm pulley
 	int current_postion = 0;
-	int position_offset = 0; //postion offset used by the postion of the endstop
+	int position_offset = 0; ///postion offset used by the postion of the endstop
 
 	//GPIO SETTINGS
 	const int CS_GPIO_NUMBER_MOTOR_0 = 0;  //USING GPIO 10 = CE_0
@@ -158,8 +160,8 @@ private:
 	const int CS_GPIO_NUMBER_MOTOR_1 = 2;  //USING GPIO 10 = CE_0
 	const int DRVEN_GPIO_NUMBER_MOTOR_1 = 5;
 
-	SPICommunication::SPI_DEVICE SPI_CS_DEVICE; //stores the id of the cs pin mapping
-	int DRVEN_GPIO = 0; //ACTUALLITY USED GPIO FOR DRV_EN PIN
+	SPICommunication::SPI_DEVICE SPI_CS_DEVICE; ///stores the id of the cs pin mapping
+	int DRVEN_GPIO = 0; ///ACTUALLITY USED GPIO FOR DRV_EN PIN
 
 	//TMC5160 RAMP PARAMETERS
 	int RAMP_VSTART = 1;

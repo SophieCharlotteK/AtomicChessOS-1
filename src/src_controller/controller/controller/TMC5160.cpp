@@ -10,12 +10,13 @@ TMC5160::TMC5160(MOTOR_ID _id) {
 		if(SPICommunication::getInstance()->lastErrorCode() != 0){
 			return;
 		}
+		return;
 	}
 	//REGIER CS PINS
 	
 	if (_id == MOTOR_ID::MOTOR_0) {
 		SPI_CS_DEVICE = SPICommunication::SPI_DEVICE::MOTOR_0;
-		SPICommunication::getInstance()->register_cs_gpio(SPI_CS_DEVICE, CS_GPIO_NUMBER_MOTOR_1);
+		SPICommunication::getInstance()->register_cs_gpio(SPI_CS_DEVICE, CS_GPIO_NUMBER_MOTOR_0);
 		DRVEN_GPIO = DRVEN_GPIO_NUMBER_MOTOR_0;
 	}
 	else  if (_id == MOTOR_ID::MOTOR_1) {
@@ -34,7 +35,7 @@ TMC5160::TMC5160(MOTOR_ID _id) {
 	disable_motor();//DISBALE DRIVER OUTPUT STATE
 	_motor_id = _id;
 
-	
+	default_settings();
 	
 }
 
@@ -97,26 +98,26 @@ void TMC5160::set_VSTOP(int _value) {
 
 void TMC5160::default_settings()
 {
-	
-	//# MULTISTEP_FILT = 1, EN_PWM_MODE = 1 enables stealthChop
+	/// MULTISTEP_FILT = 1, EN_PWM_MODE = 1 enables stealthChop
 	   write(REGDEF_GCONF, 0x0000000C);
-	//# TOFF = 3, HSTRT = 4, HEND = 1, TBL = 2, CHM = 0 (spreadCycle)
+	/// TOFF = 3, HSTRT = 4, HEND = 1, TBL = 2, CHM = 0 (spreadCycle)
 	   write(REGDEF_CHOPCONF, 0x000100C3);
-	//# IHOLD = 2, IRUN = 15 (max current), IHOLDDELAY = 8
+	/// IHOLD = 2, IRUN = 15 (max current), IHOLDDELAY = 8
 	    write(REGDEF_IHOLD_IRUN, 0x00080F02);
-	//# TPOWERDOWN = 10: Delay before powerdown in standstill
+	/// TPOWERDOWN = 10: Delay before powerdown in standstill
 	   write(REGDEF_TPOWERDOWN, 0x0000000A);
-	//# TPWMTHRS = 500
+	/// TPWMTHRS = 500
 	   write(REGDEF_A1, 0x000001F4);
-
-	//WRITE THE DEFAULT RAMP PARAMETERS
+	///WRITE THE DEFAULT RAMP PARAMETERS
 	reset_ramp_defaults(); 
-	//# Position mode
+	/// Position mode
 	write(REGDEF_RAMPMODE, 0);
-	//# Set current positin to 0
+	/// Set current positin to 0
 	write(REGDEF_XACTUAL, 0);
-	//# Set XTARGET to 0, which holds the motor at the current position
+	/// Set XTARGET to 0, which holds the motor at the current position
 	write(REGDEF_XTARGET, 0);
+	
+	steps_per_mm(DEFAULT_STEPS_PER_MM); ///WRITE STEPS PER MM
 }
 
 void TMC5160::write_ramp_params() {
@@ -248,7 +249,7 @@ int TMC5160::get_velocity() {
 }
 
 void TMC5160::move_velocity(TMC5160::VELOCITY_DIRECTION _dir, int _v_max, int _a_max) {
-
+	enable_motor();
 	write(REGDEF_VMAX, _v_max);
 	write(REGDEF_AMAX, _a_max);
 
@@ -532,11 +533,27 @@ void TMC5160::atc_set_speed_preset(TRAVEL_SPEED_PRESET _preset)
 		set_AMAX(80000);
 		break;
 	case TMC5160::TRAVEL_SPEED_PRESET::TRAVEL:
-		set_VMAX(800000);
+		set_VMAX(100000);
 		set_AMAX(80000);
 		break;
 	default:
-		default_settings();
+		stop_motor();
+		break;
+	}
+}
+
+void TMC5160::move_velocity(VELOCITY_DIRECTION _dir, TRAVEL_SPEED_PRESET _preset)
+{ 
+	switch (_preset)
+	{
+	case TMC5160::TRAVEL_SPEED_PRESET::MOVE:
+		move_velocity(_dir, 60000, 80000);
+		break;
+	case TMC5160::TRAVEL_SPEED_PRESET::TRAVEL:
+		move_velocity(_dir, 100000, 80000);
+		break;
+	default:
+		stop_motor();
 		break;
 	}
 }

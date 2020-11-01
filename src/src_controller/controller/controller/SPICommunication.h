@@ -10,7 +10,16 @@
 #include "SHARED/WiringPi-master/wiringPi/wiringPiSPI.h"
 #include <thread>
 #include <mutex>
+
+
+
+#define USE_STD_LOG
+
+#ifdef USE_STD_LOG
 #include <iostream>
+#endif
+
+
 class SPICommunication {
 
 
@@ -18,11 +27,11 @@ public:
 
     static SPICommunication* getInstance(); 
     
-    
+	///AFTER ADDING A NEW DEVICE ENTRY, ALSO ADD AN ENTRY INTO assigned_cs_gpios_mapping in SPICOmmunication.h
     enum SPI_DEVICE{
         MOTOR_0 = 0,
         MOTOR_1 = 1,
-        IO_CONTROLLER = 3,
+        IO_CONTROLLER = 2,
         RESERVED_1 = 4,
         RESERVED_2 = 5
     };
@@ -59,6 +68,8 @@ private:
 	const uint8_t SPI_BPW = 8;
     //THREAD STUFF
     static std::mutex acces_lock_mutex;
+	
+	
 };
 
 
