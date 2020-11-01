@@ -105,10 +105,18 @@ ChessPiece::FIGURE IOController::ScanNFC(int _retry_count)
 	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);    //READ BACK
 	//WAIT FOR ANSWER
 	volatile int retry = 0;
-	while(buffer_r[0] == 0 || !(retry < _retry_count))
+	bool figure_valid = false;
+	ChessPiece::FIGURE tmp_figure;
+	while (!figure_valid || !(retry < _retry_count))
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(NFC_READ_ACK_DELAY));
 		res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);
+		//PARSE RESULT TO A FIGURE AND CHECK IF ITS VALID
+		tmp_figure = ChessPiece::NDEF2Figure(buffer_r[0]);
+		if (tmp_figure.type != ChessPiece::TYPE::TYPE_INVALID) {
+			figure_valid = true;
+			
+		}
 		retry++;
 	}
 	//SEND NFC READ/FINISH COMMAND
@@ -116,9 +124,8 @@ ChessPiece::FIGURE IOController::ScanNFC(int _retry_count)
 	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);
 	
 	//PARSE RESULT TO A FIGURE
-	ChessPiece::FIGURE p =ChessPiece::NDEF2Figure(buffer_r[0]);
 	
-	return p;
+	return tmp_figure;
 }
 
 bool  IOController::isInitialized()
