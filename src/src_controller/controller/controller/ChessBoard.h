@@ -24,6 +24,8 @@
 //MISC RELATED
 #include "ConfigParser.h"
 
+//MISK 3rd PARTY
+#include "SHARED/loguru-master/loguru.hpp"
 
 
 
@@ -49,7 +51,8 @@ public:
 		MOVE_FAILED_FIGURE_MISSING = 1,
 		MOVE_FAILED = 2,
 		MOVE_FAILED_TARGET_OCCUPIED = 3,
-		MOVE_SUCCESS= 4
+		MOVE_SUCCESS= 4,
+		INIT_NULLPTR_EXECPTION = 5
 		
 	};
 	
@@ -91,6 +94,8 @@ private:
 	///REPRESENTS THE CHESS BOARD
 	ChessPiece::FIGURE board[BOARD_WIDTH][BOARD_HEIGHT]; ///REPRESENTS THE CURRENT CHESS BOARD (=> THE MECHANICAL/REAL WORLD)
 	ChessPiece::FIGURE boardTarget[BOARD_WIDTH][BOARD_HEIGHT];///REPRESENTS THE TARGETBOARD WHICH SHOULD BE ARCHVIED
+	
+	void log_error(std::string _err);
 };
 
 #endif //__CHESSBOARD_H__

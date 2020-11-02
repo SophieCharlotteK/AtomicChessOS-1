@@ -139,3 +139,56 @@ IOController::~IOController()
 {
 	
 }
+
+void IOController::invertCoilPolarity(IOController::COIL _coil, bool _invert_field)
+{
+	unsigned char cmd = 0;
+	if (_coil == IOController::COIL::COIL_A)
+	{
+		if (_invert_field)
+		{
+			cmd = IOController::COMMANDS::COIL_INVERT_ENABLE_A;
+		}
+		else
+		{
+			cmd = IOController::COMMANDS::COIL_INVERT_DISBALE_A;
+		}
+	}
+	else
+	{
+		if (_invert_field)
+		{
+			cmd = IOController::COMMANDS::COIL_INVERT_ENABLE_B;
+		}
+		else
+		{
+			cmd = IOController::COMMANDS::COIL_INVERT_DISBALE_B;
+		}
+	}
+	
+	uint8_t buffer_w[] = { cmd };
+	uint8_t buffer_r[] = { 0 };
+	
+	int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);  //WRITE CMD
+	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);   //READ BACK
+	
+	
+}
+
+
+
+
+
+void IOController::setTurnStateLight(IOController::TURN_STATE_LIGHT _state)
+{
+	
+	//CALCULATE THE REGISTER ADRESS
+	unsigned char cmd = _state + IOController::COMMANDS::TURN_STATE_LIGHT_BASE_ADDRESS;
+	
+	
+	uint8_t buffer_w[] = { cmd };
+	uint8_t buffer_r[] = { 0 };
+	
+	int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);   //WRITE CMD
+	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);    //READ BACK
+}
