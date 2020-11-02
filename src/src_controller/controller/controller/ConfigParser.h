@@ -35,6 +35,10 @@ public:
 			
 		MECHANIC_STEPS_PER_MM = 20,
 		MECHANIC_INVERT_COILS = 21,
+		
+		
+		BOARD_PRESET_START_POSITION_FEN = 30,
+		
 	};
 	
 	static ConfigParser* getInstance();

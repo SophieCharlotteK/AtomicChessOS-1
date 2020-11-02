@@ -3,7 +3,7 @@
 
 	
 
-ChessBoard::ChessBoard(ConfigParser& _configparser) {
+ChessBoard::ChessBoard() {
 	
 	///------------ SETUP MOTOR DRIVER /AXIS ------ //
 	x_axis = new TMC5160(TMC5160::MOTOR_ID::MOTOR_0);
@@ -12,7 +12,7 @@ ChessBoard::ChessBoard(ConfigParser& _configparser) {
 	y_axis->default_settings();
 	x_axis->default_settings();
 	//OVERRIDE STEPS PER MM IF CONFIG EXISTS
-	std::string tmp = _configparser.get(ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM);
+	std::string tmp = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM);
 	if (!tmp.empty())
 	{
 		int spm = atoi(tmp.c_str());
@@ -42,7 +42,7 @@ ChessBoard::ChessBoard(ConfigParser& _configparser) {
 	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
 	
 	//OVERRIDE POLARITY SETTING OF TH COILS
-	tmp = _configparser.get(ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS);
+	tmp =  ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS);
 	if (!tmp.empty())
 	{
 		int spm = atoi(tmp.c_str());
@@ -87,9 +87,60 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	y_axis->atc_home_sync();
 	
 	
+	travelToField(ChessField::CHESS_FIELD_A1);
+	
+	
+	//scanBoard(board_current);
+	//printBoard();
+	
+	//loadBoardPreset(ChessBoard::TARGET_BOARD, ChessBoard::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
+	
+//	syncRealWithTargetBoard();
 }
 
 
 void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset)
 {
+	//CLEAR BOARD
+	ChessPiece::FIGURE invlaid_piece;
+	invlaid_piece.color = ChessPiece::COLOR_UNKNOWN;
+	invlaid_piece.type = ChessPiece::TYPE_INVALID;
+	invlaid_piece.unique_id = 0;
+	invlaid_piece.figure_number = -1;
+	
+	
+	for(size_t w = 0 ; w < BOARD_WIDTH ; w++)
+	{
+		for (size_t h = 0; h < BOARD_HEIGHT; h++)
+		{
+			 
+		}		 
+	}
+	
+	
+	//LOAD PRESET
+	if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_CLEARED) {
+		return;
+		
+	}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION) {//LOAD DEFAULT FEN TO BOARD
+	
+		std::string tmp = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN);
+		//IF CONFIG FEN IS EMPTY USE A DEFAULT
+		if (tmp.empty())
+		{
+			tmp = DEFAULT_BOARD_FEN;
+		}
+		if (!boardFromFen(tmp, _target_board))
+		{
+			log_error("ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION");
+		}
+	
+		
+		
+	}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
+	{
+		//TODO
+	}
+	
+	
 }

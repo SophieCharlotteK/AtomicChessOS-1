@@ -55,7 +55,7 @@ bool ConfigParser::createConfigFile(std::string _file, bool _load_directly)
 	myfile << "MECHANIC_STEPS_PER_MM=1140\n";
 	myfile << "MECHANIC_INVERT_COILS=0\n";
 	
-
+	myfile << "BOARD_PRESET_START_POSITION_FEN=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
 	myfile.close();
 	
 	if (_load_directly)
@@ -87,6 +87,10 @@ std::string ConfigParser::get(ConfigParser::CFG_ENTRY _entry)
 	case ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH: return reader.Get("SETTINGS", "GENERAL_BOOT_PARTION_INFO_FILE_PATH", "");break;
 	case ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM: return reader.Get("SETTINGS", "MECHANIC_STEPS_PER_MM", "");break;
 	case ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS: return reader.Get("SETTINGS", "MECHANIC_INVERT_COILS", "");break;
+	case ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN: return reader.Get("SETTINGS", "BOARD_PRESET_START_POSITION_FEN", "");break;
+		
+		
+		
 	default:
 		break;
 	}
