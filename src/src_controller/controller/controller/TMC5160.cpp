@@ -529,12 +529,12 @@ void TMC5160::atc_set_speed_preset(TRAVEL_SPEED_PRESET _preset)
 	switch (_preset)
 	{
 	case TMC5160::TRAVEL_SPEED_PRESET::MOVE:
-		set_VMAX(60000);
+		set_VMAX(30000);
 		set_AMAX(80000);
 		break;
 	case TMC5160::TRAVEL_SPEED_PRESET::TRAVEL:
-		set_VMAX(100000);
-		set_AMAX(80000);
+		set_VMAX(800000);
+		set_AMAX(110000);
 		break;
 	default:
 		stop_motor();
@@ -547,7 +547,7 @@ void TMC5160::move_velocity(VELOCITY_DIRECTION _dir, TRAVEL_SPEED_PRESET _preset
 	switch (_preset)
 	{
 	case TMC5160::TRAVEL_SPEED_PRESET::MOVE:
-		move_velocity(_dir, 60000, 80000);
+		move_velocity(_dir, 30000, 80000);
 		break;
 	case TMC5160::TRAVEL_SPEED_PRESET::TRAVEL:
 		move_velocity(_dir, 100000, 80000);

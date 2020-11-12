@@ -146,7 +146,7 @@ private:
 	TMC5160::MOTOR_ID _motor_id;
 	bool atc_home_process_status = 0; ///SET TO ZERO AND CALL atc_home_async; this variable is used for the statemachine
 	//ATC HOME SETTINGS
-	const int HOME_SPEED_VELOCITY = 100000;
+	const int HOME_SPEED_VELOCITY = 150000;
 	
 	//RESOLUTION SETTINGS
 	int spm = 1140; ///THIS IS THE STEPS PER MM FOR THE GT2 20 TEETH 6mm pulley

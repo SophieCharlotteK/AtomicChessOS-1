@@ -13,7 +13,7 @@
 #include "ChessPiece.h"
 
 
-#define NFC_READ_ACK_DELAY 10 ///HOW LONG TO WAIT FOR NFC DATA IN MS
+#define NFC_READ_ACK_DELAY 50 ///HOW LONG TO WAIT FOR NFC DATA IN MS
 class IOController
 {
 	

@@ -6,8 +6,8 @@
 #include <list>
 #include <thread>
 #include <mutex>
-
-
+#include <chrono>
+#include <stdlib.h>
 #define USE_STD_LOG
 
 #ifdef USE_STD_LOG
@@ -36,6 +36,8 @@
 #define BOARD_HEIGHT 8
 
 #define DEFAULT_BOARD_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+#define WAITITME_FOR_MOTORS_TO_ARRIVE 100 //[ms] to check if motor target position is reached
+#define WAITIME_MULTIPLIER_AXIS_ARRIVAL 20 //check x times if target postion is reached
 class ChessBoard
 {
 	
@@ -54,7 +56,9 @@ public:
 		MOVE_FAILED = 2,
 		MOVE_FAILED_TARGET_OCCUPIED = 3,
 		MOVE_SUCCESS= 4,
-		INIT_NULLPTR_EXECPTION = 5
+		INIT_NULLPTR_EXECPTION = 5,
+		AXIS_TRAGET_ARRIVAL_FAILED = 6,
+		BAD_FILED_INDEX = 7
 		
 	};
 	
@@ -88,13 +92,17 @@ public:
 	void loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset);
 	ChessBoard::BOARD_ERROR makeMoveSync(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to, bool _with_scan, bool _directly, bool _occupy_check);      //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
 	
-	ChessBoard::BOARD_ERROR travelToField(ChessField::CHESS_FILEDS _field); //TRAVEL HEAD TO A FIELD
-	
+	ChessBoard::BOARD_ERROR travelToField(ChessField::CHESS_FILEDS _field , bool _to_field_center);  //TRAVEL HEAD TO A FIELD
+	void getFieldCoordinates(int _index, int& _x, int& _y, bool _get_only_array_index, bool _get_field_center);
+	void getParkPositionCoordinates(int _index, int& _x, int& _y, bool before_parkpostion_entry);
+	ChessBoard::BOARD_ERROR switch_coil(IOController::COIL _coil, bool _activate_swtiched_coil);
 private:
 	
 	TMC5160* x_axis = nullptr; //X AXIS MOTOR
 	TMC5160* y_axis = nullptr; //Y AXIS MOTOR
 	IOController* iocontroller = nullptr;//IOCONTROLLER (NFC READER AND MAGNETS)
+	IOController::COIL current_selected_coil = IOController::COIL::COIL_A;
+	ChessField::CHESS_FILEDS current_field;
 	///REPRESENTS THE CHESS BOARD
 	ChessPiece::FIGURE board_current[BOARD_WIDTH][BOARD_HEIGHT]; ///REPRESENTS THE CURRENT CHESS BOARD (=> THE MECHANICAL/REAL WORLD)
 	ChessPiece::FIGURE board_target[BOARD_WIDTH][BOARD_HEIGHT];///REPRESENTS THE TARGETBOARD WHICH SHOULD BE ARCHVIED

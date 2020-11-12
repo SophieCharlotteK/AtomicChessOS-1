@@ -54,6 +54,13 @@ bool ConfigParser::createConfigFile(std::string _file, bool _load_directly)
 	myfile << "GENERAL_BOOT_PARTION_INFO_FILE_PATH=/etc/swupdate/BOOTPART\n";
 	myfile << "MECHANIC_STEPS_PER_MM=1140\n";
 	myfile << "MECHANIC_INVERT_COILS=0\n";
+	myfile << "MECHANIC_H1_OFFSET_MM_X=20\n";
+	myfile << "MECHANIC_H1_OFFSET_MM_Y=0\n";
+	myfile << "MECHANIC_DISTANCE_COILS_MM=110\n";
+	myfile << "MECHANIC_COIL_SWITCH_POSTION_TRIGGER=200\n";
+	myfile << "MECHANIC_CHESS_FIELD_WIDTH=50\n";
+	myfile << "MECHANIC_CHESS_BOARD_WIDTH=400\n";
+	
 	
 	myfile << "BOARD_PRESET_START_POSITION_FEN=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
 	myfile.close();
@@ -87,6 +94,15 @@ std::string ConfigParser::get(ConfigParser::CFG_ENTRY _entry)
 	case ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH: return reader.Get("SETTINGS", "GENERAL_BOOT_PARTION_INFO_FILE_PATH", "");break;
 	case ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM: return reader.Get("SETTINGS", "MECHANIC_STEPS_PER_MM", "");break;
 	case ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS: return reader.Get("SETTINGS", "MECHANIC_INVERT_COILS", "");break;
+		
+	case ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_X: return reader.Get("SETTINGS", "MECHANIC_H1_OFFSET_MM_X", "");break;
+	case ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_Y: return reader.Get("SETTINGS", "MECHANIC_H1_OFFSET_MM_Y", "");break;
+	case ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM: return reader.Get("SETTINGS", "MECHANIC_DISTANCE_COILS_MM", "");break;
+	case ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER: return reader.Get("SETTINGS", "MECHANIC_COIL_SWITCH_POSTION_TRIGGER", "");break;
+	case ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH: return reader.Get("SETTINGS", "MECHANIC_CHESS_FIELD_WIDTH", "");break;
+	case ConfigParser::CFG_ENTRY::MECHANIC_CHESS_BOARD_WIDTH: return reader.Get("SETTINGS", "MECHANIC_CHESS_BOARD_WIDTH", "");break;
+		
+		
 	case ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN: return reader.Get("SETTINGS", "BOARD_PRESET_START_POSITION_FEN", "");break;
 		
 		

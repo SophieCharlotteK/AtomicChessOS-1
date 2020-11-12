@@ -107,7 +107,7 @@ ChessPiece::FIGURE IOController::ScanNFC(int _retry_count)
 	volatile int retry = 0;
 	bool figure_valid = false;
 	ChessPiece::FIGURE tmp_figure;
-	while (!figure_valid || !(retry < _retry_count))
+	while (!figure_valid && retry < _retry_count)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(NFC_READ_ACK_DELAY));
 		res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);
