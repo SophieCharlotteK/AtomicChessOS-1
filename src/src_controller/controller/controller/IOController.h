@@ -23,7 +23,8 @@ public:
 	enum COIL
 	{
 		COIL_A = 0,
-		COIL_B = 1
+		COIL_B = 1,
+		COIL_NFC = 2
 	};
 	
 	enum LED

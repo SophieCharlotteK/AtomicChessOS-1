@@ -143,7 +143,7 @@ void ChessBoard::getFieldCoordinates(int _index, int& _x, int& _y, bool _get_onl
 }
 	
 
-ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT])
+ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT], bool _include_park_postion)
 {
 	//SAVE CURRENT FIELD	
 	ChessField::CHESS_FILEDS _original_position = current_field;
@@ -152,14 +152,30 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 	int y = 0;
 	for (int i = 0; i < ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1; i++)
 	{
-		getFieldCoordinates(i, x, y, true, false);
-		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), true);
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);
-		ChessPiece::FigureDebugPrint(tmop);
-		board[x][y] = tmop;
+		getFieldCoordinates(i, x, y, true, false);//GET INDEX FOR ARRAY
+		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), true); //TRAVEL TO NEXT FIELD
+		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10); //SCAN NFC TAG IF PRESENT
+		ChessPiece::FigureDebugPrint(tmop); //DEBUG PRINT FIGURE IF FOUND
+		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
+			tmop.is_empty = true;	
+		}
+		board[x][y] = tmop;   //STORE FIGURE ON BOARD
 	}
 	
-	//TODO SCAN PARK POSITION
+	//TODO SCAN PARK POSITION FOR WHITE
+	for(int i = ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1 ; i < ChessField::CHESS_FIELD_PARK_POSTION_BLACK_1 ; i++)
+	{
+		
+		//GOOT
+		//ACTIVATE COIL
+		//MOVE OUT SLOW
+		//SCAN
+		//ACTIVTE COIL
+		//MOVE IN
+		//deativate coil
+	}
+	
+	
 	
 	travelToField(_original_position,true);
 	
@@ -218,6 +234,7 @@ ChessBoard::BOARD_ERROR ChessBoard::travelToField(ChessField::CHESS_FILEDS _fiel
 	
 	//SWITCH COIL IF NESSESSARY
 	//WENN FELD > ALS SWITCH FELD
+	/*
 	int coil_switch_threashhold = -1;
 	if (!ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER).empty()) {
 		coil_switch_threashhold = atoi(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER).c_str());
@@ -234,7 +251,7 @@ ChessBoard::BOARD_ERROR ChessBoard::travelToField(ChessField::CHESS_FILEDS _fiel
 			switch_coil(IOController::COIL::COIL_A, false);
 		}
 	}
-	
+	*/
 	
 	
 	
@@ -276,23 +293,37 @@ ChessBoard::BOARD_ERROR ChessBoard::switch_coil(IOController::COIL _coil, bool _
 	if (!ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM).empty()) {
 		coil_distance = atoi(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM).c_str());
 	}
-	;
-	coil_distance = coil_distance / 2;
+	int mv_distance = 0;
+	//coil_distance = coil_distance / 2;
 	///IF SWITCHED TO B COIL THE TRAVEL DISTANCE IS NEGATIVE
-	if(_coil == IOController::COIL::COIL_A)
+	if(current_selected_coil == IOController::COIL::COIL_A && _coil == IOController::COIL::COIL_B)
 	{
-		coil_distance = std::abs(coil_distance);
-	}else
+		mv_distance = -std::abs(coil_distance);
+	}else if(current_selected_coil == IOController::COIL::COIL_B && _coil == IOController::COIL::COIL_A)
 	{
-		coil_distance = -std::abs(coil_distance);
+		mv_distance = std::abs(coil_distance);
+	}else if(current_selected_coil == IOController::COIL::COIL_NFC && _coil == IOController::COIL::COIL_A)
+	{
+		mv_distance = std::abs(coil_distance / 2);
+	}else if(current_selected_coil == IOController::COIL::COIL_NFC && _coil == IOController::COIL::COIL_B)
+	{
+		mv_distance = -std::abs(coil_distance / 2);
+	}else if(current_selected_coil == IOController::COIL::COIL_A && _coil == IOController::COIL::COIL_NFC)
+	{
+		mv_distance = -std::abs(coil_distance / 2);
+	}else if(current_selected_coil == IOController::COIL::COIL_B && _coil == IOController::COIL::COIL_NFC)
+	{
+		mv_distance = std::abs(coil_distance / 2);
 	}
 	
 	//MOVE RELATIVE TO NEW POSITION
-	x_axis->move_to_postion_mm_relative(coil_distance, true);
+	x_axis->move_to_postion_mm_relative(mv_distance, true);
 	
 	
 	//SWITCH ON OTHER COIL
-	iocontroller->setCoilState(_coil, _activate_swtiched_coil);
+	if(_coil == IOController::COIL::COIL_A || _coil == IOController::COIL::COIL_B) {
+		iocontroller->setCoilState(_coil, _activate_swtiched_coil);
+	}
 	//SAVE CURRENT COIL
 	current_selected_coil = _coil;
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
@@ -317,17 +348,19 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	
 	
 	//iocontroller->setCoilState(IOController::COIL_A, true);
-	current_selected_coil = IOController::COIL_A;
+	current_selected_coil = IOController::COIL_NFC;
 	//MOVE TO A1 FIELD
-	travelToField(ChessField::CHESS_FIELD_A1,true);
+	
 
+	travelToField(ChessField::CHESS_FIELD_A1,true);
+	travelToField(ChessField::CHESS_FIELD_E1, true);
 	
-	
-	scanBoard(board_current);
+
+//	scanBoard(board_current,true);
 	//printBoard();
 	iocontroller->setStatusLed(IOController::STAUS_LED_A, true);
 	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
-	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
+
 	//loadBoardPreset(ChessBoard::TARGET_BOARD, ChessBoard::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
 	
 //	syncRealWithTargetBoard();

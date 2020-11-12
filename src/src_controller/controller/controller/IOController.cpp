@@ -30,7 +30,7 @@ IOController::IOController()
 void IOController::setCoilState(IOController::COIL _coil, bool _state)
 {
 	
-	unsigned char cmd = 0;
+	unsigned char cmd = -1;
 	if (_coil == IOController::COIL::COIL_A)
 	{
 		if (_state)
@@ -42,7 +42,7 @@ void IOController::setCoilState(IOController::COIL _coil, bool _state)
 			cmd = IOController::COMMANDS::DISABLE_COIL_A;
 		}
 	}
-	else
+	else if (_coil == IOController::COIL::COIL_B)
 	{
 		if (_state)
 		{
@@ -53,6 +53,12 @@ void IOController::setCoilState(IOController::COIL _coil, bool _state)
 			cmd = IOController::COMMANDS::DISABLE_COIL_B;
 		}
 	}
+	
+	//DO NOTHING IF ANYTHING ELESE IS CHOOSEN THAN ACOIL_A AND COIL_B
+	if(cmd < 0) {
+		return;
+	}
+	
 	
 	uint8_t buffer_w[] = {cmd};
 	uint8_t buffer_r[] = { 0 };
@@ -142,7 +148,7 @@ IOController::~IOController()
 
 void IOController::invertCoilPolarity(IOController::COIL _coil, bool _invert_field)
 {
-	unsigned char cmd = 0;
+	unsigned char cmd = -1;
 	if (_coil == IOController::COIL::COIL_A)
 	{
 		if (_invert_field)
@@ -154,7 +160,7 @@ void IOController::invertCoilPolarity(IOController::COIL _coil, bool _invert_fie
 			cmd = IOController::COMMANDS::COIL_INVERT_DISBALE_A;
 		}
 	}
-	else
+	else if (_coil == IOController::COIL::COIL_B)
 	{
 		if (_invert_field)
 		{
@@ -166,6 +172,12 @@ void IOController::invertCoilPolarity(IOController::COIL _coil, bool _invert_fie
 		}
 	}
 	
+	//DO NOTHING IF ANYTHING ELESE IS CHOOSEN THAN ACOIL_A AND COIL_B
+	if (cmd < 0) {
+		return;
+	}
+	
+	//FINALLY WRITE CMD TO SPI BUS
 	uint8_t buffer_w[] = { cmd };
 	uint8_t buffer_r[] = { 0 };
 	

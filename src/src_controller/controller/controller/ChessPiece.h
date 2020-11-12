@@ -27,7 +27,7 @@ public:
 		TYPE_ROOK = 3,
 		TYPE_BISHOP = 4,
 		TYPE_KNIGHT = 5,
-		TYPE_PAWN = 6
+		TYPE_PAWN = 6,
 	};
 	///COLOR
 	enum  COLOR
@@ -46,6 +46,7 @@ public:
 		int figure_number;
 		///THIS IS THE UNIQUE ID OF THE FIGURE HWICH IS ALSO WRITTEN ON THE NFC TAG
 		unsigned char  unique_id;
+		bool is_empty;
 	};
 	///GENERATES THE UNIQUE ID (WRITTEN ON NFC TAG) FROM A GIVEN FIGURE
 	///USING A REFERENCE THEN CALCULATED unique_id WILL BE OVERWRITTEN
