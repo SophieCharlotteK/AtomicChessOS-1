@@ -58,8 +58,9 @@ public:
 		MOVE_SUCCESS= 4,
 		INIT_NULLPTR_EXECPTION = 5,
 		AXIS_TRAGET_ARRIVAL_FAILED = 6,
-		BAD_FILED_INDEX = 7
-		
+		BAD_FILED_INDEX = 7,
+		INIT_CHESS_FIGURES_NOT_COMPLETE = 8,
+		INIT_COMPLETE = 9
 	};
 	
 	enum BOARD_STATUS {
@@ -74,7 +75,11 @@ public:
 		BOARD_PRESET_CLEARED = 2
 	};
 	
-	
+	struct FigureField
+	{
+		ChessField::CHESS_FILEDS field;
+		ChessPiece::FIGURE figure;
+	};
 	
 	ChessBoard() ;
 	~ChessBoard();
@@ -85,17 +90,23 @@ public:
 	void printBoard(); ///PRINT BOARD TO CONSOLE CURRENT AND TARGET
 	ChessBoard::BOARD_ERROR scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT], bool _include_park_postion);    ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
 	
-	std::list<ChessPiece> compareBoards(); ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
+	std::list<FigureField> compareBoards();  ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
 	
 	ChessBoard::BOARD_ERROR initBoard();   //INIT THE MECHANICS AND SCANS THE BOARD
 	
 	void loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset);
 	ChessBoard::BOARD_ERROR makeMoveSync(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to, bool _with_scan, bool _directly, bool _occupy_check);      //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
 	
-	ChessBoard::BOARD_ERROR travelToField(ChessField::CHESS_FILEDS _field , bool _to_field_center);  //TRAVEL HEAD TO A FIELD
-	void getFieldCoordinates(int _index, int& _x, int& _y, bool _get_only_array_index, bool _get_field_center);
-	void getParkPositionCoordinates(int _index, int& _x, int& _y, bool before_parkpostion_entry);
+	ChessBoard::BOARD_ERROR travelToField(ChessField::CHESS_FILEDS _field, IOController::COIL _coil,bool _to_field_center);   //TRAVEL HEAD TO A FIELD
+	void getFieldCoordinates(ChessField::CHESS_FILEDS _index, int& _x, int& _y, IOController::COIL _coil, bool _get_only_array_index, bool _get_field_center);
+	void getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int& _x, int& _y, IOController::COIL _coil, bool before_parkpostion_entry);
+	bool isFieldParkPosition(ChessField::CHESS_FILEDS _field);
 	ChessBoard::BOARD_ERROR switch_coil(IOController::COIL _coil, bool _activate_swtiched_coil);
+	ChessBoard::BOARD_ERROR get_coil_offset(IOController::COIL _coil, int& _x, int& _y);
+	
+	std::list<ChessPiece::FIGURE> checkBoardForFullFigureSet(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);
+	IOController::COIL getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS _field, IOController::COIL _target);
+	ChessBoard::BOARD_ERROR calibrate_home_pos();
 private:
 	
 	TMC5160* x_axis = nullptr; //X AXIS MOTOR
