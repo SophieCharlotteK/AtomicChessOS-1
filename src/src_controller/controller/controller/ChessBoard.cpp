@@ -66,10 +66,10 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	//DETERM IF PARKING POSITION IS BLACK OR WHITE SLOT
 	int is_black_park_position = 0;
 	int field_index = static_cast<int>(_index);
-	if (field_index >= static_cast<int>(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1) && field_index <= static_cast<int>(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_16)) {
+	if (field_index >= static_cast<int>(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1) && field_index <= static_cast<int>(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_16)) {
 		is_black_park_position = 1;
 	}
-	else if (field_index >= static_cast<int>(ChessField::CHESS_FIELD_PARK_POSTION_BLACK_1) && field_index <= static_cast<int>(ChessField::CHESS_FIELD_PARK_POSTION_BLACK_16)) {
+	else if (field_index >= static_cast<int>(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1) && field_index <= static_cast<int>(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_16)) {
 		is_black_park_position = 2;
 	}
 	
@@ -105,11 +105,11 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	int pp_entry = 0;
 	if (is_black_park_position == 2) //BLACK
 	{
-		pp_entry = (_index - ChessField::CHESS_FIELD_PARK_POSTION_BLACK_1) % 16;
+		pp_entry = (_index - ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1) % 16;
 	}
 	else
 	{
-		pp_entry = (_index - ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1) % 16;
+		pp_entry = (_index - ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1) % 16;
 	}
 	
 	if (before_parkpostion_entry)
@@ -203,12 +203,12 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 	ChessField::CHESS_FILEDS original_position = current_field;
 	IOController::COIL original_coil = current_selected_coil;
 	
-	iocontroller->setCoilState(IOController::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL_B, false);
+	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
 	
 	int x = 0;
 	int y = 0;
-	for (int i = 0; i < ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1; i++)
+	for (int i = 0; i < ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1; i++)
 	{
 		getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);    //GET INDEX FOR ARRAY
 		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);    //TRAVEL TO NEXT FIELD
@@ -221,7 +221,7 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 	}
 	
 	//TODO SCAN PARK POSITION FOR WHITE
-	for(int i = ChessField::CHESS_FIELD_PARK_POSTION_BLACK_1 ; i < ChessField::CHESS_FIELD_PARK_POSTION_BLACK_16 ; i++)
+	for(int i = ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1 ; i < ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_16 ; i++)
 	{
 		
 		//GOOT
@@ -239,10 +239,10 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 			tmop.is_empty = true;	
 		}
 		//ACTIVTE COIL A AGAIN
-		iocontroller->setCoilState(IOController::COIL_A, true);
+		iocontroller->setCoilState(IOController::COIL::COIL_A, true);
 		//MOVE IN
 		//DEACTIVATE COIL
-		iocontroller->setCoilState(IOController::COIL_A, false);
+		iocontroller->setCoilState(IOController::COIL::COIL_A, false);
 	}
 	
 	
@@ -287,7 +287,7 @@ IOController::COIL ChessBoard::getValidCoilTypeParkPosition(ChessField::CHESS_FI
 	bool is_black_park_position = true;
 	int field_index = static_cast<int>(_field);
 	
-	if (field_index >= static_cast<int>(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1) && field_index <= static_cast<int>(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1)) {
+	if (field_index >= static_cast<int>(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1) && field_index <= static_cast<int>(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1)) {
 		return IOController::COIL::COIL_B;
 	}
 	
@@ -376,7 +376,15 @@ ChessBoard::BOARD_ERROR ChessBoard::get_coil_offset(IOController::COIL _coil, in
 }
 	
 
-
+//ChessBoard::BOARD_ERROR ChessField::makeMoveSync(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to, bool _with_scan, bool _directly, bool _occupy_check)
+//{
+	
+	//TRAVEL TO FIELD WITH COILS OFF 
+	//SWITCH TO SCAN NFC
+	//MATCH WITH CURRENT BOARD
+	//CHECK IF TARGET FIELD IS OCCUPEID -> MOVE FIGURE TO PARK
+	//MOVE BACK TO START AND MOVE FIGURE TO DESTIANTION
+//}
 
 ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 {
@@ -396,22 +404,24 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	//TRAVEL TO THE "HOME FIELD H1" AND SWITCH ALL COILS OFF
 	iocontroller->setCoilState(IOController::COIL_A, false);
 	iocontroller->setCoilState(IOController::COIL_B, false);
-	travelToField(ChessField::CHESS_FIELD_H1, IOController::COIL_A, true);
+	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL_A, true);
 	/// AFTER HOME AND SET COIL A
 	/// THE A MAGNET HAVE TO BE AT POSTION H1
 	
-	
-	travelToField(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1, getValidCoilTypeParkPosition(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL_B), true);
-	travelToField(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_2, getValidCoilTypeParkPosition(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL_B), true);
-	travelToField(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_3, getValidCoilTypeParkPosition(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL_B), true);
-	travelToField(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_4, getValidCoilTypeParkPosition(ChessField::CHESS_FIELD_PARK_POSTION_WHITE_4, IOController::COIL_B), false);
+
+	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, IOController::COIL_B), true);
+	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL::COIL_B), true);
+
 	//NEXT SCAN THE FIELD WITH PARK POSTIONS
 	//scanBoard(board_current, true);
 //	printBoard();
 	//CHECK IF ALL FIGURES ARE PRESENT
+	//	std::list<ChessPiece::FIGURE> checkBoardForFullFigureSet(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);
 	//return ChessBoard::BOARD_ERROR::INIT_CHESS_FIGURES_NOT_COMPLETE;
 	
-
+	//makeMoveSync(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, ChessField::CHESS_FILEDS::CHESS_FIELD_A1, true, false, true);   //WITH SCAN //DIRECTLY //OCCUPY CHECK
+	
+	//TODO SCAN FIELD ROUTINE
 	
 	//MOVE FIGURES TO STANDART START POSTION
 	loadBoardPreset(ChessBoard::TARGET_BOARD, ChessBoard::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
