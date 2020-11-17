@@ -118,3 +118,5 @@ The system uses a config file located in the filesystem `/usr/ATC/atccontroller.
 
 In order to calibrate the mechanic, several entries in the config file has to be changed.
 
+
+IMAGE :ATC_Calibration_Guide.png
