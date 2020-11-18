@@ -75,7 +75,7 @@ Rectangle {
             Connections {
                 target: hb_settings_button
                 function onClicked(_mouse){
-                    ss_container.visible = true
+                    //ss_container.visible = true
                     main_menu.lb_settings_btn()
                 }
             }
@@ -406,7 +406,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        objectName: "er_container"
+        objectName: "es_container"
         Button {
             id: es_back_btn
             x: 686
@@ -730,14 +730,14 @@ Rectangle {
         height: 411
         color: "#197ab7"
         visible: false
-        objectName: "processing_container"
+        objectName: "game_container"
         Text {
             id: game_headline_label
             x: 308
             y: 34
             color: "#ffffff"
             text: qsTr("GAME STATE")
-            objectName: "processing_headline_label"
+            objectName: "game_headline_label"
             font.pixelSize: 30
         }
 

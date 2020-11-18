@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard
+QT += core quick virtualkeyboard
 
 
 DEFINES += USES_QT

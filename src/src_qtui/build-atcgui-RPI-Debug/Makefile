@@ -829,6 +829,8 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qthread.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qdeadlinetimer.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qelapsedtimer.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QStack \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstack.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/QGuiApplication \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
@@ -2533,6 +2535,8 @@ main.o: ../atcgui/main.cpp ../../../../atc_buildroot/src/src_buildroot/buildroot
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qthread.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qdeadlinetimer.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qelapsedtimer.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QStack \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstack.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick/QQuickView \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick/qquickview.h \
@@ -3252,6 +3256,8 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qthread.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qdeadlinetimer.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qelapsedtimer.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QStack \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstack.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/QGuiApplication \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qguiapplication.h \

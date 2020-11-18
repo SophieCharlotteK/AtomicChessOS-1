@@ -6,13 +6,16 @@
 #include <QDebug> //FOR WRITING TO THE APPLICATION OUTPUT CONSOLE WITH qInfo
 #include <QTimer> // FOR REFRESH INTERVAL
 #include <QThread>
-
+#include <QStack>
 #include <QString>
+#include <QMap>
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QQmlContext>
+
+
 
 #include "SHARED/guicommunicator/guicommunicator.h"
 class MenuManager: public QObject
@@ -77,6 +80,8 @@ private:
     QString last_menu_opened = "";
     QString current_menu_opened = "";
 
+    QStack<QString> menu_visist_history;
+    QMap<QString, int> menu_levels;
     void set_label_text(QString _container_name, QString _labelname,QString _text);
     void set_icon_image(QString _container_name, QString _image_name, QString _path);
 };

@@ -15,6 +15,19 @@ QTimer *timer = new QTimer(this);
  timer->start(500);
 
 
+//CREATE THE MENU LEVEL TREE HERE
+ //ITS NEEDED TO MAKER SHURE THAT THE USER ALWAYS ABLE TO OPEN MENUS
+menu_levels["mm_container"] = 0;
+menu_levels["ls_container"] = 0;
+menu_levels["game_container"] = 0;
+menu_levels["es_container"] = 0;
+menu_levels["msgta_container"] = 0;
+menu_levels["msgtb_container"] = 0;
+menu_levels["processing_container"] = 0;
+
+menu_levels["ss_container"] = 1;
+menu_levels["debug_container"] = 2;
+menu_levels["is_container"] = 3;
 
 
 
@@ -65,7 +78,13 @@ void MenuManager::set_visible_element(QString _name, bool _state){
 
 
 void MenuManager::go_menu_back(){
-switch_menu(last_menu_opened);
+    qInfo() << "DETRUCTOR CALLED";
+    if(menu_visist_history.isEmpty()){
+        return;
+    }
+    QString tmp = menu_visist_history.pop();
+    qInfo() << tmp << " ---------------------";
+    switch_menu(tmp);
 }
 
 void MenuManager::lb_info_btn(){
@@ -74,10 +93,12 @@ void MenuManager::lb_info_btn(){
 
 //ENABLES A SPECIFIC MENU AND HIDES ALL OTHER
 void MenuManager::switch_menu(QString _screen){
-    if(_screen != "debug_container"){
-    last_menu_opened = current_menu_opened;
-    current_menu_opened = _screen;
+    //SAVE ONLY THE CURRENT SCREEN TO THE QUEUE IF WE MOVE A LEVEL UP IN SCREEN TREE
+    if(menu_levels.contains(_screen) && menu_levels.contains(current_menu_opened) && menu_levels[_screen] > menu_levels[current_menu_opened]){
+    menu_visist_history.push(current_menu_opened);
+    qInfo()<< "added to history" << current_menu_opened << "-------------------------";
     }
+    current_menu_opened = _screen;
     //HIDE ALL MENU
     set_visible_element("mm_container",false);
     set_visible_element("ls_container",false);
@@ -171,8 +192,9 @@ void MenuManager::show_error(QString _err){
 
 
 void MenuManager::lb_settings_btn(){
-    //qInfo() <<"lb_settings_btn";
-   // MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+    qInfo() <<"lb_settings_btn";
+   MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+    // MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 };
 
 void MenuManager::ls_login_btn(){
