@@ -18,7 +18,7 @@ QTimer *timer = new QTimer(this);
 
 
 
-
+//switch_menu(guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
 guiconnection.start_recieve_thread();
 //guiconnection.check_guicommunicator_version();
 guiconnection.createEvent(guicommunicator::GUI_ELEMENT::QI_START_EVENT,guicommunicator::GUI_VALUE_TYPE::ENABLED);
@@ -72,19 +72,24 @@ void MenuManager::lb_info_btn(){
     MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN);
 }
 
+//ENABLES A SPECIFIC MENU AND HIDES ALL OTHER
 void MenuManager::switch_menu(QString _screen){
 
     last_menu_opened = current_menu_opened;
     current_menu_opened = _screen;
+    //HIDE ALL MENU
     set_visible_element("mm_container",false);
     set_visible_element("ls_container",false);
     set_visible_element("ss_container",false);
     set_visible_element("is_container",false);
     set_visible_element("es_container",false);
-
+    set_visible_element("msgta_container",false);
+    set_visible_element("msgtb_container",false);
+    set_visible_element("processing_container",false);
+    //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
 }
-
+//ENABLES A SPECIFIC MENU 
 void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
     switch (_screen) {
         case guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN:{switch_menu("mm_container");break;}
@@ -92,10 +97,15 @@ void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
         case guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN:{switch_menu("ss_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN:{switch_menu("is_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE:{switch_menu("es_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_A:{switch_menu("msgta_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_B:{switch_menu("msgtb_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN:{switch_menu("processing_container");break;}
+
         default:break;
     }
 }
 
+//PROCESSES EVENTS COMMING FROM THE INTER PROCESS COMMUNICATION AND SHOWS MENUS OR SET IMAGES/LABES
 void MenuManager::updateProgress()
 {
     guicommunicator::GUI_EVENT ev=  guiconnection.get_gui_update_event();
@@ -107,29 +117,35 @@ void MenuManager::updateProgress()
         switch_menu(ev.type);
     }
 
-    if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL){
+    else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL){
         set_label_text("is_container","is_hwid_label",QString::fromStdString(ev.value));
     }
-    if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
+    else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
         set_label_text("is_container","is_sessionid_label",QString::fromStdString(ev.value));
     }
 
-    if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION){
+    else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION){
         set_label_text("is_container","is_version_label",QString::fromStdString(ev.value));
     }
 
-    if(ev.event == guicommunicator::GUI_ELEMENT::ERROR){
+    else if(ev.event == guicommunicator::GUI_ELEMENT::ERROR){
         switch_menu(ev.type);
         set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
     }
 
-    if(ev.event == guicommunicator::GUI_ELEMENT::NETWORK_STATUS){
+    else if(ev.event == guicommunicator::GUI_ELEMENT::NETWORK_STATUS){
         if(ev.type == guicommunicator::GUI_VALUE_TYPE::ONLINE){
             set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_online.png");
         }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::OFFLINE){
             set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_offline.png");
         }
         set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
+    }
+
+
+    if(ev.event == guicommunicator::GUI_ELEMENT::MESSAGEBOX_MESSAGE_TEXT){
+        set_label_text("msgta_container","msgta_message_label",QString::fromStdString(ev.value));
+        set_label_text("msgtb_container","msgtb_message_label",QString::fromStdString(ev.value));
     }
 
 }
@@ -204,4 +220,14 @@ void MenuManager::mm_search_for_players_toggled(bool _state){
         qInfo() << "0";
         guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN, guicommunicator::GUI_VALUE_TYPE::DISBALED);
     }
+}
+
+void MenuManager::message_screen_ok_btn(){
+    qInfo() <<"message_screen_ok_btn";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MESSAGEBOX_OK_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+}
+
+void MenuManager::message_screen_cancel_btn(){
+    qInfo() <<"message_screen_cancel_btn";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MESSAGEBOX_CANCEL_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }

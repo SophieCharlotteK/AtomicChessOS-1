@@ -17,7 +17,7 @@ Rectangle {
 
     MenuManager{
         id:main_menu
-        //    objectName: "mainmenu"
+        objectName: "mainmenu"
     }
 
 
@@ -415,6 +415,147 @@ Rectangle {
             text: qsTr("ERROR")
             objectName: "es_lasterr_label"
             font.pixelSize: 30
+        }
+        visible: false
+    }
+
+    Rectangle {
+        id: msgta_container
+        objectName: "msgta_container"
+        x: 2
+        y: 70
+        width: 800
+        height: 411
+        color: "#197ab7"
+
+        Text {
+            id: msgta_headline_label
+            x: 358
+            y: 54
+            color: "#ffffff"
+            text: qsTr("MESSAGE")
+            objectName: "es_lasterr_label"
+            font.pixelSize: 30
+        }
+
+        Text {
+            id: msgta_message_label
+            objectName: "msgta_message_label"
+            x: 56
+            y: 102
+            width: 695
+            height: 142
+            color: "#ffffff"
+            text: qsTr("MESSAGE")
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 20
+        }
+
+        Button {
+            id: msgta_button_cancel
+            x: 134
+            y: 295
+            width: 175
+            height: 70
+            text: qsTr("CANCEL")
+            Connections {
+                target: msgta_button_cancel
+                function onClicked(_mouse){
+                    main_menu.message_screen_cancel_btn()
+                }
+            }
+        }
+
+        Button {
+            id: msgta_button_ok
+            x: 487
+            y: 295
+            width: 175
+            height: 70
+            text: qsTr("OK")
+            Connections {
+                target: msgta_button_ok
+                function onClicked(_mouse){
+                    main_menu.message_screen_ok_btn()
+                }
+            }
+        }
+        visible: false
+    }
+
+    Rectangle {
+        id: msgtb_container
+        objectName: "msgtb_container"
+        x: 2
+        y: 70
+        width: 800
+        height: 411
+        color: "#197ab7"
+        Text {
+            id: msgtb_headline_label
+            x: 358
+            y: 54
+            color: "#ffffff"
+            text: qsTr("MESSAGE")
+            objectName: "msgtb_headline_label"
+            font.pixelSize: 30
+        }
+
+        Text {
+            id: msgtb_message_label
+            x: 56
+            y: 102
+            width: 695
+            height: 142
+            color: "#ffffff"
+            text: qsTr("MESSAGE")
+            objectName: "msgtb_message_label"
+            font.pixelSize: 20
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Button {
+            id: msgtb_button_ok
+            x: 316
+            y: 279
+            width: 175
+            height: 70
+            text: qsTr("OK")
+            Connections {
+                target: msgtb_button_ok
+                function onClicked(_mouse){
+                    main_menu.message_screen_ok_btn()
+                }
+            }
+        }
+        visible: false
+    }
+
+    Rectangle {
+        id: processing_container
+        objectName: "processing_container"
+        x: 0
+        y: 70
+        width: 800
+        height: 411
+        color: "#197ab7"
+        Text {
+            id: processing_headline_label
+            x: 308
+            y: 34
+            color: "#ffffff"
+            text: qsTr("PLEASE WAIT")
+            objectName: "processing_headline_label"
+            font.pixelSize: 30
+        }
+
+        BusyIndicator {
+            id: busyIndicator
+            x: 223
+            y: 85
+            width: 355
+            height: 293
+            wheelEnabled: false
         }
         visible: false
     }

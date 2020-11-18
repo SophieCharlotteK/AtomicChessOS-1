@@ -54,6 +54,11 @@ public slots:
     //----- INFO SCREEN ----/
     void is_open_is_screen_btn();
 
+
+    //---- MESSAGE SCREEN ----//
+    void message_screen_ok_btn();
+    void message_screen_cancel_btn();
+
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;
