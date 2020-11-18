@@ -580,7 +580,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#197ab7"
-        visible: false
+        visible: true
         objectName: "debug_container"
         Text {
             id: debug_headline_label
@@ -712,9 +712,9 @@ Rectangle {
             id: debug_back_btn
             x: 685
             y: 363
-            text: qsTr("Button")
+            text: qsTr("BACK")
             Connections {
-                target: es_back_btn
+                target: debug_back_btn
                 function onClicked(_mouse){
                     main_menu.go_menu_back()
                 }
