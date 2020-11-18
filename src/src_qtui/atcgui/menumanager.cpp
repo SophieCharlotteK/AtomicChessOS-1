@@ -86,6 +86,8 @@ void MenuManager::switch_menu(QString _screen){
     set_visible_element("msgta_container",false);
     set_visible_element("msgtb_container",false);
     set_visible_element("processing_container",false);
+    set_visible_element("debug_container",false);
+    
     //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
 }
@@ -100,6 +102,7 @@ void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
         case guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_A:{switch_menu("msgta_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_B:{switch_menu("msgtb_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN:{switch_menu("processing_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN:{switch_menu("debug_container");break;}
 
         default:break;
     }
@@ -179,6 +182,11 @@ void MenuManager::is_open_is_screen_btn(){
     MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::INFO_SCREEN);
 }
 
+
+void MenuManager::open_debug_menu(){
+     MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+}
+
 void MenuManager::sm_open_settings_btn(){
     qInfo() <<"sm_open_settings_btn";
 }
@@ -230,4 +238,21 @@ void MenuManager::message_screen_ok_btn(){
 void MenuManager::message_screen_cancel_btn(){
     qInfo() <<"message_screen_cancel_btn";
     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MESSAGEBOX_CANCEL_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+}
+
+
+void MenuManager::debug_screen_fkt(int _id){
+    switch (_id)
+    {
+    case 0: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 1: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_B, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 2: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_C, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 3: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_D, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 4: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 5: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 6: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 7: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_H, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    default:
+        break;
+    }
 }

@@ -330,6 +330,19 @@ Rectangle {
                 }
             }
         }
+
+        Button {
+            id: sm_dbg_btn
+            x: 686
+            y: 8
+            text: qsTr("DBG")
+            Connections {
+                target: sm_dbg_btn
+                function onClicked(_mouse){
+                    main_menu.open_debug_menu()
+                }
+            }
+        }
     }
 
     Rectangle {
@@ -558,6 +571,155 @@ Rectangle {
             wheelEnabled: false
         }
         visible: false
+    }
+
+    Rectangle {
+        id: debug_container
+        x: -1
+        y: 70
+        width: 800
+        height: 411
+        color: "#197ab7"
+        visible: false
+        objectName: "debug_container"
+        Text {
+            id: debug_headline_label
+            x: 351
+            y: 31
+            color: "#ffffff"
+            text: qsTr("DEBUG")
+            objectName: "debug_headline_label"
+            font.pixelSize: 30
+        }
+
+        Grid {
+            id: debug_grid
+            x: 53
+            y: 86
+            width: 708
+            height: 299
+            rows: 2
+            columns: 4
+            spacing: 61
+
+            Button {
+                id: debug_fkt_a_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_A")
+                Connections {
+                    target: debug_fkt_a_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(0)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_b_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_B")
+                Connections {
+                    target: debug_fkt_b_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(1)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_c_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_C")
+                Connections {
+                    target: debug_fkt_c_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(2)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_d_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_D")
+                Connections {
+                    target: debug_fkt_d_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(3)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_e_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_E")
+                Connections {
+                    target: debug_fkt_e_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(4)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_f_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_F")
+                Connections {
+                    target: debug_fkt_f_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(5)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_g_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_G")
+                Connections {
+                    target: debug_fkt_g_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(6)
+                    }
+                }
+            }
+
+            Button {
+                id: debug_fkt_h_btn
+                width: 130
+                height: 60
+                text: qsTr("FKT_H")
+                Connections {
+                    target: debug_fkt_h_btn
+                    function onClicked(_mouse){
+                        main_menu.debug_screen_fkt(7)
+                    }
+                }
+
+            }
+        }
+
+        Button {
+            id: debug_back_btn
+            x: 685
+            y: 363
+            text: qsTr("Button")
+            Connections {
+                target: es_back_btn
+                function onClicked(_mouse){
+                    main_menu.go_menu_back()
+                }
+            }
+        }
     }
 
 

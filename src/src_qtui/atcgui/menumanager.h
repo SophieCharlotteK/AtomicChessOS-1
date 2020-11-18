@@ -59,6 +59,9 @@ public slots:
     void message_screen_ok_btn();
     void message_screen_cancel_btn();
 
+
+    void open_debug_menu();
+    void debug_screen_fkt(int _id);
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;
