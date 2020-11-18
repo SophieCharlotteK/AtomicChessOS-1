@@ -76,7 +76,7 @@ A copy of the used versions, are located in the controller software directory.
 
 
 
-# CLASS OVERVIEW
+# CONTROLLER OVERVIEW
 
 ## MOTOR DRIVER
 ## BOARD CLASS
@@ -108,3 +108,15 @@ On the controller side two functions were created to generate the unique ids and
 ````
 * IMAGE
 
+## CONFIG AND CALIBRATION
+
+The system uses a config file located in the filesystem `/usr/ATC/atccontroller.ini`.
+
+
+
+### CALIBRATION
+
+In order to calibrate the mechanic, several entries in the config file has to be changed.
+
+
+IMAGE :ATC_Calibration_Guide.png
