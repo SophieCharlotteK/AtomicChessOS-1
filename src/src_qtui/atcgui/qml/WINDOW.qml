@@ -716,7 +716,7 @@ Rectangle {
             Connections {
                 target: debug_back_btn
                 function onClicked(_mouse){
-                    main_menu.go_menu_back()
+                    main_menu.lb_settings_btn()
                 }
             }
         }

@@ -74,9 +74,10 @@ void MenuManager::lb_info_btn(){
 
 //ENABLES A SPECIFIC MENU AND HIDES ALL OTHER
 void MenuManager::switch_menu(QString _screen){
-
+    if(_screen != "debug_container"){
     last_menu_opened = current_menu_opened;
     current_menu_opened = _screen;
+    }
     //HIDE ALL MENU
     set_visible_element("mm_container",false);
     set_visible_element("ls_container",false);
