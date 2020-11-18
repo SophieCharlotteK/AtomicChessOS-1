@@ -342,7 +342,7 @@ For this purpose each menu container has its own `objectName` attribute.
 
 To finally switch the a menu the function `switch_menu(QString _container_name)` can be used, for simple menu switching.
 It also poulates a variable called `last_menu_opened`, this stores the menu name the user comes from and makes its possible to switch back to the previous menu.
-This functionally comes handy, for the settings menu, which can be opened from every other menu and by closing the settings menu the user redirect back to the prevous menu.
+This functionally comes handy, for the settings menu, which can be opened from every other menu and by closing the settings menu the user redirect back to the previous menu.
 
 ```c++
 switch_menu("ls_container"); //SHOW LOGIN MENU
@@ -351,13 +351,15 @@ switch_menu(last_menu_opened); //SWITCH BACK TO LOGIN MENU (= PREVIOUS MENU)
 ```
 
 For this menu structure it is sufficient to store only the previous menu.
-For deeper menu structures with more layers, a stack datastructure ca be used to navigate back multible times.
+A queue is used to enable navigations with deeper menu structures.
 
 ```c++
-//menumanager.cpp
-QStack<QString> previous_menus;
+//menumanager.h
+QStack<QString> menu_visist_history;
+QMap<QString, int> menu_levels;
 QString current_menu = "";
 
+//menumanager.cpp
 //ENTER MENU
 void enter_menu(QString _name){
             previous_menus.push(current_menu)
@@ -366,12 +368,23 @@ void enter_menu(QString _name){
 }
 
 void leave_menu_to_previous(e){
-            if(previous_menus.isEmpty()){
-                        QInfo() << "cant goto previouse menu";
-                        return;
-            }
-            current_menu = previous_menus.pop();
-            switch_menu(current_menu);
+    qInfo() << "go_menu_back";
+    if(menu_visist_history.isEmpty()){ //CHECK IF PREV MENU EXISTS
+        return;
+    }
+    QString tmp = menu_visist_history.pop(); //LOAD PREV MENU
+    switch_menu(tmp); //SWITCH TO PREV MENU
+}
+
+void MenuManager::switch_menu(QString _screen){
+    //SAVE ONLY THE CURRENT SCREEN TO THE QUEUE IF WE MOVE A LEVEL UP IN SCREEN TREE
+    if(menu_levels.contains(_screen) && menu_levels.contains(current_menu_opened) && menu_levels[_screen] > menu_levels[current_menu_opened]){
+    menu_visist_history.push(current_menu_opened);
+    qInfo()<< "added to history " << current_menu_opened;
+    }
+    current_menu_opened = _screen;
+    //...
+    //...
 }
 ```
 
