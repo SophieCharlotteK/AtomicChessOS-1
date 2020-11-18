@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MenuManager_t {
-    QByteArrayData data[20];
-    char stringdata0[311];
+    QByteArrayData data[21];
+    char stringdata0[325];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -51,7 +51,8 @@ QT_MOC_LITERAL(15, 226, 21), // "message_screen_ok_btn"
 QT_MOC_LITERAL(16, 248, 25), // "message_screen_cancel_btn"
 QT_MOC_LITERAL(17, 274, 15), // "open_debug_menu"
 QT_MOC_LITERAL(18, 290, 16), // "debug_screen_fkt"
-QT_MOC_LITERAL(19, 307, 3) // "_id"
+QT_MOC_LITERAL(19, 307, 3), // "_id"
+QT_MOC_LITERAL(20, 311, 13) // "gs_abort_game"
 
     },
     "MenuManager\0lb_settings_btn\0\0lb_info_btn\0"
@@ -61,7 +62,8 @@ QT_MOC_LITERAL(19, 307, 3) // "_id"
     "sm_logout_btn\0sm_scan_board_btn\0"
     "go_menu_back\0is_open_is_screen_btn\0"
     "message_screen_ok_btn\0message_screen_cancel_btn\0"
-    "open_debug_menu\0debug_screen_fkt\0_id"
+    "open_debug_menu\0debug_screen_fkt\0_id\0"
+    "gs_abort_game"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +73,7 @@ static const uint qt_meta_data_MenuManager[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,22 +81,23 @@ static const uint qt_meta_data_MenuManager[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   94,    2, 0x0a /* Public */,
-       3,    0,   95,    2, 0x0a /* Public */,
-       4,    0,   96,    2, 0x0a /* Public */,
-       5,    0,   97,    2, 0x0a /* Public */,
-       6,    0,   98,    2, 0x0a /* Public */,
-       7,    1,   99,    2, 0x0a /* Public */,
-       9,    0,  102,    2, 0x0a /* Public */,
-      10,    0,  103,    2, 0x0a /* Public */,
-      11,    0,  104,    2, 0x0a /* Public */,
-      12,    0,  105,    2, 0x0a /* Public */,
-      13,    0,  106,    2, 0x0a /* Public */,
-      14,    0,  107,    2, 0x0a /* Public */,
-      15,    0,  108,    2, 0x0a /* Public */,
-      16,    0,  109,    2, 0x0a /* Public */,
-      17,    0,  110,    2, 0x0a /* Public */,
-      18,    1,  111,    2, 0x0a /* Public */,
+       1,    0,   99,    2, 0x0a /* Public */,
+       3,    0,  100,    2, 0x0a /* Public */,
+       4,    0,  101,    2, 0x0a /* Public */,
+       5,    0,  102,    2, 0x0a /* Public */,
+       6,    0,  103,    2, 0x0a /* Public */,
+       7,    1,  104,    2, 0x0a /* Public */,
+       9,    0,  107,    2, 0x0a /* Public */,
+      10,    0,  108,    2, 0x0a /* Public */,
+      11,    0,  109,    2, 0x0a /* Public */,
+      12,    0,  110,    2, 0x0a /* Public */,
+      13,    0,  111,    2, 0x0a /* Public */,
+      14,    0,  112,    2, 0x0a /* Public */,
+      15,    0,  113,    2, 0x0a /* Public */,
+      16,    0,  114,    2, 0x0a /* Public */,
+      17,    0,  115,    2, 0x0a /* Public */,
+      18,    1,  116,    2, 0x0a /* Public */,
+      20,    0,  119,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -113,6 +116,7 @@ static const uint qt_meta_data_MenuManager[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   19,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -139,6 +143,7 @@ void MenuManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 13: _t->message_screen_cancel_btn(); break;
         case 14: _t->open_debug_menu(); break;
         case 15: _t->debug_screen_fkt((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 16: _t->gs_abort_game(); break;
         default: ;
         }
     }
@@ -173,13 +178,13 @@ int MenuManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 17)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 16;
+        _id -= 17;
     }
     return _id;
 }

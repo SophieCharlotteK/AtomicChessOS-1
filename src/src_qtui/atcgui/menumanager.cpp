@@ -87,6 +87,7 @@ void MenuManager::switch_menu(QString _screen){
     set_visible_element("msgtb_container",false);
     set_visible_element("processing_container",false);
     set_visible_element("debug_container",false);
+    set_visible_element("game_container",false);
     
     //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
@@ -103,6 +104,7 @@ void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
         case guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_B:{switch_menu("msgtb_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN:{switch_menu("processing_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN:{switch_menu("debug_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN:{switch_menu("game_container");break;}
 
         default:break;
     }
@@ -255,4 +257,10 @@ void MenuManager::debug_screen_fkt(int _id){
     default:
         break;
     }
+}
+
+
+void MenuManager::gs_abort_game(){
+    qInfo() <<"gs_abort_game";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_ABORT_GAME, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }

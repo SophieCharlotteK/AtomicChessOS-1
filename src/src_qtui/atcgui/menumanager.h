@@ -62,6 +62,11 @@ public slots:
 
     void open_debug_menu();
     void debug_screen_fkt(int _id);
+
+    //---- GAME SCREEN---- //
+    void gs_abort_game();
+
+
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;

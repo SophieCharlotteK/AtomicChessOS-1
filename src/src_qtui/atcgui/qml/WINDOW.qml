@@ -722,6 +722,41 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id: game_container
+        x: 1
+        y: 69
+        width: 800
+        height: 411
+        color: "#197ab7"
+        visible: false
+        objectName: "processing_container"
+        Text {
+            id: game_headline_label
+            x: 308
+            y: 34
+            color: "#ffffff"
+            text: qsTr("GAME STATE")
+            objectName: "processing_headline_label"
+            font.pixelSize: 30
+        }
+
+        DelayButton {
+            id: game_abortgame_btn
+            x: 600
+            y: 334
+            width: 184
+            height: 59
+            text: qsTr("ABORT GAME")
+            Connections {
+                target: game_abortgame_btn
+                function onClicked(_mouse){
+                    main_menu.gs_abort_game()
+                }
+            }
+        }
+    }
+
 
 
 }
