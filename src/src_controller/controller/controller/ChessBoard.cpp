@@ -456,6 +456,7 @@ ChessBoard::BOARD_ERROR ChessBoard::calibrate_home_pos()
 	//ENABLE COIL A
 	iocontroller->setCoilState(IOController::COIL_A, true);
 	iocontroller->setCoilState(IOController::COIL_B, false);
+	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
 }
 

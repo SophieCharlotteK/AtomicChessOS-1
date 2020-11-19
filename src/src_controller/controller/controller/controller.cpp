@@ -19,7 +19,7 @@
 #include "ChessPiece.h"
 #include "ConfigParser.h"
 #include "ChessBoard.h"
-
+#include "IOController.h"
 
 
 
@@ -76,6 +76,8 @@ std::string read_file_to_string(const std::string& _path) {
 } 
 
 
+
+
 int main(int argc, char *argv[])
 {
 	
@@ -108,6 +110,8 @@ int main(int argc, char *argv[])
 	guicommunicator gui;
 	gui.start_recieve_thread();
 	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+	IOController io;
+	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PRECCESSING);
 	//CHECK VERSION ON GUI SIDE
 	if(gui.check_guicommunicator_version())
 	{
@@ -158,7 +162,7 @@ int main(int argc, char *argv[])
 	//CHECK IF LOGIN IS VALID AND AN INVALID SESSION ID EXISTS
 	//THEN TRY TO LOGOUT
 	//IF BOTH VALID WHOE THE MAIN MENU
-	if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
+     	if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
 	{
 		LOG_F(ERROR, "gamebackend - check loginstate - user already signed in");
 		//PERFORM LOGOUT
@@ -191,6 +195,7 @@ int main(int argc, char *argv[])
 
 	
 	//ENTERING MIAN LOOP
+	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_IDLE);
 	while(mainloop_running == 0)
 	{
 		//HANDLE UI EVENTS UI LOOP
