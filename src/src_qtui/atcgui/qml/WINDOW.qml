@@ -12,7 +12,8 @@ Rectangle {
 
     width: 800
     height: 480
-    color: "#0074c4"
+    color: "#07a8a5"
+
     z: -1
 
     MenuManager{
@@ -29,6 +30,7 @@ Rectangle {
         width: 800
         height: 69
         color: "#dbdbdb"
+        visible: true
 
         Text {
             id: hb_headline_text
@@ -130,7 +132,7 @@ Rectangle {
         y: 69
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         visible: false
         Rectangle {
             id: mm_searching_for_players_box
@@ -139,7 +141,7 @@ Rectangle {
             width: 260
             height: 343
             visible: true
-            color: "#48b3ff"
+            color: "#189694"
             Switch {
                 id: sfp_searchenable_button
                 x: 14
@@ -195,7 +197,7 @@ Rectangle {
             y: 31
             width: 253
             height: 343
-            color: "#48b3ff"
+            color: "#1f8f8d"
             Button {
                 id: mm_show_playerlist_btn
                 x: 26
@@ -235,7 +237,7 @@ Rectangle {
         y: 69
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         visible: false
         Button {
             id: ls_login_btn
@@ -261,7 +263,7 @@ Rectangle {
         y: 68
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         visible: false
         Grid {
             id: ss_manual_function_buttons_grid
@@ -351,7 +353,7 @@ Rectangle {
         y: 68
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         visible: false
         objectName: "is_container"
 
@@ -405,7 +407,7 @@ Rectangle {
         y: 69
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         objectName: "es_container"
         Button {
             id: es_back_btn
@@ -439,7 +441,7 @@ Rectangle {
         y: 70
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
 
         Text {
             id: msgta_headline_label
@@ -503,7 +505,7 @@ Rectangle {
         y: 70
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         Text {
             id: msgtb_headline_label
             x: 358
@@ -551,7 +553,7 @@ Rectangle {
         y: 70
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         Text {
             id: processing_headline_label
             x: 308
@@ -579,7 +581,7 @@ Rectangle {
         y: 70
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
         visible: false
         objectName: "debug_container"
         Text {
@@ -728,7 +730,8 @@ Rectangle {
         y: 69
         width: 800
         height: 411
-        color: "#197ab7"
+        color: "#07a8a5"
+        border.color: "#000100"
         visible: false
         objectName: "game_container"
         Text {
