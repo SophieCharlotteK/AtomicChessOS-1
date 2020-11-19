@@ -78,6 +78,42 @@
     <ClCompile Include="SPICommunication.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="ChessBoard.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChessField.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigParser.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\softPwm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\softServo.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\softTone.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringSerial.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringShift.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcSerial.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\piHiPri.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\piThread.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\WiringPi-master\wiringPi\pseudoPins.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -122,6 +158,36 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SPICommunication.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessBoard.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessField.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigParser.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\softPwm.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\softServo.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\softTone.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringSerial.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringShift.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcSerial.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\WiringPi-master\wiringPi\pseudoPins.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

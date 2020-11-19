@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp ChessPiece.cpp controller.cpp IOController.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp TMC5160.cpp
+SOURCEFILES := BackendConnector.cpp ChessBoard.cpp ChessField.cpp ChessPiece.cpp ConfigParser.cpp controller.cpp IOController.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/drcSerial.c SHARED/WiringPi-master/wiringPi/piHiPri.c SHARED/WiringPi-master/wiringPi/piThread.c SHARED/WiringPi-master/wiringPi/pseudoPins.c SHARED/WiringPi-master/wiringPi/softPwm.c SHARED/WiringPi-master/wiringPi/softServo.c SHARED/WiringPi-master/wiringPi/softTone.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wiringSerial.c SHARED/WiringPi-master/wiringPi/wiringShift.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp TMC5160.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -249,6 +249,34 @@ $(BINARYDIR)/drcNet.o : SHARED/WiringPi-master/wiringPi/drcNet.c $(all_make_file
 	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 
+$(BINARYDIR)/drcSerial.o : SHARED/WiringPi-master/wiringPi/drcSerial.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/piHiPri.o : SHARED/WiringPi-master/wiringPi/piHiPri.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/piThread.o : SHARED/WiringPi-master/wiringPi/piThread.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/pseudoPins.o : SHARED/WiringPi-master/wiringPi/pseudoPins.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/softPwm.o : SHARED/WiringPi-master/wiringPi/softPwm.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/softServo.o : SHARED/WiringPi-master/wiringPi/softServo.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/softTone.o : SHARED/WiringPi-master/wiringPi/softTone.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
 $(BINARYDIR)/wiringPi.o : SHARED/WiringPi-master/wiringPi/wiringPi.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
@@ -258,6 +286,14 @@ $(BINARYDIR)/wiringPiI2C.o : SHARED/WiringPi-master/wiringPi/wiringPiI2C.c $(all
 
 
 $(BINARYDIR)/wiringPiSPI.o : SHARED/WiringPi-master/wiringPi/wiringPiSPI.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/wiringSerial.o : SHARED/WiringPi-master/wiringPi/wiringSerial.c $(all_make_files) |$(BINARYDIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
+
+
+$(BINARYDIR)/wiringShift.o : SHARED/WiringPi-master/wiringPi/wiringShift.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 

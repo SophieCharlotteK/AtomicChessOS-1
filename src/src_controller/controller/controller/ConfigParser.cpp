@@ -47,7 +47,7 @@ bool ConfigParser::createConfigFile(std::string _file, bool _load_directly)
 	
 	myfile << "[SETTINGS]\n";
 	
-	myfile << "NETWORK_BACKEND_URL=http://192.168.178.125:3001\n";
+	myfile << "NETWORK_BACKEND_URL=http://192.168.178.125:3000\n";
 	myfile << "GENERAL_HWID_INTERFACE=eth0\n";
 	myfile << "GENERAL_VERSION_FILE_PATH=/VERSION\n";
 	myfile << "GENERAL_HWREV_FILE_PATH=/etc/hwrevision\n";

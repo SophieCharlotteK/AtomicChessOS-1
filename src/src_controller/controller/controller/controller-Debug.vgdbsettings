@@ -8,10 +8,15 @@
     </CustomSourceDirectories>
     <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
     <BuildHost>
+      <HostName>192.168.178.125</HostName>
+      <Transport>SSH</Transport>
+      <UserName>prodevmo</UserName>
+    </BuildHost>
+    <DeploymentHost>
       <HostName>192.168.178.131</HostName>
       <Transport>SSH</Transport>
-      <UserName>pi</UserName>
-    </BuildHost>
+      <UserName>root</UserName>
+    </DeploymentHost>
     <MainSourceTransferCommand>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
       <RemoteHost>
@@ -52,7 +57,7 @@
     </MainSourceTransferCommand>
     <AllowChangingHostForMainCommands>false</AllowChangingHostForMainCommands>
     <SkipBuildIfNoSourceFilesChanged>false</SkipBuildIfNoSourceFilesChanged>
-    <IgnoreFileTransferErrors>false</IgnoreFileTransferErrors>
+    <IgnoreFileTransferErrors>true</IgnoreFileTransferErrors>
     <RemoveRemoteDirectoryOnClean>true</RemoveRemoteDirectoryOnClean>
     <SkipDeploymentTests>false</SkipDeploymentTests>
     <MainSourceDirectoryForLocalBuilds>$(ProjectDir)</MainSourceDirectoryForLocalBuilds>
@@ -84,8 +89,10 @@
   <Build xsi:type="com.visualgdb.build.make">
     <BuildLogMode xsi:nil="true" />
     <ToolchainID>
-      <ID>com.sysprogs.toolchain.default-gcc</ID>
+      <ID>com.sysprogs.imported.arm-buildroot-linux-gnueabihf</ID>
       <Version>
+        <GCC>9.3.0</GCC>
+        <GDB>8.2.1</GDB>
         <Revision>0</Revision>
       </Version>
     </ToolchainID>

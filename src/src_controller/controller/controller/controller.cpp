@@ -11,27 +11,37 @@
 
 
 #include "SHARED/guicommunicator/guicommunicator.h"
-#include "SHARED/inih-master/INIReader.h"
+
 #include "SHARED/loguru-master/loguru.hpp"
 
 #include "TMC5160.h"
 #include "BackendConnector.h"
 #include "ChessPiece.h"
+#include "ConfigParser.h"
+#include "ChessBoard.h"
+
+
+
+
+//---------------------- CONFIG DEFINED --------------------------- //
+#define CONFIG_FILE_PATH "./atccontrollerconfig.ini"
+
+
 using namespace std;
 
 //!Reads the system HWID File from the location
-//std::string readHWID(std::string _file)
-//{
-//	std::ifstream t(_file.c_str());
-//	std::string str;
+std::string readHWID(std::string _file)
+{
+	std::ifstream t(_file.c_str());
+	std::string str;
 
-//	t.seekg(0, std::ios::end);   
-//	str.reserve(t.tellg());
-//	t.seekg(0, std::ios::beg);
+	t.seekg(0, std::ios::end);   
+	str.reserve(t.tellg());
+	t.seekg(0, std::ios::beg);
 
-//	str.assign((std::istreambuf_iterator<char>(t)),
-//		std::istreambuf_iterator<char>());
-//}
+	str.assign((std::istreambuf_iterator<char>(t)),
+		std::istreambuf_iterator<char>());
+}
 
 
 int mainloop_running = 0;
@@ -69,81 +79,67 @@ std::string read_file_to_string(const std::string& _path) {
 int main(int argc, char *argv[])
 {
 	
-	string iface = "eth0";
 	
 	
 	//REGISTER SIGNAL HANDLER
 	signal(SIGINT, signal_callback_handler);
+	
 	//SETUP LOGGER
-	/*
 	loguru::init(argc, argv);
 	loguru::add_file("./log.log", loguru::Append, loguru::Verbosity_MAX);
 	loguru::g_stderr_verbosity = 1;
 	LOG_SCOPE_F(INFO, "ATC CONTROLLER STARTED");
+	
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
-	INIReader config("./atccontrollerconfig.ini");
-	if (config.ParseError() != 0)
+	ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
+	if (!ConfigParser::getInstance()->loadConfigFile(CONFIG_FILE_PATH))
 	{
 		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
 		return 1;
 	}
-	LOG_F(INFO, config.Get("NetworkSettings", "ATCBackendURL", "http://marcelochsendorf.com:3001").c_str());	
-	*/
-	
-	//TMC5160 motorA = TMC5160(TMC5160::MOTOR_ID::MOTOR_0);
-	
-	
-	//motorA.default_settings();
+	LOG_F(INFO, "CONFIG FILE LOADED");	
 	
 	
 	
-	ChessPiece::FIGURE fig;
-	fig.figure_number = 1;
-	fig.color = ChessPiece::COLOR_BLACK;
-	fig.type = ChessPiece::TYPE_KNIGHT;
-	
-	unsigned char UNIQUE_ID = ChessPiece::figure2NDEF(fig);
-	
-	ChessPiece::FIGURE back = ChessPiece::NDEF2Figure(UNIQUE_ID);
-	
-	int i = 0;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*	
+		
+	//SARTING GUI COMMUNICATOR PROCESS
 	LOG_F(INFO, "guicommunicator startig ipc thread");
 	guicommunicator gui;
 	gui.start_recieve_thread();
+	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 	//CHECK VERSION ON GUI SIDE
 	if(gui.check_guicommunicator_version())
 	{
 		LOG_F(WARNING, "guicommunicator version check failed");
 	}
 	//DETERM THE HWID BY USING THE MAC ADDRESS OF THE OUTGOING INTERNFACE NAME
-	std::string hwid = get_interface_mac_address(config.Get("GeneralSettings", "HWIDInterface", "eth0"));
+	std::string hwid = get_interface_mac_address(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE));
 	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, hwid);
 	LOG_F(INFO, (const char*)hwid.c_str());
 	
 	
 	//DISPLAY FIRMARE VERSION NUMBER
-	std::string fwver = read_file_to_string(config.Get("GeneralSettings", "VersionFile", "/VERSION"));
-	std::string hwrev = read_file_to_string(config.Get("GeneralSettings", "HWRevFile", "/etc/hwrevision"));
-	std::string bootpart = read_file_to_string(config.Get("GeneralSettings", "RunningPartition", "/etc/swupdate/BOOTPART"));
+	std::string fwver = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_VERSION_FILE_PATH);
+	std::string hwrev = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWREV_FILE_PATH);
+	std::string bootpart = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH);
 	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, fwver + "|" + hwrev + "|" + bootpart);
 	LOG_F(INFO, (const char*)fwver.c_str());
 	
 	
+	//INIT CHESSBOARD
+	ChessBoard board;
+	if (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+	{
+		gui.show_error_message_on_gui("board.initBoard() FAILED");
+	}
+
+	
+	
+	
+	
 	//CREATE GAME BACKEND INSTANCE
-	BackendConnector gamebackend(config.Get("NetworkSettings", "ATCBackendURL", "http://marcelochsendorf.com:3001"), config.Get("NetworkSettings", "OutgoingInterfaceName", "eth0"), hwid);
+	BackendConnector gamebackend(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL), ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE), hwid);
 	
 	//CHECK IF GAMESERVER IS REACHABLE
 	if(gamebackend.check_connection())
@@ -154,7 +150,7 @@ int main(int argc, char *argv[])
 	{
 		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::OFFLINE);
 		LOG_F(ERROR, "gamebackend - check connection failed");
-		gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + config.Get("NetworkSettings", "ATCBackendURL", "http://marcelochsendorf.com:3001") + "]");
+		gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL) + "]");
 		return 2;
 	}
 	
@@ -197,40 +193,70 @@ int main(int argc, char *argv[])
 	//ENTERING MIAN LOOP
 	while(mainloop_running == 0)
 	{
-		//HANDLE UI EVENTS
+		//HANDLE UI EVENTS UI LOOP
 		guicommunicator::GUI_EVENT ev = gui.get_gui_update_event();
 		if (ev.is_event_valid)
 		{
 			gui.debug_event(ev, true);	
 			
-			//USER PRESSED LOGOUT BUTTON
-			if (ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
-			{
-				gamebackend.logout();
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-				//TODO RESET ALL STUFF sessid, game field,...
+			if (ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+				if (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+				{
+					gui.show_error_message_on_gui("board.initBoard() FAILED");
+				}
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 			}
 			
-			//USER PRESSED LOGIN BUTTON
-			if (ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
-			{
-				if (gamebackend.login())
+			
+			
+			
+			if ((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN || ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+				if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
 				{
-					//SWITCH TO MAIN MENU
-					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
-					//UPDATE SESSION_ID
-					gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
+					gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "TABLE REACHED HOME POSITION", 10000);
 				}
 				else
 				{
-					gui.show_error_message_on_gui(gamebackend.get_last_error());
+					gui.show_error_message_on_gui("board.initBoard() FAILED");
 				}
+				gui .createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 			}
-		}
+			
+			
+			
+			
+			
+			
+			//USER PRESSED LOGOUT BUTTON
+			//if (ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+			//{
+				//gamebackend.logout();
+			//	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+				//TODO RESET ALL STUFF sessid, game field,...
+			//}
+			
+			//USER PRESSED LOGIN BUTTON
+			//if (ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+			//{
+				//if (gamebackend.login())
+				//{
+					//SWITCH TO MAIN MENU
+				//	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
+					//UPDATE SESSION_ID
+				//	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
+				//}
+				//else
+				//{
+				//	gui.show_error_message_on_gui(gamebackend.get_last_error());
+				//}
+			//}
+		//}
 		
 		//HANDLE GAME STATE 
-		if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
-		{
+		//if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+		//{
 //			motorA.goto_position(1203);
 		}
 		
@@ -241,6 +267,6 @@ int main(int argc, char *argv[])
 		
 		
 	}
-	*/
+	
 	return 0;
 }

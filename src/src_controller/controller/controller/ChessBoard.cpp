@@ -428,7 +428,7 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	//	syncRealWithTargetBoard();
 	
 
-		iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
+	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
 	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
 
 	return ChessBoard::BOARD_ERROR::INIT_COMPLETE;
