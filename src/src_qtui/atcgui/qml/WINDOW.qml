@@ -283,7 +283,7 @@ Rectangle {
                 id: ss_scan_board_btn
                 width: 200
                 height: 80
-                text: qsTr("SCAN BOARD")
+                text: qsTr("CALIBRATION WIZARD")
                 Connections {
                     target: ss_scan_board_btn
                     function onClicked(_mouse){
