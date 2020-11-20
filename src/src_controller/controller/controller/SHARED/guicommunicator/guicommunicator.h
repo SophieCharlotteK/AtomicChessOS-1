@@ -188,10 +188,10 @@ enum class GUI_ELEMENT{
     void stop_recieve_thread();
 
 
-    GUI_EVENT get_gui_update_event();
-	GUI_EVENT get_event();
+     GUI_EVENT get_gui_update_event();
+	 GUI_EVENT get_event();
      bool check_guicommunicator_version();
-	
+	 bool check_guicommunicator_reachable();
 	
 	//SOME FUNTIONS ARE ONLY FOR THE GUI SIDE
 #ifdef USES_QT

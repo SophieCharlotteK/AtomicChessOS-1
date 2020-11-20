@@ -143,6 +143,16 @@ bool guicommunicator::check_guicommunicator_version() {
 	}
 }
 
+bool guicommunicator::check_guicommunicator_reachable() {
+	httplib::Client cli(EVENT_URL_COMPLETE);
+	httplib::Result res =  cli.Get(EVENT_URL_VERSION);
+	if (res->status >= 200 && res->status < 300) {
+		debug_output("CHECK check_guicommunicator_reachable OK");
+		return true;
+	}
+		return false;
+}
+
 
 void guicommunicator::start_recieve_thread() {
   
