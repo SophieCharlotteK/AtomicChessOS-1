@@ -3,7 +3,7 @@
 #define __BackendConnector__
 
 #include <string>
-
+#include <list>
 
 
 #include "SHARED/cpp-httplib-master/httplib.h"
@@ -25,6 +25,9 @@ public:
 	bool check_login_state();
 	bool logout();
 	
+	std::list<std::string> get_avariable_player();
+	
+	bool set_visible_state(bool _state);
 	
 	std::string get_session_id();
 	std::string get_interface_name();
@@ -53,6 +56,8 @@ private:
 	
 	const std::string URL_CONNECTION_CHECK = "/";
 	const std::string URL_LOGIN = "/rest/login";
+	const std::string URL_LOGOUT = "/rest/logout";
+	const std::string URL_HEARTBEAT = "/rest/heartbeat";
 	std::string ca_client_path = "";
 	
 	std::string last_error = "";

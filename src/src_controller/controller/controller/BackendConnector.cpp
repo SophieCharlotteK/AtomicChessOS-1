@@ -100,7 +100,13 @@ bool BackendConnector::login()
 }
 bool BackendConnector::logout()
 {
+	request_result tmp = make_request(URL_LOGOUT + "?hwid=" + hwid);
 	
+	if (tmp.request_failed)
+	{
+		last_error = "login - request failed";
+		return false;
+	}
 	//SAVE SESSION
 	return true;
 }
