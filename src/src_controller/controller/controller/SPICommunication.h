@@ -19,7 +19,9 @@
 #include <iostream>
 #endif
 
-
+#define MAGIC_ACK_BYTE 42 //ACK BYTE FROM IO CONTROLLER THAT COMMAND WAS EXECUTED
+#define SPI_RW_DELAY 100 //WAIT BEWEEN EACH RW TRY
+#define SPI_RW_ACK_RETRY 5 //MAX TIMES RW TRY
 class SPICommunication {
 
 
@@ -44,7 +46,8 @@ public:
     bool isInitialised();
 
 
-    int spi_write(SPICommunication::SPI_DEVICE _device ,uint8_t* _data, int _len);
+    int spi_write(SPICommunication::SPI_DEVICE _device ,uint8_t* _data, int _len); //WRITES DATA TO THE SPI BUS => READ BYTES IN _data
+	int spi_write_ack(SPICommunication::SPI_DEVICE _device, uint8_t* _data, int _len); //SAME AS  spi_write BUT CHECKS RESULT ACK WITH MAGIC BYTE; SEE #define MAGIC_ACK_BYTE
     bool register_cs_gpio(SPICommunication::SPI_DEVICE _device, int _gpio_number);
 
     

@@ -60,11 +60,10 @@ void IOController::setCoilState(IOController::COIL _coil, bool _state)
 	}
 	
 	
-	uint8_t buffer_w[] = {cmd};
+	uint8_t buffer_w[] = { cmd };
 	uint8_t buffer_r[] = { 0 };
 	
-	int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1); //WRITE CMD
-	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);  //READ BACK
+	int res = SPICommunication::getInstance()->spi_write_ack(SPI_CS_DEVICE, buffer_w, 1);      //WRITE CMD
 }
 
 void IOController::setStatusLed(IOController::LED _led, bool _state)
@@ -96,8 +95,7 @@ void IOController::setStatusLed(IOController::LED _led, bool _state)
 	uint8_t buffer_w[] = { cmd };
 	uint8_t buffer_r[] = { 0 };
 	
-	int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);  //WRITE CMD
-	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);   //READ BACK
+	int res = SPICommunication::getInstance()->spi_write_ack(SPI_CS_DEVICE, buffer_w, 1);      //WRITE CMD
 }
 
 ChessPiece::FIGURE IOController::ScanNFC(int _retry_count)
@@ -181,8 +179,7 @@ void IOController::invertCoilPolarity(IOController::COIL _coil, bool _invert_fie
 	uint8_t buffer_w[] = { cmd };
 	uint8_t buffer_r[] = { 0 };
 	
-	int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);  //WRITE CMD
-	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);   //READ BACK
+	int res = SPICommunication::getInstance()->spi_write_ack(SPI_CS_DEVICE, buffer_w, 1);     //WRITE CMD
 	
 	
 }
@@ -202,26 +199,5 @@ void IOController::setTurnStateLight(IOController::TURN_STATE_LIGHT _state)
 		uint8_t buffer_w[] = { cmd };
 		uint8_t buffer_r[] = { 0 };
 	
-		int res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);    //WRITE CMD
-		int c = 0;
-		while(true)
-		{
-			buffer_w[0] =  cmd;
-			buffer_r[0] =  0;
-			std::this_thread::sleep_for(std::chrono::milliseconds(NFC_READ_ACK_DELAY));
-			res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_w, 1);
-			res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer_r, 1);
-			//PARSE RESULT TO A FIGURE AND CHECK IF ITS VALID
-			if(buffer_r[0] == 42)
-			{
-				break;
-			}
-			c++;
-			if (c > 5)
-			{
-				break;
-			}
-		}
-	
-	
+		int res = SPICommunication::getInstance()->spi_write_ack(SPI_CS_DEVICE, buffer_w, 1);    //WRITE CMD
 }

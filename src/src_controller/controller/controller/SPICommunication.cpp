@@ -62,8 +62,54 @@ int SPICommunication::spi_write(SPICommunication::SPI_DEVICE _device, uint8_t* _
 	return res;
 }
 
-
-
+//SAME AS  spi_write BUT CHECKS RESULT ACK WITH MAGIC BYTE; SEE #define MAGIC_ACK_BYTE
+int SPICommunication::spi_write_ack(SPICommunication::SPI_DEVICE _device, uint8_t* _data, int _len)
+{
+	
+	uint8_t* buffer_r{ new uint8_t[_len] { 0 }};
+	uint8_t* buffer_w{ new uint8_t[_len] { 0 }};
+	//POPULATE BUFFERS FOR READ WRITE
+	for (size_t i = 0; i < _len; i++)
+	{
+		buffer_w[i] = _data[i];
+	}
+	for (size_t i = 0; i < _len; i++)
+	{
+		buffer_r[i] = 0;
+	}
+	
+	
+	volatile int res = -1;
+	volatile int c = 0; //RETRY COUNTER
+	while (true)
+	{
+		//POPULATE COMMAND BUFFER
+		for (size_t i = 0; i < _len; i++)
+		{
+			buffer_w[i] = _data[i];
+		}
+		
+		for (size_t i = 0; i < _len; i++)
+		{
+			buffer_r[i] = 0;
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(SPI_RW_DELAY));
+		res = SPICommunication::getInstance()->spi_write(_device, buffer_w, _len); //WRITE
+		res = SPICommunication::getInstance()->spi_write(_device, buffer_r, _len);//READ RESULT
+		//PARSE RESULT TO A FIGURE AND CHECK IF ITS VALID
+		if(buffer_r[0] == MAGIC_ACK_BYTE)
+		{
+			break;
+		}
+		c++;
+		if (c > SPI_RW_ACK_RETRY)
+		{
+			break;
+		}
+	}
+	
+	return res;
+}
 
 bool SPICommunication::isInitialised(){
     return is_initialised;

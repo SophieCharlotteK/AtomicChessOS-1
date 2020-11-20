@@ -175,22 +175,24 @@ int main(int argc, char *argv[])
 	//CHECK IF GAMESERVER IS REACHABLE ELSE USE A OTHER PREDEFINED URL
 	volatile int abu_counter = 0;
 	volatile bool abu_result = true;
-	while(!gamebackend.check_connection()) {
+	while (!gamebackend.check_connection()) {
 		gamebackend.set_backend_base_url(ALTERNATIVE_BACKEND_URL[abu_counter]);
+		LOG_F(INFO, "gamebackend - change backendurl due prev not abariable");
+		LOG_F(INFO, ALTERNATIVE_BACKEND_URL[abu_counter].c_str());
 #ifdef DEBUG
 		gui.show_error_message_on_gui("" + gamebackend.get_backend_base_url() + "");
 #endif
 
 		abu_counter++;
 		//MARK SEARCH FAILED
-		if (abu_counter >= 6)
+		if(abu_counter >= 6)
 		{
 			abu_result = false;
 			break;
 		}
 	}
 	//UPDATE GUI THAT NETWORK IS ONLINE
-	if (abu_result) {
+	if(abu_result) {
 		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::ONLINE);
 		//SHOW MESSAGEBOX IF THE CURRENT URL IS A DIFFERENT THAN IN THE CONFIG
 		if(gamebackend.get_backend_base_url() != ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL))
@@ -200,7 +202,8 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	else { //CONNECTION FAILED => EXIT
+	else {
+		 //CONNECTION FAILED => EXIT
 		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::OFFLINE);
 		gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + gamebackend.get_backend_base_url() + "]");
 		return 3;
@@ -213,9 +216,9 @@ int main(int argc, char *argv[])
 	//CHECK IF LOGIN IS VALID AND AN INVALID SESSION ID EXISTS
 	//THEN TRY TO LOGOUT
 	//IF BOTH VALID WHOE THE MAIN MENU
-		if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
+	if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
 	{
-		LOG_F(ERROR, "gamebackend - check loginstate - user already signed in");
+	LOG_F(ERROR, "gamebackend - check loginstate - user already signed in");
 		//PERFORM LOGOUT
 		if(gamebackend.logout())
 		{
