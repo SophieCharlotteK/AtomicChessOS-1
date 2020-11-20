@@ -108,8 +108,19 @@ enum class GUI_ELEMENT{
     GAMESCREEN_ABORT_GAME = 30
 };
 
-
-enum class GUI_VALUE_TYPE{
+	enum class GUI_MESSAGE_BOX_TYPE
+	{
+		MSGBOX_B_OK = 0,
+		MSGBOX_A_OK_CANCEL = 1
+	};
+	enum class GUI_MESSAGE_BOX_RESULT
+	{
+		MSGBOX_RES_NONE = 0,
+		MSGBOX_RES_OK = 1,
+		MSGBOX_RES_CANCEL =2
+		
+	};
+	enum class GUI_VALUE_TYPE{
 	CLICKED = 0,
 	SELECTED = 1,
 	USER_INPUT_STRING = 2,
@@ -181,7 +192,13 @@ enum class GUI_VALUE_TYPE{
 	GUI_EVENT get_event();
      bool check_guicommunicator_version();
 	
-	void show_error_message_on_gui(std::string _err);
+	
+	//SOME FUNTIONS ARE ONLY FOR THE GUI SIDE
+#ifdef USES_QT
+#else
+	void show_error_message_on_gui(std::string _err);	//DISPLAYS A ERROR MESSAGE WITH OK BUTTONS
+	GUI_MESSAGE_BOX_RESULT show_message_box(GUI_MESSAGE_BOX_TYPE _type, std::string _message, int _wait_time_ms); //DISPLAY A MESSAGEBOX WITH OK/CANCEL BUTTON AND WAITS FOR THE USER INPUT
+#endif
 private:
 	  //zmq::context_t zmqctx;
 	// zsock_t* zmq_pull = nullptr;
