@@ -12,6 +12,7 @@
 
 //IF A SESSION ID IS SET AND NOT NULL START HEARTBEAR THREAD
 
+//THREAD FOR SESSOON
 class BackendConnector
 {
 	
@@ -28,7 +29,8 @@ public:
 	std::list<std::string> get_avariable_player();
 	
 	bool set_visible_state(bool _state);
-	
+	void set_backend_base_url(std::string _url);
+	std::string get_backend_base_url();
 	std::string get_session_id();
 	std::string get_interface_name();
 	

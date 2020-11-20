@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
 	ChessBoard board;
 	//INIT THE CHESS BOARD MECHANIC
 	//=> HOME, SETUP COILS
-	while (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+	while(board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
 	{
 		if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD_INIT_FAILED RETRY?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
 			break;
@@ -169,136 +169,160 @@ int main(int argc, char *argv[])
 	
 	
 	
-//CREATE GAME BACKEND INSTANCE
-BackendConnector gamebackend(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL), ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE), hwid);
+	//CREATE GAME BACKEND INSTANCE
+	BackendConnector gamebackend(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL), ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE), hwid);
+	std::string ALTERNATIVE_BACKEND_URL[6] = { "http://marcelochsendorf.com:3000", "http://marcelochsendorf.com:3001", "http://marcelochsendorf.com:3002", "http://prodevmo.com:3001", "http://prodevmo.com:3002", "http://127.0.0.1:3000" };	
+	//CHECK IF GAMESERVER IS REACHABLE ELSE USE A OTHER PREDEFINED URL
+	volatile int abu_counter = 0;
+	volatile bool abu_result = true;
+	while(!gamebackend.check_connection()) {
+		gamebackend.set_backend_base_url(ALTERNATIVE_BACKEND_URL[abu_counter]);
+#ifdef DEBUG
+		gui.show_error_message_on_gui("" + gamebackend.get_backend_base_url() + "");
+#endif
+
+		abu_counter++;
+		//MARK SEARCH FAILED
+		if (abu_counter >= 6)
+		{
+			abu_result = false;
+			break;
+		}
+	}
+	//UPDATE GUI THAT NETWORK IS ONLINE
+	if (abu_result) {
+		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::ONLINE);
+		//SHOW MESSAGEBOX IF THE CURRENT URL IS A DIFFERENT THAN IN THE CONFIG
+		if(gamebackend.get_backend_base_url() != ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL))
+		{
+			if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "GAME_SERVER_URL_CHANGED:" + gamebackend.get_backend_base_url(), 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+			}
+		}
+	}
+	else { //CONNECTION FAILED => EXIT
+		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::OFFLINE);
+		gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + gamebackend.get_backend_base_url() + "]");
+		return 3;
+	}
 	
-//CHECK IF GAMESERVER IS REACHABLE
-if(gamebackend.check_connection())
-{
-	gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::ONLINE);	
-}
-else
-{
-	gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::OFFLINE);
-	LOG_F(ERROR, "gamebackend - check connection failed");
-	gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL) + "]");
-	return 3;
-}
+	
+
 	
 	
-//CHECK IF LOGIN IS VALID AND AN INVALID SESSION ID EXISTS
-//THEN TRY TO LOGOUT
-//IF BOTH VALID WHOE THE MAIN MENU
-	if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
-{
-	LOG_F(ERROR, "gamebackend - check loginstate - user already signed in");
-	//PERFORM LOGOUT
-	if(gamebackend.logout())
+	//CHECK IF LOGIN IS VALID AND AN INVALID SESSION ID EXISTS
+	//THEN TRY TO LOGOUT
+	//IF BOTH VALID WHOE THE MAIN MENU
+		if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
 	{
-		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-		LOG_F(ERROR, "gamebackend - LOGIN");	
+		LOG_F(ERROR, "gamebackend - check loginstate - user already signed in");
+		//PERFORM LOGOUT
+		if(gamebackend.logout())
+		{
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+			LOG_F(ERROR, "gamebackend - LOGIN");	
+		}else
+		{
+			LOG_F(ERROR, "gamebackend - logout failed");
+			gui.show_error_message_on_gui("LOGOUT FAILED");
+
+		}
+	}
+	else if(gamebackend.check_login_state() && !gamebackend.get_session_id().empty())
+	{
+		//SHOW MAIN MENU
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
+		//UPDATE SESSION_ID
+		gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
+		
 	}else
 	{
-		LOG_F(ERROR, "gamebackend - logout failed");
-		gui.show_error_message_on_gui("LOGOUT FAILED");
-
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 	}
-}
-else if(gamebackend.check_login_state() && !gamebackend.get_session_id().empty())
-{
-	//SHOW MAIN MENU
-	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
-	//UPDATE SESSION_ID
-	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
-		
-}else
-{
-	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-}
 	
 	
 	
 	
 
 	
-//ENTERING MIAN LOOP
-io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_IDLE);
-while (mainloop_running == 0)
-{
-	//HANDLE UI EVENTS UI LOOP
-	guicommunicator::GUI_EVENT ev = gui.get_gui_update_event();
-	if (ev.is_event_valid)
+	//ENTERING MIAN LOOP
+	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_IDLE);
+	while (mainloop_running == 0)
 	{
-		gui.debug_event(ev, true);	
+		//HANDLE UI EVENTS UI LOOP
+		guicommunicator::GUI_EVENT ev = gui.get_gui_update_event();
+		if (ev.is_event_valid)
+		{
+			gui.debug_event(ev, true);	
 			
-		if (ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			if (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
-			{
-				gui.show_error_message_on_gui("board.initBoard() FAILED");
+			if (ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+				if (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+				{
+					gui.show_error_message_on_gui("board.initBoard() FAILED");
+				}
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 			}
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
-		}
 			
 			
 			
 			
-		if ((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN || ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
-			{
-				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "TABLE REACHED HOME POSITION", 10000);
+			if ((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN || ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+				if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
+				{
+					gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "TABLE REACHED HOME POSITION", 10000);
+				}
+				else
+				{
+					gui.show_error_message_on_gui("board.initBoard() FAILED");
+				}
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 			}
-			else
-			{
-				gui.show_error_message_on_gui("board.initBoard() FAILED");
-			}
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
-		}
 			
 			
 			
 			
 			
 			
-		//USER PRESSED LOGOUT BUTTON
-		//if (ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
-		//{
-			//gamebackend.logout();
-//	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-	//TODO RESET ALL STUFF sessid, game field,...
-//}
+			//USER PRESSED LOGOUT BUTTON
+			//if (ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+			//{
+				//gamebackend.logout();
+				//	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+					//TODO RESET ALL STUFF sessid, game field,...
+					//}
 			
-//USER PRESSED LOGIN BUTTON
-//if (ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
-//{
-	//if (gamebackend.login())
-	//{
-		//SWITCH TO MAIN MENU
-	//	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
-		//UPDATE SESSION_ID
-	//	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
-	//}
-	//else
-	//{
-	//	gui.show_error_message_on_gui(gamebackend.get_last_error());
-	//}
-//}
-//}
+					//USER PRESSED LOGIN BUTTON
+					//if (ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+					//{
+						//if (gamebackend.login())
+						//{
+							//SWITCH TO MAIN MENU
+						//	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
+							//UPDATE SESSION_ID
+						//	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
+						//}
+						//else
+						//{
+						//	gui.show_error_message_on_gui(gamebackend.get_last_error());
+						//}
+						//}
+						//}
 		
-//HANDLE GAME STATE 
-//if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
-//{
-//			motorA.goto_position(1203);
+						//HANDLE GAME STATE 
+						//if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+						//{
+						//			motorA.goto_position(1203);
+		}
+		
+		//HANDLE BACKEND EVETNS
+		//CHECK CONNECTION IN INTERVAL
+		//CHECK LOGINSTATE IN INTERVAL
+		
+		
+		
 	}
-		
-	//HANDLE BACKEND EVETNS
-	//CHECK CONNECTION IN INTERVAL
-	//CHECK LOGINSTATE IN INTERVAL
-		
-		
-		
-}
 	
-return 0;
+	return 0;
 }

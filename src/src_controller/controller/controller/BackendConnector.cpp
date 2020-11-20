@@ -49,7 +49,15 @@ BackendConnector::request_result BackendConnector::make_request(std::string _url
 	return req_res;
 }
 
+void BackendConnector::set_backend_base_url(std::string _url)
+{
+	backend_base_url = _url;
+}
 
+std::string BackendConnector::get_backend_base_url()
+{
+	return backend_base_url;
+}
 
 //CHECKS IF BACKEND REACHABLE
 bool BackendConnector::check_connection()
