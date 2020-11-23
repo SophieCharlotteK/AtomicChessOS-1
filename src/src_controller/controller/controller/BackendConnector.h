@@ -31,6 +31,10 @@ public:
 		PS_PREPARING_INGAME = 6,
 		PS_INGAME = 7
 	};
+	enum class PLAYER_TYPE{
+		PT_HUMAN = 0,
+		PT_AI = 1
+	};
 	BackendConnector(std::string _backend_base_url, std::string _interface_name, std::string _hwid);
 	~BackendConnector();
 	
