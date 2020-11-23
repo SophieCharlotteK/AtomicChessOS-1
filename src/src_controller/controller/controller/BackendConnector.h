@@ -17,6 +17,20 @@ class BackendConnector
 {
 	
 public:
+	struct PLAYER_AVARIABLE{
+		std::string visibale_name;
+		int rank;
+		std::string elo_rank;
+		std::string virtual_player_id
+	};
+	enum class PLAYER_STATE{
+		PS_INVALID=0
+		PS_IDLE=1,
+		PS_SEARCHING=4
+		PS_SEARCHING_MANUAL =5,
+		PS_PREPARING_INGAME = 6,
+		PS_INGAME = 7
+	};
 	BackendConnector(std::string _backend_base_url, std::string _interface_name, std::string _hwid);
 	~BackendConnector();
 	
@@ -33,6 +47,16 @@ public:
 	std::string get_backend_base_url();
 	std::string get_session_id();
 	std::string get_interface_name();
+	
+	
+	
+	bool set_player_state(PLAYER_STATE _ps);
+	bool set_player_setup_confirmation(bool _board_ready);
+	bool start_match_with_player(std::string _virtual_player_id);
+	
+	
+	
+	std::list<PLAYER_AVARIABLE> get_players_avariable();
 	
 	
 	void set_https_client_certificate(std::string _path);
