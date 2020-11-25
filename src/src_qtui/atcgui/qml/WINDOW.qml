@@ -201,7 +201,7 @@ Rectangle {
             Button {
                 id: mm_show_playerlist_btn
                 x: 26
-                y: 81
+                y: 151
                 width: 207
                 height: 55
                 text: qsTr("SHOW AVARIABLE PLAYERS")
@@ -220,6 +220,7 @@ Rectangle {
                 width: 207
                 height: 55
                 text: qsTr("START AI MATCH")
+                visible: false
                 Connections {
                     target: mm_start_random_btn
                     function onClicked(_mouse){
@@ -373,30 +374,39 @@ Rectangle {
         Text {
             id: is_hwid_label
             objectName: "is_hwid_label"
-            x: 358
+            x: 57
             y: 54
+            width: 680
+            height: 75
             color: "#ffffff"
             text: qsTr("HWID")
+            horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
         }
 
         Text {
             id: is_sessionid_label
             objectName: "is_sessionid_label"
-            x: 319
+            x: 57
             y: 155
+            width: 680
+            height: 78
             color: "#ffffff"
             text: qsTr("SESSION_ID")
+            horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
         }
 
         Text {
             id: is_version_label
             objectName: "is_version_label"
-            x: 319
-            y: 223
+            x: 57
+            y: 246
+            width: 680
+            height: 102
             color: "#ffffff"
             text: qsTr("ATCOS_VERSION")
+            horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
         }
     }
@@ -424,10 +434,13 @@ Rectangle {
 
         Text {
             id: es_lasterr_label
-            x: 358
+            x: 97
             y: 54
+            width: 652
+            height: 246
             color: "#ffffff"
             text: qsTr("ERROR")
+            horizontalAlignment: Text.AlignHCenter
             objectName: "es_lasterr_label"
             font.pixelSize: 30
         }
@@ -449,6 +462,7 @@ Rectangle {
             y: 54
             color: "#ffffff"
             text: qsTr("MESSAGE")
+            horizontalAlignment: Text.AlignHCenter
             objectName: "es_lasterr_label"
             font.pixelSize: 30
         }
@@ -512,6 +526,7 @@ Rectangle {
             y: 54
             color: "#ffffff"
             text: qsTr("MESSAGE")
+            horizontalAlignment: Text.AlignHCenter
             objectName: "msgtb_headline_label"
             font.pixelSize: 30
         }
@@ -740,21 +755,112 @@ Rectangle {
             y: 34
             color: "#ffffff"
             text: qsTr("GAME STATE")
+            horizontalAlignment: Text.AlignHCenter
             objectName: "game_headline_label"
             font.pixelSize: 30
         }
 
+        Text {
+            id: game_possible_move_label
+            x: 8
+            y: 85
+            color: "#ffffff"
+            text: qsTr("POSSIBLE MOVES")
+            horizontalAlignment: Text.AlignHCenter
+            objectName: "game_possible_move_label"
+            font.pixelSize: 24
+        }
+
         DelayButton {
             id: game_abortgame_btn
-            x: 600
-            y: 334
-            width: 184
-            height: 59
+            objectName: "game_abortgame_btn"
+            x: 286
+            y: 305
+            width: 266
+            height: 89
             text: qsTr("ABORT GAME")
+            focusPolicy: Qt.ClickFocus
+            autoRepeat: false
             Connections {
                 target: game_abortgame_btn
                 function onClicked(_mouse){
                     main_menu.gs_abort_game()
+                }
+            }
+        }
+
+        ListView {
+            id: game_possible_moves_list
+            objectName: "game_possible_moves_list"
+            x: 25
+            y: 132
+            width: 215
+            height: 271
+            model: ListModel {
+                ListElement {
+                    name: "E2 -> E4"
+
+                }
+
+                ListElement {
+                    name: "G6 -> A4"
+
+                }
+
+
+            }
+            delegate: Item {
+                x: 5
+                width: 80
+                height: 40
+                Row {
+                    id: row1
+
+
+                    Text {
+                        text: name
+                        font.bold: true
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    spacing: 10
+                }
+            }
+        }
+
+        Text {
+            id: game_statistics_headline_label1
+            x: 579
+            y: 85
+            color: "#ffffff"
+            text: qsTr("GAME STATISTICS")
+            visible: true
+            horizontalAlignment: Text.AlignHCenter
+            objectName: "game_possible_move_label"
+            font.pixelSize: 24
+        }
+
+    }
+
+    Rectangle {
+        id: showavariableplayer_container
+        objectName: "showavariableplayer_container"
+        x: 0
+        y: 70
+        width: 800
+        height: 411
+        color: "#07a8a5"
+        visible: false
+
+        Button {
+            id: showavariableplayer_back_btn
+            x: 686
+            y: 363
+            text: qsTr("BACK")
+            visible: true
+            Connections {
+                target: is_back_btn
+                function onClicked(_mouse){
+                    main_menu.go_menu_back()
                 }
             }
         }

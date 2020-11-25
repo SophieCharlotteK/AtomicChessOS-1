@@ -25,9 +25,11 @@ menu_levels["msgta_container"] = 0;
 menu_levels["msgtb_container"] = 0;
 menu_levels["processing_container"] = 0;
 
-menu_levels["ss_container"] = 1;
-menu_levels["debug_container"] = 2;
-menu_levels["is_container"] = 3;
+
+menu_levels["showavariableplayer_container"] = 1;
+menu_levels["ss_container"] = 2;
+menu_levels["debug_container"] = 3;
+menu_levels["is_container"] = 4;
 
 
 
@@ -110,7 +112,7 @@ void MenuManager::switch_menu(QString _screen){
     set_visible_element("processing_container",false);
     set_visible_element("debug_container",false);
     set_visible_element("game_container",false);
-    
+    set_visible_element("showavariableplayer_container",false);
     //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
 }
@@ -127,6 +129,8 @@ void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
         case guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN:{switch_menu("processing_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN:{switch_menu("debug_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN:{switch_menu("game_container");break;}
+        case guicommunicator::GUI_VALUE_TYPE::PLAYER_SEARCH_SCREEN:{switch_menu("showavariableplayer_container");break;}
+        
 
         default:break;
     }
@@ -240,6 +244,7 @@ void MenuManager::mm_start_ai_btn(){
 
 void MenuManager::mm_player_list_btn(){
     qInfo() << "goto_search_player_view";
+    MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE::PLAYER_SEARCH_SCREEN);
     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::MAINMENU_PLAYER_LIST_BTN, guicommunicator::GUI_VALUE_TYPE::CLICKED);
 }
 
