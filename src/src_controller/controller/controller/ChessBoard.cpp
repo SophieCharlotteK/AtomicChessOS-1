@@ -409,8 +409,8 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	/// THE A MAGNET HAVE TO BE AT POSTION H1
 	
 
-	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, IOController::COIL_B), true);
-	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL::COIL_B), true);
+//	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, IOController::COIL_B), true);
+//	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL::COIL_B), true);
 
 	//NEXT SCAN THE FIELD WITH PARK POSTIONS
 	//scanBoard(board_current, true);

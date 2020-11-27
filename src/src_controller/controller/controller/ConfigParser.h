@@ -6,7 +6,7 @@
 #include <mutex>
 #include <iostream>
 #include <fstream>
-
+#include <map>
 
 ///INCLUDE 3rd PARTY
 #include "SHARED/inih-master/INIReader.h"
@@ -16,13 +16,12 @@
 #define USE_STD_LOG
 
 
-
-
+#define INI_SETTINGS_CATEGORY_TOKEN "SETTINGS"
 class ConfigParser
 {
 public:
 	///PLEAE NOT BY EDIT/ADDING ENTRIES PLEASE EDIT ConfigParser::createConfigFile FUNCTION
-	enum CFG_ENTRY
+	enum class CFG_ENTRY
 	{
 		NETWORK_BACKEND_URL = 0,
 				
@@ -61,16 +60,40 @@ public:
 		
 		BOARD_PRESET_START_POSITION_FEN = 50,
 		
+		//SOME REVERSE ENTRIES FOR CUSTOM  SAVE STUFF
+		RESERVED_1 = 100,
+		RESERVED_2 = 101,
+		RESERVED_3 = 102,
+		RESERVED_4 = 103,
+		RESERVED_5 = 104,
+		RESERVED_6 = 105,
+		RESERVED_7 = 106,
+		RESERVED_8 = 107,
+		RESERVED_9 = 108,
+		RESERVED_10 = 109,
+		RESERVED_11 = 110,
+		RESERVED_12 = 111,
+		RESERVED_13 = 112,
+		RESERVED_14 = 113,
+		RESERVED_15 = 114,
+		RESERVED_16 = 115,
+		RESERVED_17 = 116,
+		RESERVED_18 = 117,
+		RESERVED_19 = 118,
+		RESERVED_20 = 119
+		
 	};
 	
 	static ConfigParser* getInstance();
 	
 	bool loadConfigFile(std::string _file);
 	bool createConfigFile(std::string _file, bool _load_directly); //GENERATES A CONFIG FILE WITH DEFAULTS
-
+	
 	bool configLoaded();
 	
 	std::string get(ConfigParser::CFG_ENTRY _entry);
+	void set(ConfigParser::CFG_ENTRY _entry, std::string _value, bool _writeConfigToFile);
+	bool writeConfigFile(std::string _file);
 	
 	bool get_int(ConfigParser::CFG_ENTRY _entry, int& _ret);
 	
@@ -81,8 +104,8 @@ private:
 	bool cfg_loaded_success = false;
 	ConfigParser();
 	~ConfigParser();
-	
-	
+	//STORES THE ACUTAL CONFIG FILE
+	std::map<ConfigParser::CFG_ENTRY, std::string> config_store;
 	INIReader reader;
 };
 #endif

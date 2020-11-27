@@ -21,12 +21,12 @@ public:
 		std::string visibale_name;
 		int rank;
 		std::string elo_rank;
-		std::string virtual_player_id
+		std::string virtual_player_id;
 	};
 	enum class PLAYER_STATE{
-		PS_INVALID=0
+		PS_INVALID=0,
 		PS_IDLE=1,
-		PS_SEARCHING=4
+		PS_SEARCHING=4,
 		PS_SEARCHING_MANUAL =5,
 		PS_PREPARING_INGAME = 6,
 		PS_INGAME = 7
@@ -84,7 +84,7 @@ private:
 	const std::string PLAYER_TYPE = "0"; //DEFINED THE PLAYERTYPE 0 IS A HUMAN PLAYER;
 	
 	
-	const std::string URL_CONNECTION_CHECK = "/";
+	const std::string URL_CONNECTION_CHECK = "/rest/client_status";
 	const std::string URL_LOGIN = "/rest/login";
 	const std::string URL_LOGOUT = "/rest/logout";
 	const std::string URL_HEARTBEAT = "/rest/heartbeat";

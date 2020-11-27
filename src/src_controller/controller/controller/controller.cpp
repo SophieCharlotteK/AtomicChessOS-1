@@ -81,8 +81,8 @@ std::string read_file_to_string(const std::string& _path) {
 int main(int argc, char *argv[])
 {
 	
-	
-	
+//	IOController io;
+
 	//REGISTER SIGNAL HANDLER
 	signal(SIGINT, signal_callback_handler);
 	
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 	
 	//CREATE GAME BACKEND INSTANCE
 	BackendConnector gamebackend(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL), ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE), hwid);
-	std::string ALTERNATIVE_BACKEND_URL[6] = { "http://marcelochsendorf.com:3000", "http://marcelochsendorf.com:3001", "http://marcelochsendorf.com:3002", "http://prodevmo.com:3001", "http://prodevmo.com:3002", "http://127.0.0.1:3000" };	
+	std::string ALTERNATIVE_BACKEND_URL[7] = { "http://atomicchess.de:3000", "http://marcelochsendorf.com:3000", "http://marcelochsendorf.com:3001", "http://marcelochsendorf.com:3002", "http://prodevmo.com:3001", "http://prodevmo.com:3002", "http://127.0.0.1:3000" };	
 	//CHECK IF GAMESERVER IS REACHABLE ELSE USE A OTHER PREDEFINED URL
 	volatile int abu_counter = 0;
 	volatile bool abu_result = true;
@@ -213,51 +213,47 @@ int main(int argc, char *argv[])
 
 	
 	
-	//CHECK IF LOGIN IS VALID AND AN INVALID SESSION ID EXISTS
-	//THEN TRY TO LOGOUT
-	//IF BOTH VALID WHOE THE MAIN MENU
-	if(gamebackend.check_login_state() && gamebackend.get_session_id().empty())
-	{
-	LOG_F(ERROR, "gamebackend - check loginstate - user already signed in");
-		//PERFORM LOGOUT
-		if(gamebackend.logout())
-		{
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-			LOG_F(ERROR, "gamebackend - LOGIN");	
-		}else
-		{
-			LOG_F(ERROR, "gamebackend - logout failed");
-			gui.show_error_message_on_gui("LOGOUT FAILED");
-
-		}
-	}
-	else if(gamebackend.check_login_state() && !gamebackend.get_session_id().empty())
-	{
-		//SHOW MAIN MENU
-		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
-		//UPDATE SESSION_ID
-		gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
-		
-	}else
+	//PERFORM A LOGOUT
+	if(gamebackend.logout())
 	{
 		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+		LOG_F(ERROR, "gamebackend - LOGIN");	
+	}else
+	{
+		LOG_F(ERROR, "gamebackend - logout failed");
+		gui.show_error_message_on_gui("LOGOUT FAILED");
+
 	}
 	
+
 	
 	
 	
 
 	
 	//ENTERING MIAN LOOP
+	//IOController io; //THE IO CONTROLLER ITSELF IS STATELESS SO MULTIBALE INSTANCE CAN BE USED AT ONE BEACUSE THE ABSTRATION OG THE SPI COMMUNICATION
 	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_IDLE);
 	while (mainloop_running == 0)
 	{
 		//HANDLE UI EVENTS UI LOOP
 		guicommunicator::GUI_EVENT ev = gui.get_gui_update_event();
-		if (ev.is_event_valid)
-		{
+		if (!ev.is_event_valid){continue;}
+		
+		
 			gui.debug_event(ev, true);	
 			
+		
+		//TODO GAME STATE MACINE GET PLAYER STATE SHOW SCRRENS
+		//FIRST LOGIN
+		
+		
+		
+		
+		
+		
+		
+		
 			if (ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 				if (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
@@ -266,10 +262,7 @@ int main(int argc, char *argv[])
 				}
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 			}
-			
-			
-			
-			
+				
 			if ((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN || ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 				if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
@@ -282,7 +275,13 @@ int main(int argc, char *argv[])
 				}
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 			}
-			
+					
+			if ( ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_B && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+				ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, true);
+				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOADED DEFAULT CONFIG", 10000);
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+			}
 			
 			
 			
@@ -317,7 +316,7 @@ int main(int argc, char *argv[])
 						//if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
 						//{
 						//			motorA.goto_position(1203);
-		}
+		
 		
 		//HANDLE BACKEND EVETNS
 		//CHECK CONNECTION IN INTERVAL
