@@ -79,16 +79,18 @@ bool ConfigParser::writeConfigFile(std::string _file)
 	return true;
 }
 
-bool ConfigParser::createConfigFile(std::string _file, bool _load_directly)
-{
-	
-	
+
+
+void ConfigParser::loadDefaults() {
 	//DEFAULT CONFIG HARD CODED :)
 	config_store[ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL] = "http::192.168.178.125:3000";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE] = "eth0";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_VERSION_FILE_PATH] = "/VERSION";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_HWREV_FILE_PATH] = "/etc/hwrevision";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH] = "/etc/swupdate/BOOTPART";
+	config_store[ConfigParser::CFG_ENTRY::GENERAL_SYSTEM_TICK_INTERVAL_MS] = "1000";
+	
+	
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM] = "1292";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS] = "0";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_X] = "50";
@@ -103,7 +105,15 @@ bool ConfigParser::createConfigFile(std::string _file, bool _load_directly)
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_FIRST_Y_OFFSET] = "20";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_BEFORE_OFFSET] = "20";	
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_SIZE] = "30";
+	
+	
 	config_store[ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN] = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+}
+
+bool ConfigParser::createConfigFile(std::string _file, bool _load_directly) {
+		
+	//LOAD DEFAULTS
+	loadDefaults();
 
 	
 	//WRITE SETTINGS TO FILE
@@ -123,7 +133,7 @@ bool ConfigParser::configLoaded()
 }
 
 
-bool ConfigParser::get_int(ConfigParser::CFG_ENTRY _entry, int& _ret)
+bool ConfigParser::getInt(ConfigParser::CFG_ENTRY _entry, int& _ret)
 {
 	
 	if (!ConfigParser::getInstance()->get(_entry).empty()) {

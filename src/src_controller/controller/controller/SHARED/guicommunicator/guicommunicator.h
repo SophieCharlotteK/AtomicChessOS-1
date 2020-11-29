@@ -176,7 +176,7 @@ enum class GUI_ELEMENT{
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value); //sends a event though ZeroMQ using protocol buffer
     //DERIVATIONS FRom createEvent
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type);
-
+	void clearPreviousEvents();
     #ifdef USES_QT
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value);
     #endif

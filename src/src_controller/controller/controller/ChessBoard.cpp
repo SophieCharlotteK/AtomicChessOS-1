@@ -12,7 +12,7 @@ ChessBoard::ChessBoard() {
 	x_axis->default_settings();
 	///OVERRIDE STEPS PER MM IF CONFIG EXISTS
 	int spm = 0;
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM, spm);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM, spm);
 	if (spm > 0)
 	{
 		x_axis->steps_per_mm(spm);
@@ -34,7 +34,7 @@ ChessBoard::ChessBoard() {
 	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
 	//OVERRIDE POLARITY SETTING OF TH COILS
 	int ivcoils = 0;
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS, ivcoils);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS, ivcoils);
 	if (ivcoils > 0)
 	{
 		iocontroller->invertCoilPolarity(IOController::COIL::COIL_A, true);
@@ -86,19 +86,19 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	
 	if (is_black_park_position ==2) //BLACK
 	{
-		ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_X_LINE, line_offset);
-		ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_FIRST_Y_OFFSET, y_offset);
+		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_X_LINE, line_offset);
+		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_FIRST_Y_OFFSET, y_offset);
 	}
 	else
 	{
-		ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_X_LINE, line_offset);
-		ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_FIRST_Y_OFFSET, y_offset);
+		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_X_LINE, line_offset);
+		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_FIRST_Y_OFFSET, y_offset);
 	}
 		
 		
 	//LOAD PARKING SLOT CELL SIZE
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_SIZE, cell_size);
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_BEFORE_OFFSET, before_line_offset);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_SIZE, cell_size);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_BEFORE_OFFSET, before_line_offset);
 	
 	
 	//GET PARK POSITON INDEX 1-16
@@ -152,13 +152,13 @@ void ChessBoard::getFieldCoordinates(ChessField::CHESS_FILEDS  _index, int& _x, 
 	int offset_x = 0;
 	int offset_y = 0;
 	//LOAD OFFSET FROM CONFIG FILE IF HOME POS IS NOT IN FIELD H1
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_X, offset_x);
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_Y, offset_y);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_X, offset_x);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_H1_OFFSET_MM_Y, offset_y);
 	int board_width = 0;
 	//LOAD OFFSET FROM CONFIG FILE IF HOME POS IS NOT IN FIELD H1
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_BOARD_WIDTH, board_width);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_BOARD_WIDTH, board_width);
 	int field_width = 50;
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH, field_width);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH, field_width);
 	
 	
 	
@@ -355,7 +355,7 @@ ChessBoard::BOARD_ERROR ChessBoard::get_coil_offset(IOController::COIL _coil, in
 {
 	//LOAD COIL DISTANCE COIL_A <--- NFC ---> COIL_B THE DISTANCE IS COIL_A to COIL_B THE NFC COIL IS IN THE MIDDLE
 	int coil_distance = 0;
-	ConfigParser::getInstance()->get_int(ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM, coil_distance);
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM, coil_distance);
 	
 	int mv_distance = 0;
 	//coil_distance = coil_distance / 2;

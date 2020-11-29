@@ -211,6 +211,13 @@ guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 	return tmp;
 }
 
+void guicommunicator::clearPreviousEvents()
+{
+	update_thread_mutex.lock();
+	//SIMPLEST WAY TO CLEAN UP THE QUEUE
+	gui_update_event_queue = std::queue<GUI_EVENT>();
+	update_thread_mutex.unlock();
+}
 
 std::string guicommunicator::rpc_callback(std::string _msg)
 {

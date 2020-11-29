@@ -31,6 +31,7 @@ public:
 		GENERAL_VERSION_FILE_PATH = 11,
 		GENERAL_HWREV_FILE_PATH = 12,
 		GENERAL_BOOT_PARTION_INFO_FILE_PATH = 13,
+		GENERAL_SYSTEM_TICK_INTERVAL_MS = 14,
 			
 		MECHANIC_STEPS_PER_MM = 20,
 		MECHANIC_INVERT_COILS = 21,
@@ -59,6 +60,9 @@ public:
 		
 		
 		BOARD_PRESET_START_POSITION_FEN = 50,
+		
+		
+		
 		
 		//SOME REVERSE ENTRIES FOR CUSTOM  SAVE STUFF
 		RESERVED_1 = 100,
@@ -95,8 +99,9 @@ public:
 	void set(ConfigParser::CFG_ENTRY _entry, std::string _value, bool _writeConfigToFile);
 	bool writeConfigFile(std::string _file);
 	
-	bool get_int(ConfigParser::CFG_ENTRY _entry, int& _ret);
+	bool getInt(ConfigParser::CFG_ENTRY _entry, int& _ret);
 	
+	void loadDefaults();
 private:
 	static ConfigParser* instance;
 	static std::mutex acces_lock_mutex;
