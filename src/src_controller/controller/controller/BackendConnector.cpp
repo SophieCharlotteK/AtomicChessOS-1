@@ -5,6 +5,35 @@ BackendConnector::~BackendConnector()
 {
 }
 
+
+
+
+BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
+{
+	PLAYER_STATUS status;
+	status.requst_success = true;
+	
+	//DO THE REQUEST
+	request_result tmp = make_request(URL_LOGIN + "?hwid=" + hwid + "&sid=" + session_id);
+	
+	if (tmp.request_failed)
+	{
+		last_error = "get_player_state - request failed";
+		status.requst_success = false;
+		return status;
+	}
+	std::string e = tmp.body;
+	//PARSE THE JSON RESULT
+	if(tmp.body.empty())
+	{
+		last_error = "get_player_state - result empty";
+		status.requst_success = false;
+		return status;
+	}
+	
+}
+
+
 void BackendConnector::set_https_client_certificate(std::string _path)
 {
 	ca_client_path = _path;
@@ -160,7 +189,6 @@ bool BackendConnector::login(PLAYER_TYPE _pt)
 		last_error = "login - request failed";
 		return false;
 	}
-	std::string e = tmp.body;
 	//PARSE THE JSON RESULT
 	if(!tmp.body.empty())
 	{
@@ -228,6 +256,10 @@ bool BackendConnector::logout()
 		return false;
 	}
 	//DESTROY SESSION
+	player_profile.rank = -1;
+	player_profile.elo_rank_readable = "";
+	player_profile.virtual_player_id  = "";
+	player_profile.friendly_name = "";
 	session_id = "";
 	return true;
 }
