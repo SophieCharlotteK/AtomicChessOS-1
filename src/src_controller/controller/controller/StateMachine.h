@@ -24,12 +24,12 @@ public:
 	SM_STATE switch_to_next_state(BackendConnector::PLAYER_STATUS _ps);
 	
 	
-	
+	SM_STATE get_prev_state();
 	
 	
 	
 private:
-	SM_STATE current_state = SM_STATE::UNKNOWN;
+	SM_STATE prev_state = SM_STATE::UNKNOWN;
 };
 #endif
 

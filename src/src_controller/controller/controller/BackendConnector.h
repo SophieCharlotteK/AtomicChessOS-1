@@ -24,11 +24,21 @@ public:
 		std::string virtual_player_id;
 	};
 	
+	struct GAME_STATE_SIMPLIFIED
+	{
+	};
+		
 	struct MATCHMAKING_STATE
 	{
-		
+		bool waiting_for_game; //IF THE PLAYER HAS MATCHMAKING ENABLED
 	};
 	
+	struct GAME_STATE
+	{
+		bool game_running;
+		GAME_STATE_SIMPLIFIED simplified;
+	};
+		
 	struct PLAYER_PROFILE
 	{
 		std::string friendly_name;
@@ -59,7 +69,9 @@ public:
 		std::string status;
 		std::string err;
 		
-		bool player_login_state;
+		
+		MATCHMAKING_STATE matchmaking_state;
+		GAME_STATE game_state;
 		bool requst_success;
 		
 	};
@@ -89,6 +101,14 @@ public:
 	
 	
 	std::list<PLAYER_AVARIABLE> get_players_avariable();
+	
+	bool start_heartbeat_thread(); //CHECK IF RUNNING
+	bool stop_heartbeat_thread();
+	void get_heartbeat(); // REQUEST EVERY SECOND
+	
+	
+	
+	
 	
 	
 	void set_https_client_certificate(std::string _path);

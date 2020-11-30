@@ -14,7 +14,7 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 	status.requst_success = true;
 	
 	//DO THE REQUEST
-	request_result tmp = make_request(URL_LOGIN + "?hwid=" + hwid + "&sid=" + session_id);
+	request_result tmp = make_request(URL_PLAYER_STATE + "?hwid=" + hwid + "&sid=" + session_id + "&simplified=1");
 	
 	if (tmp.request_failed)
 	{
@@ -23,6 +23,7 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 		return status;
 	}
 	std::string e = tmp.body;
+	LOG_F(INFO, "%s", e.c_str());
 	//PARSE THE JSON RESULT
 	if(tmp.body.empty())
 	{
@@ -30,7 +31,46 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 		status.requst_success = false;
 		return status;
 	}
+	std::string jp_err = "";
+	json11::Json t = json11::Json::parse(tmp.body.c_str(), jp_err);
+	//CHECK JSON PARSE RESULT	
+	if (!jp_err.empty())
+	{
+		last_error = "get_player_state - json parse failed";
+		status.requst_success = false;
+		status.err = "json_parse_failed";
+		return status;
+	}
+	//PARSE ROOT OBJECT
+	json11::Json::object  root = t.object_items();
+	//err
+	if(root.find("err") != root.end() && root["err"].is_string()) {
+		status.err = root["err"].bool_value();
+	}
+	//status
+	if(root.find("status") != root.end() && root["status"].is_string()) {
+		status.err = root["status"].bool_value();
+	}
 	
+	//MATCHMAKING ->waiting_for_game
+	if(root["matchmaking"].is_object())
+	{
+		json11::Json::object  mm = root["matchmaking"].object_items();
+		//FRIENDLY NAME
+		if(mm.find("waiting_for_game") != mm.end() && mm["waiting_for_game"].is_bool()) {
+			status.matchmaking_state.waiting_for_game = mm["waiting_for_game"].bool_value();
+		}	
+	}
+	//GAME_STATE->game_running
+	if(root["matchmaking"].is_object())
+	{
+		json11::Json::object  gs = root["matchmaking"].object_items();
+		//FRIENDLY NAME
+		if(gs.find("game_running") != gs.end() && gs["game_running"].is_bool()) {
+			status.game_state.game_running = gs["game_running"].bool_value();
+		}	
+	}
+	return status;
 }
 
 
