@@ -9,7 +9,7 @@
 #include "SHARED/cpp-httplib-master/httplib.h"
 #include "SHARED/json11-master/json11.hpp"
 #include "SHARED/loguru-master/loguru.hpp"
-
+#include "SHARED/magic_enum-master/include/magic_enum.hpp"
 //IF A SESSION ID IS SET AND NOT NULL START HEARTBEAR THREAD
 
 //THREAD FOR SESSOON
@@ -23,6 +23,20 @@ public:
 		std::string elo_rank;
 		std::string virtual_player_id;
 	};
+	
+	struct MATCHMAKING_STATE
+	{
+		
+	};
+	
+	struct PLAYER_PROFILE
+	{
+		std::string friendly_name;
+		std::string virtual_player_id;
+		std::string elo_rank_readable;
+		int rank;
+	};
+
 	enum class PLAYER_STATE{
 		PS_INVALID=0,
 		PS_IDLE=1,
@@ -35,24 +49,38 @@ public:
 		PT_HUMAN = 0,
 		PT_AI = 1
 	};
+	
+	
+	struct PLAYER_STATUS
+	{
+		PLAYER_STATE player_state;
+		PLAYER_TYPE player_type;
+		
+		std::string status;
+		std::string err;
+		
+		bool player_login_state;
+		bool requst_success;
+		
+	};
 	BackendConnector(std::string _backend_base_url, std::string _interface_name, std::string _hwid);
 	~BackendConnector();
 	
-	bool login();
+	bool login(PLAYER_TYPE _pt);
 	bool update_session();
 	bool check_connection();
 	bool check_login_state();
 	bool logout();
 	
 	std::list<std::string> get_avariable_player();
+	int get_avariable_ai_player();
 	
-	bool set_visible_state(bool _state);
 	void set_backend_base_url(std::string _url);
 	std::string get_backend_base_url();
 	std::string get_session_id();
 	std::string get_interface_name();
 	
-	
+	PLAYER_STATUS get_player_state();
 	
 	bool set_player_state(PLAYER_STATE _ps);
 	bool set_player_setup_confirmation(bool _board_ready);
@@ -66,6 +94,8 @@ public:
 	void set_https_client_certificate(std::string _path);
 	std::string get_last_error();
 	
+	
+	PLAYER_PROFILE getPlayerProfile();
 private:
 	struct request_result
 	{
@@ -73,6 +103,7 @@ private:
 		std::string body;
 		httplib::Error error;
 		int status_code;
+		std::string uri;
 	};
 	
 	std::string backend_base_url;
@@ -80,14 +111,19 @@ private:
 	std::string session_id;
 	std::string interface_name;
 	
-	
-	const std::string PLAYER_TYPE = "0"; //DEFINED THE PLAYERTYPE 0 IS A HUMAN PLAYER;
+	PLAYER_PROFILE player_profile;
 	
 	
 	const std::string URL_CONNECTION_CHECK = "/rest/client_status";
 	const std::string URL_LOGIN = "/rest/login";
 	const std::string URL_LOGOUT = "/rest/logout";
 	const std::string URL_HEARTBEAT = "/rest/heartbeat";
+	const std::string URL_PLAYER_STATE = "/rest/get_player_state";
+	const std::string URL_GET_PLAYERS_AVARIABLE = "/rest/get_players_avariable";
+	const std::string URL_GET_AI_PLAYERS_AVARIABLE = "/rest/get_avariable_ai_players";
+	
+	const std::string URL_SET_PLAYER_VISIBLE_STATE = "/rest/set_player_state";
+	
 	std::string ca_client_path = "";
 	
 	std::string last_error = "";
