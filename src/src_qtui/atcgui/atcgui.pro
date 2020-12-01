@@ -1,5 +1,5 @@
-QT += core quick virtualkeyboard
-
+QT += core quick 
+# QT += virtualkeyboard
 
 DEFINES += USES_QT
 
