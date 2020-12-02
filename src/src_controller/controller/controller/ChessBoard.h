@@ -4,10 +4,11 @@
 
 #include <string>
 #include <list>
-#include <thread>
-#include <mutex>
+#include <vector>
+
 #include <chrono>
 #include <stdlib.h>
+#include <map>
 #define USE_STD_LOG
 
 #ifdef USE_STD_LOG
@@ -72,7 +73,6 @@ public:
 	enum BOARD_PRESET {
 		BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION = 0,
 		BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION = 1,
-		BOARD_PRESET_CLEARED = 2
 	};
 	
 	struct FigureField
@@ -81,6 +81,13 @@ public:
 		ChessPiece::FIGURE figure;
 	};
 	
+	struct MovePiar
+	{
+		ChessField::CHESS_FILEDS from_field;
+		ChessField::CHESS_FILEDS to_field;
+	};
+		
+		
 	ChessBoard() ;
 	~ChessBoard();
 	
@@ -117,7 +124,7 @@ private:
 	///REPRESENTS THE CHESS BOARD
 	ChessPiece::FIGURE board_current[BOARD_WIDTH][BOARD_HEIGHT]; ///REPRESENTS THE CURRENT CHESS BOARD (=> THE MECHANICAL/REAL WORLD)
 	ChessPiece::FIGURE board_target[BOARD_WIDTH][BOARD_HEIGHT];///REPRESENTS THE TARGETBOARD WHICH SHOULD BE ARCHVIED
-	ChessPiece::FIGURE temp_board[BOARD_WIDTH][BOARD_HEIGHT]; ///USED FOR FEN PARSING
+	ChessPiece::FIGURE board_temp[BOARD_WIDTH][BOARD_HEIGHT];  ///USED FOR FEN PARSING
 	void log_error(std::string _err);
 };
 

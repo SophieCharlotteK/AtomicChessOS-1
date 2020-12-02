@@ -181,8 +181,10 @@ int main(int argc, char *argv[])
 		}
 	}
 	
+#ifdef DEBUG
+	board.boardFromFen("8/8/8/8/8/8/8/8", ChessBoard::BOARD_TPYE::TARGET_BOARD);			  
+#endif // DEBUG
 
-	
 	
 	//CREATE GAME BACKEND INSTANCE
 	BackendConnector gamebackend(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL), ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE), hwid);
@@ -314,7 +316,51 @@ int main(int argc, char *argv[])
 					//EG FROM NO_GAME_RUNNING TO GAME_RUNNING, THE SCREEN HAVE TO BE SWITCHED, ...
 					
 					
-					//TODO GAME RUNNING && NEED SETUP
+					//NOW THE NEW GAME HAS STARTED AND THE HARDWARE HAS TO INITILIZES TO THE GIVEN BOARD
+					//AND MOVE THE CHESS FIGURES TO THE INIT BOARD GIVEN BY THE SERVER
+					if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING) {
+						//SHOW THE PROCESSING SCREEN
+						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+						io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PRECCESSING);
+						//NOW INIT THE GAME BOARD
+						if(!ps.game_state.current_board_fen.empty()) {
+							//LOAD THE FEN TO THE TARGET BOARD
+							//IF RETURNS FALSE => THE FEN IS INVALID
+							if(!board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD))
+							{
+								gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "INVALID BOARD FEN - CANCEL GAME", 4000);
+								LOG_F(ERROR, ps.game_state.current_board_fen.c_str());
+								gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE);
+								gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
+							}
+								
+							//NOW SYNC THE TWO BOARDS => THE TARGET CHESS POSITIONS WITH THE REAL WORLD MECHANICAL POSTIONS
+							if (board.syncRealWithTargetBoard())
+							{
+								//BOARD SYNCED => UPDATE STATE ON SERVER THAT BOARD IS SYNCED
+								gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
+							}else
+							{
+								//BOARD INIT FAILED => SHOW OPTION TO CONTIOUE
+								if(gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD SETUP FAILED? CONTINUE", 4000) == guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK){
+									//SEND BOARD INIT COMPLETE CALL
+									gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
+								}else
+								{
+									//RESET PLAYER STATE => ABORTS GAME
+									gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE);
+									//GO BACK TO MAIN_MENU SCREEN
+									gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
+								}
+							}
+						}
+						
+						
+					//ALL OTHER STATES RETURNS BACK TO THE MAIN MENU
+					}else if (current_state == StateMachine::SM_STATE::SMS_GAME_ABORTED || current_state == StateMachine::SM_STATE::SMS_UNKNOWN)
+					{
+						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
+					}
 					
 					//FINALLY SWITCH TO THE NEW STATE
 					state_machiene.switch_to_next_state(ps);

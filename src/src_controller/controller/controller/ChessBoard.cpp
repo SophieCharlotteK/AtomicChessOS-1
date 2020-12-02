@@ -46,6 +46,204 @@ ChessBoard::~ChessBoard() {
 }
 
 
+bool ChessBoard::syncRealWithTargetBoard() {
+	//TODO
+   //USE MAKE MOVE TO GENERATE A MOVE LIST THEN EXECUTE THE MOVES
+   std::vector<MovePiar> move_list;
+	
+	
+	
+	
+	
+	for (size_t i = 0; i < move_list.size(); i++)
+	{
+		//	makeMoveSync(move_list.at(i).from_field, move_list.at(i).to_field, false, false, true);
+	}
+		
+		
+		
+	return true;	
+}
+
+
+bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board) {
+	
+	
+	_fen += " "; //THE BOARD BLOCK (CONTAINING FROM START OF THE STRING) TO THE FIRST WHITESPACE => EVERYTHING AFTER IS NOT IMPORTANT
+	//CREATE AN EMPTY FIGURE
+	ChessPiece::FIGURE*cb;
+	ChessPiece::FIGURE empty_firegure;
+	empty_firegure.is_empty = true;
+	
+	if (_target_board == ChessBoard::BOARD_TPYE::TARGET_BOARD)
+	{
+		cb = *board_target;
+	}
+	else if (_target_board == ChessBoard::BOARD_TPYE::REAL_BOARD)
+	{
+		cb = *board_current;
+	}
+	else if (_target_board == ChessBoard::BOARD_TPYE::TEMP_BOARD)
+	{
+		cb = *board_temp;
+	}
+	else
+	{
+		return false;//INVALID SELECTD BOARD
+	}
+	
+	
+	//WE NEED COUNTER FOR EACH TYPE OF FIGURE PLACED IN THE BOARD
+	//TO DETERM THE AMOUNT OF GIRES IN THE PARKING SLOTS
+	// INIT WIHT -1 INDICATED THAT NO FIGURE OF THIS TYPE IS SET
+	std::map<char, int> figure_counter;
+	//BLACK
+	figure_counter['r'] = -1;
+	figure_counter['n'] = -1;
+	figure_counter['b'] = -1;
+	figure_counter['q'] = -1;
+	figure_counter['k'] = -1;
+	figure_counter['p'] = -1;
+	//WHITE
+	figure_counter['R'] = -1;
+	figure_counter['N'] = -1;
+	figure_counter['B'] = -1;
+	figure_counter['Q'] = -1;
+	figure_counter['K'] = -1;
+	figure_counter['P'] = -1;
+	
+	
+	
+	//CLEAR TARGET BOARD
+	for(size_t w = 0 ; w < BOARD_WIDTH ; w++){
+		for (size_t h = 0; h < BOARD_HEIGHT; h++){
+			size_t index = w + (h*BOARD_HEIGHT);
+			cb[index] = empty_firegure;
+		}		 
+	}
+	
+	//ALGORITHM PARTLY MODIFIED FRO  POST 12550 SITE:
+	//http://www.cplusplus.com/forum/general/181525/
+	//CHECK FEN STRING
+	int num_spaces = 0;
+	int num_rows = 1;
+	//FOR EACH CHARACTER IN FEN STRING
+	
+	for(const char *p =  _fen.c_str() ; *p != 0 ; ++p) {
+		if (*p == ' ') {
+			++num_spaces;
+		}
+		else if (*p == '/') {
+			++num_rows; 
+		}
+		
+	}
+	//INVALID FEN
+	if(num_rows > 8) //DISBALE SPACE CHECK => ONLY USED FOR EXTENDED FEN STRINGS num_spaces != 5 || 
+	{			
+		return false;
+	}
+	
+
+	
+	
+	int board_position_x = 0; //WIDTH
+	int board_position_y = 0; //HEIGHT
+	const char *p =  _fen.c_str();
+	for (; *p != ' '; ++p)
+	{
+		const char ch = *p;
+
+		if (isdigit(ch)) { //IS A DIGIT => EMPTY SPACE FOR THE VALUE OF THE DIGIT
+			for (int i = 0; i < (ch - '0'); ++i) {
+				board_position_x++; //STEP OVER FIELD	
+			}
+		}else if (ch == '/') { //NEW ROW
+			printf("\n\n");
+			board_position_y++; //GOTO NEXT ROW
+			board_position_x = 0;  //AND STARTING A NEW LINE WITH X COUNTER AT 0
+		}
+		else if((ch>65 && ch <90) || (ch>97 && ch <122)){//IS A FIGURE 
+			printf(" %c", ch); 
+			ChessPiece::FIGURE tmp = ChessPiece::getFigureByCharakter(ch);
+			//CHECK FIGURE IS VLAID
+			if (tmp.type == ChessPiece::TYPE_INVALID || tmp.color == ChessPiece::COLOR_UNKNOWN)
+			{
+				return false;
+			}
+			//ASSIGN FIGURE NUMBER
+			figure_counter[ch]++;
+			tmp.figure_number = figure_counter[ch];
+			
+			//PLACE THE FIGURE
+			size_t index = board_position_x + (board_position_y*BOARD_HEIGHT) +2; //+2 FOR THE 2 SPACE FOR THE PARKING POSITIONS
+			cb[index] = tmp;
+			//STEP TO NEXT FIELD
+			board_position_x++;  
+		}
+			
+	}
+
+	
+	//DETERMN FIGURES IN PARK POSITION
+	const size_t FIGURE_COUNT = 12;
+	const char FIGURES[FIGURE_COUNT] = {'r', 'n', 'b', 'q', 'k', 'p', 'R', 'N', 'B', 'Q', 'K', 'P'};
+	int park_pos_counter_white = 0;
+	int park_pos_counter_black = 0;
+	
+	//FOR EACH FIGURE
+	for (int i = 0; i < FIGURE_COUNT; i++)
+	{
+		//GET TARGET COUNT
+		const int target_count = ChessPiece::getFigureCountByChrakter(FIGURES[i]);
+		const int current_count = figure_counter[FIGURES[i]] + 1;
+		const int missing_count = llabs(current_count - target_count);
+		//IF TARGET COUNT REACHED
+		if(missing_count == 0)
+		{
+			continue;
+		}
+		//ELSE FILL UP
+		for(int y = 0 ; y < missing_count ; y++)
+		{
+			//CREATE FIGURE WITH NUMBER
+			ChessPiece::FIGURE tmp = ChessPiece::getFigureByCharakter(FIGURES[i]);
+			//CHECK FIGURE IS VLAID
+			if(tmp.type == ChessPiece::TYPE_INVALID || tmp.color == ChessPiece::COLOR_UNKNOWN)
+			{
+				return false;
+			}
+			figure_counter[FIGURES[i]]++;
+			tmp.figure_number = figure_counter[FIGURES[i]];
+			//CALCUCLATE POSITION IN THE FIELD
+			//FIRST CHECK SITE BLACK/WHITE
+			//WHITE IS ON THE LEFT SIDE OF THE FIELD => WIDTRH INDEX 0 OR 1
+			
+			if(tmp.color == ChessPiece::COLOR_WHITE){
+				//CALCULCATE
+				int x = (park_pos_counter_white / BOARD_HEIGHT) + 0; //+0 START OF THE PARK POSTION OF THE WHITE SIDE
+				int y = park_pos_counter_white % BOARD_HEIGHT;
+				size_t index = x + (y*BOARD_HEIGHT);
+				cb[index] = tmp;
+				
+				//INC PARKPOS COUNTER FOR NEXT POSITION
+				park_pos_counter_white++;
+			}else{
+				int x = (park_pos_counter_black / BOARD_HEIGHT) + 10; //START OF THE PARK POSTION OF THE BLACK SIDE
+				int y = park_pos_counter_black % BOARD_HEIGHT;
+				size_t index = x + (y*BOARD_HEIGHT);
+				cb[index] = tmp;
+				
+				//INC PARKPOS COUNTER FOR NEXT POSITION
+				park_pos_counter_black++;
+			}
+			
+		}
+			
+	}
+	return true;
+}
+	
 void ChessBoard::log_error(std::string _err)
 {
 #ifdef USE_STD_LOG
@@ -74,9 +272,9 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	}
 	
 	if (is_black_park_position == 0) //NOT WHITE OR BLACK
-	{
-		return; //ERROR
-	}
+		{
+			return; //ERROR
+		}
 		
 	//NOW LOAD THE OFFSETS OF THE PARKPOSTION WHITE OR BLACK SITE
 	int line_offset = 0;
@@ -84,11 +282,11 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	int y_offset = 0;
 	int before_line_offset = 0;
 	
-	if (is_black_park_position ==2) //BLACK
-	{
-		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_X_LINE, line_offset);
-		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_FIRST_Y_OFFSET, y_offset);
-	}
+	if (is_black_park_position == 2) //BLACK
+		{
+			ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_X_LINE, line_offset);
+			ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_FIRST_Y_OFFSET, y_offset);
+		}
 	else
 	{
 		ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_X_LINE, line_offset);
@@ -104,9 +302,9 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	//GET PARK POSITON INDEX 1-16
 	int pp_entry = 0;
 	if (is_black_park_position == 2) //BLACK
-	{
-		pp_entry = (_index - ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1) % 16;
-	}
+		{
+			pp_entry = (_index - ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1) % 16;
+		}
 	else
 	{
 		pp_entry = (_index - ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1) % 16;
@@ -114,10 +312,10 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	
 	if (before_parkpostion_entry)
 	{
-		if (is_black_park_position ==2) //BLACK
-		{
-			_x = line_offset + before_line_offset;
-		}
+		if (is_black_park_position == 2) //BLACK
+			{
+				_x = line_offset + before_line_offset;
+			}
 		else
 		{
 			_x = line_offset - before_line_offset;
@@ -210,14 +408,14 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 	int y = 0;
 	for (int i = 0; i < ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1; i++)
 	{
-		getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);    //GET INDEX FOR ARRAY
-		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);    //TRAVEL TO NEXT FIELD
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);   //SCAN NFC TAG IF PRESENT
-		ChessPiece::FigureDebugPrint(tmop);   //DEBUG PRINT FIGURE IF FOUND
+		getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);        //GET INDEX FOR ARRAY
+		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);        //TRAVEL TO NEXT FIELD
+		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);       //SCAN NFC TAG IF PRESENT
+		ChessPiece::FigureDebugPrint(tmop);       //DEBUG PRINT FIGURE IF FOUND
 		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
 			tmop.is_empty = true;	
 		}
-		board[x][y] = tmop;     //STORE FIGURE ON BOARD
+		board[x][y] = tmop;         //STORE FIGURE ON BOARD
 	}
 	
 	//TODO SCAN PARK POSITION FOR WHITE
@@ -226,15 +424,15 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 		
 		//GOOT
 		//getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);   //GET INDEX FOR ARRAY
-		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);     //TRAVEL TO NEXT FIELD
+		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);         //TRAVEL TO NEXT FIELD
 		//ACTIVATE COIL FOR THE BLACK SITE COIL A IS NESSESSARY
 		iocontroller->setCoilState(IOController::COIL_A, false);
 		//MOVE OUT SLOW
 		//MOVE NFC
 		
 		//SCAN POSSBILE NFC TAG
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);    //SCAN NFC TAG IF PRESENT
-		ChessPiece::FigureDebugPrint(tmop);    //DEBUG PRINT FIGURE IF FOUND
+		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);        //SCAN NFC TAG IF PRESENT
+		ChessPiece::FigureDebugPrint(tmop);        //DEBUG PRINT FIGURE IF FOUND
 		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
 			tmop.is_empty = true;	
 		}
@@ -255,7 +453,7 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(ChessPiece::FIGURE(&board)[BOARD_W
 
 bool ChessBoard::isFieldParkPosition(ChessField::CHESS_FILEDS _field)
 {	
-	int field_index = static_cast<int>(_field);   //CAST FIELD ENUM TO A INDEX/NUMBER
+	int field_index = static_cast<int>(_field);       //CAST FIELD ENUM TO A INDEX/NUMBER
 	if(field_index < 64) //ALL PARKPOSITIONS ARE INDEX >=64
 	{
 		return false;
@@ -371,7 +569,7 @@ ChessBoard::BOARD_ERROR ChessBoard::get_coil_offset(IOController::COIL _coil, in
 		//	mv_distance = std::abs(coil_distance / 2);
 	}
 
-	_y = 0;   //THE COILS ARE ONLY MOVING IN X DIRECTION
+	_y = 0;       //THE COILS ARE ONLY MOVING IN X DIRECTION
 	_x = mv_distance;
 }
 	
@@ -409,16 +607,10 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	/// THE A MAGNET HAVE TO BE AT POSTION H1
 	
 
-//	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_D5, IOController::COIL_B), true);
-//	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1, IOController::COIL::COIL_B), true);
-
 	//NEXT SCAN THE FIELD WITH PARK POSTIONS
 	//scanBoard(board_current, true);
 //	printBoard();
-	//CHECK IF ALL FIGURES ARE PRESENT
-	//	std::list<ChessPiece::FIGURE> checkBoardForFullFigureSet(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);
-	//return ChessBoard::BOARD_ERROR::INIT_CHESS_FIGURES_NOT_COMPLETE;
-	
+
 	//makeMoveSync(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, ChessField::CHESS_FILEDS::CHESS_FIELD_A1, true, false, true);   //WITH SCAN //DIRECTLY //OCCUPY CHECK
 	
 	//TODO SCAN FIELD ROUTINE
@@ -472,20 +664,7 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 	invlaid_piece.figure_number = -1;
 	
 	
-	for (size_t w = 0; w < BOARD_WIDTH; w++)
-	{
-		for (size_t h = 0; h < BOARD_HEIGHT; h++)
-		{
-			 
-		}		 
-	}
-	
-	
-	//LOAD PRESET
-	if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_CLEARED) {
-		return;
-		
-	}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION) {
+	 if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION) {
 		//LOAD DEFAULT FEN TO BOARD
 	
 		std::string tmp = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN);
@@ -494,17 +673,17 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 		{
 			tmp = DEFAULT_BOARD_FEN;
 		}
-		//		if (!boardFromFen(tmp, _target_board))
-		//		{
-		//			log_error("ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION");
-		//		}
+		if (!boardFromFen(tmp, _target_board))
+		{
+			log_error("ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION");
+		}
 	
 		
 		
-	}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
-	{
-		//TODO
-	}
+		}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
+		{
+		boardFromFen("8/8/8/8/8/8/8/8", _target_board);
+		}
 	
 	
 }

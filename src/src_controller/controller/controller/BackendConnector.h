@@ -4,6 +4,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 //THREAD STUFF
 #include <queue>
 #include <mutex>
@@ -29,9 +30,12 @@ public:
 		std::string virtual_player_id;
 	};
 	
-	struct GAME_STATE_SIMPLIFIED
+	
+	enum class GAME_STATE_STATE
 	{
+		GSS_UNKNOWN = 0
 	};
+
 		
 	struct MATCHMAKING_STATE
 	{
@@ -41,7 +45,19 @@ public:
 	struct GAME_STATE
 	{
 		bool game_running;
-		GAME_STATE_SIMPLIFIED simplified;
+		
+		GAME_STATE_STATE game_state;
+		bool im_white_player;
+		bool is_my_turn;
+		bool is_syncing_phase;
+		
+		
+		std::string current_board_fen; //CURRENT BOARD FEN STRING
+		bool  is_initial_board;
+		bool is_board_valid;
+		bool is_game_over;
+		std::vector<std::string> legal_moves;
+		
 	};
 		
 	struct PLAYER_PROFILE
@@ -65,6 +81,10 @@ public:
 		PT_AI = 1
 	};
 	
+	enum class PLAYER_SETUP_STATE {
+		PSP_NO_READY = 0,
+		PSP_READY = 1
+	};
 	
 	struct PLAYER_STATUS
 	{
@@ -94,20 +114,7 @@ public:
 	
 	std::list<std::string> get_avariable_player();
 	
-	/*
-	int? test1 = listID;
-	//SO
-	if(!s3c.List.WaitForListIdle(out test1, 1000))
-	
-	//ODER SO ?
-	if(!s3c.List.WaitForListIdle(out test1, 0))
-	
-	//ODER SOOO ?
-		while(!s3c.List.WaitForListIdle(out test1, 0))
-	{
-		//TODO NOTHIING
-	}
-	*/
+
 	int get_avariable_ai_player();
 	bool get_heartbeat();
 	
@@ -119,7 +126,7 @@ public:
 	PLAYER_STATUS get_player_state();
 	
 	bool set_player_state(PLAYER_STATE _ps);
-	bool set_player_setup_confirmation(bool _board_ready);
+	bool set_player_setup_confirmation(PLAYER_SETUP_STATE _state);
 	bool start_match_with_player(std::string _virtual_player_id);
 	
 	
@@ -174,6 +181,7 @@ private:
 	
 	const std::string URL_SET_PLAYER_VISIBLE_STATE = "/rest/set_player_state";
 	
+	const std::string URL_SET_PLAYER_SETUP_CONFIRMATION = "/rest/player_setup_confirmation";
 	std::string ca_client_path = "";
 	
 	std::string last_error = "";

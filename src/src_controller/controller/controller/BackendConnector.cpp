@@ -86,6 +86,38 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 		//GET GAME RUNNING FLAG
 		if(gs.find("game_running") != gs.end() && gs["game_running"].is_bool()) {
 			status.game_state.game_running = gs["game_running"].bool_value();
+		}
+		
+		if (gs.find("simplified") != gs.end() && gs["simplified"].is_object()) {
+			json11::Json::object  gs_simplified = gs["simplified"].object_items();
+			
+			if (gs_simplified.find("im_white_player") != gs_simplified.end() && gs_simplified["im_white_player"].is_bool()) {
+				status.game_state.im_white_player = gs_simplified["im_white_player"].bool_value();
+			}
+			if (gs_simplified.find("is_my_turn") != gs_simplified.end() && gs_simplified["is_my_turn"].is_bool()) {
+				status.game_state.is_my_turn = gs_simplified["is_my_turn"].bool_value();
+			}
+			if (gs_simplified.find("is_syncing_phase") != gs_simplified.end() && gs_simplified["is_syncing_phase"].is_bool()) {
+				status.game_state.is_syncing_phase = gs_simplified["is_syncing_phase"].bool_value();
+			}
+			//PARSE CURRENT BOARD OBJECT
+			if (gs_simplified.find("current_board") != gs_simplified.end() && gs_simplified["current_board"].is_object()) {
+				json11::Json::object  gs_board = gs_simplified["current_board"].object_items();
+				
+				if (gs_board.find("fen") != gs_board.end() && gs_board["fen"].is_string()) {
+					status.game_state.current_board_fen = gs_board["fen"].string_value();
+				}
+				if (gs_board.find("initial_board") != gs_board.end() && gs_board["initial_board"].is_bool()) {
+					status.game_state.is_initial_board = gs_board["initial_board"].bool_value();
+				}
+				if (gs_board.find("is_board_valid") != gs_board.end() && gs_board["is_board_valid"].is_bool()) {
+					status.game_state.is_board_valid = gs_board["is_board_valid"].bool_value();
+				}
+				if (gs_board.find("is_game_over") != gs_board.end() && gs_board["is_game_over"].is_bool()) {
+					status.game_state.is_game_over = gs_board["is_game_over"].bool_value();
+				}
+			}
+			
 		}	
 	}
 	return status;
@@ -134,7 +166,27 @@ int BackendConnector::get_avariable_ai_player()
 	
 }
 
-
+bool BackendConnector::set_player_setup_confirmation(PLAYER_SETUP_STATE _state)
+{
+	int state_index = magic_enum::enum_integer(_state);
+	request_result tmp = make_request(URL_SET_PLAYER_SETUP_CONFIRMATION + "?hwid=" + hwid + "&sid=" + session_id + "&state=" + std::to_string(state_index));
+	if (!tmp.body.empty())
+	{
+		//PARSE JSON
+		std::string jp_err = "";
+		json11::Json t = json11::Json::parse(tmp.body.c_str(), jp_err);
+		if (jp_err.empty())
+		{
+			if (((json11::Json::object)t.object_items())["status"].string_value() == "ok")
+			{
+				return true;
+			}	
+		}
+	}
+	return false;
+}
+	
+	
 bool BackendConnector::set_player_state(PLAYER_STATE _ps)
 {
 	int ps_index = magic_enum::enum_integer(_ps);

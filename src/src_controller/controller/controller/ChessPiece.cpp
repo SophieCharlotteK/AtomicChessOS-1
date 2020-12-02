@@ -1,4 +1,67 @@
 #include "ChessPiece.h"
+ChessPiece::FIGURE ChessPiece::getFigureByCharakter(char _figure_rep)
+{
+	
+	ChessPiece::FIGURE tmp;
+	
+	tmp.is_empty = false;
+	tmp.figure_number = -1;
+	
+	
+	switch (_figure_rep)
+	{
+		
+	case 'r':tmp.color = ChessPiece::COLOR_BLACK, tmp.type = ChessPiece::TYPE_ROOK;break;
+	case 'n':tmp.color = ChessPiece::COLOR_BLACK, tmp.type = ChessPiece::TYPE_KNIGHT; break;
+	case 'b':tmp.color = ChessPiece::COLOR_BLACK, tmp.type = ChessPiece::TYPE_BISHOP; break;
+	case 'q':tmp.color = ChessPiece::COLOR_BLACK, tmp.type = ChessPiece::TYPE_QUEEN; break;
+	case 'k':tmp.color = ChessPiece::COLOR_BLACK, tmp.type = ChessPiece::TYPE_KING; break;
+	case 'p':tmp.color = ChessPiece::COLOR_BLACK, tmp.type = ChessPiece::TYPE_PAWN; break;
+	case 'R':tmp.color = ChessPiece::COLOR_WHITE, tmp.type = ChessPiece::TYPE_ROOK; break;
+	case 'N':tmp.color = ChessPiece::COLOR_WHITE, tmp.type = ChessPiece::TYPE_KNIGHT; break;
+	case 'B':tmp.color = ChessPiece::COLOR_WHITE, tmp.type = ChessPiece::TYPE_BISHOP; break;
+	case 'Q':tmp.color = ChessPiece::COLOR_WHITE, tmp.type = ChessPiece::TYPE_QUEEN; break;
+	case 'K':tmp.color = ChessPiece::COLOR_WHITE, tmp.type = ChessPiece::TYPE_KING; break;
+	case 'P':tmp.color = ChessPiece::COLOR_WHITE, tmp.type = ChessPiece::TYPE_PAWN; break;
+		
+		
+	default:tmp.color = ChessPiece::COLOR_UNKNOWN, tmp.type = ChessPiece::TYPE_INVALID; break;
+		
+	}
+	
+	return tmp;
+}
+
+
+int ChessPiece::getFigureCountByChrakter(char _figure_rep){
+	
+	
+	
+	switch (_figure_rep)
+	{
+		
+	case 'r':return 2; break;
+	case 'n':return 2;break;
+	case 'b':return 2; break;
+	case 'q':return 1; break;
+	case 'k':return 1; break;
+	case 'p':return 8; break;
+
+	case 'R':return 2; break;
+	case 'N':return 2;break;
+	case 'B':return 2; break;
+	case 'Q':return 1; break;
+	case 'K':return 1; break;
+	case 'P':return 8; break;
+		
+		
+	default:return-1; break;
+		
+	}
+	
+
+}
+
 
 unsigned char ChessPiece::figure2NDEF(ChessPiece::FIGURE& _figure)
 {

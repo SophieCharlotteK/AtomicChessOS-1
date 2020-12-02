@@ -19,9 +19,12 @@ StateMachine::SM_STATE StateMachine::determ_state(BackendConnector::PLAYER_STATU
 	{
 		return StateMachine::SM_STATE::SMS_IDLE_MATCHMAKING;
 	}
-	else if (_ps.game_state.game_running) //+ PLAYER SETUP
+	else if (_ps.game_state.game_running && _ps.game_state.is_syncing_phase) //+ PLAYER SETUP
 	{
 		return StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING;
+	}else if (_ps.game_state.game_running && !_ps.game_state.is_syncing_phase) //+ PLAYER SETUP
+	{
+			return StateMachine::SM_STATE::SMS_GAME_RUNNING_INITILIZED;
 	}
 	
 	return StateMachine::SM_STATE::SMS_UNKNOWN;
