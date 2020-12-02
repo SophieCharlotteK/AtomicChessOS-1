@@ -9,9 +9,20 @@ class StateMachine
 	
 	
 public:
+	
+	//THIS "SYSTEM_STATES" ARE USED LOCALLAY
+	//WHICH ARE GENERATED OUT OF THE /get_player_state REQUEST FROM THE SERVER
 	enum class SM_STATE
 	{
-		UNKNOWN
+		SMS_UNKNOWN = 0,
+		SMS_IDLE_NO_MATCHMAKING = 1,
+		SMS_IDLE_MATCHMAKING = 2,
+		SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING=3,
+		SMS_GAME_RUNNING_INITILIZED=4,
+		SMS_GAME_RUNNING_WAITING_FOR_OTHER_TURN=5,
+		SMS_GANE_RUNNIGN_WAITING_FOR_OWN_TURN=6,
+		SMS_GAME_ABORTED=7,
+		SMS_GAME_ABORTED_BOARD_RESET=8
 			
 	}; 
 	
@@ -19,8 +30,8 @@ public:
 	
 	
 	
-	SM_STATE determ_next_state(BackendConnector::PLAYER_STATUS _ps);
-	SM_STATE current_next_state(BackendConnector::PLAYER_STATUS _ps);
+
+	SM_STATE determ_state(BackendConnector::PLAYER_STATUS _ps);
 	SM_STATE switch_to_next_state(BackendConnector::PLAYER_STATUS _ps);
 	
 	
@@ -29,7 +40,7 @@ public:
 	
 	
 private:
-	SM_STATE prev_state = SM_STATE::UNKNOWN;
+	SM_STATE prev_state = SM_STATE::SMS_UNKNOWN;
 };
 #endif
 

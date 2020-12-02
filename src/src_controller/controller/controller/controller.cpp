@@ -305,9 +305,10 @@ int main(int argc, char *argv[])
 				//FOR ALL OTHER EVENTS USE THE STATE MACHINE HANDLING CLASS
 				//WHICH HANDLES THE GAME LOGIC STATES
 				//THE CALL DETERMS THE CURRENT STATE
-				StateMachine::SM_STATE current_state = state_machiene.current_next_state(ps);
+				StateMachine::SM_STATE current_state = state_machiene.determ_state(ps);
+				StateMachine::SM_STATE previous_state = state_machiene.get_prev_state();
 				//IF STATE SWITCHED
-				if(current_state != state_machiene.get_prev_state())
+				if(current_state != previous_state)
 				{
 					//IN THIS SECIONT THE IMMEDIATES STATE WILL BE HANDLED
 					//EG FROM NO_GAME_RUNNING TO GAME_RUNNING, THE SCREEN HAVE TO BE SWITCHED, ...

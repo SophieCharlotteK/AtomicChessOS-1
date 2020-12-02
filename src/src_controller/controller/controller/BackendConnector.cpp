@@ -34,7 +34,7 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 	std::string jp_err = "";
 	json11::Json t = json11::Json::parse(tmp.body.c_str(), jp_err);
 	//CHECK JSON PARSE RESULT	
-	if (!jp_err.empty())
+	if(!jp_err.empty())
 	{
 		last_error = "get_player_state - json parse failed";
 		status.requst_success = false;
@@ -53,19 +53,37 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 	}
 	
 	//MATCHMAKING ->waiting_for_game
-	if(root["matchmaking"].is_object())
+	if(root["matchmaking_state"].is_object())
 	{
-		json11::Json::object  mm = root["matchmaking"].object_items();
-		//FRIENDLY NAME
+		json11::Json::object  mm = root["matchmaking_state"].object_items();
+		//WAITING_FOR_GAME_STATE
 		if(mm.find("waiting_for_game") != mm.end() && mm["waiting_for_game"].is_bool()) {
 			status.matchmaking_state.waiting_for_game = mm["waiting_for_game"].bool_value();
 		}	
+		//GET PLAYER VISIBLE STATE AND DO THE CASTING TO THE ENUM
+		//WHICH IS INLY AVARIABLE IN THE DETAILED OBJECT
+		//TODO REWORK THIS
+		if(mm.find("detailed") != mm.end() && mm["detailed"].is_object()) {
+			json11::Json::object  mm_detailed = root["detailed"].object_items();
+			if (mm_detailed.find("player_state") != mm_detailed.end() && mm_detailed["player_state"].int_value()) {
+				auto val = magic_enum::enum_cast<PLAYER_STATE>(mm_detailed["player_state"].int_value());
+				if (val.has_value())
+				{
+					status.player_state = val.value();
+				}
+				else
+				{
+					status.player_state = BackendConnector::PLAYER_STATE::PS_INVALID;
+				}
+			}
+		}
+		
 	}
 	//GAME_STATE->game_running
-	if(root["matchmaking"].is_object())
+	if(root["game_state"].is_object())
 	{
-		json11::Json::object  gs = root["matchmaking"].object_items();
-		//FRIENDLY NAME
+		json11::Json::object  gs = root["game_state"].object_items();
+		//GET GAME RUNNING FLAG
 		if(gs.find("game_running") != gs.end() && gs["game_running"].is_bool()) {
 			status.game_state.game_running = gs["game_running"].bool_value();
 		}	
@@ -85,7 +103,7 @@ int BackendConnector::get_avariable_ai_player()
 	if (tmp.request_failed)
 	{
 		last_error = "get_avariable_ai_player - request failed";
-		return-1;
+		return -1;
 	}
 	
 	if (tmp.body.empty())
@@ -144,7 +162,7 @@ BackendConnector::request_result BackendConnector::make_request(std::string _url
 	//PORT AND PROTOCOL IS ALREADY INCLUDED IN BASE URL LIKE http://127.0.0.1:3000
 	httplib::Client cli(backend_base_url.c_str());
 	cli.set_connection_timeout(10);
-	cli.set_follow_location(true);  //AUTO REDIRECT IF GOT AN 300
+	cli.set_follow_location(true);   //AUTO REDIRECT IF GOT AN 300
 	//SEND REQUEST OVER SELECTED INTERFACE
 	if(!interface_name.empty())
 	{
@@ -279,11 +297,11 @@ bool BackendConnector::login(PLAYER_TYPE _pt)
 			}
 		}
 	}
-		//PARSE ID
-		//SAVE SESSION ID
-		//SAVE IMPORTANT PROFILE DATA
-		last_error = "login - body empty";
-		return false;
+	//PARSE ID
+	//SAVE SESSION ID
+	//SAVE IMPORTANT PROFILE DATA
+	last_error = "login - body empty";
+	return false;
 }
 		
 bool BackendConnector::logout()
@@ -341,8 +359,8 @@ std::string BackendConnector::get_last_error()
 void BackendConnector::setHearbeatCallInterval(int _int)
 {
 
-	if(_int <= 0) {
-		_int = 1;     //MINUMUM INTERVAL
+	if (_int <= 0) {
+		_int = 1;      //MINUMUM INTERVAL
 	}
 	heartbeat_call_interval = _int;
 }
@@ -357,7 +375,7 @@ bool BackendConnector::start_heartbeat_thread()
 		stop_heartbeat_thread();
 	}
 	if (heartbeat_call_interval <= 0) {
-		heartbeat_call_interval = 1;       //MINUMUM INTERVAL
+		heartbeat_call_interval = 1;        //MINUMUM INTERVAL
 	}
 	
 	//SET THREAD DATA
@@ -416,10 +434,10 @@ bool BackendConnector::get_heartbeat()
 void BackendConnector::heartbeat_thread_function(BackendConnector* _this)
 {
 	//https://stackoverflow.com/questions/158585/how-do-you-add-a-timed-delay-to-a-c-program
-	using namespace std::this_thread;   // sleep_for, sleep_until
-	using namespace std::chrono;   // nanoseconds, system_clock, seconds
+	using namespace std::this_thread;    // sleep_for, sleep_until
+	using namespace std::chrono;    // nanoseconds, system_clock, seconds
 	
-	
+	//MAKE A
 	HB_THREAD_DATA thread_data = _this->heartbeat_thread_data;
 	
 	while (_this->heartbeat_thread_running) {
