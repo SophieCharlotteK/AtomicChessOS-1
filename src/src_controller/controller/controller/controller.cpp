@@ -182,13 +182,16 @@ int main(int argc, char *argv[])
 	}
 	
 
-
-	
-	
 	
 	
 	//CREATE GAME BACKEND INSTANCE
 	BackendConnector gamebackend(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL), ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE), hwid);
+	//SET NEEDED SETTINGS
+	int gamebackend_heartbeat_interval = 5;
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::NETWORK_HEARTBEAT_INTERVAL_SECS, gamebackend_heartbeat_interval);
+	gamebackend.setHearbeatCallInterval(gamebackend_heartbeat_interval);
+	
+	//NOW TRY TO CONNECT TO THE SERVER
 	std::string ALTERNATIVE_BACKEND_URL[] = { "http://192.168.178.125:3000", "http://192.168.178.24:3000", "http://atomicchess.de:3000", "http://marcelochsendorf.com:3000", "http://marcelochsendorf.com:3001", "http://marcelochsendorf.com:3002", "http://prodevmo.com:3001", "http://prodevmo.com:3002", "http://127.0.0.1:3000" };	
 	//CHECK IF GAMESERVER IS REACHABLE ELSE USE A OTHER PREDEFINED URL
 	volatile int abu_counter = 0;
@@ -200,7 +203,6 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 		gui.show_error_message_on_gui("" + gamebackend.get_backend_base_url() + "");
 #endif
-
 		abu_counter++;
 		//MARK SEARCH FAILED
 		if(abu_counter >= 6)

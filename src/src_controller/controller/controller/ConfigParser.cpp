@@ -83,7 +83,11 @@ bool ConfigParser::writeConfigFile(std::string _file)
 
 void ConfigParser::loadDefaults() {
 	//DEFAULT CONFIG HARD CODED :)
-	config_store[ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL] = "http::192.168.178.125:3000";
+	config_store[ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL] = "http://atomicchess.de:3000";
+	config_store[ConfigParser::CFG_ENTRY::NETWORK_HEARTBEAT_INTERVAL_SECS] = "5";
+	
+	
+	
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE] = "eth0";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_VERSION_FILE_PATH] = "/VERSION";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_HWREV_FILE_PATH] = "/etc/hwrevision";

@@ -24,7 +24,7 @@ public:
 	enum class CFG_ENTRY
 	{
 		NETWORK_BACKEND_URL = 0,
-				
+		NETWORK_HEARTBEAT_INTERVAL_SECS = 1,
 		
 		
 		GENERAL_HWID_INTERFACE = 10,

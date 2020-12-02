@@ -143,7 +143,7 @@ BackendConnector::request_result BackendConnector::make_request(std::string _url
 {
 	//PORT AND PROTOCOL IS ALREADY INCLUDED IN BASE URL LIKE http://127.0.0.1:3000
 	httplib::Client cli(backend_base_url.c_str());
-	
+	cli.set_connection_timeout(10);
 	cli.set_follow_location(true);  //AUTO REDIRECT IF GOT AN 300
 	//SEND REQUEST OVER SELECTED INTERFACE
 	if(!interface_name.empty())
@@ -335,4 +335,100 @@ std::string BackendConnector::get_interface_name()
 std::string BackendConnector::get_last_error()
 {
 	return last_error;
+}
+
+
+void BackendConnector::setHearbeatCallInterval(int _int)
+{
+
+	if(_int <= 0) {
+		_int = 1;     //MINUMUM INTERVAL
+	}
+	heartbeat_call_interval = _int;
+}
+	
+
+	
+
+bool BackendConnector::start_heartbeat_thread()
+{
+	if (heartbeat_thread_running)
+	{
+		stop_heartbeat_thread();
+	}
+	if (heartbeat_call_interval <= 0) {
+		heartbeat_call_interval = 1;       //MINUMUM INTERVAL
+	}
+	
+	//SET THREAD DATA
+	heartbeat_thread_data.hwid = hwid;
+	heartbeat_thread_data.sid = session_id;
+	heartbeat_thread_data.heartbeat_interval = heartbeat_call_interval;
+	//FINALLY START THREAD WITH THE THREAD FUNCTION
+	heartbeat_thread_running = true;
+	std::thread t1(BackendConnector::heartbeat_thread_function, this);
+	t1.detach();
+	heartbeat_thread = &t1;
+	return true;
+}
+
+bool BackendConnector::stop_heartbeat_thread()
+{
+	if (!heartbeat_thread_running)
+	{
+		return false;
+	}
+	heartbeat_thread_running = false;
+	heartbeat_thread->join();
+	return false;
+}
+
+
+bool BackendConnector::get_heartbeat(BackendConnector::HB_THREAD_DATA _data)
+{
+	request_result tmp = make_request(URL_HEARTBEAT + "?hwid=" + _data.hwid + "&sid=" + _data.sid);
+	if (!tmp.body.empty())
+	{
+		//PARSE JSON
+		std::string jp_err = "";
+		json11::Json t = json11::Json::parse(tmp.body.c_str(), jp_err);
+		if (jp_err.empty())
+		{
+			if (((json11::Json::object)t.object_items())["status"].is_null())
+			{
+				return true;
+			}	
+		}
+	}
+	return false;
+}
+	
+bool BackendConnector::get_heartbeat()
+{
+	HB_THREAD_DATA tmp;
+	tmp.hwid = hwid;
+	tmp.sid = session_id;
+	
+	return get_heartbeat(tmp);
+}
+	
+
+void BackendConnector::heartbeat_thread_function(BackendConnector* _this)
+{
+	//https://stackoverflow.com/questions/158585/how-do-you-add-a-timed-delay-to-a-c-program
+	using namespace std::this_thread;   // sleep_for, sleep_until
+	using namespace std::chrono;   // nanoseconds, system_clock, seconds
+	
+	
+	HB_THREAD_DATA thread_data = _this->heartbeat_thread_data;
+	
+	while (_this->heartbeat_thread_running) {
+		
+		bool res = _this->get_heartbeat(thread_data);
+		
+	
+		sleep_until(system_clock::now() + seconds(thread_data.heartbeat_interval));
+		
+	}
+	
 }
