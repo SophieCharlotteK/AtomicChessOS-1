@@ -48,6 +48,12 @@ public:
 		unsigned char  unique_id;
 		bool is_empty;
 	};
+	
+	
+	static FIGURE getFigureByCharakter(char _figure_rep); //RETURNS A FIGURE BY (WHITE)R,N,B,Q,K,P or (BLACK)r,n,b,q,k,p or invalid
+	
+	static bool compareFigures(FIGURE _a, FIGURE _b); //A EQUAL FIGURE IS AFIGURE WITH THE SAME TYPE AND THE SAME COLOR NOT THE SAME ID BEACUSE THE HUMAN CAN SWITCH THE FIGURES THEN THE ID CHAGES
+	static int getFigureCountByChrakter(char _figure_rep); //returns the normal count if figures of the tsype in a game
 	///GENERATES THE UNIQUE ID (WRITTEN ON NFC TAG) FROM A GIVEN FIGURE
 	///USING A REFERENCE THEN CALCULATED unique_id WILL BE OVERWRITTEN
 	static unsigned char figure2NDEF(ChessPiece::FIGURE& _figure);
@@ -57,6 +63,10 @@ public:
 	
 	///PRINTS SOME INFORMATION ABOUT A GIVEN FIGURE
 	static void FigureDebugPrint(ChessPiece::FIGURE _figure);
+	
+	static char Figure2Charakter(ChessPiece::FIGURE _figure);
+	
+	static bool IsFigureValid(ChessPiece::FIGURE _figure);
 };
 #endif
 

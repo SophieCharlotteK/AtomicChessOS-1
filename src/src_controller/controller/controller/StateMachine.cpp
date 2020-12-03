@@ -19,14 +19,22 @@ StateMachine::SM_STATE StateMachine::determ_state(BackendConnector::PLAYER_STATU
 	{
 		return StateMachine::SM_STATE::SMS_IDLE_MATCHMAKING;
 	}
-	else if (_ps.game_state.game_running && _ps.game_state.is_syncing_phase) //+ PLAYER SETUP
+	else if (_ps.game_state.game_running && _ps.game_state.is_syncing_phase)
 	{
 		return StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING;
-	}else if (_ps.game_state.game_running && !_ps.game_state.is_syncing_phase) //+ PLAYER SETUP
-	{
-			return StateMachine::SM_STATE::SMS_GAME_RUNNING_INITILIZED;
 	}
-	
+//	else if (_ps.game_state.game_running && !_ps.game_state.is_syncing_phase){
+//			return StateMachine::SM_STATE::SMS_GAME_RUNNING_INITILIZED;
+//	}
+else if (_ps.game_state.game_running && !_ps.game_state.is_syncing_phase && _ps.game_state.is_my_turn && !_ps.game_state.is_game_over){
+		return StateMachine::SM_STATE::SMS_GANE_RUNNIGN_WAITING_FOR_OWN_TURN;
+	}
+	else if (_ps.game_state.game_running && !_ps.game_state.is_syncing_phase && !_ps.game_state.is_my_turn && !_ps.game_state.is_game_over){
+		return StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_OTHER_TURN;
+	}else if (_ps.game_state.game_running && _ps.game_state.is_game_over){
+		return StateMachine::SM_STATE::SMS_GAME_ABORTED;
+	}
+		
 	return StateMachine::SM_STATE::SMS_UNKNOWN;
 }
 

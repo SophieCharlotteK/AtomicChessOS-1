@@ -3,8 +3,13 @@
 #define __CHESSBOARD_H__
 
 #include <string>
+#include <locale>         // std::locale, std::tolower
+
 #include <list>
 #include <vector>
+
+
+
 
 #include <chrono>
 #include <stdlib.h>
@@ -27,8 +32,7 @@
 
 //MISK 3rd PARTY
 #include "SHARED/loguru-master/loguru.hpp"
-
-
+#include "SHARED/magic_enum-master/include/magic_enum.hpp"
 
 ///CHESS BOARD DIMENSIONS
 ///FOR WIDTH 8 normal + 4 for parkposition
@@ -44,14 +48,14 @@ class ChessBoard
 	
 public:
 	
-	enum BOARD_TPYE
+	enum class BOARD_TPYE
 	{
 	         REAL_BOARD = 0,
 			TARGET_BOARD = 1,
 			TEMP_BOARD = 2
 	};
 	
-	enum BOARD_ERROR {
+	enum class BOARD_ERROR {
 		NO_ERROR = 0,
 		MOVE_FAILED_FIGURE_MISSING = 1,
 		MOVE_FAILED = 2,
@@ -64,13 +68,13 @@ public:
 		INIT_COMPLETE = 9
 	};
 	
-	enum BOARD_STATUS {
+	enum class BOARD_STATUS {
 		BOARD_INIT_FAILED,
 		BOARD_INIT_OK
 		
 	};
 	
-	enum BOARD_PRESET {
+	enum class BOARD_PRESET {
 		BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION = 0,
 		BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION = 1,
 	};
@@ -85,16 +89,17 @@ public:
 	{
 		ChessField::CHESS_FILEDS from_field;
 		ChessField::CHESS_FILEDS to_field;
+		bool is_valid;
 	};
 		
 		
 	ChessBoard() ;
 	~ChessBoard();
-	
+	MovePiar StringToMovePair(std::string _mv);
 	std::string board2FEN(ChessBoard::BOARD_TPYE _type); //RETURNS A FEN REPRESENTATION OF THE BOARD
 	bool boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board); //LOADS A BOARD BY FEN
 	bool syncRealWithTargetBoard(); ///SNYC THE RealBoard with the Target board and move the figures
-	void printBoard(); ///PRINT BOARD TO CONSOLE CURRENT AND TARGET
+	void printBoard(ChessBoard::BOARD_TPYE _target_board);   ///PRINT BOARD TO CONSOLE CURRENT AND TARGET
 	ChessBoard::BOARD_ERROR scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT], bool _include_park_postion);    ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
 	
 	std::list<FigureField> compareBoards();  ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
@@ -102,7 +107,7 @@ public:
 	ChessBoard::BOARD_ERROR initBoard();   //INIT THE MECHANICS AND SCANS THE BOARD
 	
 	void loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset);
-	ChessBoard::BOARD_ERROR makeMoveSync(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to, bool _with_scan, bool _directly, bool _occupy_check);      //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
+	ChessBoard::BOARD_ERROR makeMoveSync(MovePiar _move, bool _with_scan, bool _directly, bool _occupy_check);       //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
 	
 	ChessBoard::BOARD_ERROR travelToField(ChessField::CHESS_FILEDS _field, IOController::COIL _coil,bool _to_field_center);   //TRAVEL HEAD TO A FIELD
 	void getFieldCoordinates(ChessField::CHESS_FILEDS _index, int& _x, int& _y, IOController::COIL _coil, bool _get_only_array_index, bool _get_field_center);
@@ -114,6 +119,8 @@ public:
 	std::list<ChessPiece::FIGURE> checkBoardForFullFigureSet(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);
 	IOController::COIL getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS _field, IOController::COIL _target);
 	ChessBoard::BOARD_ERROR calibrate_home_pos();
+	
+	int get_next_free_park_position(ChessBoard::BOARD_TPYE _target_board, ChessPiece::FIGURE _fig); //RETURNS THE INDEX OF THE NEXT FREE PARK POSITION FO RTHE GIVEN COLOR
 private:
 	
 	TMC5160* x_axis = nullptr; //X AXIS MOTOR
@@ -122,9 +129,9 @@ private:
 	IOController::COIL current_selected_coil = IOController::COIL::COIL_A;
 	ChessField::CHESS_FILEDS current_field;
 	///REPRESENTS THE CHESS BOARD
-	ChessPiece::FIGURE board_current[BOARD_WIDTH][BOARD_HEIGHT]; ///REPRESENTS THE CURRENT CHESS BOARD (=> THE MECHANICAL/REAL WORLD)
-	ChessPiece::FIGURE board_target[BOARD_WIDTH][BOARD_HEIGHT];///REPRESENTS THE TARGETBOARD WHICH SHOULD BE ARCHVIED
-	ChessPiece::FIGURE board_temp[BOARD_WIDTH][BOARD_HEIGHT];  ///USED FOR FEN PARSING
+	ChessPiece::FIGURE board_current[BOARD_WIDTH*BOARD_HEIGHT];  ///REPRESENTS THE CURRENT CHESS BOARD (=> THE MECHANICAL/REAL WORLD)
+	ChessPiece::FIGURE board_target[BOARD_WIDTH*BOARD_HEIGHT]; ///REPRESENTS THE TARGETBOARD WHICH SHOULD BE ARCHVIED
+	ChessPiece::FIGURE board_temp[BOARD_WIDTH*BOARD_HEIGHT];   ///USED FOR FEN PARSING
 	void log_error(std::string _err);
 };
 

@@ -33,6 +33,45 @@ ChessPiece::FIGURE ChessPiece::getFigureByCharakter(char _figure_rep)
 }
 
 
+bool ChessPiece::IsFigureValid(ChessPiece::FIGURE _figure)
+{
+	if (_figure.type == ChessPiece::TYPE_INVALID || _figure.color == ChessPiece::COLOR_UNKNOWN)
+	{
+		return false;
+	}
+	return true;
+}
+
+
+bool ChessPiece:: compareFigures(FIGURE _a, FIGURE _b)
+{
+	if (_a.color == _b.color && _a.type == _b.type)
+	{
+		return true;
+	}
+	return false;
+}
+
+char ChessPiece::Figure2Charakter(ChessPiece::FIGURE _figure)
+{
+	
+	if (_figure.color == ChessPiece::COLOR_BLACK && _figure.type == ChessPiece::TYPE_ROOK) {return 'r';}
+	else if (_figure.color == ChessPiece::COLOR_BLACK && _figure.type == ChessPiece::TYPE_KNIGHT) {return 'n';}
+	else if (_figure.color == ChessPiece::COLOR_BLACK && _figure.type == ChessPiece::TYPE_BISHOP) {return 'b';}
+	else if (_figure.color == ChessPiece::COLOR_BLACK && _figure.type == ChessPiece::TYPE_QUEEN) {return 'q';}
+	else if (_figure.color == ChessPiece::COLOR_BLACK && _figure.type == ChessPiece::TYPE_KING) {return 'k';}
+	else if (_figure.color == ChessPiece::COLOR_BLACK && _figure.type == ChessPiece::TYPE_PAWN) {return 'p';}
+	
+	else if (_figure.color == ChessPiece::COLOR_WHITE && _figure.type == ChessPiece::TYPE_ROOK) {return 'R';}
+	else if (_figure.color == ChessPiece::COLOR_WHITE && _figure.type == ChessPiece::TYPE_KNIGHT) {return 'N';}
+	else if (_figure.color == ChessPiece::COLOR_WHITE && _figure.type == ChessPiece::TYPE_BISHOP) {return 'B';}
+	else if (_figure.color == ChessPiece::COLOR_WHITE && _figure.type == ChessPiece::TYPE_QUEEN) {return 'Q';}
+	else if (_figure.color == ChessPiece::COLOR_WHITE && _figure.type == ChessPiece::TYPE_KING) {return 'K';}
+	else if (_figure.color == ChessPiece::COLOR_WHITE && _figure.type == ChessPiece::TYPE_PAWN) {return 'P';}
+	
+	return ' ';
+}
+
 int ChessPiece::getFigureCountByChrakter(char _figure_rep){
 	
 	

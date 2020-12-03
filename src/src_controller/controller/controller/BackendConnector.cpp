@@ -116,6 +116,23 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 				if (gs_board.find("is_game_over") != gs_board.end() && gs_board["is_game_over"].is_bool()) {
 					status.game_state.is_game_over = gs_board["is_game_over"].bool_value();
 				}
+				if (gs_board.find("is_game_over") != gs_board.end() && gs_board["is_game_over"].is_bool()) {
+					status.game_state.is_game_over = gs_board["is_game_over"].bool_value();
+				}
+				if (gs_board.find("legal_moves") != gs_board.end() && gs_board["legal_moves"].is_array()) {
+					for (int i = 0; i < gs_board["legal_moves"].array_items().size(); i++)
+					{
+						json11::Json ttobj = gs_board["legal_moves"].array_items()[i];
+						
+						if (ttobj.is_string()) {
+							std::string tmp = ttobj.string_value();
+							status.game_state.legal_moves.push_back(tmp);
+						}		
+						
+					}
+						
+					  
+				}
 			}
 			
 		}	

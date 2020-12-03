@@ -12,7 +12,7 @@ public:
 	
 	
 	
-	enum CHESS_FILEDS
+	enum class CHESS_FILEDS
 	{
 		CHESS_FIELD_A1                    = 0,
 		CHESS_FIELD_A2                    = 1,
@@ -124,5 +124,6 @@ public:
 	};
 	
 	static int field2Index(ChessField::CHESS_FILEDS _field);
+	static ChessField::CHESS_FILEDS Index2Field(int _field);
 };
 

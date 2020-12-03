@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 	
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
-	ConfigParser::getInstance()->loadDefaults();    //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
+	ConfigParser::getInstance()->loadDefaults();     //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
 	//GENERATE A DEFAULT CONFIG FILE IN DEBUG MODE TO TEST THE CONFIG GENERATION
 #ifdef DEBUG
 	ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
@@ -181,9 +181,6 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-#ifdef DEBUG
-	board.boardFromFen("8/8/8/8/8/8/8/8", ChessBoard::BOARD_TPYE::TARGET_BOARD);			  
-#endif // DEBUG
 
 	
 	//CREATE GAME BACKEND INSTANCE
@@ -335,16 +332,18 @@ int main(int argc, char *argv[])
 							}
 								
 							//NOW SYNC THE TWO BOARDS => THE TARGET CHESS POSITIONS WITH THE REAL WORLD MECHANICAL POSTIONS
-							if (board.syncRealWithTargetBoard())
+							if(board.syncRealWithTargetBoard())
 							{
 								//BOARD SYNCED => UPDATE STATE ON SERVER THAT BOARD IS SYNCED
 								gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
+								gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
 							}else
 							{
 								//BOARD INIT FAILED => SHOW OPTION TO CONTIOUE
-								if(gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD SETUP FAILED? CONTINUE", 4000) == guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK){
+								if(gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD SETUP FAILED? CONTINUE", 4000) == guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
 									//SEND BOARD INIT COMPLETE CALL
 									gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
+									gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
 								}else
 								{
 									//RESET PLAYER STATE => ABORTS GAME
@@ -356,15 +355,58 @@ int main(int argc, char *argv[])
 						}
 						
 						
-					//ALL OTHER STATES RETURNS BACK TO THE MAIN MENU
-					}else if (current_state == StateMachine::SM_STATE::SMS_GAME_ABORTED || current_state == StateMachine::SM_STATE::SMS_UNKNOWN)
+						//INIT FINÍSHED AND GAME RUNNING => SWITCH TO GAME SCREEN
+					}else if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_INITILIZED) {
+						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+					
+					}else if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_OTHER_TURN) {
+						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+						if (!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard())
+						{
+								
+						}
+						//UPDATE UI
+						//UPDATE BOARD
+					}else if(current_state == StateMachine::SM_STATE::SMS_GANE_RUNNIGN_WAITING_FOR_OWN_TURN) {
+						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+						//UPDATE BOARD TO CURRENT FEN
+						if(!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()){
+								
+						}
+							
+						
+						
+						
+						
+						
+						
+						//TODO LIST MOVE ON UI
+						//TODO MAKE MOVE ON BOARD
+						//TODO CREATE QT MADE MOVE UI WITH ONE BUTTON
+					
+						//INIT FINÍSHED AND GAME RUNNING => SWITCH TO GAME SCREEN
+						//UPDATE BOARD
+					}else if(current_state == StateMachine::SM_STATE::SMS_GAME_ABORTED || current_state == StateMachine::SM_STATE::SMS_UNKNOWN)
 					{
 						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
 					}
+			
+					
+				
+					
+					
 					
 					//FINALLY SWITCH TO THE NEW STATE
 					state_machiene.switch_to_next_state(ps);
 					
+					
+					
+					
+					//THE PREVIOUS IF ARE ONLY FOR STATE TRANSITION LIKE FROM GAME_INIT TO GAME RUNNING
+					//THE ELSE IS USED TO UPDATE THE GAME SCREEN WITH CHANGES (like the turn of the other player)
+				}else
+				{
+					//TODO REFRESH THE GAME SCREEN 
 				}
 				
 			}
@@ -393,13 +435,13 @@ int main(int argc, char *argv[])
 					gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
 					//SHOW PLAYERNAME ON INFO SCREEN
 					gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "Playername: " + gamebackend.getPlayerProfile().friendly_name + " | " + gamebackend.getPlayerProfile().elo_rank_readable);
-				}else{
+				}else {
 					gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED_HEARTBEAT", 4000);
 					LOG_F(ERROR, "GOT LOGIN_FAILED_HEARTBEAT START THREAD");
 					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 				}
 			
-			}else{
+			}else {
 				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED", 4000);
 				LOG_F(ERROR, "GOT LOGIN FAILED");
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
@@ -486,7 +528,16 @@ int main(int argc, char *argv[])
 			}
 		}	
 			
-			
+		//--------------------------------------------------------
+		//----------------DISBALE MATCHMAKING BUTTON --------------
+		//--------------------------------------------------------
+		if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_ABORT_GAME && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			//SET PLAYERSTATE TO OPEN FO A MATCH
+			if(gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE)) {
+				gui.show_error_message_on_gui("GAME STOPPED");
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
+			}
+		}	
 		
 		
 		
@@ -494,3 +545,8 @@ int main(int argc, char *argv[])
 	
 	return 0;
 }
+
+
+
+
+
