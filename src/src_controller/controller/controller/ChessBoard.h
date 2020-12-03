@@ -118,9 +118,21 @@ public:
 	
 	std::list<ChessPiece::FIGURE> checkBoardForFullFigureSet(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT]);
 	IOController::COIL getValidCoilTypeParkPosition(ChessField::CHESS_FILEDS _field, IOController::COIL _target);
-	ChessBoard::BOARD_ERROR calibrate_home_pos();
+	ChessBoard::BOARD_ERROR calibrate_home_pos(); //MOVE THE HEAD TO FIELD H1
 	
 	int get_next_free_park_position(ChessBoard::BOARD_TPYE _target_board, ChessPiece::FIGURE _fig); //RETURNS THE INDEX OF THE NEXT FREE PARK POSITION FO RTHE GIVEN COLOR
+	
+	std::vector<ChessField::CHESS_FILEDS> get_free_fields_on_the_board(ChessPiece::FIGURE* _board_pointer);
+	std::vector<ChessField::CHESS_FILEDS> get_parking_fileld_occupied_by_figure_type(ChessPiece::FIGURE* _board_pointer, ChessPiece::FIGURE _fig);
+	
+	int get_figure_type_count(ChessBoard::BOARD_TPYE _target_board, char _type_char , bool _board_only);  //RETURNS THE COUNT OF FIGURES PLACED ON THE BOARD
+	int get_figure_type_count(ChessPiece::FIGURE* _board_pointer, char _type_char , bool _board_only); 
+	
+	std::vector<ChessField::CHESS_FILEDS> get_chess_fields_occupied_from_figure(ChessPiece::FIGURE* _board_pointer, ChessPiece::FIGURE _fig, bool _board_only);
+	
+	ChessPiece::FIGURE* get_board_pointer(ChessBoard::BOARD_TPYE _target_board); //RETURNS THE POINTER TO A SPCIFIED BOARD ARRAY
+	
+
 private:
 	
 	TMC5160* x_axis = nullptr; //X AXIS MOTOR
