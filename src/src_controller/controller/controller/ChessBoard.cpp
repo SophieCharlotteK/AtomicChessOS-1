@@ -255,6 +255,13 @@ bool ChessBoard::syncRealWithTargetBoard() {
 		
 		//FINALLY TRAVEL BACK TO HOME POS
 	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL::COIL_A, true);
+	
+	
+	//NOW COPY NEW POSITIONS OVER
+	for(size_t w = 0 ; w < BOARD_WIDTH*BOARD_HEIGHT ; w++) {
+			board_current[w] = board_target[w];
+	}
+	
 	return true;	
 }
 
@@ -1066,7 +1073,7 @@ ChessBoard::BOARD_ERROR ChessBoard::get_coil_offset(IOController::COIL _coil, in
 	//MOVE BACK TO START AND MOVE FIGURE TO DESTIANTION
 //}
 
-ChessBoard::BOARD_ERROR ChessBoard::initBoard()
+ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 {
 	//CHECK HARDWARE INIT
 	if(x_axis == nullptr || y_axis == nullptr || iocontroller == nullptr)
@@ -1096,8 +1103,14 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard()
 	loadBoardPreset(ChessBoard::BOARD_TPYE::TARGET_BOARD, ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
 	
 	//NEXT SCAN THE FIELD WITH PARK POSTIONS
-	scanBoard(true);
-	printBoard(ChessBoard::BOARD_TPYE::REAL_BOARD);
+	if(_with_scan)
+	{
+		scanBoard(true);
+		printBoard(ChessBoard::BOARD_TPYE::REAL_BOARD);
+	}
+		
+		
+	
 	
 	//makeMoveSync(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, ChessField::CHESS_FILEDS::CHESS_FIELD_A1, true, false, true);   //WITH SCAN //DIRECTLY //OCCUPY CHECK
 	
@@ -1171,6 +1184,11 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 		}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
 		{
 		boardFromFen("8/8/8/8/8/8/8/8", _target_board);
+		
+		
+		}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_NO_FIGURES_PLACED) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
+		{
+			boardFromFen("8/8/8/8/8/8/8/8", _target_board);
 		}
 	
 	

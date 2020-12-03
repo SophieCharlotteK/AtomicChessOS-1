@@ -77,6 +77,7 @@ public:
 	enum class BOARD_PRESET {
 		BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION = 0,
 		BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION = 1,
+		BOARD_PRESET_NO_FIGURES_PLACED = 2
 	};
 	
 	struct FigureField
@@ -104,7 +105,7 @@ public:
 	
 	std::list<FigureField> compareBoards();  ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
 	
-	ChessBoard::BOARD_ERROR initBoard();   //INIT THE MECHANICS AND SCANS THE BOARD
+	ChessBoard::BOARD_ERROR initBoard(bool _with_scan);   //INIT THE MECHANICS AND SCANS THE BOARD
 	
 	void loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset);
 	ChessBoard::BOARD_ERROR makeMoveSync(MovePiar _move, bool _with_scan, bool _directly, bool _occupy_check);       //MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied

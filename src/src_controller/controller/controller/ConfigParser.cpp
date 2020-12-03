@@ -104,10 +104,10 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH] = "50";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_CHESS_BOARD_WIDTH] = "400";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_X_LINE] = "0";
-	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_FIRST_Y_OFFSET] = "20";
+	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_BLACK_FIRST_Y_OFFSET] = "10";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_X_LINE] = "350";
-	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_FIRST_Y_OFFSET] = "20";
-	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_BEFORE_OFFSET] = "20";	
+	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_FIRST_Y_OFFSET] = "5";
+	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_BEFORE_OFFSET] = "5";	
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_SIZE] = "25";
 	
 	

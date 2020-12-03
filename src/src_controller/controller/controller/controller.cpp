@@ -174,7 +174,19 @@ int main(int argc, char *argv[])
 	ChessBoard board;
 	//INIT THE CHESS BOARD MECHANIC
 	//=> HOME, SETUP COILS
-	while(board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PLAYER_WHITE_TURN);
+	bool board_scan = true;
+	if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK)
+	{
+		board_scan = false;
+	}
+	else if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_CANCEL)
+	{
+		board_scan = true;
+	}
+	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PRECCESSING);
+	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+	while (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
 	{
 		if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD_INIT_FAILED RETRY?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
 			break;
@@ -459,7 +471,7 @@ int main(int argc, char *argv[])
 		//--------------------------------------------------------
 		if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			if (board.initBoard() != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+			if (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
 			{
 				gui.show_error_message_on_gui("board.initBoard() FAILED");
 			}
