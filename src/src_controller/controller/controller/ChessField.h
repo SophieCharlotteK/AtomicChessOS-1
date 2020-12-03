@@ -127,6 +127,6 @@ public:
 	static ChessField::CHESS_FILEDS Index2Field(int _field);
 	
 	static ChessField::CHESS_FILEDS get_field_from_board_index(int _board_index);
-	
+	static int get_board_index_from_field(ChessField::CHESS_FILEDS _field);
 };
 

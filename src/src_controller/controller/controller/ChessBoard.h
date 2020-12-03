@@ -100,7 +100,7 @@ public:
 	bool boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board); //LOADS A BOARD BY FEN
 	bool syncRealWithTargetBoard(); ///SNYC THE RealBoard with the Target board and move the figures
 	void printBoard(ChessBoard::BOARD_TPYE _target_board);   ///PRINT BOARD TO CONSOLE CURRENT AND TARGET
-	ChessBoard::BOARD_ERROR scanBoard(ChessPiece::FIGURE(&board)[BOARD_WIDTH][BOARD_HEIGHT], bool _include_park_postion);    ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
+	ChessBoard::BOARD_ERROR scanBoard(bool _include_park_postion);     ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
 	
 	std::list<FigureField> compareBoards();  ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
 	

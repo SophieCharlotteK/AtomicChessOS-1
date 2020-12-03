@@ -7,6 +7,29 @@ int ChessField::field2Index(ChessField::CHESS_FILEDS _field)
 }
 
 
+
+int ChessField::get_board_index_from_field(ChessField::CHESS_FILEDS _field)
+{
+	const int LUT[96] = { 
+		86,74,62,50,38,26,14,2, //A
+		87,75,63,51,39,27,15,3, //B
+		88,76,64,52,40,28,16,4, //C
+		89,77,65,53,41,29,17,5, //D
+		90,78,66,54,42,30,18,6, //E
+		91,79,67,55,43,31,19,7, //F
+		92,80,68,56,44,32,20,8, //G
+		93,81,69,57,45,33,21,9, //H
+		
+		0,1,12,13,24,25,36,37,49,49,60,61,72,73,84,85, //PARK POSITION WHITE
+		10,11,22,23,34,35,446,47,58,59,70,71,82,83,94,95	 //PARK POSITION BLACK
+		};
+	
+	
+	return LUT[static_cast<int>(_field)];
+	
+}
+
+
 ChessField::CHESS_FILEDS ChessField::get_field_from_board_index(int _board_index)
 {
 	
