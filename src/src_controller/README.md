@@ -126,6 +126,7 @@ In order to calibrate the mechanic, several entries in the config file has to be
 
 #### BASIC MOVEMENT PROCEDURE
 
+*move 
 ##### BOARD <-> BOARD
 
 ##### PARK_POSITION <-> BOARD || BOARD <-> PARK_POSITON
