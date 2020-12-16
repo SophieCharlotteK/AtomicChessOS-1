@@ -62,7 +62,7 @@ void ChessBoard::test()
 	//FIGURE WEGEBWEGEN => wird durch sync gemacht
 	MovePiar tmp_pair;
 	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H1;
-	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_H2;
+	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_C2;
 	
 	makeMoveSync(tmp_pair, false, false, false);
 		
@@ -82,7 +82,9 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		field_width = 50;  //SET TO DEFAULT WIDTH
 	}
 	field_width /= 2;  //WANT TO TRAVEL BETWEEN TWO FIELDS
-	
+	//GET COIL OFFSET FOR THE LATER COIL SWITCH
+	int coil_distance = 0;
+	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM, coil_distance);
 	//COLLECTED THE MOVEMENT STEPS WITH COIL INFORMATION
 	std::queue<MV_POSITION> position_queue;
 
@@ -91,7 +93,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
 	//GET THE NEDDED COILS TO REACH THE POSITONS
 	IOController::COIL start_coil = getValidCoilTypeParkPosition(_move.from_field, IOController::COIL::COIL_A);
-	IOController::COIL end_coil = getValidCoilTypeParkPosition(_move.to_field, IOController::COIL::COIL_A);
+	IOController::COIL end_coil = getValidCoilTypeParkPosition(_move.to_field, IOController::COIL::COIL_B);
 	//GET THE POSITIONS FROM START / END
 	//WITHIN THE BOARD !!!
 	int x_start = -1;
@@ -117,20 +119,41 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 
 	//CHECK IF COIL_SWITCH NEEDED
 	//INERT A BREAKPOINT BEWEEN FIELD D AND E ON THE SAME Y LINE
+	int coil_offset = 0;
 	if(start_coil != end_coil) { 
 		int coil_switch_pos = 200;
 		if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER, coil_switch_pos))
 		{
 			coil_switch_pos = 200;
 		}
-		//TRAVEL WITH START COIL TO THIS POINT
-		//THEN SWITCH COIL => TRAVEL WITH END COIL TO THIS POINT
+		//MOVE TO THE COIL SWITCH POSITION WITH THE START COIL
+		if (start_coil == IOController::COIL::COIL_A) {
+			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, true, false));
+		}
+		else if (start_coil == IOController::COIL::COIL_B) {
+			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, false));
+		}
+		//TURN COILS OFF
+		position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, false));
+		
+		//GET COORDINATES FOR THE COIL SWITCH
+		//=> SWITCH TO B COIL => -coil_offset
+		if(start_coil == IOController::COIL::COIL_A && end_coil == IOController::COIL::COIL_B)
+		{
+			position_queue.push(MV_POSITION(coil_switch_pos - coil_distance, y_start + field_width, false, false));
+			coil_offset = -coil_distance;
+		}else if(start_coil == IOController::COIL::COIL_B && end_coil == IOController::COIL::COIL_A)
+		{
+			position_queue.push(MV_POSITION(coil_switch_pos + coil_distance, y_start + field_width, false, false));
+			coil_offset = coil_distance;
+		}
+		
+		
+		//SWITCH NEW COIL BACK ON
 		if(start_coil == IOController::COIL::COIL_A) {
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, true, false));
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, true));
+			position_queue.push(MV_POSITION(coil_switch_pos + coil_offset, y_start + field_width, true, false));
 		}else if(start_coil == IOController::COIL::COIL_B) {
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, true));
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, true, false));
+			position_queue.push(MV_POSITION(coil_switch_pos + coil_offset, y_start + field_width, false, true));
 		}
 		
 	}
@@ -143,15 +166,15 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	}
 	//MOVE TO TARGET Y COORDINATES WITH 1/2 FIELD OFFSET
 	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width, true, false));
+		position_queue.push(MV_POSITION(x_end + field_width , y_end + field_width, true, false));
 	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width, false, true));
+		position_queue.push(MV_POSITION(x_end + field_width , y_end + field_width, false, true));
 	}
 	//MOVE TO FIELD CENTER
 	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end , y_end , true, false));
+		position_queue.push(MV_POSITION(x_end , y_end, true, false));
 	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end , y_end , false, true));
+		position_queue.push(MV_POSITION(x_end , y_end, false, true));
 	}
 	
 	//	travelToField(_move.from_field, start_coil, true);
