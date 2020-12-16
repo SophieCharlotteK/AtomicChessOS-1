@@ -61,8 +61,8 @@ void ChessBoard::test()
 	//TEST OCCUPY CHECK
 	//FIGURE WEGEBWEGEN => wird durch sync gemacht
 	MovePiar tmp_pair;
-	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_C3;
-	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_F6;
+	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G2;
+	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1;
 	
 	makeMoveSync(tmp_pair, false, false, false);
 		
@@ -117,7 +117,7 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
 }
 
-
+//GET NEXT FIELD TO PARK POS
 
 bool ChessBoard::makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_pos, ChessField::CHESS_FILEDS _dest_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int& _dest_pos_x, int& _dest_pos_y)
 {
@@ -207,6 +207,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	int x_end = -1;
 	int y_end = -1;
 	bool is_start_park_pos = false;
+	bool is_end_park_pos = false;
 	//FIST GET THE MOTOR COORINATES
 	if(isFieldParkPosition(_move.from_field))
 	{
@@ -218,7 +219,8 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	
 	if (isFieldParkPosition(_move.to_field))
 	{
-		makeMoveFromParkPositionToBoard(_move.to_field, _move.to_field, position_queue, x_end, y_end);
+		makeMoveFromParkPositionToBoard(_move.to_field, _move.to_field, position_queue, x_end, y_end); //TODO GET NEARED FIELD PARK POS
+		is_end_park_pos = true;
 		//ENDE IST ANDERS DA IST DIE x_end und y_end = X LINE
 		//NEUE LISTE DIE DANN ANGEHÄNGT WERDEN MUSS
 	}
@@ -289,8 +291,12 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 
 	//MoveWaypointsAlong(position_queue);
 	//MOVE TO FIELD CENTER
-	
-	position_queue.push(MV_POSITION(x_end, y_end, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+	if(!is_end_park_pos) {
+		position_queue.push(MV_POSITION(x_end, y_end, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+	}else
+	{
+		//TODO MOVE FROM THERE TO FINAL PARK POS
+	}
 
 	MoveWaypointsAlong(position_queue);
 	
