@@ -61,8 +61,8 @@ void ChessBoard::test()
 	//TEST OCCUPY CHECK
 	//FIGURE WEGEBWEGEN => wird durch sync gemacht
 	MovePiar tmp_pair;
-	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H1;
-	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_H2;
+	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_C1;
+	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_F1;
 	
 	makeMoveSync(tmp_pair, false, false, false);
 		
@@ -75,85 +75,27 @@ void ChessBoard::test()
 
 ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, bool _with_scan, bool _directly, bool _occupy_check)
 {
-	//GET FIELD WITDTH /2
-	int field_width = 50;
-	if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH, field_width))
-	{
-		field_width = 50;  //SET TO DEFAULT WIDTH
-	}
-	field_width /= 2;  //WANT TO TRAVEL BETWEEN TWO FIELDS
-	
-	//COLLECTED THE MOVEMENT STEPS WITH COIL INFORMATION
-	std::queue<MV_POSITION> position_queue;
 
-	//DISABLE COILS
+	
+	
+	std::queue<MV_POSITION> position_queue;
+	//NICHT PARK START ORDER END TEST
+	
+	position_queue.push(MV_POSITION(0, 1,false,true));
+	//FIRST TRAVEL TO START FIELD
+	//getValidCoilTypeParkPosition
 	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
 	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	//GET THE NEDDED COILS TO REACH THE POSITONS
+	
 	IOController::COIL start_coil = getValidCoilTypeParkPosition(_move.from_field, IOController::COIL::COIL_A);
 	IOController::COIL end_coil = getValidCoilTypeParkPosition(_move.to_field, IOController::COIL::COIL_A);
-	//GET THE POSITIONS FROM START / END
-	//WITHIN THE BOARD !!!
-	int x_start = -1;
-	int y_start = -1;
-	int x_end = -1;
-	int y_end = -1;
-	//FIST GET THE MOTOR COORINATES
-	getFieldCoordinates(_move.from_field, x_start, y_start, start_coil, false, true);
-	getFieldCoordinates(_move.to_field, x_end, y_end, end_coil, false, true);
 	
-	
-	//FIRST TRAVEL TO START POSITON
-	position_queue.push(MV_POSITION(x_start, y_start, false, false));
-	
-	
-	//SECOND TRAVEL 1/2 FIELD UP
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_start, y_start + field_width, true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_start, y_start + field_width, false, true));
-	}
-	
-
-	//CHECK IF COIL_SWITCH NEEDED
-	//INERT A BREAKPOINT BEWEEN FIELD D AND E ON THE SAME Y LINE
+		//CHECK IF COIL_SWITCH NEEDED
 	if(start_coil != end_coil) { 
-		int coil_switch_pos = 200;
-		if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER, coil_switch_pos))
-		{
-			coil_switch_pos = 200;
-		}
-		//TRAVEL WITH START COIL TO THIS POINT
-		//THEN SWITCH COIL => TRAVEL WITH END COIL TO THIS POINT
-		if(start_coil == IOController::COIL::COIL_A) {
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, true, false));
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, true));
-		}else if(start_coil == IOController::COIL::COIL_B) {
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, true));
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, true, false));
-		}
+			//ADD A STOP BEWTEEN D AND F,
+	}
+			
 		
-	}
-	
-	//MOVE TO TARGET X COORDINATES WITH 1/2 FIELD OFFSET
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width, true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width, false, true));
-	}
-	//MOVE TO TARGET Y COORDINATES WITH 1/2 FIELD OFFSET
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width, true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width, false, true));
-	}
-	//MOVE TO FIELD CENTER
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end , y_end , true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end , y_end , false, true));
-	}
-	
 	//	travelToField(_move.from_field, start_coil, true);
 		//iocontroller->setCoilState(start_coil, true);	//ACTIVATE START COIL
 	
@@ -169,27 +111,18 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	int wait_counter = 0;
 		while(!position_queue.empty())
 		{
-			const MV_POSITION tmp = position_queue.front();
 			
-			iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
-			iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
-			
-			x_axis->move_to_postion_mm_absolute(tmp.x, false); //MOVE TO X AND NOT WAIT
-			y_axis->move_to_postion_mm_absolute(tmp.y, false); //MOVE TO Y AND NOT WAIT
-			//WAIT FO BOTH MOTORS
+
+			x_axis->move_to_postion_mm_absolute(field_coordinates_x, false);
+			y_axis->move_to_postion_mm_absolute(field_coordinates_y, false);
 			while (!(x_axis->is_target_position_reached() && y_axis->is_target_position_reached())) {
 				std::this_thread::sleep_for(std::chrono::milliseconds(WAITITME_FOR_MOTORS_TO_ARRIVE));
 			}
-			position_queue.pop();
 		}
 		
 	//DISBALE MOTOR
 	x_axis->disable_motor();
 	y_axis->disable_motor();
-	//DISABLE COILS
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
 }
 	
@@ -1201,7 +1134,7 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 		return ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION;
 	}
 
-	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
+iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
 	iocontroller->setTurnStateLight(IOController::TSL_PRECCESSING);
 
 	//FIRST DO HOMEING OF THE AXIS
@@ -1217,7 +1150,6 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 	
 	
 	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL_A, true);
-	//travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_A1, IOController::COIL_A, true);
 	/// AFTER HOME AND SET COIL A
 	/// THE A MAGNET HAVE TO BE AT POSTION H1
 	

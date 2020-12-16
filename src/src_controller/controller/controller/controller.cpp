@@ -94,10 +94,20 @@ std::string read_file_to_string(const std::string& _path) {
 int main(int argc, char *argv[])
 {
 	
-	//	IOController io;
+	
 
+	
+	
+	
+		
+	
+	
+	
 		//REGISTER SIGNAL HANDLER
 		signal(SIGINT, signal_callback_handler);
+	
+	
+
 	
 	//SETUP LOGGER
 	loguru::init(argc, argv);
@@ -121,6 +131,24 @@ int main(int argc, char *argv[])
 	LOG_F(INFO, "CONFIG FILE LOADED");	
 	
 	
+	
+	
+	
+	
+	ChessBoard board;
+	board.initBoard(false);
+	board.test();
+	
+	
+
+	
+	while (1)
+	{
+		
+	}
+	
+	
+	/*
 	
 		
 	//SARTING GUI COMMUNICATOR PROCESS
@@ -554,7 +582,7 @@ int main(int argc, char *argv[])
 		
 		
 	}
-	
+	*/
 	return 0;
 }
 

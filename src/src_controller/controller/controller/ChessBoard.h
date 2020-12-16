@@ -8,7 +8,7 @@
 #include <list>
 #include <vector>
 
-
+#include <queue>
 
 
 #include <chrono>
@@ -47,6 +47,22 @@ class ChessBoard
 {
 	
 public:
+	
+	struct MV_POSITION
+	{
+		int x;
+		int y;
+		bool coil_a_state;
+		bool coil_b_state;
+		MV_POSITION(int _x, int _y, bool _cas,bool _cbs)
+		{
+			x = _x;
+			y = _y;
+			coil_a_state = _cas,
+			coil_b_state = _cbs;
+				
+		}
+	};
 	
 	enum class BOARD_TPYE
 	{
@@ -93,7 +109,7 @@ public:
 		bool is_valid;
 	};
 		
-		
+	void test();
 	ChessBoard() ;
 	~ChessBoard();
 	MovePiar StringToMovePair(std::string _mv);
