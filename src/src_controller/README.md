@@ -130,6 +130,14 @@ In order to calibrate the mechanic, several entries in the config file has to be
 
 ##### PARK_POSITION <-> BOARD || BOARD <-> PARK_POSITON
 
+
+##### ALGORITHM IMPROVEMENTS
+
+* queue movement all movementinstructions needed for a move, send them combinded to the motor driver
+* send coil change event only if changed, SPI Implementation needs time (about 0.5 Secs with the wait ACK)
+*
+
+
 #### PIECE MOVE TIME
 
 | ALGORITHM_V1_TRAVEL_TIME [s] 	| ALGORITHM_V2_TRAVEL_TIME [s] 	| TRAVEL_DISTANCE [FIELDS_DIAGONAL] 	|
