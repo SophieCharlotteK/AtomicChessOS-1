@@ -118,5 +118,25 @@ The system uses a config file located in the filesystem `/usr/ATC/atccontroller.
 
 In order to calibrate the mechanic, several entries in the config file has to be changed.
 
+![MOCKUP_MAIN_MENU](./documentation_images/ATC_Calibration_Guide.png)
 
-IMAGE :ATC_Calibration_Guide.png
+### Chess Piece Movement Algorithm
+
+![MOCKUP_MAIN_MENU](./documentation_images/ATC_ChessMoveAlgorithm.png)
+
+#### BASIC MOVEMENT PROCEDURE
+
+##### BOARD <-> BOARD
+
+##### PARK_POSITION <-> BOARD || BOARD <-> PARK_POSITON
+
+#### PIECE MOVE TIME
+
+| ALGORITHM_V1_TRAVEL_TIME [s] 	| ALGORITHM_V2_TRAVEL_TIME [s] 	| TRAVEL_DISTANCE [FIELDS_DIAGONAL] 	|
+|------------------------------	|------------------------------	|-----------------------------------	|
+| 7.20                         	| 2.56                         	| 1                                 	|
+| 11.56                        	| 6,20                         	| 3                                 	|
+| 12,27                        	| 7,06                         	| 5                                 	|
+| 14,39                        	| 6,56                         	| 8                                 	|
+
+
