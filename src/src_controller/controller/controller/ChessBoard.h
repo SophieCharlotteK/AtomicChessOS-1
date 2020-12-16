@@ -47,7 +47,7 @@ class ChessBoard
 {
 	
 public:
-	
+	///WAYPOINT STRUCT - USED BY THE MoveAlongWaypoints Funktion - Generates by makeMoveSync Function
 	struct MV_POSITION
 	{
 		int x;
@@ -149,7 +149,7 @@ public:
 	
 	ChessPiece::FIGURE* get_board_pointer(ChessBoard::BOARD_TPYE _target_board); //RETURNS THE POINTER TO A SPCIFIED BOARD ARRAY
 	
-
+	bool MoveWaypointsAlong(std::queue<MV_POSITION>& _mv); //MOVES THE HEAD ALONG A LIST OF WAYPOINTS
 private:
 	
 	TMC5160* x_axis = nullptr; //X AXIS MOTOR

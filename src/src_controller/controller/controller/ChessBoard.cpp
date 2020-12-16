@@ -5,7 +5,7 @@
 
 ChessBoard::ChessBoard() {
 	
-	if(!ConfigParser::getInstance()->configLoaded()){
+	if (!ConfigParser::getInstance()->configLoaded()) {
 		LOG_F(ERROR, "CONFIG NOT LOADED");
 	}
 		
@@ -61,8 +61,8 @@ void ChessBoard::test()
 	//TEST OCCUPY CHECK
 	//FIGURE WEGEBWEGEN => wird durch sync gemacht
 	MovePiar tmp_pair;
-	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H1;
-	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_C2;
+	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_C3;
+	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_F6;
 	
 	makeMoveSync(tmp_pair, false, false, false);
 		
@@ -70,18 +70,53 @@ void ChessBoard::test()
 	
 	
 
-	
+bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
+{
+	//SET MOTORS TO CHESS FIGURE MOVE SPEED
+	x_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
+	y_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
+	int wait_counter = 0;
+	while (!_mv.empty())
+	{
+		const MV_POSITION tmp = _mv.front();
+			
+		iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
+		iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
+			
+		x_axis->move_to_postion_mm_absolute(tmp.x, false);   //MOVE TO X AND NOT WAIT
+		y_axis->move_to_postion_mm_absolute(tmp.y, false);   //MOVE TO Y AND NOT WAIT
+		//WAIT FO BOTH MOTORS
+		while(!(x_axis->is_target_position_reached() && y_axis->is_target_position_reached())) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(WAITITME_FOR_MOTORS_TO_ARRIVE));
+		}
+		_mv.pop();
+	}
+		
+	//DISBALE MOTOR
+	x_axis->disable_motor();
+	y_axis->disable_motor();
+	//DISABLE COILS
+	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+}
 
 
 ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, bool _with_scan, bool _directly, bool _occupy_check)
 {
+	//IF FIELDS EQUAL NOTHING TODO
+	if (_move.to_field == _move.from_field) {
+		iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+		iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+		return ChessBoard::BOARD_ERROR::NO_ERROR;
+	}
+	
 	//GET FIELD WITDTH /2
 	int field_width = 50;
 	if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH, field_width))
 	{
-		field_width = 50;  //SET TO DEFAULT WIDTH
+		field_width = 50;   //SET TO DEFAULT WIDTH
 	}
-	field_width /= 2;  //WANT TO TRAVEL BETWEEN TWO FIELDS
+	field_width /= 2;   //WANT TO TRAVEL BETWEEN TWO FIELDS
 	//GET COIL OFFSET FOR THE LATER COIL SWITCH
 	int coil_distance = 0;
 	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_DISTANCE_COILS_MM, coil_distance);
@@ -90,7 +125,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 
 	//DISABLE COILS
 	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
 	//GET THE NEDDED COILS TO REACH THE POSITONS
 	IOController::COIL start_coil = getValidCoilTypeParkPosition(_move.from_field, IOController::COIL::COIL_A);
 	IOController::COIL end_coil = getValidCoilTypeParkPosition(_move.to_field, IOController::COIL::COIL_B);
@@ -119,99 +154,59 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 
 	//CHECK IF COIL_SWITCH NEEDED
 	//INERT A BREAKPOINT BEWEEN FIELD D AND E ON THE SAME Y LINE
-	int coil_offset = 0;
-	if(start_coil != end_coil) { 
+	
+	if(start_coil != end_coil) {
+		int coil_offset = 0;
 		int coil_switch_pos = 200;
 		if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER, coil_switch_pos))
 		{
 			coil_switch_pos = 200;
 		}
+		//MoveWaypointsAlong(position_queue);
 		//MOVE TO THE COIL SWITCH POSITION WITH THE START COIL
-		if (start_coil == IOController::COIL::COIL_A) {
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, true, false));
+		if(start_coil == IOController::COIL::COIL_A) {
+			coil_offset = coil_switch_pos;
 		}
-		else if (start_coil == IOController::COIL::COIL_B) {
-			position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, false));
+		else if(start_coil == IOController::COIL::COIL_B) {
+			coil_offset = coil_switch_pos - coil_switch_pos / 2;	
 		}
+		position_queue.push(MV_POSITION(coil_offset, y_start + field_width, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+		//MoveWaypointsAlong(position_queue);
 		//TURN COILS OFF
-		position_queue.push(MV_POSITION(coil_switch_pos, y_start + field_width, false, false));
-		
+		iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+		iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+		//MoveWaypointsAlong(position_queue);
 		//GET COORDINATES FOR THE COIL SWITCH
 		//=> SWITCH TO B COIL => -coil_offset
 		if(start_coil == IOController::COIL::COIL_A && end_coil == IOController::COIL::COIL_B)
 		{
-			position_queue.push(MV_POSITION(coil_switch_pos - coil_distance, y_start + field_width, false, false));
-			coil_offset = -coil_distance;
+			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width, false, false));
+			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 		}else if(start_coil == IOController::COIL::COIL_B && end_coil == IOController::COIL::COIL_A)
 		{
-			position_queue.push(MV_POSITION(coil_switch_pos + coil_distance, y_start + field_width, false, false));
-			coil_offset = coil_distance;
+			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width, false, false));
+			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+			
 		}
-		
-		
-		//SWITCH NEW COIL BACK ON
-		if(start_coil == IOController::COIL::COIL_A) {
-			position_queue.push(MV_POSITION(coil_switch_pos + coil_offset, y_start + field_width, true, false));
-		}else if(start_coil == IOController::COIL::COIL_B) {
-			position_queue.push(MV_POSITION(coil_switch_pos + coil_offset, y_start + field_width, false, true));
-		}
+		//MoveWaypointsAlong(position_queue);
 		
 	}
 	
 	//MOVE TO TARGET X COORDINATES WITH 1/2 FIELD OFFSET
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width, true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width, false, true));
-	}
+	position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+
+	//MoveWaypointsAlong(position_queue);
 	//MOVE TO TARGET Y COORDINATES WITH 1/2 FIELD OFFSET
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end + field_width , y_end + field_width, true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end + field_width , y_end + field_width, false, true));
-	}
+	position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+
+	//MoveWaypointsAlong(position_queue);
 	//MOVE TO FIELD CENTER
-	if(start_coil == IOController::COIL::COIL_A) {
-		position_queue.push(MV_POSITION(x_end , y_end, true, false));
-	}else if(start_coil == IOController::COIL::COIL_B) {
-		position_queue.push(MV_POSITION(x_end , y_end, false, true));
-	}
 	
-	//	travelToField(_move.from_field, start_coil, true);
-		//iocontroller->setCoilState(start_coil, true);	//ACTIVATE START COIL
+	position_queue.push(MV_POSITION(x_end, y_end, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+
+	MoveWaypointsAlong(position_queue);
 	
-	
-		//travelToField(_move.to_field, end_coil, true);
-		//iocontroller->setCoilState(start_coil, false);
-		
-	
-		//SET MOTORS TO CHESS FIGURE MOVE SPEED
-		x_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
-		y_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
-		//NOW GOTO EACH POSITON
-	int wait_counter = 0;
-		while(!position_queue.empty())
-		{
-			const MV_POSITION tmp = position_queue.front();
-			
-			iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
-			iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
-			
-			x_axis->move_to_postion_mm_absolute(tmp.x, false); //MOVE TO X AND NOT WAIT
-			y_axis->move_to_postion_mm_absolute(tmp.y, false); //MOVE TO Y AND NOT WAIT
-			//WAIT FO BOTH MOTORS
-			while (!(x_axis->is_target_position_reached() && y_axis->is_target_position_reached())) {
-				std::this_thread::sleep_for(std::chrono::milliseconds(WAITITME_FOR_MOTORS_TO_ARRIVE));
-			}
-			position_queue.pop();
-		}
-		
-	//DISBALE MOTOR
-	x_axis->disable_motor();
-	y_axis->disable_motor();
-	//DISABLE COILS
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+
 	
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
 }
@@ -221,7 +216,7 @@ ChessBoard::MovePiar ChessBoard::StringToMovePair(std::string _mv)
 {
 	MovePiar tmp;
 	//CHECK STRING POPULATES
-	if (_mv.empty())
+	if(_mv.empty())
 	{
 		tmp.is_valid = false;
 	}
@@ -232,9 +227,9 @@ ChessBoard::MovePiar ChessBoard::StringToMovePair(std::string _mv)
 	}
 	
 	//STRING TO LOWER CASE	
-	transform(_mv.begin(), _mv.end(), _mv.begin(),::tolower);
+	transform(_mv.begin(), _mv.end(), _mv.begin(), ::tolower);
 	
-	int ft = std::atoi(&_mv.at(1)) + (_mv.at(0)-97) * 8;
+	int ft = std::atoi(&_mv.at(1)) + (_mv.at(0) - 97) * 8;
 	int tf = std::atoi(&_mv.at(3)) + (_mv.at(2) - 97) * 8;
 	
 	
@@ -293,7 +288,7 @@ bool ChessBoard::syncRealWithTargetBoard() {
 			ChessPiece::FIGURE tmp_curr = board_current[index];
 			ChessPiece::FIGURE tmp_target = board_target[index];
 			//CHECK IF EQUAL FIGURES
-			if (ChessPiece::compareFigures(tmp_curr, tmp_target))
+			if(ChessPiece::compareFigures(tmp_curr, tmp_target))
 			{
 				continue;
 			}
@@ -308,10 +303,10 @@ bool ChessBoard::syncRealWithTargetBoard() {
 	const size_t FIGURE_COUNT = 12;
 	const char FIGURES[FIGURE_COUNT] = { 'r', 'n', 'b', 'q', 'k', 'p', 'R', 'N', 'B', 'Q', 'K', 'P' };
 	//CHECK THE COUNT OF THE PIECES
-	for (int i = 0; i < FIGURE_COUNT; i++)
+	for(int i = 0 ; i < FIGURE_COUNT ; i++)
 	{
-		int bA_count = get_figure_type_count(board_current, FIGURES[i],true); //CURRENT 
-		int bB_count = get_figure_type_count(board_target, FIGURES[i],true); //TARGET
+		int bA_count = get_figure_type_count(board_current, FIGURES[i], true);  //CURRENT 
+		int bB_count = get_figure_type_count(board_target, FIGURES[i], true);  //TARGET
 		
 		//IF THE AMOUNT ARE THE SAME OF BOTH BOARD => NOTHING TODO HERE
 		if(bA_count == bB_count)
@@ -323,18 +318,18 @@ bool ChessBoard::syncRealWithTargetBoard() {
 		}else if(bA_count > bB_count)
 		{
 			//GET THE FILEDS OCCUPEID BY FIGURE TYPE
-			std::vector<ChessField::CHESS_FILEDS> figure_field_list = get_chess_fields_occupied_from_figure(board_current, ChessPiece::getFigureByCharakter(FIGURES[i]),true);
+			std::vector<ChessField::CHESS_FILEDS> figure_field_list = get_chess_fields_occupied_from_figure(board_current, ChessPiece::getFigureByCharakter(FIGURES[i]), true);
 			
 			//USE THE GET PARK POSITION FUNCTION
 			//GET THE FIELD BY FUNCTION INDEX TO FIELDS
 			int difference = bA_count - bB_count;
 			//CHECK OCCUPIED SIZE
-			if (figure_field_list.size() < difference)
+			if(figure_field_list.size() < difference)
 			{
 				difference = figure_field_list.size();
 			}
 				
-			for(int dc = 0 ; dc < difference ; dc++) { 
+			for (int dc = 0; dc < difference; dc++) { 
 				int parking_slot_index = get_next_free_park_position(ChessBoard::BOARD_TPYE::REAL_BOARD, ChessPiece::getFigureByCharakter(FIGURES[i]));
 				
 				//CREATE MOVE AND ADD TO MOVE LIST
@@ -351,7 +346,7 @@ bool ChessBoard::syncRealWithTargetBoard() {
 			std::vector<ChessField::CHESS_FILEDS> figure_park_field_list = get_parking_fileld_occupied_by_figure_type(board_current, ChessPiece::getFigureByCharakter(FIGURES[i]));
 			std::vector<ChessField::CHESS_FILEDS> free_fields_list = get_free_fields_on_the_board(board_current);
 			//SOME BOUNDRY CHECKS
-			if (figure_park_field_list.size() < difference)
+			if(figure_park_field_list.size() < difference)
 			{
 				difference = figure_park_field_list.size();
 			}
@@ -361,7 +356,7 @@ bool ChessBoard::syncRealWithTargetBoard() {
 			}
 			
 			//ADD MOVE TO MOVE THE PIECES FROM PARKING TO THE BOARD
-			for (int dc = 0; dc < difference; dc++) { 
+			for(int dc = 0 ; dc < difference ; dc++) { 
 				//CREATE MOVE AND ADD TO MOVE LIST
 				MovePiar tmp_pair;
 				tmp_pair.to_field = free_fields_list.at(dc);
@@ -388,19 +383,19 @@ bool ChessBoard::syncRealWithTargetBoard() {
 	
 	
 	//FINALLY EXECUTE MOVES
-	for (size_t i = 0; i < move_list.size(); i++)
+	for(size_t i = 0 ; i < move_list.size() ; i++)
 	{
-			makeMoveSync(move_list.at(i), false, false, false);
+		makeMoveSync(move_list.at(i), false, false, false);
 	}
 		
 		
-		//FINALLY TRAVEL BACK TO HOME POS
-	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL::COIL_A, true);
+	//FINALLY TRAVEL BACK TO HOME POS
+travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL::COIL_A, true);
 	
 	
 	//NOW COPY NEW POSITIONS OVER
 	for(size_t w = 0 ; w < BOARD_WIDTH*BOARD_HEIGHT ; w++) {
-			board_current[w] = board_target[w];
+		board_current[w] = board_target[w];
 	}
 	
 	return true;	
@@ -443,10 +438,10 @@ std::vector<ChessField::CHESS_FILEDS> ChessBoard::get_parking_fileld_occupied_by
 	//DETERM SITE OFFSET
 	int side_offset = -1;
 	if (_fig.color == ChessPiece::COLOR_WHITE) {
-		side_offset = 0;  //LEFT BOARD COL 0+1
+		side_offset = 0;   //LEFT BOARD COL 0+1
 	}
 	else if (_fig.color == ChessPiece::COLOR_BLACK) {
-		side_offset = 10;  //RIGHT BOARD COL 10+11
+		side_offset = 10;   //RIGHT BOARD COL 10+11
 	}
 	else {
 		return tmp;
@@ -466,7 +461,7 @@ std::vector<ChessField::CHESS_FILEDS> ChessBoard::get_parking_fileld_occupied_by
 				continue;
 			}
 			//OVERRIDE INVALID FIGURES
-			if(!ChessPiece::compareFigures(tmp_fig,_fig))
+			if(!ChessPiece::compareFigures(tmp_fig, _fig))
 			{
 				continue;
 			}
@@ -491,7 +486,7 @@ std::vector<ChessField::CHESS_FILEDS> ChessBoard::get_chess_fields_occupied_from
 	int w_offset = 0;
 	if (_board_only)
 	{
-		w_offset = 2;  //BOARD WIDTH - 2*2 FOR PARKING
+		w_offset = 2;   //BOARD WIDTH - 2*2 FOR PARKING
 	}
 	
 	for (size_t w = 0 + w_offset; w < BOARD_WIDTH - w_offset; w++) {
@@ -524,7 +519,7 @@ std::vector<ChessField::CHESS_FILEDS> ChessBoard::get_chess_fields_occupied_from
 int ChessBoard::get_next_free_park_position(ChessBoard::BOARD_TPYE _target_board, ChessPiece::FIGURE _fig)
 {
 
- 	ChessPiece::FIGURE*cb = get_board_pointer(_target_board);
+	ChessPiece::FIGURE*cb = get_board_pointer(_target_board);
 	if (cb == nullptr)
 	{
 		return -1;
@@ -534,11 +529,13 @@ int ChessBoard::get_next_free_park_position(ChessBoard::BOARD_TPYE _target_board
 	
 	//DETERM SITE OFFSET
 	int side_offset = -1;
-	if (_fig.color == ChessPiece::COLOR_WHITE){
-		side_offset = 0; //LEFT BOARD COL 0+1
-	}else if (_fig.color == ChessPiece::COLOR_BLACK) {
-		side_offset = 10; //RIGHT BOARD COL 10+11
-	}else{
+	if (_fig.color == ChessPiece::COLOR_WHITE) {
+		side_offset = 0;  //LEFT BOARD COL 0+1
+	}
+	else if (_fig.color == ChessPiece::COLOR_BLACK) {
+		side_offset = 10;  //RIGHT BOARD COL 10+11
+	}
+	else {
 		return -1;
 	}
 		
@@ -555,7 +552,7 @@ int ChessBoard::get_next_free_park_position(ChessBoard::BOARD_TPYE _target_board
 				continue;
 			}
 			//OVERRIDE INVALID FIGURES
-			if (ChessPiece::IsFigureValid(tmp))
+			if(ChessPiece::IsFigureValid(tmp))
 			{
 				continue;
 			}
@@ -595,7 +592,7 @@ int ChessBoard::get_figure_type_count(ChessBoard::BOARD_TPYE _target_board, char
 
 }
 
-int ChessBoard::get_figure_type_count(ChessPiece::FIGURE* _board_pointer, char _type_char , bool _board_only) {
+int ChessBoard::get_figure_type_count(ChessPiece::FIGURE* _board_pointer, char _type_char, bool _board_only) {
 	if (_board_pointer == nullptr)
 	{
 		return -1;
@@ -606,7 +603,7 @@ int ChessBoard::get_figure_type_count(ChessPiece::FIGURE* _board_pointer, char _
 	int w_offset = 0;
 	if (_board_only)
 	{
-		w_offset = 2; //BOARD WIDTH - 2*2 FOR PARKING
+		w_offset = 2;  //BOARD WIDTH - 2*2 FOR PARKING
 	}
 		
 		
@@ -630,7 +627,7 @@ int ChessBoard::get_figure_type_count(ChessPiece::FIGURE* _board_pointer, char _
 bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board) {
 	
 	
-	_fen += " "; //THE BOARD BLOCK (CONTAINING FROM START OF THE STRING) TO THE FIRST WHITESPACE => EVERYTHING AFTER IS NOT IMPORTANT
+	_fen += " ";  //THE BOARD BLOCK (CONTAINING FROM START OF THE STRING) TO THE FIRST WHITESPACE => EVERYTHING AFTER IS NOT IMPORTANT
 	//CREATE AN EMPTY FIGURE
 	
 	ChessPiece::FIGURE empty_firegure;
@@ -669,17 +666,17 @@ bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_b
 	
 	
 	//CLEAR TARGET BOARD
-	for (size_t h = 0; h < BOARD_HEIGHT; h++){
-		for(size_t w = 0 ; w < BOARD_WIDTH ; w++){
+	for(size_t h = 0 ; h < BOARD_HEIGHT ; h++) {
+		for (size_t w = 0; w < BOARD_WIDTH; w++) {
 			size_t index = w + (h*BOARD_WIDTH);
 			cb[index] = empty_firegure;
 		}		 
 	}
-//	printBoard(_target_board);
-	//ALGORITHM PARTLY MODIFIED FRO  POST 12550 SITE:
-	//http://www.cplusplus.com/forum/general/181525/
-	//CHECK FEN STRING
-	int num_spaces = 0;
+	//	printBoard(_target_board);
+		//ALGORITHM PARTLY MODIFIED FRO  POST 12550 SITE:
+		//http://www.cplusplus.com/forum/general/181525/
+		//CHECK FEN STRING
+		int num_spaces = 0;
 	int num_rows = 1;
 	//FOR EACH CHARACTER IN FEN STRING
 	
@@ -701,23 +698,27 @@ bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_b
 
 	
 	
-	int board_position_x = 0; //WIDTH
-	int board_position_y = 0; //HEIGHT
+	int board_position_x = 0;  //WIDTH
+	int board_position_y = 0;  //HEIGHT
 	const char *p =  _fen.c_str();
 	for (; *p != ' '; ++p)
 	{
 		const char ch = *p;
 
-		if (isdigit(ch)) { //IS A DIGIT => EMPTY SPACE FOR THE VALUE OF THE DIGIT
-			for (int i = 0; i < (ch - '0'); ++i) {
-				board_position_x++; //STEP OVER FIELD	
+		if (isdigit(ch)) {
+			 //IS A DIGIT => EMPTY SPACE FOR THE VALUE OF THE DIGIT
+			for(int i = 0 ; i < (ch - '0') ; ++i) {
+				board_position_x++;  //STEP OVER FIELD	
 			}
-		}else if (ch == '/') { //NEW ROW
-			printf("\n\n");
-			board_position_y++; //GOTO NEXT ROW
-			board_position_x = 0;  //AND STARTING A NEW LINE WITH X COUNTER AT 0
 		}
-		else if((ch>65 && ch <90) || (ch>97 && ch <122)){//IS A FIGURE 
+		else if (ch == '/') {
+			 //NEW ROW
+			printf("\n\n");
+			board_position_y++;  //GOTO NEXT ROW
+			board_position_x = 0;   //AND STARTING A NEW LINE WITH X COUNTER AT 0
+		}
+		else if ((ch > 65 && ch < 90) || (ch > 97 && ch < 122)) {
+			//IS A FIGURE 
 			printf(" %c", ch); 
 			ChessPiece::FIGURE tmp = ChessPiece::getFigureByCharakter(ch);
 			//CHECK FIGURE IS VLAID
@@ -732,7 +733,7 @@ bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_b
 			tmp.figure_number = figure_counter[ch];
 			
 			//PLACE THE FIGURE
-			size_t index = board_position_x + (board_position_y*BOARD_WIDTH) +2; //+2 FOR THE 2 SPACE FOR THE PARKING POSITIONS
+			size_t index = board_position_x + (board_position_y*BOARD_WIDTH) + 2;  //+2 FOR THE 2 SPACE FOR THE PARKING POSITIONS
 			cb[index] = tmp;
 			//STEP TO NEXT FIELD
 			board_position_x++;  
@@ -744,12 +745,12 @@ bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_b
 	
 	//DETERMN FIGURES IN PARK POSITION
 	const size_t FIGURE_COUNT = 12;
-	const char FIGURES[FIGURE_COUNT] = {'r', 'n', 'b', 'q', 'k', 'p', 'R', 'N', 'B', 'Q', 'K', 'P'};
+	const char FIGURES[FIGURE_COUNT] = { 'r', 'n', 'b', 'q', 'k', 'p', 'R', 'N', 'B', 'Q', 'K', 'P' };
 	int park_pos_counter_white = 0;
 	int park_pos_counter_black = 0;
 	
 	//FOR EACH FIGURE
-	for (int i = 0; i < FIGURE_COUNT; i++)
+	for(int i = 0 ; i < FIGURE_COUNT ; i++)
 	{
 		//GET TARGET COUNT
 		const int target_count = ChessPiece::getFigureCountByChrakter(FIGURES[i]);
@@ -775,7 +776,7 @@ bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_b
 			
 			int pos_index = get_next_free_park_position(_target_board, tmp);
 			//INVALID POSITION
-			if (pos_index < 0)
+			if(pos_index < 0)
 			{
 				continue;
 			}
@@ -786,8 +787,8 @@ bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_b
 			
 	}
 	
-printBoard(_target_board);
-return true;
+	printBoard(_target_board);
+	return true;
 }
 	
 
@@ -822,27 +823,27 @@ void ChessBoard::printBoard(ChessBoard::BOARD_TPYE _target_board)
 	
 	for (size_t h = 0; h < BOARD_HEIGHT; h++) {
 		for (size_t w = 0; w < BOARD_WIDTH; w++) {
-			if (w == 2 || w== 10)
+			if (w == 2 || w == 10)
 			{
 				std::cout << "| ";
 			}
 				
 			size_t index = w + (h*BOARD_WIDTH);
 			//PRINT BLANK IF FIGURE IS INVALID
-			if (cb[index].is_empty)
+			if(cb[index].is_empty)
 			{
 				std::cout << "." << " ";
 				continue;
 			}
 			//PRINT X FOR AN INVALID FIGURE
-			if (!ChessPiece::IsFigureValid(cb[index]))
+			if(!ChessPiece::IsFigureValid(cb[index]))
 			{
 				std::cout << "x" << " ";
 				continue;
 			}
 			//ELSE PRINT THE CHARAKTER
-			std ::cout << ChessPiece::Figure2Charakter(cb[index]) << " ";
-			}	
+			std::cout << ChessPiece::Figure2Charakter(cb[index]) << " ";
+		}	
 		std::cout << std::endl;
 	}
 	std::cout << "----- END BOARD -------------------" << std::endl;
@@ -908,11 +909,11 @@ void ChessBoard::getParkPositionCoordinates(ChessField::CHESS_FILEDS _index, int
 	int pp_entry = 0;
 	if (is_black_park_position == 2) //BLACK
 		{
-			pp_entry = (magic_enum::enum_integer(_index) - magic_enum::enum_integer(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1)) % 16 ;
+			pp_entry = (magic_enum::enum_integer(_index) - magic_enum::enum_integer(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1)) % 16;
 		}
 	else
 	{
-		pp_entry = (magic_enum::enum_integer(_index) - magic_enum::enum_integer(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1)) % 16 ;
+		pp_entry = (magic_enum::enum_integer(_index) - magic_enum::enum_integer(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1)) % 16;
 	}
 	
 	if (before_parkpostion_entry)
@@ -1014,9 +1015,9 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 	for (int i = 0; i < magic_enum::enum_integer(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1); i++)
 	{
 		//getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);        //GET INDEX FOR ARRAY
-		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);        //TRAVEL TO NEXT FIELD
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);       //SCAN NFC TAG IF PRESENT
-		ChessPiece::FigureDebugPrint(tmop);       //DEBUG PRINT FIGURE IF FOUND
+		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);         //TRAVEL TO NEXT FIELD
+		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);        //SCAN NFC TAG IF PRESENT
+		ChessPiece::FigureDebugPrint(tmop);        //DEBUG PRINT FIGURE IF FOUND
 		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
 			tmop.is_empty = true;	
 		}else
@@ -1024,7 +1025,7 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 			tmop.is_empty = false;
 		}
 		
-		board_current[ChessField::get_board_index_from_field(static_cast<ChessField::CHESS_FILEDS>(i))] = tmop;              //STORE FIGURE ON BOARD
+		board_current[ChessField::get_board_index_from_field(static_cast<ChessField::CHESS_FILEDS>(i))] = tmop;               //STORE FIGURE ON BOARD
 	}
 	
 	//TODO SCAN PARK POSITION FOR WHITE
@@ -1033,15 +1034,15 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 		
 		//GOOT
 		//getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);   //GET INDEX FOR ARRAY
-		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);         //TRAVEL TO NEXT FIELD
+		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);          //TRAVEL TO NEXT FIELD
 		//ACTIVATE COIL FOR THE BLACK SITE COIL A IS NESSESSARY
 		iocontroller->setCoilState(IOController::COIL_A, false);
 		//MOVE OUT SLOW
 		//MOVE NFC
 		
 		//SCAN POSSBILE NFC TAG
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);        //SCAN NFC TAG IF PRESENT
-		ChessPiece::FigureDebugPrint(tmop);        //DEBUG PRINT FIGURE IF FOUND
+		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);         //SCAN NFC TAG IF PRESENT
+		ChessPiece::FigureDebugPrint(tmop);         //DEBUG PRINT FIGURE IF FOUND
 		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
 			tmop.is_empty = true;	
 		}
@@ -1062,7 +1063,7 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 
 bool ChessBoard::isFieldParkPosition(ChessField::CHESS_FILEDS _field)
 {	
-	int field_index = static_cast<int>(_field);       //CAST FIELD ENUM TO A INDEX/NUMBER
+	int field_index = static_cast<int>(_field);        //CAST FIELD ENUM TO A INDEX/NUMBER
 	if(field_index < 64) //ALL PARKPOSITIONS ARE INDEX >=64
 	{
 		return false;
@@ -1086,7 +1087,7 @@ IOController::COIL ChessBoard::getValidCoilTypeParkPosition(ChessField::CHESS_FI
 //		return _target;
 //	}
 	
-	if (_target == IOController::COIL::COIL_NFC)
+	if(_target == IOController::COIL::COIL_NFC)
 	{
 		return _target;
 	}
@@ -1200,7 +1201,7 @@ ChessBoard::BOARD_ERROR ChessBoard::get_coil_offset(IOController::COIL _coil, in
 		//	mv_distance = std::abs(coil_distance / 2);
 	}
 
-	_y = 0;       //THE COILS ARE ONLY MOVING IN X DIRECTION
+	_y = 0;        //THE COILS ARE ONLY MOVING IN X DIRECTION
 	_x = mv_distance;
 }
 	
@@ -1314,7 +1315,7 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 	invlaid_piece.figure_number = -1;
 	
 	
-	 if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION) {
+	if (_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION) {
 		//LOAD DEFAULT FEN TO BOARD
 	
 		std::string tmp = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN);
@@ -1330,12 +1331,14 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 	
 		
 		
-		}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
+	}
+	else if (_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
 		{
-		boardFromFen("8/8/8/8/8/8/8/8", _target_board);
+			boardFromFen("8/8/8/8/8/8/8/8", _target_board);
 		
 		
-		}else if(_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_NO_FIGURES_PLACED) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
+		}
+	else if (_preset == ChessBoard::BOARD_PRESET::BOARD_PRESET_NO_FIGURES_PLACED) //LOAD ALL FIGURES IN PARTKIN POSITION BOARD
 		{
 			boardFromFen("8/8/8/8/8/8/8/8", _target_board);
 		}
