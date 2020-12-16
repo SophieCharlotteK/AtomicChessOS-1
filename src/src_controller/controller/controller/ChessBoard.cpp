@@ -118,7 +118,22 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 }
 
 //GET NEXT FIELD TO PARK POS
+ChessField::CHESS_FILEDS ChessBoard::getNextParkPosNearAtBoardField(ChessField::CHESS_FILEDS _board_field)
+{
+	//TODO CHECK IF PARK POS
+	//CALC POSITION AND USE MIT FOR NEAREST
+}
 
+
+bool ChessBoard::makeMoveFromBoardToParkPosition(ChessField::CHESS_FILEDS _park_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int _current_x, int _current_y)
+{
+	//TODO CHECK IF PARKPOS
+	//FROM CURRENT POS DIRECTLY TO LINE X
+	//MOVE ON LINE Y
+	//GO INTO
+}
+	
+	
 bool ChessBoard::makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_pos, ChessField::CHESS_FILEDS _dest_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int& _dest_pos_x, int& _dest_pos_y)
 {
 	if (!isFieldParkPosition(_park_pos))
@@ -219,7 +234,9 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	
 	if (isFieldParkPosition(_move.to_field))
 	{
-		makeMoveFromParkPositionToBoard(_move.to_field, _move.to_field, position_queue, x_end, y_end); //TODO GET NEARED FIELD PARK POS
+		ChessField::CHESS_FILEDS _tmp_nearest_field = getNextParkPosNearAtBoardField(_move.to_field);
+		end_coil = getValidCoilTypeParkPosition(_tmp_nearest_field, IOController::COIL::COIL_B);
+		getFieldCoordinates(_tmp_nearest_field, x_end, y_end, end_coil, false, true);
 		is_end_park_pos = true;
 		//ENDE IST ANDERS DA IST DIE x_end und y_end = X LINE
 		//NEUE LISTE DIE DANN ANGEHÄNGT WERDEN MUSS
@@ -290,12 +307,13 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 
 	//MoveWaypointsAlong(position_queue);
-	//MOVE TO FIELD CENTER
+	//MOVE TO FIELD CENTER OR FURTHER TO MARK POS
 	if(!is_end_park_pos) {
 		position_queue.push(MV_POSITION(x_end, y_end, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 	}else
 	{
 		//TODO MOVE FROM THERE TO FINAL PARK POS
+		makeMoveFromBoardToParkPosition(_move.to_field, position_queue, x_end + field_width, y_end + field_width);
 	}
 
 	MoveWaypointsAlong(position_queue);
