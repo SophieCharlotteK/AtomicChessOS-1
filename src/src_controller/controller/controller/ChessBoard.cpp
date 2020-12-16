@@ -75,13 +75,30 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 	//SET MOTORS TO CHESS FIGURE MOVE SPEED
 	x_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
 	y_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
+	//DISABLE COILS
+	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
 	int wait_counter = 0;
+	bool ca_changed = false;
+	bool cb_changed = false;
 	while (!_mv.empty())
 	{
 		const MV_POSITION tmp = _mv.front();
+		
+		//SOME IMPROVEMENTS => SPI WRITING IS EXPENSIVE
+		if (ca_changed != tmp.coil_a_state)
+		{
+			ca_changed = tmp.coil_a_state;
+			iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
+		}
+		if (cb_changed != tmp.coil_b_state)
+		{
+			cb_changed = tmp.coil_b_state;
+			iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
+		}
 			
-		iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
-		iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
+		
+		
 			
 		x_axis->move_to_postion_mm_absolute(tmp.x, false);   //MOVE TO X AND NOT WAIT
 		y_axis->move_to_postion_mm_absolute(tmp.y, false);   //MOVE TO Y AND NOT WAIT
@@ -98,6 +115,60 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 	//DISABLE COILS
 	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
 	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+}
+
+
+
+bool ChessBoard::makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_pos, ChessField::CHESS_FILEDS _dest_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int& _dest_pos_x, int& _dest_pos_y)
+{
+	if (!isFieldParkPosition(_park_pos))
+	{
+		return false;
+	}
+	//GET FIELD WITDTH /2
+	int field_width = 50;
+	if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_CHESS_FIELD_WIDTH, field_width))
+	{
+		field_width = 50;    //SET TO DEFAULT WIDTH
+	}
+	field_width /= 2;    //WANT TO TRAVEL BETWEEN TWO FIELDS
+	//MOVE TO PARK START POSTION
+	int pp_pos_inside_x = 0;
+	int pp_pos_inside_y = 0;  
+	
+	int pp_pos_before_x = 0;
+	int pp_pos_before_y = 0;  
+	IOController::COIL parkpos_needed_coil = getValidCoilTypeParkPosition(_park_pos, IOController::COIL::COIL_A);
+	IOController::COIL target_coil = getValidCoilTypeParkPosition(_dest_pos, IOController::COIL::COIL_A);
+	
+	//GET PARK POS COORIDNATES IN THE PARK POS
+	getParkPositionCoordinates(_park_pos, pp_pos_inside_x, pp_pos_inside_y, parkpos_needed_coil, false);
+	//GET PARK POS COORIDNATES IN THE BEFORE THE PARK POS
+	getParkPositionCoordinates(_park_pos, pp_pos_before_x, pp_pos_before_y, parkpos_needed_coil, true);
+	
+	//TRAVEL TO PARK POS
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_inside_x, pp_pos_inside_y,false,false));
+	//MoveWaypointsAlong(_generated_waypoint_list);
+	//ACTIVATE COILS
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_inside_x, pp_pos_inside_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+	//MoveWaypointsAlong(_generated_waypoint_list);
+	//MOVE OUT THE PARK POS COILS
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_before_x, pp_pos_before_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+	//MoveWaypointsAlong(_generated_waypoint_list);
+	
+	//MOVE THE FIGURE TO THE _target_field y position
+	int target_pos_x = 0;
+	int target_pos_y = 0;
+	getFieldCoordinates(_dest_pos, target_pos_x, target_pos_y, target_coil, false, true);
+	
+	//TARGET POS IS EXACLTY BETWEEN TWO FIELDS
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_before_x, target_pos_y + field_width, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+	//MoveWaypointsAlong(_generated_waypoint_list);
+	
+	_dest_pos_x = pp_pos_before_x;
+	_dest_pos_y = target_pos_y;
+	
+	return true;
 }
 
 
@@ -135,13 +206,30 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	int y_start = -1;
 	int x_end = -1;
 	int y_end = -1;
+	bool is_start_park_pos = false;
 	//FIST GET THE MOTOR COORINATES
-	getFieldCoordinates(_move.from_field, x_start, y_start, start_coil, false, true);
-	getFieldCoordinates(_move.to_field, x_end, y_end, end_coil, false, true);
+	if(isFieldParkPosition(_move.from_field))
+	{
+		makeMoveFromParkPositionToBoard(_move.from_field, _move.to_field, position_queue, x_start, y_start);
+		is_start_park_pos = true;
+	}else{
+		getFieldCoordinates(_move.from_field, x_start, y_start, start_coil, false, true);
+	}
 	
+	if (isFieldParkPosition(_move.to_field))
+	{
+		makeMoveFromParkPositionToBoard(_move.to_field, _move.to_field, position_queue, x_end, y_end);
+		//ENDE IST ANDERS DA IST DIE x_end und y_end = X LINE
+		//NEUE LISTE DIE DANN ANGEHÄNGT WERDEN MUSS
+	}
+	else {
+		getFieldCoordinates(_move.to_field, x_end, y_end, end_coil, false, true);
+	}
 	
 	//FIRST TRAVEL TO START POSITON
-	position_queue.push(MV_POSITION(x_start, y_start, false, false));
+	if(!is_start_park_pos) {
+		position_queue.push(MV_POSITION(x_start, y_start, false, false));
+	}
 	
 	
 	//SECOND TRAVEL 1/2 FIELD UP
@@ -242,30 +330,6 @@ ChessBoard::MovePiar ChessBoard::StringToMovePair(std::string _mv)
 
 
 
-
-
-/*
-if (_occupy_check)
-{
-	if (!isFieldParkPosition(_move.to_field)){
-		travelToField(_move.to_field, IOController::COIL::COIL_NFC, false);		
-		ChessPiece::FIGURE scan_result = iocontroller->ScanNFC(2);
-		if (ChessPiece::IsFigureValid(scan_result))
-		{
-			//TODO
-			MovePiar tmp_move;
-			tmp_move.from_field = _move.to_field;
-			tmp_move.to_field = get_field_from_board_index(get_next_free_park_position())
-			move_list.push_back()
-}
-}
-			
-	
-}
-	
-move_list.push_back(_move);
-//TRAVEL TO
-*/
 
 
 bool ChessBoard::syncRealWithTargetBoard() {
