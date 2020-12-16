@@ -139,4 +139,5 @@ In order to calibrate the mechanic, several entries in the config file has to be
 | 12,27                        	| 7,06                         	| 5                                 	|
 | 14,39                        	| 6,56                         	| 8                                 	|
 
+![MOCKUP_MAIN_MENU](./documentation_images/FigureMovementTims_GRAPH_COMP.PNG)
 
