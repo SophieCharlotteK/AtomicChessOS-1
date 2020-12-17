@@ -51,21 +51,50 @@ ChessBoard::~ChessBoard() {
 }
 
 
-void ChessBoard::test()
+bool ChessBoard::test_make_move_func(std::string& _descr, int& _test_no)
 {
 	
-	//TEST A1-B2 B4-A5
-	//TEST A1-H1 (switch detection in mitte tauschen) A1-H8
-	//park white ->C4 park black D4 (änderung bis mitte rand ab da dann bis ziel)
-	
-	//TEST OCCUPY CHECK
-	//FIGURE WEGEBWEGEN => wird durch sync gemacht
+	calibrate_home_pos();
 	MovePiar tmp_pair;
-	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G5;
-	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_4;
 	
-	makeMoveSync(tmp_pair, false, false, false);
-		
+	switch (_test_no)
+	{
+	case 0: {
+		_descr = "H1 -> F5";
+		tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H1;
+		tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_F5;
+		makeMoveSync(tmp_pair, false, false, false); 
+		break;
+	}
+	case 1: {
+		_descr = "G5 -> A2";
+		tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G5;
+		tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_A2;
+		makeMoveSync(tmp_pair, false, false, false);
+			break;
+		}
+	case 2: {
+		_descr = "PARK_BLACK_1 -> PARK_WHITE_10";
+		tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1;
+		tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_10;
+		makeMoveSync(tmp_pair, false, false, false);
+			break;
+		}
+	case 3: {
+		_descr = "G8 -> PARK_WHITE_10";
+		tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G8;
+		tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_10;
+		makeMoveSync(tmp_pair, false, false, false); 
+			break;
+		}
+	default: _test_no = -1;break;
+	}
+	
+	
+	if (_test_no >= 0) {
+		_test_no++;
+	}
+	return true;
 }
 	
 	
@@ -366,12 +395,12 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		position_queue.push(MV_POSITION(x_start, y_start, false, false));
 	}
 	
-	
+	//MoveWaypointsAlong(position_queue);
 	//SECOND TRAVEL 1/2 FIELD UP OR DOWN IF START WORKAROUND
 	position_queue.push(MV_POSITION(x_start, y_start + field_width*INVERT_FIELD_OFFSET, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 	
 	
-//	MoveWaypointsAlong(position_queue);
+	//MoveWaypointsAlong(position_queue);
 
 	//CHECK IF COIL_SWITCH NEEDED
 	//INERT A BREAKPOINT BEWEEN FIELD D AND E ON THE SAME Y LINE
@@ -474,9 +503,9 @@ ChessBoard::MovePiar ChessBoard::StringToMovePair(std::string _mv)
 
 
 bool ChessBoard::syncRealWithTargetBoard() {
-	//TODO
+
    //USE MAKE MOVE TO GENERATE A MOVE LIST THEN EXECUTE THE MOVES
-   std::vector<MovePiar> move_list;
+	std::vector<MovePiar> move_list;
 	ChessPiece::FIGURE*board_current = get_board_pointer(ChessBoard::BOARD_TPYE::REAL_BOARD);
 	ChessPiece::FIGURE*board_target = get_board_pointer(ChessBoard::BOARD_TPYE::TARGET_BOARD);
 	

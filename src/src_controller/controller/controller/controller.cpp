@@ -135,20 +135,8 @@ int main(int argc, char *argv[])
 	
 	
 	
-	ChessBoard board;
-	board.initBoard(false);
-	board.test();
 	
 	
-
-	
-	while (1)
-	{
-		
-	}
-	
-	
-	/*
 	
 		
 	//SARTING GUI COMMUNICATOR PROCESS
@@ -535,6 +523,21 @@ int main(int argc, char *argv[])
 			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOADED DEFAULT CONFIG", 10000);
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 		}
+		
+		
+		//--------------------------------------------------------
+		//----------------DEBUG - LOAD CONFIG BUTTON--------------
+		//--------------------------------------------------------
+		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_C && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "RUN MAKE_MOVE FKT", 10000);
+			std::string test_text = "";
+			int test_id = 0;
+			while (test_id >= 0) {
+				board.test_make_move_func(test_text, test_id);
+				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, test_text, 10000);
+			}
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+		}
 			
 		
 		//--------------------------------------------------------
@@ -582,7 +585,7 @@ int main(int argc, char *argv[])
 		
 		
 	}
-	*/
+	
 	return 0;
 }
 

@@ -110,7 +110,7 @@ public:
 		bool is_valid;
 	};
 		
-	void test();
+	bool test_make_move_func(std::string& _descr, int& _test_no);
 	ChessBoard() ;
 	~ChessBoard();
 	MovePiar StringToMovePair(std::string _mv);
