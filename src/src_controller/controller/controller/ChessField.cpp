@@ -6,6 +6,9 @@ int ChessField::field2Index(ChessField::CHESS_FILEDS _field)
 	return static_cast<int>(_field);
 }
 
+ChessField::CHESS_FILEDS ChessField::Index2Field(int _field){
+	return static_cast<ChessField::CHESS_FILEDS>(_field);
+}
 
 
 int ChessField::get_board_index_from_field(ChessField::CHESS_FILEDS _field)
