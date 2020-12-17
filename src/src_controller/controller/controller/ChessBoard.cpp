@@ -61,8 +61,8 @@ void ChessBoard::test()
 	//TEST OCCUPY CHECK
 	//FIGURE WEGEBWEGEN => wird durch sync gemacht
 	MovePiar tmp_pair;
-	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_10;
-	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_E5;
+	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G5;
+	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_4;
 	
 	makeMoveSync(tmp_pair, false, false, false);
 		
@@ -118,19 +118,92 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 }
 
 //GET NEXT FIELD TO PARK POS
-ChessField::CHESS_FILEDS ChessBoard::getNextParkPosNearAtBoardField(ChessField::CHESS_FILEDS _board_field)
-{
-	//TODO CHECK IF PARK POS
-	//CALC POSITION AND USE MIT FOR NEAREST
+ChessField::CHESS_FILEDS ChessBoard::getNextHalfFieldFromParkPos(ChessField::CHESS_FILEDS _board_field)
+{	
+	
+	IOController::COIL parkpos_needed_coil = getValidCoilTypeParkPosition(_board_field, IOController::COIL::COIL_A);
+	//IF NOT PARK POS RETURN THE BOARD FIELD COODIANTES
+	if (!isFieldParkPosition(_board_field))
+	{
+		return _board_field;
+	}
+	
+	//GET POSITION OF THE PARK POS
+	int pp_x = -1;
+	int pp_y = -1;
+	getParkPositionCoordinates(_board_field, pp_x, pp_y, parkpos_needed_coil,true);
+
+	//NOW FIND THE NEXT BOARD FIELD NEXT TO THIS POSITION
+	int bf_x = std::numeric_limits<int>::max();
+	int bf_y = std::numeric_limits<int>::max();	
+	int tmp_x = std::numeric_limits<int>::max();
+	int tmp_y = std::numeric_limits<int>::max();
+	float distance = 0.0f;
+	float smallest_distance = std::numeric_limits<float>::max();
+	ChessField::CHESS_FILEDS nearest_field = _board_field;
+	///EDIT START STOP FIELDS HERE
+	const int start_index = ChessField::field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_A1);
+	const int stop_index = ChessField::field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1);
+	
+	//FOR EACH BOARD FIELD
+	for (int i = start_index; i < stop_index; i++)
+	{
+		//GET FIELD COODIANTES
+		getFieldCoordinates(ChessField::Index2Field(i), tmp_x, tmp_y, parkpos_needed_coil, false, true);
+		//USE PYTHAGORAS TO GET THE DISTANCE BEWEEN THE POINTS
+		distance = std::hypotl(tmp_x - pp_x, tmp_y - pp_y);
+		if (distance < smallest_distance)
+		{
+			smallest_distance = distance;
+			nearest_field = ChessField::Index2Field(i);
+		}
+	}
+		
+
+	return nearest_field;
 }
 
 
 bool ChessBoard::makeMoveFromBoardToParkPosition(ChessField::CHESS_FILEDS _park_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int _current_x, int _current_y)
-{
-	//TODO CHECK IF PARKPOS
-	//FROM CURRENT POS DIRECTLY TO LINE X
-	//MOVE ON LINE Y
-	//GO INTO
+{	
+	//IF NOT PARK POS RETURN ADD THE FINAL TARGET FIELD POSITION TO THE QUEUE
+	if(!isFieldParkPosition(_park_pos))
+	{
+		IOController::COIL parkpos_needed_coil = getValidCoilTypeParkPosition(_park_pos, IOController::COIL::COIL_A);
+		getFieldCoordinates(_park_pos, _current_x, _current_y, parkpos_needed_coil, false, true);
+		_generated_waypoint_list.push(MV_POSITION(_current_x, _current_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+		return false;
+	}
+	
+	int pp_pos_inside_x = 0;
+	int pp_pos_inside_y = 0;  
+	
+	int pp_pos_before_x = 0;
+	int pp_pos_before_y = 0;  
+	IOController::COIL parkpos_needed_coil = getValidCoilTypeParkPosition(_park_pos, IOController::COIL::COIL_A);
+
+	
+	//GET PARK POS COORIDNATES IN THE PARK POS
+	getParkPositionCoordinates(_park_pos, pp_pos_inside_x, pp_pos_inside_y, parkpos_needed_coil, false);
+	//GET PARK POS COORIDNATES IN THE BEFORE THE PARK POS
+	getParkPositionCoordinates(_park_pos, pp_pos_before_x, pp_pos_before_y, parkpos_needed_coil, true);
+	
+	
+	//MOVE OUT THE PARK POS COILS
+	///DONT CHANGE Y AXIS 
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_before_x, _current_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+//	MoveWaypointsAlong(_generated_waypoint_list);
+	//MOVE TO PARK POS BEFORE ENTRY
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_before_x, pp_pos_before_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+//	MoveWaypointsAlong(_generated_waypoint_list);
+	
+	//FINALLY MOVE IN
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_inside_x, pp_pos_inside_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
+//	MoveWaypointsAlong(_generated_waypoint_list);
+	//TURN OFF COILS
+	_generated_waypoint_list.push(MV_POSITION(pp_pos_inside_x, pp_pos_inside_y, false, false));
+//	MoveWaypointsAlong(_generated_waypoint_list);
+	return true;
 }
 	
 	
@@ -163,13 +236,13 @@ bool ChessBoard::makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_
 	
 	//TRAVEL TO PARK POS
 	_generated_waypoint_list.push(MV_POSITION(pp_pos_inside_x, pp_pos_inside_y,false,false));
-	MoveWaypointsAlong(_generated_waypoint_list);
+	//MoveWaypointsAlong(_generated_waypoint_list);
 	//ACTIVATE COILS
 	_generated_waypoint_list.push(MV_POSITION(pp_pos_inside_x, pp_pos_inside_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
-	MoveWaypointsAlong(_generated_waypoint_list);
+	//MoveWaypointsAlong(_generated_waypoint_list);
 	//MOVE OUT THE PARK POS COILS
 	_generated_waypoint_list.push(MV_POSITION(pp_pos_before_x, pp_pos_before_y, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
-	MoveWaypointsAlong(_generated_waypoint_list);
+	//MoveWaypointsAlong(_generated_waypoint_list);
 	
 	//MOVE THE FIGURE TO THE _target_field y position
 	int target_pos_x = 0;
@@ -183,7 +256,7 @@ bool ChessBoard::makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_
 		_generated_waypoint_list.push(MV_POSITION(pp_pos_before_x, target_pos_y + field_width, parkpos_needed_coil == IOController::COIL::COIL_A, parkpos_needed_coil == IOController::COIL::COIL_B));
 		
 	}
-	MoveWaypointsAlong(_generated_waypoint_list);
+	//MoveWaypointsAlong(_generated_waypoint_list);
 	_dest_pos_x = pp_pos_before_x;
 	_dest_pos_y = target_pos_y;
 	
@@ -199,6 +272,14 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		iocontroller->setCoilState(IOController::COIL::COIL_B, false);
 		return ChessBoard::BOARD_ERROR::NO_ERROR;
 	}
+	
+	int coil_switch_pos = 200;
+	if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER, coil_switch_pos))
+	{
+		coil_switch_pos = 200;
+	}
+	
+	
 	//------------------- BOARD SIZE LIMIT WORKAROUND ---------------------- //
 	bool EN_BSIZE_WORKAROUND = false;
 	if (!ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_BOARD_SIZE_550MM_WORKAROUND, EN_BSIZE_WORKAROUND))
@@ -271,12 +352,10 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	
 	if (isFieldParkPosition(_move.to_field))
 	{
-		ChessField::CHESS_FILEDS _tmp_nearest_field = getNextParkPosNearAtBoardField(_move.to_field);
-		end_coil = getValidCoilTypeParkPosition(_tmp_nearest_field, IOController::COIL::COIL_B);
-		getFieldCoordinates(_tmp_nearest_field, x_end, y_end, end_coil, false, true);
+		ChessField::CHESS_FILEDS end_field_tmp = getNextHalfFieldFromParkPos(_move.to_field); // GET NEAREST FIELD NEXT TO PARK POS
+		getFieldCoordinates(end_field_tmp, x_end, y_end, end_coil, false, true); //CALCULATE NEW COORDINATES FOR THE CHANGED FIELD
+		end_coil = getValidCoilTypeParkPosition(end_field_tmp, IOController::COIL::COIL_B);
 		is_end_park_pos = true;
-		//ENDE IST ANDERS DA IST DIE x_end und y_end = X LINE
-		//NEUE LISTE DIE DANN ANGEHÄNGT WERDEN MUSS
 	}
 	else {
 		getFieldCoordinates(_move.to_field, x_end, y_end, end_coil, false, true);
@@ -299,11 +378,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	
 	if(start_coil != end_coil) {
 		int coil_offset = 0;
-		int coil_switch_pos = 200;
-		if (!ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_COIL_SWITCH_POSTION_TRIGGER, coil_switch_pos))
-		{
-			coil_switch_pos = 200;
-		}
+		
 		//MoveWaypointsAlong(position_queue);
 		//MOVE TO THE COIL SWITCH POSITION WITH THE START COIL
 		if(start_coil == IOController::COIL::COIL_A) {
@@ -346,7 +421,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	//MOVE TO TARGET Y COORDINATES WITH 1/2 FIELD OFFSET
 	position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width*INVERT_FIELD_OFFSET_END, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 
-//	MoveWaypointsAlong(position_queue);
+	//MoveWaypointsAlong(position_queue);
 	//MOVE TO FIELD CENTER OR FURTHER TO MARK POS
 	if(!is_end_park_pos) {
 		position_queue.push(MV_POSITION(x_end, y_end, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
@@ -356,6 +431,8 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		makeMoveFromBoardToParkPosition(_move.to_field, position_queue, x_end + field_width, y_end + field_width);
 	}
 
+	
+	//FINALLY EXECUTE MOVE
 	MoveWaypointsAlong(position_queue);
 	
 
