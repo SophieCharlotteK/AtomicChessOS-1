@@ -536,7 +536,17 @@ int main(int argc, char *argv[])
 				board.test_make_move_func(test_text, test_id);
 				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, test_text, 10000);
 			}
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+		}
+		
+		//--------------------------------------------------------
+		//----------------DEBUG - LOAD CONFIG BUTTON--------------
+		//--------------------------------------------------------
+		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_D && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "G5 -> A2", 10000);
+			std::string test_text = "";
+			board.test_make_move_func();
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
 		}
 			
 		

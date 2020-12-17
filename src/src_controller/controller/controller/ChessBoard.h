@@ -111,7 +111,7 @@ public:
 	};
 		
 	bool test_make_move_func(std::string& _descr, int& _test_no);
-	
+	void test_make_move_static();
 	void home_board();
 	ChessBoard() ;
 	~ChessBoard();

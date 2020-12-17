@@ -50,11 +50,18 @@ ChessBoard::ChessBoard() {
 ChessBoard::~ChessBoard() {
 }
 
-
+void ChessBoard::test_make_move_static()
+{
+	MovePiar tmp_pair;
+	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G5;
+	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_A2;
+	makeMoveSync(tmp_pair, false, false, false);
+}
+	
 bool ChessBoard::test_make_move_func(std::string& _descr, int& _test_no)
 {
 	
-	calibrate_home_pos();
+	home_board();
 	MovePiar tmp_pair;
 	
 	switch (_test_no)
@@ -516,8 +523,8 @@ bool ChessBoard::syncRealWithTargetBoard() {
 	
 	
 	//NOW CHECK BOARD DIFFERENCES
-	for(size_t w = 0 ; w < BOARD_WIDTH ; w++) {
-		for (size_t h = 0; h < BOARD_HEIGHT; h++) {
+	for (size_t h = 0; h < BOARD_HEIGHT; h++) {
+		for (size_t w = 2; w < BOARD_WIDTH-2; w++) {
 			size_t index = w + (h*BOARD_WIDTH);
 			ChessPiece::FIGURE tmp_curr = board_current[index];
 			ChessPiece::FIGURE tmp_target = board_target[index];
@@ -604,14 +611,99 @@ bool ChessBoard::syncRealWithTargetBoard() {
 	}
 	
 	
+//TODO make moves
+//TODO UPDATE BOARDS => UPDATE CURRENT BOARD
+	
 	
 	//NOW ALL NEEDED PIECES ARE PLACED INSIDE THE BOARD
 	//NEXT STEP IS TO MOVE THEM AROUND
 	
 	//-> MAKE OCCUPY CHECK IF OCCUPIED ADD AN OTHER MOVE TO GET THE FIGURE TO PARK POSITION
+	struct BOARD_CHANGES
+	{
+		ChessPiece::FIGURE fig_current;
+		ChessPiece::FIGURE fig_target;
+		ChessField::CHESS_FILEDS field;
+		BOARD_CHANGES(ChessPiece::FIGURE _fig_curr, ChessPiece::FIGURE _fig_target, ChessField::CHESS_FILEDS _field)
+		{
+			fig_current = _fig_curr;
+			fig_target = _fig_target;
+			field = _field;
+		}
+	}
+	;
+		
+	std::vector<BOARD_CHANGES> board_changes;
+
+	//NOW CHECK BOARD DIFFERENCES
+	for (size_t h = 0; h < BOARD_HEIGHT; h++) {
+		for (size_t w = 2; w < BOARD_WIDTH-2; w++) {
+			size_t index = w + (h*BOARD_WIDTH);
+			ChessPiece::FIGURE tmp_curr = board_current[index];
+			ChessPiece::FIGURE tmp_target = board_target[index];
+			//CHECK IF EQUAL FIGURES
+			if(ChessPiece::compareFigures(tmp_curr, tmp_target))
+			{
+				continue;
+			}
+			
+			
+			
+			
+			ChessField::CHESS_FILEDS tmp_fiedl = ChessField::get_field_from_board_index(index);
+			//FIGURE POSITIONS NOT EQUAL
+			//CHECK HOW MANY SOURCE AND HOW MANY DST PIVECES ON THE BOARD
+			//THE SMALLEST NUMBERS LETS BE ON THE BOARD THE HIGHES ARE SORTED OUT TO THE PARK POSITIONS
+			board_changes.push_back(BOARD_CHANGES(tmp_curr, tmp_target, tmp_fiedl));
+			
+			
+			int i = 0;
+			
+		}		 
+	}
 	
 	
 	
+	
+	for (size_t i = 0; i < board_changes.size(); i++)
+	{
+		BOARD_CHANGES sn1 = board_changes.at(i);
+		
+		for (size_t j = 0; j < board_changes.size(); j++)
+		{
+			if (i == j)
+			{
+				continue;
+			}
+		
+			BOARD_CHANGES sm2 = board_changes.at(j);
+			
+			
+			//FIST CASE => current board state changes from occupied to empty and target board changef from empty to occupied WITH THE SAME FIGURE ID => THEN WE HAVE A MOVE
+			if (ChessPiece::compareFigures(sn1.fig_current, sm2.fig_target) && sn1.fig_current.is_empty == false && sn1.fig_target.is_empty  && sm2.fig_current.is_empty == true && sm2.fig_target.is_empty == false)
+			{
+				//THEN THE PIECE IS TRABELED FROM SN1 TO SM2
+				MovePiar tmp_pair;
+				tmp_pair.from_field = sn1.field;
+				tmp_pair.to_field = sm2.field;
+				move_list.push_back(tmp_pair);
+				int a = 0;
+				
+			
+				//TARGET FIELS IS OCCUPIED => PARK MOVE NEEDED
+				//TODO STORE NEW FIELD FROM ADDING REMOVEING PIECE IN TMP USE THEM TOO 
+			}else
+			{
+			}
+				
+				
+			
+	
+		}
+		
+	
+	}
+		
 	
 	
 	
@@ -624,7 +716,7 @@ bool ChessBoard::syncRealWithTargetBoard() {
 		
 		
 	//FINALLY TRAVEL BACK TO HOME POS
-travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL::COIL_A, true);
+	home_board();
 	
 	
 	//NOW COPY NEW POSITIONS OVER
@@ -1498,8 +1590,8 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 	}
 		
 		
-	
-	
+	boardFromFen("rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b - - 0 1", ChessBoard::BOARD_TPYE::TARGET_BOARD);
+	syncRealWithTargetBoard();
 	//makeMoveSync(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, ChessField::CHESS_FILEDS::CHESS_FIELD_A1, true, false, true);   //WITH SCAN //DIRECTLY //OCCUPY CHECK
 	
 	//TODO SCAN FIELD ROUTINE
@@ -1509,8 +1601,8 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 		//syncRealWithTargetBoard();
 	
 
-//	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
-//	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
+	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
+	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
 
 	return ChessBoard::BOARD_ERROR::INIT_COMPLETE;
 }
