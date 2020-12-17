@@ -608,7 +608,7 @@ Rectangle {
                 id: debug_fkt_a_btn
                 width: 130
                 height: 60
-                text: qsTr("FKT_A")
+                text: qsTr("CALIBRATE_HOME_POS")
                 Connections {
                     target: debug_fkt_a_btn
                     function onClicked(_mouse){
@@ -621,7 +621,7 @@ Rectangle {
                 id: debug_fkt_b_btn
                 width: 130
                 height: 60
-                text: qsTr("FKT_B")
+                text: qsTr("LOAD_DEFAULT_CONFIG")
                 Connections {
                     target: debug_fkt_b_btn
                     function onClicked(_mouse){
@@ -634,7 +634,7 @@ Rectangle {
                 id: debug_fkt_c_btn
                 width: 130
                 height: 60
-                text: qsTr("FKT_C")
+                text: qsTr("MAKE_MOVE_TEST")
                 Connections {
                     target: debug_fkt_c_btn
                     function onClicked(_mouse){
