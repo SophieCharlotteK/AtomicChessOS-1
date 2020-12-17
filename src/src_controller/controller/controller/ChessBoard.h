@@ -162,7 +162,7 @@ private:
 	bool MoveWaypointsAlong(std::queue<MV_POSITION>& _mv);  //MOVES THE HEAD ALONG A LIST OF WAYPOINTS
 	bool makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_pos, ChessField::CHESS_FILEDS _dest_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int& _dest_pos_x, int& _dest_pos_y);   //MOVES THE FIGURES FROM THE PARKPOSTION THE THE H4,5 OR A4,5 FIELD => GENERATED THE MOVES LIST
 	ChessField::CHESS_FILEDS getNextParkPosNearAtBoardField(ChessField::CHESS_FILEDS _board_field);
-	bool ChessBoard::makeMoveFromBoardToParkPosition(ChessField::CHESS_FILEDS _park_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int _current_x, int _current_y);
+	bool makeMoveFromBoardToParkPosition(ChessField::CHESS_FILEDS _park_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int _current_x, int _current_y);
 	
 };
 
