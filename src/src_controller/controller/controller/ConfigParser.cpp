@@ -93,6 +93,8 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_HWREV_FILE_PATH] = "/etc/hwrevision";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH] = "/etc/swupdate/BOOTPART";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_SYSTEM_TICK_INTERVAL_MS] = "1000";
+	config_store[ConfigParser::CFG_ENTRY::GENERAL_ENABLE_RANDOM_MOVE_MATCH] = "1";
+	
 	
 	
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM] = "1292";
@@ -112,7 +114,7 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_BOARD_SIZE_550MM_WORKAROUND] = "1";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE] = "0";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF] = "0";
-	
+	config_store[ConfigParser::CFG_ENTRY::MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE] = "0";
 	
 	
 	
@@ -183,6 +185,20 @@ bool ConfigParser::getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret)
 	return false;
 	
 }
+
+
+bool ConfigParser::getBool_nocheck(ConfigParser::CFG_ENTRY _entry)
+{
+	bool tmp = false;
+	if (!getBool(_entry, tmp))
+	{
+		return false;
+	}
+		
+	return tmp;
+}
+
+
 std::string ConfigParser::get(ConfigParser::CFG_ENTRY _entry)
 {
 	if (!cfg_loaded_success) {

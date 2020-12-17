@@ -32,7 +32,7 @@ typedef std::chrono::_V2::system_clock::time_point TimePoint;
 #include "ChessBoard.h"
 #include "IOController.h"
 #include "StateMachine.h"
-
+#include "BoardUserMoveWatcher.h"
 //---------------------- CONFIG DEFINED --------------------------- //
 #define CONFIG_FILE_PATH "./atccontrollerconfig.ini"
 
@@ -100,11 +100,11 @@ int main(int argc, char *argv[])
 	
 	
 		
+	//INIT SRAND	srand((unsigned) time(0));
 	
 	
-	
-		//REGISTER SIGNAL HANDLER
-		signal(SIGINT, signal_callback_handler);
+	//REGISTER SIGNAL HANDLER
+	signal(SIGINT, signal_callback_handler);
 	
 	
 
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 	
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
-	ConfigParser::getInstance()->loadDefaults();     //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
+	ConfigParser::getInstance()->loadDefaults();        //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
 	//GENERATE A DEFAULT CONFIG FILE IN DEBUG MODE TO TEST THE CONFIG GENERATION
 #ifdef DEBUG
 	ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
@@ -398,15 +398,30 @@ int main(int argc, char *argv[])
 					}else if(current_state == StateMachine::SM_STATE::SMS_GANE_RUNNIGN_WAITING_FOR_OWN_TURN) {
 						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
 						//UPDATE BOARD TO CURRENT FEN
-						if(!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()){
+						if(!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()) {
 								
 						}
 						
-						if (ps.game_state.legal_moves.size() > 0) {
-							gamebackend.set_make_move(ps.game_state.legal_moves.at(0));
 						
+						//ENABLE AUTO PLAY FEATURE
+						if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::GENERAL_ENABLE_RANDOM_MOVE_MATCH))
+						{	
+							if (ps.game_state.legal_moves.size() > 0)
+							{
+								const int rnd_idnex = (rand() % (ps.game_state.legal_moves.size() - 1));
+								gamebackend.set_make_move(ps.game_state.legal_moves.at(rnd_idnex));
+						
+							}
+							else
+							{
+								gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LEGAL_MOVES_EMPTY - CANCEL GAME", 4000);
+								LOG_F(ERROR, "LEGAL_MOVES_EMPTY - CANCEL GAME");
+							}
+						
+						//READ HUMAN PLAYER INPUT
+						}else
+						{
 						}
-						
 						
 						
 						

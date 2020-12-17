@@ -123,6 +123,10 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 	//DISABLE COILS
 	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
 	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+	//ENABLE MOTOR
+	x_axis->enable_motor();
+	y_axis->enable_motor();
+	
 	int wait_counter = 0;
 	bool ca_changed = false;
 	bool cb_changed = false;
@@ -489,8 +493,17 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	//FINALLY EXECUTE MOVE
 	MoveWaypointsAlong(position_queue);
 	
-
-	home_board();
+	//HOME BOARD AFTER MOVE
+	bool HOME_BOARD = false;
+	if (!ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE, HOME_BOARD))
+	{
+		HOME_BOARD = true;
+	}
+	if (HOME_BOARD) {
+		home_board();
+	}
+	
+	
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
 }
 	
@@ -734,7 +747,7 @@ bool ChessBoard::syncRealWithTargetBoard() {
 		
 		
 	//FINALLY TRAVEL BACK TO HOME POS
-	home_board();
+//	home_board();
 	
 	
 	//NOW COPY NEW POSITIONS OVER

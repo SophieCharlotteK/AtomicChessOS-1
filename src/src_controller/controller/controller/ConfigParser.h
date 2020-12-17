@@ -32,7 +32,10 @@ public:
 		GENERAL_HWREV_FILE_PATH = 12,
 		GENERAL_BOOT_PARTION_INFO_FILE_PATH = 13,
 		GENERAL_SYSTEM_TICK_INTERVAL_MS = 14,
-			
+		
+		GENERAL_ENABLE_RANDOM_MOVE_MATCH = 15,
+		
+		
 		MECHANIC_STEPS_PER_MM = 20,
 		MECHANIC_INVERT_COILS = 21,
 		//OFFSET COORDINATES FROM HOME POS TO H1
@@ -59,7 +62,7 @@ public:
 		MECHANIC_BOARD_SIZE_550MM_WORKAROUND = 34,
 		MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE = 35,
 		MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF = 36,
-		
+		MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE = 37,
 		BOARD_PRESET_START_POSITION_FEN = 50,
 		
 		
@@ -103,6 +106,7 @@ public:
 	bool getInt(ConfigParser::CFG_ENTRY _entry, int& _ret);
 	bool getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret);
 	void loadDefaults();
+	bool getBool_nocheck(ConfigParser::CFG_ENTRY _entry);
 private:
 	static ConfigParser* instance;
 	static std::mutex acces_lock_mutex;
