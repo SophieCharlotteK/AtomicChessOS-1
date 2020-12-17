@@ -647,7 +647,7 @@ Rectangle {
                 id: debug_fkt_d_btn
                 width: 130
                 height: 60
-                text: qsTr("FKT_D")
+                text: qsTr("G5 -> A2")
                 Connections {
                     target: debug_fkt_d_btn
                     function onClicked(_mouse){
