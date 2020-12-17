@@ -432,11 +432,11 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		if(start_coil == IOController::COIL::COIL_A && end_coil == IOController::COIL::COIL_B)
 		{
 			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, false, false));
-			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 		}else if(start_coil == IOController::COIL::COIL_B && end_coil == IOController::COIL::COIL_A)
 		{
 			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, false, false));
-			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 			
 		}
 	//	MoveWaypointsAlong(position_queue);
@@ -444,16 +444,16 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	}
 	
 	//MOVE TO TARGET X COORDINATES WITH 1/2 FIELD OFFSET
-	position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width*INVERT_FIELD_OFFSET, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+	position_queue.push(MV_POSITION(x_end + field_width, y_start + field_width*INVERT_FIELD_OFFSET, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 
 	//MoveWaypointsAlong(position_queue);
 	//MOVE TO TARGET Y COORDINATES WITH 1/2 FIELD OFFSET
-	position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width*INVERT_FIELD_OFFSET_END, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+	position_queue.push(MV_POSITION(x_end + field_width, y_end + field_width*INVERT_FIELD_OFFSET_END, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 
 	//MoveWaypointsAlong(position_queue);
 	//MOVE TO FIELD CENTER OR FURTHER TO MARK POS
 	if(!is_end_park_pos) {
-		position_queue.push(MV_POSITION(x_end, y_end, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
+		position_queue.push(MV_POSITION(x_end, y_end, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 	}else
 	{
 		//TODO MOVE FROM THERE TO FINAL PARK POS
@@ -465,7 +465,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	MoveWaypointsAlong(position_queue);
 	
 
-	
+	home_board();
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
 }
 	
@@ -1483,14 +1483,18 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 	
 	
 	//LOAD PRESETS
-//	loadBoardPreset(ChessBoard::BOARD_TPYE::REAL_BOARD, ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION);
-//	loadBoardPreset(ChessBoard::BOARD_TPYE::TARGET_BOARD, ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
+	loadBoardPreset(ChessBoard::BOARD_TPYE::REAL_BOARD, ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_PARK_POSITION);
+	loadBoardPreset(ChessBoard::BOARD_TPYE::TARGET_BOARD, ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
 	
 	//NEXT SCAN THE FIELD WITH PARK POSTIONS
 	if(_with_scan)
 	{
 		scanBoard(true);
 		printBoard(ChessBoard::BOARD_TPYE::REAL_BOARD);
+	}else
+	{
+		loadBoardPreset(ChessBoard::BOARD_TPYE::REAL_BOARD, ChessBoard::BOARD_PRESET::BOARD_PRESET_ALL_FIGURES_IN_START_POSTITION);
+	
 	}
 		
 		
@@ -1578,4 +1582,13 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 		}
 	
 	
+}
+
+void ChessBoard::home_board()
+{
+	iocontroller->setCoilState(IOController::COIL_A, false);
+	iocontroller->setCoilState(IOController::COIL_B, false);
+	
+	x_axis->atc_home_sync();
+	y_axis->atc_home_sync();
 }

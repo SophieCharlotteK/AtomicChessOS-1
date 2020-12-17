@@ -111,6 +111,8 @@ public:
 	};
 		
 	bool test_make_move_func(std::string& _descr, int& _test_no);
+	
+	void home_board();
 	ChessBoard() ;
 	~ChessBoard();
 	MovePiar StringToMovePair(std::string _mv);
