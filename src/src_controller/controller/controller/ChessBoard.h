@@ -160,7 +160,7 @@ private:
 	ChessPiece::FIGURE* get_board_pointer(ChessBoard::BOARD_TPYE _target_board);  //RETURNS THE POINTER TO A SPCIFIED BOARD ARRAY
 	
 	bool MoveWaypointsAlong(std::queue<MV_POSITION>& _mv);  //MOVES THE HEAD ALONG A LIST OF WAYPOINTS
-	bool makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_pos, ChessField::CHESS_FILEDS _dest_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int& _dest_pos_x, int& _dest_pos_y);   //MOVES THE FIGURES FROM THE PARKPOSTION THE THE H4,5 OR A4,5 FIELD => GENERATED THE MOVES LIST
+	bool makeMoveFromParkPositionToBoard(ChessField::CHESS_FILEDS _park_pos, ChessField::CHESS_FILEDS _dest_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int& _dest_pos_x, int& _dest_pos_y, bool _EN_BOARD_SIZE_WORKAROUND);    //MOVES THE FIGURES FROM THE PARKPOSTION THE THE H4,5 OR A4,5 FIELD => GENERATED THE MOVES LIST
 	ChessField::CHESS_FILEDS getNextParkPosNearAtBoardField(ChessField::CHESS_FILEDS _board_field);
 	bool makeMoveFromBoardToParkPosition(ChessField::CHESS_FILEDS _park_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int _current_x, int _current_y);
 	

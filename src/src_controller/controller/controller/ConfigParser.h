@@ -56,7 +56,7 @@ public:
 		//DISTANCE BETWEEN EACH PARK POS TO THE NEXT
 		MECHANIC_PARK_POS_CELL_SIZE = 32,
 		MECHANIC_PARK_POS_CELL_BEFORE_OFFSET = 33,
-		
+		MECHANIC_BOARD_SIZE_550MM_WORKAROUND = 34,
 		
 		
 		BOARD_PRESET_START_POSITION_FEN = 50,
@@ -100,7 +100,7 @@ public:
 	bool writeConfigFile(std::string _file);
 	
 	bool getInt(ConfigParser::CFG_ENTRY _entry, int& _ret);
-	
+	bool getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret);
 	void loadDefaults();
 private:
 	static ConfigParser* instance;

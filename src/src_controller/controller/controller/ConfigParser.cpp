@@ -109,7 +109,7 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_WHITE_FIRST_Y_OFFSET] = "5";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_BEFORE_OFFSET] = "30";	
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_PARK_POS_CELL_SIZE] = "26";
-	
+	config_store[ConfigParser::CFG_ENTRY::MECHANIC_BOARD_SIZE_550MM_WORKAROUND] = "1";
 	
 	config_store[ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN] = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 }
@@ -147,7 +147,35 @@ bool ConfigParser::getInt(ConfigParser::CFG_ENTRY _entry, int& _ret)
 	return false;
 	
 }
+bool ConfigParser::getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret)
+{
 	
+	if (!ConfigParser::getInstance()->get(_entry).empty()) {
+		
+		if (get(_entry) == "true" || get(_entry) == "TRUE" || get(_entry) == "True") {
+			_ret = true;
+			return true;
+		}else if(get(_entry) == "false" || get(_entry) == "FALSE" || get(_entry) == "False"){
+			_ret = false;
+			return true;
+		}
+		
+		
+		int ret = atoi(get(_entry).c_str());
+		if (ret > 0)
+		{
+			_ret = true;
+			return true;
+		}
+		else
+		{
+			_ret = false;
+			return true;
+		}
+	}
+	return false;
+	
+}
 std::string ConfigParser::get(ConfigParser::CFG_ENTRY _entry)
 {
 	if (!cfg_loaded_success) {
