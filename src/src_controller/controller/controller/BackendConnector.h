@@ -130,7 +130,7 @@ public:
 	bool start_match_with_player(std::string _virtual_player_id);
 	
 	
-	
+	bool set_make_move(std::string _move);
 	std::list<PLAYER_AVARIABLE> get_players_avariable();
 	//DATA STRUCT SEND TO THE HEARTBEAT THREAD FUNCTION
 	
@@ -182,6 +182,11 @@ private:
 	const std::string URL_SET_PLAYER_VISIBLE_STATE = "/rest/set_player_state";
 	
 	const std::string URL_SET_PLAYER_SETUP_CONFIRMATION = "/rest/player_setup_confirmation";
+	const std::string URL_SET_MAKE_MOVE = "/rest/make_move";
+	
+	
+	
+	
 	std::string ca_client_path = "";
 	
 	std::string last_error = "";

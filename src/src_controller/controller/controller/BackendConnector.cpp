@@ -204,6 +204,28 @@ bool BackendConnector::set_player_setup_confirmation(PLAYER_SETUP_STATE _state)
 }
 	
 	
+
+bool BackendConnector::set_make_move(std::string _move)
+{
+	request_result tmp = make_request(URL_SET_MAKE_MOVE + "?hwid=" + hwid + "&sid=" + session_id + "&move=" + _move);
+	if (!tmp.body.empty())
+	{
+		//PARSE JSON
+		std::string jp_err = "";
+		json11::Json t = json11::Json::parse(tmp.body.c_str(), jp_err);
+		if (jp_err.empty())
+		{
+			if (((json11::Json::object)t.object_items())["status"].string_value() == "ok")
+			{
+				return true;
+			}	
+		}
+	}
+	return false;
+}
+
+
+
 bool BackendConnector::set_player_state(PLAYER_STATE _ps)
 {
 	int ps_index = magic_enum::enum_integer(_ps);

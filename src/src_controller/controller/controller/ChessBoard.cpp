@@ -53,7 +53,7 @@ ChessBoard::~ChessBoard() {
 void ChessBoard::test_make_move_static()
 {
 	MovePiar tmp_pair;
-	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G5;
+	tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G2;
 	tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_A2;
 	makeMoveSync(tmp_pair, false, false, false);
 }
@@ -74,8 +74,8 @@ bool ChessBoard::test_make_move_func(std::string& _descr, int& _test_no)
 		break;
 	}
 	case 1: {
-		_descr = "G5 -> A2";
-		tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G5;
+		_descr = "G2 -> A2";
+		tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G2;
 		tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_A2;
 		makeMoveSync(tmp_pair, false, false, false);
 			break;
@@ -108,6 +108,15 @@ bool ChessBoard::test_make_move_func(std::string& _descr, int& _test_no)
 
 bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 {
+	
+	bool EN_COIL_UPDATE_ALWAYS = false;
+	bool EN_COILE_ALWAYS_WRITE_OFF = false;
+	ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE, EN_COIL_UPDATE_ALWAYS);
+	ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF, EN_COILE_ALWAYS_WRITE_OFF);
+	
+	
+	
+	
 	//SET MOTORS TO CHESS FIGURE MOVE SPEED
 	x_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
 	y_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
@@ -119,15 +128,23 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 	bool cb_changed = false;
 	while (!_mv.empty())
 	{
+		if (EN_COILE_ALWAYS_WRITE_OFF)
+		{
+			iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+			iocontroller->setCoilState(IOController::COIL::COIL_B, false);	
+		}
+			
+			
+		
 		const MV_POSITION tmp = _mv.front();
 		
 		//SOME IMPROVEMENTS => SPI WRITING IS EXPENSIVE
-		if (ca_changed != tmp.coil_a_state)
+		if(EN_COIL_UPDATE_ALWAYS || ca_changed != tmp.coil_a_state)
 		{
 			ca_changed = tmp.coil_a_state;
 			iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
 		}
-		if (cb_changed != tmp.coil_b_state)
+		if (EN_COIL_UPDATE_ALWAYS || cb_changed != tmp.coil_b_state)
 		{
 			cb_changed = tmp.coil_b_state;
 			iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
@@ -336,8 +353,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	std::queue<MV_POSITION> position_queue;
 
 	//DISABLE COILS
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+
 	//GET THE NEDDED COILS TO REACH THE POSITONS
 	IOController::COIL start_coil = getValidCoilTypeParkPosition(_move.from_field, IOController::COIL::COIL_A);
 	IOController::COIL end_coil = getValidCoilTypeParkPosition(_move.to_field, IOController::COIL::COIL_B);
@@ -400,6 +416,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	//FIRST TRAVEL TO START POSITON
 	if(!is_start_park_pos) {
 		position_queue.push(MV_POSITION(x_start, y_start, false, false));
+		position_queue.push(MV_POSITION(x_start, y_start, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 	}
 	
 	//MoveWaypointsAlong(position_queue);
@@ -407,7 +424,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	position_queue.push(MV_POSITION(x_start, y_start + field_width*INVERT_FIELD_OFFSET, start_coil == IOController::COIL::COIL_A, start_coil == IOController::COIL::COIL_B));
 	
 	
-	//MoveWaypointsAlong(position_queue);
+//	MoveWaypointsAlong(position_queue);
 
 	//CHECK IF COIL_SWITCH NEEDED
 	//INERT A BREAKPOINT BEWEEN FIELD D AND E ON THE SAME Y LINE
@@ -415,7 +432,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	if(start_coil != end_coil) {
 		int coil_offset = 0;
 		
-		//MoveWaypointsAlong(position_queue);
+	//	MoveWaypointsAlong(position_queue);
 		//MOVE TO THE COIL SWITCH POSITION WITH THE START COIL
 		if(start_coil == IOController::COIL::COIL_A) {
 			coil_offset = coil_switch_pos;
@@ -431,22 +448,23 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		
 		//MoveWaypointsAlong(position_queue);
 		//TURN COILS OFF
-		iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-		iocontroller->setCoilState(IOController::COIL::COIL_B, false);
-	//	MoveWaypointsAlong(position_queue);
+		position_queue.push(MV_POSITION(coil_offset, y_start + field_width*INVERT_FIELD_OFFSET, false,false));
+		//MoveWaypointsAlong(position_queue);
 		//GET COORDINATES FOR THE COIL SWITCH
 		//=> SWITCH TO B COIL => -coil_offset
 		if(start_coil == IOController::COIL::COIL_A && end_coil == IOController::COIL::COIL_B)
 		{
 			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, false, false));
+			//MoveWaypointsAlong(position_queue);
 			position_queue.push(MV_POSITION(coil_offset - coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 		}else if(start_coil == IOController::COIL::COIL_B && end_coil == IOController::COIL::COIL_A)
 		{
 			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, false, false));
+			//MoveWaypointsAlong(position_queue);
 			position_queue.push(MV_POSITION(coil_offset + coil_switch_pos / 2, y_start + field_width*INVERT_FIELD_OFFSET, end_coil == IOController::COIL::COIL_A, end_coil == IOController::COIL::COIL_B));
 			
 		}
-	//	MoveWaypointsAlong(position_queue);
+		//MoveWaypointsAlong(position_queue);
 		
 	}
 	
@@ -1590,8 +1608,8 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 	}
 		
 		
-	boardFromFen("rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b - - 0 1", ChessBoard::BOARD_TPYE::TARGET_BOARD);
-	syncRealWithTargetBoard();
+	//boardFromFen("rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b - - 0 1", ChessBoard::BOARD_TPYE::TARGET_BOARD);
+	//syncRealWithTargetBoard();
 	//makeMoveSync(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, ChessField::CHESS_FILEDS::CHESS_FIELD_A1, true, false, true);   //WITH SCAN //DIRECTLY //OCCUPY CHECK
 	
 	//TODO SCAN FIELD ROUTINE

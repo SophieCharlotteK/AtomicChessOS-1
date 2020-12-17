@@ -401,8 +401,11 @@ int main(int argc, char *argv[])
 						if(!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()){
 								
 						}
-							
 						
+						if (ps.game_state.legal_moves.size() > 0) {
+							gamebackend.set_make_move(ps.game_state.legal_moves.at(0));
+						
+						}
 						
 						
 						
@@ -545,7 +548,7 @@ int main(int argc, char *argv[])
 		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_D && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "G5 -> A2", 10000);
 			std::string test_text = "";
-			board.test_make_move_func();
+			board.test_make_move_static();
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
 		}
 			
