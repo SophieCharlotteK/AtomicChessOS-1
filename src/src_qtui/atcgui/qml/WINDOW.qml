@@ -133,7 +133,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: false
+        visible: true
         Rectangle {
             id: mm_searching_for_players_box
             x: 478
@@ -142,29 +142,7 @@ Rectangle {
             height: 343
             visible: true
             color: "#189694"
-            Switch {
-                id: sfp_searchenable_button
-                x: 14
-                y: 91
-                visible: true
-                text: qsTr("SEARCHING FOR GAME")
-                Connections {
-                    target: sfp_searchenable_button
-                    function onToggled(_state){
-                        print(sfp_searchenable_button.state)
-                        if (sfp_searchenable_button.state == "on"){
-                            sfp_searchenable_button.state = "off";
-                            main_menu.mm_search_for_players_toggled(false) //DONT KNOW WHY ITS INVERTED...
-                            sfp_indicator.visible = false;
-                        }else{
-                            sfp_searchenable_button.state = "on";
-                            main_menu.mm_search_for_players_toggled(true)
-                            sfp_indicator.visible = true;
-                        }
-                    }
-                }
-                state: "off"
-            }
+
 
             BusyIndicator {
                 id: sfp_indicator
@@ -179,16 +157,7 @@ Rectangle {
                 wheelEnabled: true
             }
 
-            Text {
-                id: spf_timer_text
-                x: 77
-                y: 25
-                width: 107
-                height: 50
-                text: qsTr("0:00")
-                font.pixelSize: 30
-                horizontalAlignment: Text.AlignHCenter
-            }
+
         }
 
         Rectangle {
@@ -208,7 +177,8 @@ Rectangle {
                 Connections {
                     target: mm_show_playerlist_btn
                     function onClicked(_mouse){
-                        main_menu.mm_player_list_btn()
+                        main_menu.mm_search_for_players_toggled(false) //DONT KNOW WHY ITS INVERTED...
+                        sfp_indicator.visible = true;
                     }
                 }
             }
@@ -222,6 +192,37 @@ Rectangle {
                 text: qsTr("START AI MATCH")
                 Connections {
                     target: mm_start_random_btn
+                    function onClicked(_mouse){
+                        main_menu.mm_search_for_players_toggled(true) //DONT KNOW WHY ITS INVERTED...
+                        sfp_indicator.visible = false;
+                    }
+                }
+            }
+
+            Button {
+                id: mm_en_sfg_btn
+                x: 446
+                y: 8
+                width: 207
+                height: 55
+                text: qsTr("START SEARCH FOR GAME")
+                Connections {
+                    target: mm_en_sfg_btn
+                    function onClicked(_mouse){
+                        main_menu.mm_start_ai_btn()
+                    }
+                }
+            }
+
+            Button {
+                id: mm_dis_sfg_btn
+                x: 446
+                y: 81
+                width: 207
+                height: 55
+                text: qsTr("STOP SEARCH FOR GAME")
+                Connections {
+                    target: mm_dis_sfg_btn
                     function onClicked(_mouse){
                         main_menu.mm_start_ai_btn()
                     }
@@ -744,7 +745,7 @@ Rectangle {
             font.pixelSize: 30
         }
 
-        DelayButton {
+        Button {
             id: game_abortgame_btn
             x: 600
             y: 334
