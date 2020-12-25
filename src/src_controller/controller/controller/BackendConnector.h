@@ -16,7 +16,9 @@
 #include "SHARED/json11-master/json11.hpp"
 #include "SHARED/loguru-master/loguru.hpp"
 #include "SHARED/magic_enum-master/include/magic_enum.hpp"
-//IF A SESSION ID IS SET AND NOT NULL START HEARTBEAR THREAD
+
+//INCLUDE LOCAL DEPENDENCIES
+#include "ConfigParser.h"
 
 //THREAD FOR SESSOON
 class BackendConnector
@@ -134,23 +136,29 @@ public:
 	std::list<PLAYER_AVARIABLE> get_players_avariable();
 	//DATA STRUCT SEND TO THE HEARTBEAT THREAD FUNCTION
 	
+	PLAYER_PROFILE getPlayerProfile(); //GETTER FOR private plaqyer_profile
 	
 	
-	
+    
+    
+    //USED TO LOAD/REPLACE GENERAL CONFIG FROM SERVER
+    bool upload_config(ConfigParser* __parser_instance);
+    bool download_config(ConfigParser* __parser_instance);
+    
+    
+    
+    //HEARTBEAT THREAD
 	bool start_heartbeat_thread();   //CHECK IF RUNNING
 	bool stop_heartbeat_thread();
-
-	
-	
-	
 	void setHearbeatCallInterval(int _int);
-
-	
+    
+    
+    //MISC CALLS
 	void set_https_client_certificate(std::string _path);
 	std::string get_last_error();
 	
 	
-	PLAYER_PROFILE getPlayerProfile(); //GETTER FOR private plaqyer_profile
+	
 private:
 	
 	//STRUCT FOR HOLDING IMPORTANT INFORMATION ABOUT A REQUEST RESPONSE USED AS RETURN IN THE make_request FUNCTION
@@ -178,12 +186,11 @@ private:
 	const std::string URL_PLAYER_STATE = "/rest/get_player_state";
 	const std::string URL_GET_PLAYERS_AVARIABLE = "/rest/get_players_avariable";
 	const std::string URL_GET_AI_PLAYERS_AVARIABLE = "/rest/get_avariable_ai_players";
-	
 	const std::string URL_SET_PLAYER_VISIBLE_STATE = "/rest/set_player_state";
-	
 	const std::string URL_SET_PLAYER_SETUP_CONFIRMATION = "/rest/player_setup_confirmation";
 	const std::string URL_SET_MAKE_MOVE = "/rest/make_move";
-	
+	const std::string URL_UPLOAD_CONFIG = "/rest/set_user_config";
+    const std::string URL_DOWNLOAD_CONFIG = "/rest/get_user_config";
 	
 	
 	

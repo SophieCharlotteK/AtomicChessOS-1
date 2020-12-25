@@ -5,7 +5,13 @@ BackendConnector::~BackendConnector()
 {
 }
 
+bool BackendConnector::upload_config(ConfigParser* __parser_instance){
+    //URL_UPLOAD_CONFIG
+}
 
+bool BackendConnector::download_config(ConfigParser* __parser_instance){
+    //URL_DOWNLOAD_CONFIG
+}
 
 
 BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
