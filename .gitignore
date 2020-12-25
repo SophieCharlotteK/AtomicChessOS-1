@@ -2,3 +2,4 @@
 src/src_controller/controller/.vs/*
 
 src/src_controller/controller/CodeDB/*
+.DS_Store
