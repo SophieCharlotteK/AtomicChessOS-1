@@ -5,6 +5,98 @@ ConfigParser* ConfigParser::instance = nullptr;
 std::mutex ConfigParser::acces_lock_mutex;
 
 
+std::string ConfigParser::toJson(){
+
+    //CREATE JSON ROOT ELEMENT
+    json11::Json::object root;
+    json11::Json::object settings;
+    json11::Json::object settings_user;
+    constexpr auto& entries = magic_enum::enum_values<ConfigParser::CFG_ENTRY>();
+    //FOR EACH CONFIG ENTRY ADD ENTRY TO ROOT ELEMENT
+    for (size_t i = 0; i < entries.size(); i++)
+    {
+        //CAST ENUM KEY TO STRING
+        std::string_view cfg_name = magic_enum::enum_name(entries.at(i));
+        //SKIP EMPTY NAMES
+        if (std::string(cfg_name).empty()) {
+            continue;
+        }
+        //FINALLY ADD ELEMENT
+        if (std::string(cfg_name).rfind(USER_DATA_CONFIG_ENTRY_PREFIX,0)==0) {
+            settings_user[std::string(cfg_name)] = config_store[entries.at(i)];
+        }else{
+            settings[std::string(cfg_name)] = config_store[entries.at(i)];
+        }
+
+    }
+
+
+    //SUMP TO JSON
+    root[INI_SETTINGS_CATEGORY_TOKEN] = settings;
+    root[INI_USER_DATA_CATEGORY_TOKEN] = settings_user;
+
+    std::string json_str = json11::Json(root).dump();
+
+    return json_str;
+}
+
+bool ConfigParser::loadFromJson(std::string _jsonstr, bool load_only_user_data){
+    if(_jsonstr.empty()){
+        return false;
+    }
+    //PARSE JSON STRING
+    std::string parse_err = "";
+    json11::Json json_root = json11::Json::parse(_jsonstr.c_str(), parse_err);
+    json11::Json::object root_obj = json_root.object_items();
+    //CHECK PARSE RESULT
+    if(!parse_err.empty()){
+        return false;
+    }
+
+    //NOW READ ENTRIES
+    constexpr auto& entries = magic_enum::enum_values<ConfigParser::CFG_ENTRY>();
+
+    if(!load_only_user_data){
+        //CHECK
+        if(root_obj.find(INI_SETTINGS_CATEGORY_TOKEN) != root_obj.end() && root_obj[INI_SETTINGS_CATEGORY_TOKEN].is_object()) {
+            json11::Json::object settings_obj = root_obj[INI_SETTINGS_CATEGORY_TOKEN].object_items();
+            //GET SINGLE ITEMS
+            for (size_t i = 0; i < entries.size(); i++)
+            {
+                std::string_view cfg_name = magic_enum::enum_name(entries.at(i));
+                if (std::string(cfg_name).empty()) {
+                    continue;
+                }
+                //GET OBJECT VALUE STORE IT IN CONFIG_STORE
+                if(settings_obj.find(std::string(cfg_name)) != settings_obj.end() && settings_obj[std::string(cfg_name)].is_string()) {
+                    config_store[entries.at(i)] = settings_obj[std::string(cfg_name)].string_value();
+                }
+            }
+        }
+    }
+
+    //FOR KEY USER_DATA
+    if(root_obj.find(INI_USER_DATA_CATEGORY_TOKEN) != root_obj.end() && root_obj[INI_USER_DATA_CATEGORY_TOKEN].is_object()) {
+        json11::Json::object settings_obj = root_obj[INI_USER_DATA_CATEGORY_TOKEN].object_items();
+        //GET SINGLE ITEMS
+        for (size_t i = 0; i < entries.size(); i++)
+        {
+            std::string_view cfg_name = magic_enum::enum_name(entries.at(i));
+            if (std::string(cfg_name).empty()) {
+                continue;
+            }
+            //GET OBJECT VALUE STORE IT IN CONFIG_STORE
+            if(settings_obj.find(std::string(cfg_name)) != settings_obj.end() && settings_obj[std::string(cfg_name)].is_string()) {
+                config_store[entries.at(i)] = settings_obj[std::string(cfg_name)].string_value();
+            }
+        }
+    }
+
+
+    return true;
+}
+
+
 
 
 ConfigParser::ConfigParser()
@@ -15,6 +107,7 @@ ConfigParser::ConfigParser()
 ConfigParser::~ConfigParser()
 {
 }
+
 ConfigParser* ConfigParser::getInstance()
 {
 	std::lock_guard<std::mutex> lck(ConfigParser::acces_lock_mutex);
@@ -43,7 +136,13 @@ bool ConfigParser::loadConfigFile(std::string _file)
 		if (std::string(cfg_name).empty()) {
 			continue;
 		}
-		config_store[entries.at(i)] = reader.Get(INI_SETTINGS_CATEGORY_TOKEN, std::string(cfg_name), "");
+
+        if (std::string(cfg_name).rfind(USER_DATA_CONFIG_ENTRY_PREFIX,0)==0) {
+            config_store[entries.at(i)] = reader.Get(INI_USER_DATA_CATEGORY_TOKEN, std::string(cfg_name), "");
+        }else{
+            config_store[entries.at(i)] = reader.Get(INI_SETTINGS_CATEGORY_TOKEN, std::string(cfg_name), "");
+        }
+
 	}
 	
 	
@@ -64,16 +163,33 @@ bool ConfigParser::writeConfigFile(std::string _file)
 	myfile << "[" << INI_SETTINGS_CATEGORY_TOKEN << "]\n";
 	//FOR EACH ENTRY IN ENUM
 	constexpr auto& entries = magic_enum::enum_values<ConfigParser::CFG_ENTRY>();
-	
+	//WRITE NORMAL CONFIG
 	for (size_t i = 0; i < entries.size(); i++)
 	{
 		std::string_view cfg_name = magic_enum::enum_name(entries.at(i));
 		if (std::string(cfg_name).empty()) {
 			continue;
 		}
+        if (std::string(cfg_name).rfind(USER_DATA_CONFIG_ENTRY_PREFIX,0)==0) {
+            continue;
+        }
 		myfile << std::string(cfg_name) << "=" << config_store[entries.at(i)] << "\n";
 	}
-	
+	//WRITE USER DATA CONFIG
+    myfile << "[" << INI_USER_DATA_CATEGORY_TOKEN << "]\n";
+    for (size_t i = 0; i < entries.size(); i++)
+    {
+        std::string_view cfg_name = magic_enum::enum_name(entries.at(i));
+        if (std::string(cfg_name).empty()) {
+            continue;
+        }
+        if (!(std::string(cfg_name).rfind(USER_DATA_CONFIG_ENTRY_PREFIX,0)==0)) {
+            continue;
+        }
+        myfile << std::string(cfg_name) << "=" << config_store[entries.at(i)] << "\n";
+    }
+
+
 	//FINALLY WRITE FILE
 	myfile.close();
 	return true;
