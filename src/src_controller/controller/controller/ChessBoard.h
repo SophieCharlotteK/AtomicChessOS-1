@@ -59,7 +59,7 @@ public:
 		{
 			x = _x;
 			y = _y;
-			coil_a_state = _cas,
+            coil_a_state = _cas;
 			coil_b_state = _cbs;
 				
 		}

@@ -11,12 +11,16 @@
 ///INCLUDE 3rd PARTY
 #include "SHARED/inih-master/INIReader.h"
 #include "SHARED/magic_enum-master/include/magic_enum.hpp"
-
+#include "SHARED/json11-master/json11.hpp"
 
 #define USE_STD_LOG
 
 
 #define INI_SETTINGS_CATEGORY_TOKEN "SETTINGS"
+
+
+#define INI_USER_DATA_CATEGORY_TOKEN "USERDATA"
+#define USER_DATA_CONFIG_ENTRY_PREFIX "USER_"
 class ConfigParser
 {
 public:
@@ -67,28 +71,28 @@ public:
 		
 		
 		
-		
+		//-------- USER_ SECTION FOR USER DATA WHICH ARE DYN LOADED FROM SERVER ---- //
 		//SOME REVERSE ENTRIES FOR CUSTOM  SAVE STUFF
-		RESERVED_1 = 100,
-		RESERVED_2 = 101,
-		RESERVED_3 = 102,
-		RESERVED_4 = 103,
-		RESERVED_5 = 104,
-		RESERVED_6 = 105,
-		RESERVED_7 = 106,
-		RESERVED_8 = 107,
-		RESERVED_9 = 108,
-		RESERVED_10 = 109,
-		RESERVED_11 = 110,
-		RESERVED_12 = 111,
-		RESERVED_13 = 112,
-		RESERVED_14 = 113,
-		RESERVED_15 = 114,
-		RESERVED_16 = 115,
-		RESERVED_17 = 116,
-		RESERVED_18 = 117,
-		RESERVED_19 = 118,
-		RESERVED_20 = 119
+		USER_RESERVED_1 = 100,
+        USER_RESERVED_2 = 101,
+        USER_RESERVED_3 = 102,
+        USER_RESERVED_4 = 103,
+        USER_RESERVED_5 = 104,
+        USER_RESERVED_6 = 105,
+        USER_RESERVED_7 = 106,
+        USER_RESERVED_8 = 107,
+        USER_RESERVED_9 = 108,
+        USER_RESERVED_10 = 109,
+        USER_RESERVED_11 = 110,
+        USER_RESERVED_12 = 111,
+        USER_RESERVED_13 = 112,
+        USER_RESERVED_14 = 113,
+        USER_RESERVED_15 = 114,
+        USER_RESERVED_16 = 115,
+        USER_RESERVED_17 = 116,
+        USER_RESERVED_18 = 117,
+        USER_RESERVED_19 = 118,
+        USER_RESERVED_20 = 119
 		
 	};
 	
@@ -107,7 +111,22 @@ public:
 	bool getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret);
 	void loadDefaults();
 	bool getBool_nocheck(ConfigParser::CFG_ENTRY _entry);
+	bool loadFromJson(std::string _jsonstr, bool load_only_user_data); //loads config from json  load_only_user_data is TRUE = updates only the user data section with the new data from json
+    bool loadFromJson(json11::Json::object _jsobj, bool load_only_user_data);
+
 private:
+    //USED IN toJson/loadFromJson
+    struct KV_PAIR{
+        std::string key = "";
+        std::string value = "";
+        KV_PAIR(std::string _k, std::string _v){
+            key = _k;
+            value = _v;
+        }
+        KV_PAIR(){
+        }
+    };
+
 	static ConfigParser* instance;
 	static std::mutex acces_lock_mutex;
 	

@@ -1,0 +1,158 @@
+language: generic
+os: linux
+dist: xenial
+
+jobs:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources: [ ubuntu-toolchain-r-test ]
+          packages: [ g++-8 ]
+      env:
+        - CXX=g++-8
+        - LDFLAGS="-lstdc++fs"
+
+    - compiler: gcc
+      addons:
+        apt:
+          sources: [ ubuntu-toolchain-r-test ]
+          packages: [ g++-9 ]
+      env:
+        - CXX=g++-9
+
+    - &gcc-10
+      dist: bionic
+      compiler: gcc
+      addons:
+        apt:
+          sources: [ ubuntu-toolchain-r-test ]
+          packages: [ g++-10 ]
+      env:
+        - CXX=g++-10
+
+    - <<: *gcc-10
+      env:
+        - CXX=g++-10
+        - CXXSTD="-std=c++20"
+
+    - compiler: clang
+      addons:
+        apt:
+          sources: [ ubuntu-toolchain-r-test, llvm-toolchain-xenial-7 ]
+          packages: [ clang-7, g++-9 ]
+      env:
+        - CXX=clang++-7
+
+    - compiler: clang
+      addons:
+        apt:
+          sources: [ ubuntu-toolchain-r-test, llvm-toolchain-xenial-8 ]
+          packages: [ clang-8, g++-9 ]
+      env:
+        - CXX=clang++-8
+
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - sourceline: deb https://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main
+              key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
+          packages: [ clang-9, g++-9 ]
+      env:
+        - CXX=clang++-9
+
+    - &clang-10
+      dist: bionic
+      compiler: clang
+      addons:
+        apt:
+          sources: &clang-10-sources
+            - ubuntu-toolchain-r-test
+            - sourceline: deb https://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main
+              key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
+          packages: [ clang-10, g++-10 ]
+      env:
+        - CXX=clang++-10
+
+    - <<: *clang-10
+      env:
+        - CXX=clang++-10
+        - CXXSTD="-std=c++20"
+
+    - <<: *clang-10
+      env:
+        - CXX=clang++-10
+        - CPPFLAGS="-fms-extensions"
+
+    - os: osx
+      osx_image: xcode11.4
+      compiler: clang
+      env:
+        - CXX=clang++
+
+    - <<: *gcc-10
+      env:
+        - CXX=g++-10
+        - CPPFLAGS="-fsanitize=undefined -fuse-ld=gold"
+
+    - <<: *gcc-10
+      env:
+        - CXX=g++-10
+        - CPPFLAGS="-fsanitize=address -fuse-ld=gold"
+
+    - <<: *clang-10
+      env:
+        - CXX=clang++-10
+        - CPPFLAGS="-fsanitize=undefined"
+
+    - <<: *clang-10
+      env:
+        - CXX=clang++-10
+        - CPPFLAGS="-fsanitize=address"
+
+    - dist: bionic
+      compiler: clang
+      addons:
+        apt:
+          sources: *clang-10-sources
+          packages: [ clang-10, clang-tidy-10, g++-10 ]
+      env:
+        - CXX=clang++-10
+        - CLANG_TIDY=clang-tidy-10
+      script:
+        - make -kj3 clang-tidy
+
+    - dist: bionic
+      compiler: clang
+      addons:
+        apt:
+          sources: *clang-10-sources
+          packages: [ clang-tools-10, g++-10 ]
+      script:
+        - scan-build-10 --use-c++=clang++-10 --status-bugs make -kj3
+
+    - <<: *gcc-10
+      env:
+        - CXX=g++-10
+        - CXXFLAGS="-O0 --coverage"
+      before_script:
+        - pip install --user cpp-coveralls
+      script:
+        - make -kj3 check
+        - coveralls --gcov gcov-10 --gcov-options '\-lp' --exclude src --exclude include/tao/json/external
+
+    - dist: bionic
+      compiler: clang
+      addons:
+        apt:
+          sources: *clang-10-sources
+          packages: [ clang-format-10, g++-10 ]
+      script:
+        - clang-format-10 -i -style=file $(find . -name '[^.]*.[hc]pp'|grep -v contrib/nlohmann/json.hpp)
+        - git diff --exit-code
+
+script:
+  - $CXX --version
+  - make -kj3

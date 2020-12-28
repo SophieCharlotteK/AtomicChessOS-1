@@ -473,6 +473,8 @@ int main(int argc, char *argv[])
 			//PERFORM A LOGIN AS HUMAN
 			if(gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
 			{
+                //LOAD USER CONFIG FROM SERVER (MAYBE)
+                gamebackend.download_config(ConfigParser::getInstance(),true);
 				//START HEARTBEAT THREAD
 				if(gamebackend.start_heartbeat_thread()) {
 					//SWITCH TO MAIN MENU
@@ -567,6 +569,17 @@ int main(int argc, char *argv[])
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
 		}
 			
+        //--------------------------------------------------------
+        //----------------DEBUG - LOAD CONFIG BUTTON--------------
+        //--------------------------------------------------------
+        if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+            gamebackend.upload_config(ConfigParser::getInstance());
+            gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "UPLOAD CONFIG TO SERVER", 10000);
+ 
+        }
+        
+        
+         
 		
 		//--------------------------------------------------------
 		//----------------LOGOUT BUTTON --------------------------
