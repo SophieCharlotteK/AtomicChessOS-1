@@ -661,7 +661,7 @@ Rectangle {
                 id: debug_fkt_e_btn
                 width: 130
                 height: 60
-                text: qsTr("FKT_E")
+                text: qsTr("UPLOAD CONFIG FILE")
                 Connections {
                     target: debug_fkt_e_btn
                     function onClicked(_mouse){
@@ -674,7 +674,7 @@ Rectangle {
                 id: debug_fkt_f_btn
                 width: 130
                 height: 60
-                text: qsTr("FKT_F")
+                text: qsTr("UPLOAD LOGFILE")
                 Connections {
                     target: debug_fkt_f_btn
                     function onClicked(_mouse){
