@@ -35,7 +35,7 @@ typedef std::chrono::_V2::system_clock::time_point TimePoint;
 #include "BoardUserMoveWatcher.h"
 //---------------------- CONFIG DEFINED --------------------------- //
 #define CONFIG_FILE_PATH "./atccontrollerconfig.ini"
-
+#define LOG_FILE_PATH "/tmp/atc_controller_log.log"
 
 using namespace std;
 
@@ -55,12 +55,7 @@ std::string readHWID(std::string _file)
 
 
 int mainloop_running = 0;
-void signal_callback_handler(int signum)
-{
-	printf("Caught signal %d\n", signum);
-	mainloop_running = signum;
-	//exit(signum);
-}
+BackendConnector* gamebackend_logupload = nullptr; //USED ONLY FOR UPLOADING THE LOGS
 
 std::string get_interface_mac_address(const string& _ifname) {
 	ifstream iface("/sys/class/net/" + _ifname + "/address");
@@ -91,6 +86,26 @@ std::string read_file_to_string(const std::string& _path) {
 
 
 
+
+
+void signal_callback_handler(int signum)
+{
+	printf("Caught signal %d\n", signum);
+	
+	LOG_F(ERROR, "Caught signal %d\n", signum);
+	loguru::flush();
+	//IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
+	std::string log = read_file_to_string(LOG_FILE_PATH);
+	if (!log.empty() && gamebackend_logupload)
+	{
+		gamebackend_logupload->upload_logfile(log);
+	}
+	
+	mainloop_running = signum;
+	//exit(signum);
+}
+
+
 int main(int argc, char *argv[])
 {
 	
@@ -111,7 +126,7 @@ int main(int argc, char *argv[])
 	
 	//SETUP LOGGER
 	loguru::init(argc, argv);
-	loguru::add_file("./log.log", loguru::Append, loguru::Verbosity_MAX);
+	loguru::add_file(LOG_FILE_PATH, loguru::Append, loguru::Verbosity_MAX);
 	loguru::g_stderr_verbosity = 1;
 	LOG_SCOPE_F(INFO, "ATC CONTROLLER STARTED");
 	
@@ -238,6 +253,7 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
+	gamebackend_logupload = &gamebackend;
 	//UPDATE GUI THAT NETWORK IS ONLINE
 	if(abu_result) {
 		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::ONLINE);
@@ -570,7 +586,7 @@ int main(int argc, char *argv[])
 		}
 			
         //--------------------------------------------------------
-        //----------------DEBUG - LOAD CONFIG BUTTON--------------
+        //----------------DEBUG - UPLOAD CONFIG BUTTON--------------
         //--------------------------------------------------------
         if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
             gamebackend.upload_config(ConfigParser::getInstance());
@@ -578,7 +594,26 @@ int main(int argc, char *argv[])
  
         }
         
+		//--------------------------------------------------------
+	   //----------------DEBUG - UPLOAD CONFIG BUTTON--------------
+	   //--------------------------------------------------------
+	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		   LOG_F(INFO, "MANUAL LOG UPLOAD");
+		   loguru::flush();
+		   //IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
+		   std::string log = read_file_to_string(LOG_FILE_PATH);
+		   if (!log.empty())
+		   {
+			   gamebackend.upload_logfile(log);
+		   }
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "UPLOAD LOG", 10000);
+ 
+		}
         
+		
+		
+		
+		
          
 		
 		//--------------------------------------------------------

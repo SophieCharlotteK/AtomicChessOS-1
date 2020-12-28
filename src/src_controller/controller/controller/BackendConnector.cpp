@@ -6,6 +6,17 @@ BackendConnector::~BackendConnector()
 
 }
 
+
+bool BackendConnector::upload_logfile(std::string _log_string)
+{
+	request_result tmp = make_request_post(URL_UPLOAD_LOG + "?hwid=" + hwid + "&sid=" + session_id, _log_string);
+	if (tmp.request_failed) {
+		return false;
+	}
+
+	return true;
+}
+	
 bool BackendConnector::upload_config(ConfigParser* __parser_instance){
     //CHECK CONFIG PARSED
     if(__parser_instance == nullptr){

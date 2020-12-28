@@ -111,6 +111,7 @@ public:
 	bool getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret);
 	void loadDefaults();
 	bool getBool_nocheck(ConfigParser::CFG_ENTRY _entry);
+	std::string toJson();
 	bool loadFromJson(std::string _jsonstr, bool load_only_user_data); //loads config from json  load_only_user_data is TRUE = updates only the user data section with the new data from json
     bool loadFromJson(json11::Json::object _jsobj, bool load_only_user_data);
 

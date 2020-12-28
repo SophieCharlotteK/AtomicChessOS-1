@@ -150,7 +150,8 @@ public:
     bool upload_config(ConfigParser* __parser_instance);
     bool download_config(ConfigParser* __parser_instance, bool _userdata_only);
     
-    
+	//LOG UPLOAD
+	bool upload_logfile(std::string _log_string);
     
     //HEARTBEAT THREAD
 	bool start_heartbeat_thread();   //CHECK IF RUNNING
@@ -197,6 +198,7 @@ private:
 	const std::string URL_UPLOAD_CONFIG = "/rest/set_user_config";
     const std::string URL_DOWNLOAD_CONFIG = "/rest/get_user_config";
 	
+	const std::string URL_UPLOAD_LOG = "/rest/store_user_log";
 	
 	
 	std::string ca_client_path = "";
