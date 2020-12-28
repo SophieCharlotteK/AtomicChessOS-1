@@ -220,7 +220,7 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH] = "/etc/swupdate/BOOTPART";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_SYSTEM_TICK_INTERVAL_MS] = "1000";
 	config_store[ConfigParser::CFG_ENTRY::GENERAL_ENABLE_RANDOM_MOVE_MATCH] = "1";
-	
+	config_store[ConfigParser::CFG_ENTRY::GENERAL_EN_ATCGUI_COMMUNICATION] = "1";
 	
 	
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM] = "1292";
@@ -247,6 +247,10 @@ void ConfigParser::loadDefaults() {
 	
 		
 	config_store[ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN] = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+	
+	
+	
+	
 }
 
 bool ConfigParser::createConfigFile(std::string _file, bool _load_directly) {

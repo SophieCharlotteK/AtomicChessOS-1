@@ -108,27 +108,15 @@ void signal_callback_handler(int signum)
 
 int main(int argc, char *argv[])
 {
-	
-	
-
-	
-	
-	
-		
-	//INIT SRAND	srand((unsigned) time(0));
-	
-	
 	//REGISTER SIGNAL HANDLER
 	signal(SIGINT, signal_callback_handler);
-	
-	
-
 	
 	//SETUP LOGGER
 	loguru::init(argc, argv);
 	loguru::add_file(LOG_FILE_PATH, loguru::Append, loguru::Verbosity_MAX);
 	loguru::g_stderr_verbosity = 1;
 	LOG_SCOPE_F(INFO, "ATC CONTROLLER STARTED");
+	
 	
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
@@ -157,8 +145,13 @@ int main(int argc, char *argv[])
 	//SARTING GUI COMMUNICATOR PROCESS
 	LOG_F(INFO, "guicommunicator startig ipc thread");
 	guicommunicator gui;
-	gui.start_recieve_thread();
+	gui.start_recieve_thread(); //START RECEIEVE WEBSERVER
 	
+	//USER_GENERAL_EN_ATCGUI_COMMUNICATION
+	bool cfg_res = false;
+	if (ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::GENERAL_EN_ATCGUI_COMMUNICATION, cfg_res)) {
+		gui.enable_qt_communication(cfg_res);
+	}
 	//WAIT FOR GUI TO BECOME REACHABLE
 	int gui_wait_counter = 0;
 	//TRY X TIMES BEFORE RETURN AN ERROR
