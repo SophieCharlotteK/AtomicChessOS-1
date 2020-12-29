@@ -13,14 +13,7 @@ guicommunicator::guicommunicator()
 
 guicommunicator::~guicommunicator() {
 	//STOP REC THREAD IF RUNNING
-	    stop_recieve_thread();
-	
-	//	if (ptrsrv)
-	//	{
-	//		ptrsrv->stop();
-	//	}
-		//CLEAR PROTOBUF LIB
-	
+	stop_recieve_thread();
 }
 
 void guicommunicator::debug_output(std::string _msg) {
@@ -105,8 +98,16 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 		httplib::Client cli(EVENT_URL_COMPLETE);
 		cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");		
 	}
-		//TODO STORE IN EXTRA QUEUE FOR WEBSERVER GUI
-
+	//STORE IN EXTRA QUEUE FOR WEBSERVER GUI
+	webview_thread_mutex.lock();
+	webview_update_event_queue.push(tmp_event);
+	//STORE THE LAST OPENED PAGE FOR THE WEBVIEW
+	if (tmp_event.ispageswitchevent && tmp_event.is_event_valid)
+	{
+		webview_last_screen_switch_event = tmp_event;
+	}
+		
+	webview_thread_mutex.unlock();
 
 }
 
@@ -324,16 +325,7 @@ void guicommunicator::clearPreviousEvents()
 	update_thread_mutex.unlock();
 }
 
-std::string guicommunicator::rpc_callback(std::string _msg)
-{
-	
-}
 
-std::string guicommunicator::event_to_json(GUI_EVENT _ev) {
-
-	return "{}";
-}
-;
 
 void guicommunicator::enqueue_event(GUI_EVENT _ev) {
 	update_thread_mutex.lock();
@@ -351,14 +343,33 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 	//REGISTER WEBSERVER EVENTS
 	_this->svr.Get("/",
 		[](const Request& req, Response& res) {
-			res.set_redirect("/index.html", 302);
+			res.set_redirect("/public/index.html", 302);
 		});
 
 	_this->svr.Get(EVENT_URL_SETEVENT,
 		[_this](const Request& req, Response& res) {
-			res.set_content(_this->event_to_json(_this->last_event_from_webserver), "application/json");
+			res.set_content(_this->guievent2Json(_this->last_event_from_webserver), "application/json");
 		});
-
+	
+	
+	_this->svr.Get(WEBUI_EVENT_URL_GET_NEXT_EVENT,
+		[_this](const Request& req, Response& res) {
+			_this->webview_thread_mutex.lock();
+			if (!_this->webview_update_event_queue.empty())
+			{
+				res.set_content(_this->guievent2Json(_this->webview_update_event_queue.front()), "application/json");	
+				_this->webview_update_event_queue.pop();
+			}
+			else
+			{
+				res.set_content("{}", "application/json");	
+			}
+				
+			_this->webview_thread_mutex.unlock();
+			
+		});
+	
+	
 	_this->svr.Get(EVENT_URL_VERSION,
 		[_this](const Request& req, Response& res) {
 			res.set_content(GUICOMMUNICATOR_VERSION, "text/plain");

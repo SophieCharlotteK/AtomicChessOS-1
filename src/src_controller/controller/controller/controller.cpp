@@ -32,7 +32,7 @@ typedef std::chrono::_V2::system_clock::time_point TimePoint;
 #include "ChessBoard.h"
 #include "IOController.h"
 #include "StateMachine.h"
-#include "BoardUserMoveWatcher.h"
+#include "HardwareInterface.h"
 //---------------------- CONFIG DEFINED --------------------------- //
 #define CONFIG_FILE_PATH "./atccontrollerconfig.ini"
 #define LOG_FILE_PATH "/tmp/atc_controller_log.log"
@@ -134,7 +134,31 @@ int main(int argc, char *argv[])
 	LOG_F(INFO, "CONFIG FILE LOADED");	
 	
 	
+	//------------- DETERM THE HW REV ------------ //
+	//DETERM BY THE HWID => THERE IS ONLY ONE DK VERSION WITH DIFFERENT HARDWARE
+	std::string hwid = get_interface_mac_address(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE));
+	LOG_F(INFO, (const char*)hwid.c_str());
+
+	//IF WE ARE ON THE DK HARDWARE THEN OVERRIDE THE DEFAULT CONFIG
+	if (hwid == "b827ebad862f")
+	{
+		//STORE ONLY IN DEBUG MODE PERSISTENT
+#ifdef DEBUG
+		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::HWARDWARE_REVISION, "DK", CONFIG_FILE_PATH);
+		ConfigParser::getInstance()->loadConfigFile(CONFIG_FILE_PATH);
+#else
+		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::HWARDWARE_REVISION, "DK", "");
+#endif
+		
+	}
+
 	
+	//INIT HARDWARE
+	if(!HardwareInterface::getInstance()->check_hw_init_complete())
+	{
+		LOG_F(ERROR, "check_hw_init_complete failed");
+		std::raise(SIGINT);
+	}
 	
 	
 	
@@ -168,22 +192,19 @@ int main(int argc, char *argv[])
 	if(gui_wait_counter > GUI_WAIT_COUNTER_MAX)
 	{
 		LOG_F(WARNING, "guicommunicator check_guicommunicator_reachable check failed");
-		return 2;
+		std::raise(SIGINT);
 	}
 	
 	
 	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-	IOController io;
-	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PRECCESSING);
 	//CHECK VERSION ON GUI SIDE
 	if(gui.check_guicommunicator_version())
 	{
 		LOG_F(WARNING, "guicommunicator version check failed");
 	}
-	//DETERM THE HWID BY USING THE MAC ADDRESS OF THE OUTGOING INTERNFACE NAME
-	std::string hwid = get_interface_mac_address(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWID_INTERFACE));
+	//DETERM THE HWID BY USING THE MAC ADDRESS OF THE OUTGOING INTERNFACE NAME	
 	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, hwid);
-	LOG_F(INFO, (const char*)hwid.c_str());
+
 	
 	
 	//DISPLAY FIRMARE VERSION NUMBER
@@ -194,11 +215,20 @@ int main(int argc, char *argv[])
 	LOG_F(INFO, (const char*)fwver.c_str());
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//INIT CHESSBOARD
 	ChessBoard board;
 	//INIT THE CHESS BOARD MECHANIC
 	//=> HOME, SETUP COILS
-	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PLAYER_WHITE_TURN);
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_WHITE_TURN);
 	bool board_scan = true;
 	if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK)
 	{
@@ -208,7 +238,7 @@ int main(int argc, char *argv[])
 	{
 		board_scan = true;
 	}
-	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PRECCESSING);
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PRECCESSING);
 	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 	while (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
 	{
@@ -246,6 +276,7 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
+	//SET POINTER TO GAMEBACKEND FOR UPLOAD THE LOGFILES TO CLOUD IF CATCH A SIGNAL
 	gamebackend_logupload = &gamebackend;
 	//UPDATE GUI THAT NETWORK IS ONLINE
 	if(abu_result) {
@@ -260,9 +291,9 @@ int main(int argc, char *argv[])
 	}
 	else {
 		//CONNECTION FAILED => EXIT
-	   gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::OFFLINE);
+		gui.createEvent(guicommunicator::GUI_ELEMENT::NETWORK_STATUS, guicommunicator::GUI_VALUE_TYPE::OFFLINE);
 		gui.show_error_message_on_gui("Cant connect to game server. (ERR01) [" + gamebackend.get_backend_base_url() + "]");
-		return 3;
+		std::raise(SIGINT);
 	}
 	
 	
@@ -300,7 +331,7 @@ int main(int argc, char *argv[])
 	//DISCARD ALL GUI EVENTS
 	gui.clearPreviousEvents();
 	//ENTERING MIAN LOOP
-	io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_IDLE);
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_IDLE);
 	while (mainloop_running == 0)
 	{
 		
@@ -355,7 +386,7 @@ int main(int argc, char *argv[])
 					if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING) {
 						//SHOW THE PROCESSING SCREEN
 						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-						io.setTurnStateLight(IOController::TURN_STATE_LIGHT::TSL_PRECCESSING);
+						HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PRECCESSING);
 						//NOW INIT THE GAME BOARD
 						if(!ps.game_state.current_board_fen.empty()) {
 							//LOAD THE FEN TO THE TARGET BOARD
@@ -654,6 +685,13 @@ int main(int argc, char *argv[])
 		
 		
 	}
+	
+	
+	
+	
+	//UPLOAD LOGILES
+	loguru::flush();
+	gamebackend.upload_logfile(read_file_to_string(LOG_FILE_PATH));
 	
 	return 0;
 }

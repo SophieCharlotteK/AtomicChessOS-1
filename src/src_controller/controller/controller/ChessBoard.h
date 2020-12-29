@@ -25,8 +25,7 @@
 #include "ChessPiece.h"
 #include "ChessField.h"
 //HARDWARE LOGIC RELATED
-#include "IOController.h"
-#include "TMC5160.h"
+#include "HardwareInterface.h"
 
 //MISC RELATED
 #include "ConfigParser.h"
@@ -137,9 +136,7 @@ public:
 	
 private:
 	
-	TMC5160* x_axis = nullptr; //X AXIS MOTOR
-	TMC5160* y_axis = nullptr; //Y AXIS MOTOR
-	IOController* iocontroller = nullptr;//IOCONTROLLER (NFC READER AND MAGNETS)
+
 	IOController::COIL current_selected_coil = IOController::COIL::COIL_A;
 	ChessField::CHESS_FILEDS current_field;
 	///REPRESENTS THE CHESS BOARD

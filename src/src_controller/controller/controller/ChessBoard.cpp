@@ -8,42 +8,10 @@ ChessBoard::ChessBoard() {
 	if (!ConfigParser::getInstance()->configLoaded()) {
 		LOG_F(ERROR, "CONFIG NOT LOADED");
 	}
-		
-	///------------ SETUP MOTOR DRIVER /AXIS ------ //
-	x_axis = new TMC5160(TMC5160::MOTOR_ID::MOTOR_0);
-	y_axis = new TMC5160(TMC5160::MOTOR_ID::MOTOR_1);
-	///LOAD DEFAULT SETTINGS
-	y_axis->default_settings();
-	x_axis->default_settings();
-	///OVERRIDE STEPS PER MM IF CONFIG EXISTS
-	int spm = 0;
-	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_STEPS_PER_MM, spm);
-	if (spm > 0)
-	{
-		x_axis->steps_per_mm(spm);
-		y_axis->steps_per_mm(spm);
-	}
-	///-------- SETUP IO CONTROLLER ------ //
-	iocontroller = new IOController();
-	if (!iocontroller->isInitialized())
-	{
-		//TODO LOG ERROR
-	}
-	///DISABLE COILS
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
 	
-	///SET STATUS LED
-	iocontroller->setStatusLed(IOController::STAUS_LED_A, true);
-	///SET TURN STATE LIGHT
-	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
-	//OVERRIDE POLARITY SETTING OF TH COILS
-	int ivcoils = 0;
-	ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::MECHANIC_INVERT_COILS, ivcoils);
-	if (ivcoils > 0)
+	if (!HardwareInterface::getInstance()->check_hw_init_complete())
 	{
-		iocontroller->invertCoilPolarity(IOController::COIL::COIL_A, true);
-		iocontroller->invertCoilPolarity(IOController::COIL::COIL_B, true);
+		LOG_F(ERROR, "ChessBoard::ChessBoard HARDWARE INIT NOT COMPLETE LOADED");
 	}
 }
 	
@@ -109,23 +77,21 @@ bool ChessBoard::test_make_move_func(std::string& _descr, int& _test_no)
 bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 {
 	
-	bool EN_COIL_UPDATE_ALWAYS = false;
-	bool EN_COILE_ALWAYS_WRITE_OFF = false;
-	ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE, EN_COIL_UPDATE_ALWAYS);
-	ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF, EN_COILE_ALWAYS_WRITE_OFF);
+	//LOAD CONFIG FOR MOVEMENT //TODO MOVE TO CONSTRUCTOR
+	bool EN_COIL_UPDATE_ALWAYS = ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE);
+	bool EN_COILE_ALWAYS_WRITE_OFF = ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF);
 	
 	
 	
 	
 	//SET MOTORS TO CHESS FIGURE MOVE SPEED
-	x_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
-	y_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
+	HardwareInterface::getInstance()->set_speed_preset(HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_MOVE);
+
 	//DISABLE COILS
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 	//ENABLE MOTOR
-	x_axis->enable_motor();
-	y_axis->enable_motor();
+	HardwareInterface::getInstance()->enable_motors();
 	
 	int wait_counter = 0;
 	bool ca_changed = false;
@@ -134,8 +100,8 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 	{
 		if (EN_COILE_ALWAYS_WRITE_OFF)
 		{
-			iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-			iocontroller->setCoilState(IOController::COIL::COIL_B, false);	
+			HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+			HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 		}
 			
 			
@@ -146,32 +112,31 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 		if(EN_COIL_UPDATE_ALWAYS || ca_changed != tmp.coil_a_state)
 		{
 			ca_changed = tmp.coil_a_state;
-			iocontroller->setCoilState(IOController::COIL::COIL_A, tmp.coil_a_state);
+			HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, tmp.coil_a_state);
 		}
 		if (EN_COIL_UPDATE_ALWAYS || cb_changed != tmp.coil_b_state)
 		{
 			cb_changed = tmp.coil_b_state;
-			iocontroller->setCoilState(IOController::COIL::COIL_B, tmp.coil_b_state);
+			HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, tmp.coil_b_state);
 		}
 			
 		
 		
 			
-		x_axis->move_to_postion_mm_absolute(tmp.x, false);   //MOVE TO X AND NOT WAIT
-		y_axis->move_to_postion_mm_absolute(tmp.y, false);   //MOVE TO Y AND NOT WAIT
+		HardwareInterface::getInstance()->move_to_postion_mm_absolute(tmp.x, tmp.y, false);       //MOVE TO X AND NOT WAIT
+
 		//WAIT FO BOTH MOTORS
-		while(!(x_axis->is_target_position_reached() && y_axis->is_target_position_reached())) {
+		while(!(HardwareInterface::getInstance()->is_target_position_reached())) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(WAITITME_FOR_MOTORS_TO_ARRIVE));
 		}
 		_mv.pop();
 	}
 		
 	//DISBALE MOTOR
-	x_axis->disable_motor();
-	y_axis->disable_motor();
+	HardwareInterface::getInstance()->disable_motors();
 	//DISABLE COILS
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 }
 
 //GET NEXT FIELD TO PARK POS
@@ -325,8 +290,8 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 {
 	//IF FIELDS EQUAL NOTHING TODO
 	if (_move.to_field == _move.from_field) {
-		iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-		iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+		HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+		HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 		return ChessBoard::BOARD_ERROR::NO_ERROR;
 	}
 	
@@ -1364,8 +1329,8 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 	ChessField::CHESS_FILEDS original_position = current_field;
 	IOController::COIL original_coil = current_selected_coil;
 	
-	iocontroller->setCoilState(IOController::COIL::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL::COIL_B, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 	
 	int x = 0;
 	int y = 0;
@@ -1373,7 +1338,7 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 	{
 		//getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);        //GET INDEX FOR ARRAY
 		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);         //TRAVEL TO NEXT FIELD
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);        //SCAN NFC TAG IF PRESENT
+		ChessPiece::FIGURE tmop = HardwareInterface::getInstance()->ScanNFC(10);         //SCAN NFC TAG IF PRESENT
 		ChessPiece::FigureDebugPrint(tmop);        //DEBUG PRINT FIGURE IF FOUND
 		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
 			tmop.is_empty = true;	
@@ -1393,21 +1358,21 @@ ChessBoard::BOARD_ERROR ChessBoard::scanBoard(bool _include_park_postion)
 		//getFieldCoordinates((ChessField::CHESS_FILEDS)i, x, y, IOController::COIL::COIL_NFC, true, true);   //GET INDEX FOR ARRAY
 		travelToField(static_cast<ChessField::CHESS_FILEDS>(i), IOController::COIL::COIL_NFC, true);          //TRAVEL TO NEXT FIELD
 		//ACTIVATE COIL FOR THE BLACK SITE COIL A IS NESSESSARY
-		iocontroller->setCoilState(IOController::COIL_A, false);
+		HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
 		//MOVE OUT SLOW
 		//MOVE NFC
 		
 		//SCAN POSSBILE NFC TAG
-		ChessPiece::FIGURE tmop = iocontroller->ScanNFC(10);         //SCAN NFC TAG IF PRESENT
+		ChessPiece::FIGURE tmop = HardwareInterface::getInstance()->ScanNFC(10);          //SCAN NFC TAG IF PRESENT
 		ChessPiece::FigureDebugPrint(tmop);         //DEBUG PRINT FIGURE IF FOUND
 		if(tmop.type == ChessPiece::TYPE::TYPE_INVALID) {
 			tmop.is_empty = true;	
 		}
 		//ACTIVTE COIL A AGAIN
-		iocontroller->setCoilState(IOController::COIL::COIL_A, true);
+		HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, true);
 		//MOVE IN
 		//DEACTIVATE COIL
-		iocontroller->setCoilState(IOController::COIL::COIL_A, false);
+		HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
 	}
 	
 	
@@ -1488,8 +1453,7 @@ ChessBoard::BOARD_ERROR ChessBoard::travelToField(ChessField::CHESS_FILEDS _fiel
 //	iocontroller->setCoilState(IOController::COIL_A, false);
 //	iocontroller->setCoilState(IOController::COIL_B, false);
 	//SETUP_MOTORS
-	x_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
-	y_axis->atc_set_speed_preset(TMC5160::TRAVEL_SPEED_PRESET::MOVE);
+	HardwareInterface::getInstance()->set_speed_preset(HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_MOVE);
 	
 	
 	//GET FIELD COORDIANTES
@@ -1511,11 +1475,11 @@ ChessBoard::BOARD_ERROR ChessBoard::travelToField(ChessField::CHESS_FILEDS _fiel
 	}
 	//FINALLY MOVE TO POSITION
 	/// NON BLOCKING BECUASE WE WANT TO MOVE SIMULATNIOUSLY
-	x_axis->move_to_postion_mm_absolute(field_coordinates_x, false);
-	y_axis->move_to_postion_mm_absolute(field_coordinates_y, false);
+	HardwareInterface::getInstance()->move_to_postion_mm_absolute(field_coordinates_x, field_coordinates_y, false);
+
 	//WAIT FOR MOTORS TO REACH POSTION
 	int wait_counter = 0;
-	while (!(x_axis->is_target_position_reached() && y_axis->is_target_position_reached())) {
+	while (!(HardwareInterface::getInstance()->is_target_position_reached())) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(WAITITME_FOR_MOTORS_TO_ARRIVE));
 		wait_counter++;
 		if (wait_counter > WAITIME_MULTIPLIER_AXIS_ARRIVAL)
@@ -1524,8 +1488,8 @@ ChessBoard::BOARD_ERROR ChessBoard::travelToField(ChessField::CHESS_FILEDS _fiel
 		}
 	}
 	//DISBALE MOTOR
-	x_axis->disable_motor();
-	y_axis->disable_motor();
+	HardwareInterface::getInstance() ->disable_motors();
+
 	//CHECK IF MOTORS ARRIVED TARGET POSITION WITH NO ERROR
  	if(wait_counter > WAITIME_MULTIPLIER_AXIS_ARRIVAL)
 	{
@@ -1576,22 +1540,21 @@ ChessBoard::BOARD_ERROR ChessBoard::get_coil_offset(IOController::COIL _coil, in
 ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 {
 	//CHECK HARDWARE INIT
-	if(x_axis == nullptr || y_axis == nullptr || iocontroller == nullptr)
+	if(!HardwareInterface::getInstance()->check_hw_init_complete())
 	{
 		log_error("ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION");
 		return ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION;
 	}
 
-	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
-	iocontroller->setTurnStateLight(IOController::TSL_PRECCESSING);
-
+	
+	
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PRECCESSING);
 	//FIRST DO HOMEING OF THE AXIS
-	x_axis->atc_home_sync();
-	y_axis->atc_home_sync();
+	HardwareInterface::getInstance()->home_sync();
 	
 	//TRAVEL TO THE "HOME FIELD H1" AND SWITCH ALL COILS OFF
-	iocontroller->setCoilState(IOController::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL_B, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
 	
 	
 	
@@ -1632,8 +1595,8 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 		//syncRealWithTargetBoard();
 	
 
-	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
-	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
+	
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_IDLE);
 
 	return ChessBoard::BOARD_ERROR::INIT_COMPLETE;
 }
@@ -1641,26 +1604,25 @@ ChessBoard::BOARD_ERROR ChessBoard::initBoard(bool _with_scan)
 ChessBoard::BOARD_ERROR ChessBoard::calibrate_home_pos()
 {
 	//CHECK HARDWARE INIT
-	if(x_axis == nullptr || y_axis == nullptr || iocontroller == nullptr)
+	if(!HardwareInterface::getInstance()->check_hw_init_complete())
 	{
 		log_error("ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION");
 		return ChessBoard::BOARD_ERROR::INIT_NULLPTR_EXECPTION;
 	}
 	//SOME USER NOTIFICATION
-	iocontroller->setStatusLed(IOController::STAUS_LED_A, false);
-	iocontroller->setTurnStateLight(IOController::TSL_PRECCESSING);
+
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PRECCESSING);
 
 	//FIRST DO HOMEING OF THE AXIS
-	x_axis->atc_home_sync();
-	y_axis->atc_home_sync();
+	HardwareInterface::getInstance()->home_sync();
 	//MOVE TO H1 WITH COILA_ACTIVE
 	travelToField(ChessField::CHESS_FILEDS::CHESS_FIELD_H1, IOController::COIL_A, true);
 	
 	
 	//ENABLE COIL A
-	iocontroller->setCoilState(IOController::COIL_A, true);
-	iocontroller->setCoilState(IOController::COIL_B, false);
-	iocontroller->setTurnStateLight(IOController::TSL_IDLE);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
+	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_IDLE);
 	return ChessBoard::BOARD_ERROR::NO_ERROR;
 }
 
@@ -1709,9 +1671,8 @@ void ChessBoard::loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoar
 
 void ChessBoard::home_board()
 {
-	iocontroller->setCoilState(IOController::COIL_A, false);
-	iocontroller->setCoilState(IOController::COIL_B, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
 	
-	x_axis->atc_home_sync();
-	y_axis->atc_home_sync();
+	HardwareInterface::getInstance()->home_sync();
 }

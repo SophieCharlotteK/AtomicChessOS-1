@@ -74,6 +74,7 @@
     <ClCompile Include="ChessPiece.cpp" />
     <ClCompile Include="ConfigParser.cpp" />
     <ClCompile Include="controller.cpp" />
+    <ClCompile Include="HardwareInterface.cpp" />
     <ClCompile Include="IOController.cpp" />
     <ClCompile Include="serialib.cpp" />
     <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp" />
@@ -111,7 +112,9 @@
     <ClInclude Include="ChessField.h" />
     <ClInclude Include="ChessPiece.h" />
     <ClInclude Include="ConfigParser.h" />
+    <ClInclude Include="HardwareInterface.h" />
     <ClInclude Include="IOController.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="serialib.h" />
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h" />
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
@@ -133,5 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="USER_DATA\atccontrollerconfig.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="controller.rc" />
   </ItemGroup>
 </Project>

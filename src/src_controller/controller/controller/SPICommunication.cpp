@@ -38,6 +38,9 @@ SPICommunication::SPICommunication()
 }
 
 
+
+
+
 int SPICommunication::lastErrorCode(){
     int tmp = last_error;
 #ifdef USE_STD_LOG

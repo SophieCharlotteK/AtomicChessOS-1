@@ -120,6 +120,9 @@
     <ClCompile Include="serialib.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="HardwareInterface.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -202,8 +205,19 @@
     <ClInclude Include="serialib.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareInterface.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="USER_DATA\atccontrollerconfig.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="controller.rc">
+      <Filter>Resource files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

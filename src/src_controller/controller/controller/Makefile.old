@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp BoardUserMoveWatcher.cpp ChessBoard.cpp ChessField.cpp ChessPiece.cpp ConfigParser.cpp controller.cpp IOController.cpp serialib.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/guicommunicator/PROTOCOL_MSG.pb.cc SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/drcSerial.c SHARED/WiringPi-master/wiringPi/piHiPri.c SHARED/WiringPi-master/wiringPi/piThread.c SHARED/WiringPi-master/wiringPi/pseudoPins.c SHARED/WiringPi-master/wiringPi/softPwm.c SHARED/WiringPi-master/wiringPi/softServo.c SHARED/WiringPi-master/wiringPi/softTone.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wiringSerial.c SHARED/WiringPi-master/wiringPi/wiringShift.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp StateMachine.cpp TMC5160.cpp
+SOURCEFILES := BackendConnector.cpp BoardUserMoveWatcher.cpp ChessBoard.cpp ChessField.cpp ChessPiece.cpp ConfigParser.cpp controller.cpp IOController.cpp serialib.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/drcSerial.c SHARED/WiringPi-master/wiringPi/piHiPri.c SHARED/WiringPi-master/wiringPi/piThread.c SHARED/WiringPi-master/wiringPi/pseudoPins.c SHARED/WiringPi-master/wiringPi/softPwm.c SHARED/WiringPi-master/wiringPi/softServo.c SHARED/WiringPi-master/wiringPi/softTone.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wiringSerial.c SHARED/WiringPi-master/wiringPi/wiringShift.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp StateMachine.cpp TMC5160.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -231,10 +231,6 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 
 $(BINARYDIR)/guicommunicator.o : SHARED/guicommunicator/guicommunicator.cpp $(all_make_files) |$(BINARYDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
-
-
-$(BINARYDIR)/PROTOCOL_MSG.pb.o : SHARED/guicommunicator/PROTOCOL_MSG.pb.cc $(all_make_files) |$(BINARYDIR)
-	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 
 $(BINARYDIR)/json11.o : SHARED/json11-master/json11.cpp $(all_make_files) |$(BINARYDIR)

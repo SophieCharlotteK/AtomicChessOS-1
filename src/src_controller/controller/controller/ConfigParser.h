@@ -38,7 +38,7 @@ public:
 		GENERAL_SYSTEM_TICK_INTERVAL_MS = 14,
 		GENERAL_ENABLE_RANDOM_MOVE_MATCH = 15,
 		GENERAL_EN_ATCGUI_COMMUNICATION = 16,  //ENABLES THE ATC GUI COMMUNICATION IF DISBALED THE ATC QT GUI ID DISABLED AND THE WEBCLIENT IS USED
-		
+
 		MECHANIC_STEPS_PER_MM = 20,
 		MECHANIC_INVERT_COILS = 21,
 		//OFFSET COORDINATES FROM HOME POS TO H1
@@ -66,7 +66,13 @@ public:
 		MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE = 35,
 		MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF = 36,
 		MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE = 37,
+		
+		
 		BOARD_PRESET_START_POSITION_FEN = 50,
+		
+		
+		HWARDWARE_REVISION = 60, //DETERMS THE HW REV OF THE TABLE DK,PROD,UNKNOWN
+		
 		
 		
 		//-------- USER_ SECTION FOR USER DATA WHICH ARE DYN LOADED FROM SERVER ---- //
@@ -102,7 +108,7 @@ public:
 	bool configLoaded();
 	
 	std::string get(ConfigParser::CFG_ENTRY _entry);
-	void set(ConfigParser::CFG_ENTRY _entry, std::string _value, bool _writeConfigToFile);
+	void set(ConfigParser::CFG_ENTRY _entry, std::string _value, std::string _conf_file_path); //SETS A CONFIG VALUE FOR ENTRY IF _conf_file_path IS NOT EMPTY THE NEW CONFIG WILL BE WRITTEN TO FILE
 	bool writeConfigFile(std::string _file);
 	
 	bool getInt(ConfigParser::CFG_ENTRY _entry, int& _ret);

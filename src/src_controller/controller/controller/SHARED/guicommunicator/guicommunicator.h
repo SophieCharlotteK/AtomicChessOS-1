@@ -35,11 +35,15 @@
 
 #endif
 
-#define USE_WEBSERVER_AS_IPC
-
-#ifdef USE_WEBSERVER_AS_IPC
-
+//IF RUNNING AS CONTROLLER => BIND TO EVERYTHING TO ALLOW COMMUNICATION WITH THE WEBUI
+#ifdef USES_QT
 #define WEBSERVER_BIND_ADDR "127.0.0.1" //NOTE CHANGE TO LOCALHOST
+#else
+#define WEBSERVER_BIND_ADDR "0.0.0.0" //NOTE CHANGE TO LOCALHOST
+#endif
+
+
+
 #define WEBSERVER_STATIC_FILE_DIR "./static"
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
@@ -53,8 +57,8 @@
 
 #define EVENT_URL_SETEVENT "/status"
 #define EVENT_URL_VERSION "/version"
+#define WEBUI_EVENT_URL_GET_NEXT_EVENT "/webui_next_event"
 
-#endif
 
 
 
@@ -63,7 +67,7 @@ class guicommunicator
 {
 public:
 
-enum class GUI_ELEMENT{
+    enum class GUI_ELEMENT{
     BEGIN_BTN = 0,
     QI_START_EVENT = 1,
     INITFIELD_BTN = 2,
@@ -172,9 +176,7 @@ enum class GUI_ELEMENT{
     guicommunicator();
     ~guicommunicator();
 
-	std::string guievent2Json(GUI_EVENT _ev);
-	GUI_EVENT json2Guievent(std::string _jsonstring);
-	GUI_EVENT json2Guievent(json11::Json::object _jsobj);
+
 	
 	
 	
@@ -187,7 +189,7 @@ enum class GUI_ELEMENT{
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value);
     #endif
 
-    void debug_output(std::string _msg);
+  
     void debug_event(GUI_EVENT _event, bool _rec);
 
     void start_recieve_thread();
@@ -206,22 +208,21 @@ enum class GUI_ELEMENT{
 	GUI_MESSAGE_BOX_RESULT show_message_box(GUI_MESSAGE_BOX_TYPE _type, std::string _message, int _wait_time_ms); //DISPLAY A MESSAGEBOX WITH OK/CANCEL BUTTON AND WAITS FOR THE USER INPUT
 #endif
 private:
-	  //zmq::context_t zmqctx;
-	// zsock_t* zmq_pull = nullptr;
-	
 
+	
 #ifdef USES_QT
       QThread* update_thread = nullptr;
       QMutex update_thread_mutex;
 #else
     std::thread* update_thread = nullptr;
     std::mutex update_thread_mutex;
+	std::mutex webview_thread_mutex;
 	
 #endif
 
     std::queue<GUI_EVENT> gui_update_event_queue;
-    
-	std::string rpc_callback(std::string _msg);
+	std::queue<GUI_EVENT> webview_update_event_queue;
+	GUI_EVENT webview_last_screen_switch_event;
 	
 	bool thread_running = false;
 	bool en_qt_communication = true;
@@ -231,8 +232,11 @@ private:
 
 
     void enqueue_event(GUI_EVENT _ev);
-     std::string event_to_json(GUI_EVENT _ev);
-     static void recieve_thread_function(guicommunicator* _this);
+	void debug_output(std::string _msg);
+	std::string guievent2Json(GUI_EVENT _ev);
+	GUI_EVENT json2Guievent(std::string _jsonstring);
+	GUI_EVENT json2Guievent(json11::Json::object _jsobj);
+    static void recieve_thread_function(guicommunicator* _this);
 
 
 };

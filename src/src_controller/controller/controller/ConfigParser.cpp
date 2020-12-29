@@ -249,9 +249,22 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::BOARD_PRESET_START_POSITION_FEN] = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	
 	
+	config_store[ConfigParser::CFG_ENTRY::HWARDWARE_REVISION] = "PROD";
+	
 	
 	
 }
+
+void ConfigParser::set(ConfigParser::CFG_ENTRY _entry, std::string _value, std::string _conf_file_path)
+{
+	config_store[_entry] = _value;
+	
+	if (!_conf_file_path.empty())
+	{
+		writeConfigFile(_conf_file_path);
+	}
+}
+
 
 bool ConfigParser::createConfigFile(std::string _file, bool _load_directly) {
 		
