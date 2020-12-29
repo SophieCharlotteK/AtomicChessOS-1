@@ -378,7 +378,7 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 			_this->last_event_from_webserver = ev;
 			//        _this->debug_event(ev,false);
 			         if(!ev.is_event_valid) {
-				res.set_content("{\"status\"\"event_invalid\",\"err\":true}", "application/json");
+				         res.set_content(req.body, "application/json");
 				return;
 			}
 
@@ -415,7 +415,8 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QStr
 }
 #endif
 
-
+#ifdef USES_QT
+#else	
 void guicommunicator::show_error_message_on_gui(std::string _err)
 {
 	createEvent(guicommunicator::GUI_ELEMENT::ERROR, guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE, _err);
@@ -457,3 +458,4 @@ guicommunicator::GUI_MESSAGE_BOX_RESULT guicommunicator::show_message_box(GUI_ME
 	}
 
 }
+#endif
