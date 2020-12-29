@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "_gpt",
-  1: "_gpt"
+  0: "g",
+  1: "g"
 };
 
 var indexSectionNames =
