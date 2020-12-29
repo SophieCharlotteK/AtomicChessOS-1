@@ -586,7 +586,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: true
+        visible: false
         objectName: "debug_container"
         Text {
             id: debug_headline_label
