@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_5finternal_0',['_Internal',['../classprotocolmsg_1_1gui2backend__msg_1_1___internal.html',1,'protocolmsg::gui2backend_msg']]]
+  ['gui_5fevent_0',['GUI_EVENT',['../structguicommunicator_1_1_g_u_i___e_v_e_n_t.html',1,'guicommunicator']]],
+  ['guicommunicator_1',['guicommunicator',['../classguicommunicator.html',1,'']]]
 ];
