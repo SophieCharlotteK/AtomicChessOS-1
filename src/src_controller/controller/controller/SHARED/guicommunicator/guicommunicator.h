@@ -1,14 +1,9 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
-#define GUICOMMUNICATOR_VERSION "1.2.4"
+#define GUICOMMUNICATOR_VERSION "1.3.0"
 
 
-#include "../magic_enum-master/include/magic_enum.hpp"
-
-
-
-#include "PROTOCOL_MSG.pb.h"
 
 #include <string>
 #include <queue>
@@ -20,9 +15,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../cpp-httplib-master/httplib.h"
-#include "../json-master/include/tao/json.hpp"
 
+
+
+
+#include "../magic_enum-master/include/magic_enum.hpp"
+#include "../cpp-httplib-master/httplib.h"
+#include "../json11-master/json11.hpp"
 
 
 //SOME DEBUGGING AND LOGGIN
@@ -41,6 +40,7 @@
 #ifdef USE_WEBSERVER_AS_IPC
 
 #define WEBSERVER_BIND_ADDR "127.0.0.1" //NOTE CHANGE TO LOCALHOST
+#define WEBSERVER_STATIC_FILE_DIR "./static"
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
 #define EVENT_CLIENT_PORT L"8001" // 1
@@ -172,7 +172,13 @@ enum class GUI_ELEMENT{
     guicommunicator();
     ~guicommunicator();
 
-
+	std::string guievent2Json(GUI_EVENT _ev);
+	GUI_EVENT json2Guievent(std::string _jsonstring);
+	GUI_EVENT json2Guievent(json11::Json::object _jsobj);
+	
+	
+	
+	void enable_qt_communication(bool _en);
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value); //sends a event though ZeroMQ using protocol buffer
     //DERIVATIONS FRom createEvent
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type);
@@ -218,10 +224,11 @@ private:
 	std::string rpc_callback(std::string _msg);
 	
 	bool thread_running = false;
+	bool en_qt_communication = true;
     httplib::Server svr;
 
     GUI_EVENT last_event_from_webserver;
-    GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
+
 
     void enqueue_event(GUI_EVENT _ev);
      std::string event_to_json(GUI_EVENT _ev);
