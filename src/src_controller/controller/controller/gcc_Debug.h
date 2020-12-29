@@ -1497,7 +1497,6 @@
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/../../../../arm-buildroot-linux-gnueabihf/include
 ///var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
 //SHARED\cpp-httplib-master
-//SHARED\json-develop\include
 // --- Include directories end --- //
 
 
