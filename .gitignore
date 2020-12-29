@@ -2,6 +2,7 @@
 src/src_controller/controller/.vs/*
 
 src/src_controller/controller/CodeDB/*
+src/src_controller/controller/.visualgdb/CodeDB/*
 src/src_controller/controller/.visualgdb/*
 .DS_Store
 *.npd
