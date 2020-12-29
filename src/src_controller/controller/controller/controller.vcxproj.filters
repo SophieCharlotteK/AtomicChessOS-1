@@ -48,9 +48,6 @@
     <ClCompile Include="TMC5160.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.cc">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\json11-master\json11.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -114,6 +111,15 @@
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\pseudoPins.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardUserMoveWatcher.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="serialib.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -128,9 +134,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="TMC5160.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\guicommunicator\PROTOCOL_MSG.pb.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h">
@@ -188,6 +191,15 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\pseudoPins.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardUserMoveWatcher.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="serialib.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
