@@ -27,12 +27,19 @@ public:
 	
 	
 		
-private :
+private:
 	mn::CppLinuxSerial::SerialPort*  port = nullptr;
 	const int MARLIN_SERIAL_BAUD_RATE = 115200;
 	bool init_serial_port(std::string _serial_port_file, int _baud_rate, bool _blocking);
 	bool close_serial_port();
 	
+	//TODO PREAMBE GCODE => ABS POS
+	//TODO WRITE SEND CODE
+	//WRITE SEND CODE WAIT FOR ACK (TIME)
+	
+	
+	
+	//FINALLY WRITE MOTOR HOME/ MOVE TO / SET LIGHT ((I2C))
 };
 
 #endif
