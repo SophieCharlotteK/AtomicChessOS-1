@@ -250,7 +250,8 @@ void ConfigParser::loadDefaults() {
 	
 	
 	config_store[ConfigParser::CFG_ENTRY::HWARDWARE_REVISION] = "PROD";
-	
+	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT] = "/dev/ttyACM0";
+	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD] = "115200";
 	
 	
 }

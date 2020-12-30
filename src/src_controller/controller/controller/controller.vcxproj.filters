@@ -117,13 +117,13 @@
     <ClCompile Include="BoardUserMoveWatcher.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="serialib.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="HardwareInterface.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="GCodeSender.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHARED\CppLinuxSerial-master\src\SerialPort.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -205,9 +205,6 @@
     <ClInclude Include="BoardUserMoveWatcher.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="serialib.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -215,6 +212,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="GCodeSender.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\CppLinuxSerial-master\include\CppLinuxSerial\SerialPort.hpp">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED\CppLinuxSerial-master\include\CppLinuxSerial\Exception.hpp">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

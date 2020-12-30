@@ -33,6 +33,12 @@ typedef std::chrono::_V2::system_clock::time_point TimePoint;
 #include "IOController.h"
 #include "StateMachine.h"
 #include "HardwareInterface.h"
+
+
+
+#include "GCodeSender.h"
+
+
 //---------------------- CONFIG DEFINED --------------------------- //
 #define CONFIG_FILE_PATH "./atccontrollerconfig.ini"
 #define LOG_FILE_PATH "/tmp/atc_controller_log.log"
@@ -161,6 +167,17 @@ int main(int argc, char *argv[])
 	}
 	
 	
+	//INIT SERIAL PORT
+	int baudrate = -1;
+	if (ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD, baudrate) && baudrate > 0)
+	{
+		GCodeSender gcs(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT), baudrate);	
+	}
+	else
+	{
+		GCodeSender gcs(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT));
+	}
+		
 	
 	
 	
