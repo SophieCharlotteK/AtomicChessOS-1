@@ -17,7 +17,7 @@
 #include <ctime>
 #include <chrono>
 typedef std::chrono::high_resolution_clock Clock;
-typedef std::chrono::_V2::system_clock::time_point TimePoint;
+typedef std::chrono::system_clock::time_point TimePoint;
 #define CHRONO_DURATION_MS(x,y) std::chrono::duration_cast<std::chrono::milliseconds>(x - y).count()
 
 
