@@ -65,6 +65,21 @@ namespace CppLinuxSerial {
         }
 	}
 
+
+    bool SerialPort::isPortOpen(){
+        if(state_ == State::OPEN){
+            return true;
+        }
+        return false;
+	}
+
+    bool SerialPort::isPortInitilized(){
+        if(state_ != State::OPEN && !device_.empty()){
+            return true;
+        }
+	}
+
+
 	void SerialPort::SetDevice(const std::string& device) {
 		device_ = device;
         if(state_ == State::OPEN)

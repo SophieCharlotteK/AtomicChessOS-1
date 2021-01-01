@@ -20,7 +20,7 @@
 #include "TMC5160.h"
 
 //--- V2 HARDWARE MODULES -------- //
-//USING SIMPLE 3D PRINTER GCODE CONTROLLER
+#include "GCodeSender.h"
 
 
 
@@ -94,7 +94,8 @@ private:
 	TMC5160* tmc5160_x = nullptr;
 	TMC5160* tmc5160_y = nullptr;
 	IOController* iocontroller = nullptr;
-	
+	//----- V2 HARDWARE ------- //
+	GCodeSender* gcode_interface = nullptr;
 	HardwareInterface();
 	~HardwareInterface();
 };
