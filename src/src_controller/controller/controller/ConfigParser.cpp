@@ -43,10 +43,6 @@ std::string ConfigParser::toJson(){
 
 
 bool ConfigParser::loadFromJson(json11::Json::object _jsobj, bool load_only_user_data){
-
-
-
-
     //NOW READ ENTRIES
     constexpr auto& entries = magic_enum::enum_values<ConfigParser::CFG_ENTRY>();
 
@@ -87,8 +83,7 @@ bool ConfigParser::loadFromJson(json11::Json::object _jsobj, bool load_only_user
     }
 
     cfg_loaded_success = true;
-
-
+	return cfg_loaded_success;
 }
 bool ConfigParser::loadFromJson(std::string _jsonstr, bool load_only_user_data){
     if(_jsonstr.empty()){
@@ -105,9 +100,6 @@ bool ConfigParser::loadFromJson(std::string _jsonstr, bool load_only_user_data){
 
     return loadFromJson(root_obj,load_only_user_data);
 }
-
-
-
 
 ConfigParser::ConfigParser()
 {
@@ -160,7 +152,6 @@ bool ConfigParser::loadConfigFile(std::string _file)
 	return true;
 }
 
-
 bool ConfigParser::writeConfigFile(std::string _file)
 {
 	//OPEN TEXT FILE
@@ -205,8 +196,6 @@ bool ConfigParser::writeConfigFile(std::string _file)
 	return true;
 }
 
-
-
 void ConfigParser::loadDefaults() {
 	//DEFAULT CONFIG HARD CODED :)
 	config_store[ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL] = "http://atomicchess.de:3000";
@@ -241,7 +230,7 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_MAKE_MOVE] = "0";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_WRITE_COIL_STATE_ALWAYS_WRITE_OFF] = "0";
 	config_store[ConfigParser::CFG_ENTRY::MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE] = "0";
-	
+	config_store[ConfigParser::CFG_ENTRY::MECHANIC_DISBABLE_COILSIWTCH_USE_COIL_A_ONLY] = "1";
 	
 	
 	
@@ -252,8 +241,15 @@ void ConfigParser::loadDefaults() {
 	config_store[ConfigParser::CFG_ENTRY::HWARDWARE_REVISION] = "PROD";
 	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT] = "/dev/ttyACM0";
 	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD] = "115200";
+	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_A_INDEX] = "0";
+	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_B_INDEX] = "1";
+	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_BOTTOM_POS] = "120";
+	config_store[ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_UPPER_POS] = "0";
 	
 	
+	
+	
+
 }
 
 void ConfigParser::set(ConfigParser::CFG_ENTRY _entry, std::string _value, std::string _conf_file_path)
@@ -265,7 +261,6 @@ void ConfigParser::set(ConfigParser::CFG_ENTRY _entry, std::string _value, std::
 		writeConfigFile(_conf_file_path);
 	}
 }
-
 
 bool ConfigParser::createConfigFile(std::string _file, bool _load_directly) {
 		
@@ -289,7 +284,6 @@ bool ConfigParser::configLoaded()
 	return cfg_loaded_success;
 }
 
-
 bool ConfigParser::getInt(ConfigParser::CFG_ENTRY _entry, int& _ret)
 {
 	
@@ -300,6 +294,7 @@ bool ConfigParser::getInt(ConfigParser::CFG_ENTRY _entry, int& _ret)
 	return false;
 	
 }
+
 bool ConfigParser::getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret)
 {
 	
@@ -330,7 +325,6 @@ bool ConfigParser::getBool(ConfigParser::CFG_ENTRY _entry, bool& _ret)
 	
 }
 
-
 bool ConfigParser::getBool_nocheck(ConfigParser::CFG_ENTRY _entry)
 {
 	bool tmp = false;
@@ -342,6 +336,14 @@ bool ConfigParser::getBool_nocheck(ConfigParser::CFG_ENTRY _entry)
 	return tmp;
 }
 
+int ConfigParser::getInt_nocheck(ConfigParser::CFG_ENTRY _entry)
+{
+	int ret = 0;
+	if (getInt(_entry,ret)) {
+		return ret;
+	}
+	return 0;
+}
 
 std::string ConfigParser::get(ConfigParser::CFG_ENTRY _entry)
 {

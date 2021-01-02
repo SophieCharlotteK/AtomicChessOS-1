@@ -25,21 +25,16 @@ HardwareInterface::HardwareInterface()
 	}
 	else if (hwrevstr == "PROD")
 	{ 
-		hwrev = HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_DK;
+		hwrev = HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD;
 	}
 	else
 	{
 		init_complete = false;
 		return;
 	}
-	
-	
-	
+	LOG_F(INFO, "HardwareInterface::HardwareInterface got hwrev ", hwrevstr.c_str());
 	//AFTER DETERM OF THE HW REV THE SPECIFIC HARDWARE CAN BE SETUP
 	init_complete = init_hardware(hwrev);
-	
-	
-	
 }
 
 
@@ -48,7 +43,7 @@ bool HardwareInterface::init_hardware(HardwareInterface::HI_HARDWARE_REVISION _h
 	if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_DK)
 	{
 		//MOTOR SETUP
-		if (tmc5160_x == nullptr)
+		if(tmc5160_x == nullptr)
 		{
 			tmc5160_x = new TMC5160(TMC5160::MOTOR_ID::MOTOR_0);
 		}
@@ -66,8 +61,11 @@ bool HardwareInterface::init_hardware(HardwareInterface::HI_HARDWARE_REVISION _h
 		{
 			tmc5160_x->steps_per_mm(spm);
 			tmc5160_y->steps_per_mm(spm);
+
+			LOG_F(INFO, "HardwareInterface::init_hardware set steps per mm setting to: %i" ,spm);
 		}	
-		
+		tmc5160_x->disable_motor();
+		tmc5160_y->disable_motor();
 		//IO CONTROLLER SETUP
 		if(iocontroller == nullptr)
 		{
@@ -97,14 +95,14 @@ bool HardwareInterface::init_hardware(HardwareInterface::HI_HARDWARE_REVISION _h
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-	    if(gcode_interface == nullptr){
-	        int baud = 115200;
-	        ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD,baud);
-            gcode_interface = new GCodeSender(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT),baud);
-            gcode_interface->configure_marlin(); //CONFIGURE MARLIN FOR STARTUP
-            setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
-		    setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
-	    }
+		if (gcode_interface == nullptr) {
+			int baud = 115200;
+			ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD, baud);
+			gcode_interface = new GCodeSender(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT), baud);
+			gcode_interface->configure_marlin();  //CONFIGURE MARLIN FOR STARTUP
+			setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+			setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
+		}
 
 	}
 	else
@@ -130,6 +128,12 @@ HardwareInterface::~HardwareInterface()
 	{
 		delete iocontroller;
 	}
+	
+	if (gcode_interface != nullptr)
+	{
+		delete gcode_interface;
+	}
+	
 }
 
 //LOAD CONFGI
@@ -137,6 +141,19 @@ bool HardwareInterface::check_hw_init_complete()
 {
 	return init_complete;
 }
+
+bool HardwareInterface::is_production_hardware()
+{
+	if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 
 bool HardwareInterface::setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT _state)
 {
@@ -150,7 +167,7 @@ bool HardwareInterface::setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		//TODO
 	}
 	return true;
 }
@@ -167,7 +184,28 @@ bool HardwareInterface::setCoilState(HI_COIL _coil, bool _state)
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		//MORE LOGIC NEEDED HERE
+		//IT DEPENDS ON THE ONFIGURATION OF MARLIN WHICH INDEX THE SERVOS HAVE TO WE NEED TO LOAD IT FROM THE CONFIG FIRST
+		if(_coil == HardwareInterface::HI_COIL::HI_COIL_A)
+		{
+			if (_state)
+			{
+				gcode_interface->setServo(ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_A_INDEX), ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_UPPER_POS));	
+			}
+			else
+			{
+				gcode_interface->setServo(ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_A_INDEX), ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_BOTTOM_POS));	
+			}
+		}else if(_coil == HardwareInterface::HI_COIL::HI_COIL_B) {
+			if (_state)
+			{
+				gcode_interface->setServo(ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_B_INDEX), ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_UPPER_POS));	
+			}
+			else
+			{
+				gcode_interface->setServo(ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_B_INDEX), ConfigParser::getInstance()->getInt_nocheck(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_SERVO_COIL_BOTTOM_POS));	
+			}
+		}
 	}
 	return true;
 }
@@ -184,7 +222,7 @@ ChessPiece::FIGURE HardwareInterface::ScanNFC(int _retry_count)
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		//TODO
 	}
 }
 	
@@ -223,7 +261,10 @@ void HardwareInterface::disable_motors()
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		if (gcode_interface != nullptr)
+		{
+			gcode_interface->disable_motors();
+		}
 	}
 }
 	
@@ -243,25 +284,30 @@ bool HardwareInterface::is_target_position_reached()
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		if (gcode_interface != nullptr)
+		{
+			return gcode_interface->is_target_position_reached();
+		}
 	}
 }
 	
-void HardwareInterface::move_to_postion_mm_absolute(int _x,int _y, bool _blocking)
+void HardwareInterface::move_to_postion_mm_absolute(int _x, int _y, bool _blocking)
 {
 	if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_DK)
 	{
 		if (tmc5160_x != nullptr && tmc5160_y != nullptr)
 		{
 			tmc5160_x->move_to_postion_mm_absolute(_x, _blocking);
-			tmc5160_y->move_to_postion_mm_absolute(_y, _blocking);
-			
+			tmc5160_y->move_to_postion_mm_absolute(_y, _blocking);	
 		}
 			
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		if (gcode_interface != nullptr)
+		{
+			gcode_interface->move_to_postion_mm_absolute(_x, _y, _blocking);
+		}
 	}
 }
 	
@@ -278,7 +324,10 @@ void HardwareInterface::home_sync()
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		if (gcode_interface != nullptr)
+		{
+			gcode_interface->home_sync();
+		}
 	}
 }
 	
@@ -295,6 +344,16 @@ void HardwareInterface::set_speed_preset(HardwareInterface::HI_TRAVEL_SPEED_PRES
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-		
+		if (gcode_interface != nullptr)
+		{
+			switch (_preset)
+			{
+			case HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_MOVE : gcode_interface->set_speed_preset(3000); break; //MM per MINUTE
+			case HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_TRAVEL : gcode_interface->set_speed_preset(8000); break;
+			default:
+				break;
+			}
+			
+		}
 	}
 }

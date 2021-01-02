@@ -120,18 +120,14 @@ bool ChessBoard::MoveWaypointsAlong(std::queue<MV_POSITION>& _mv)
 			HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, tmp.coil_b_state);
 		}
 			
-		
-		
-			
+	
 		HardwareInterface::getInstance()->move_to_postion_mm_absolute(tmp.x, tmp.y, false);       //MOVE TO X AND NOT WAIT
-
 		//WAIT FO BOTH MOTORS
 		while(!(HardwareInterface::getInstance()->is_target_position_reached())) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(WAITITME_FOR_MOTORS_TO_ARRIVE));
 		}
 		_mv.pop();
-	}
-		
+	}	
 	//DISBALE MOTOR
 	HardwareInterface::getInstance()->disable_motors();
 	//DISABLE COILS
@@ -1413,7 +1409,16 @@ IOController::COIL ChessBoard::getValidCoilTypeParkPosition(ChessField::CHESS_FI
 	{
 		return _target;
 	}
-		
+	
+	//----- THIS CODE IS FOR THE PROD HARDWARE WITH ONLY ONE COIL ON POSITION A --------- //	
+	if (HardwareInterface::getInstance()->is_production_hardware())
+	{
+		return IOController::COIL::COIL_A;
+	}
+	
+	
+	
+	//----- THIS CODE IS FOR THE DK HARDWARE WITH TWO COILS TO SWITCH BETWEEN THEM --------- //	
 	bool is_black_park_position = true;
 	int field_index = static_cast<int>(_field);
 	

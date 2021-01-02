@@ -86,8 +86,6 @@ bool GCodeSender::check_baud_rate(int _baudrate_to_check) {
 	}
 }
 
-
-
 bool GCodeSender::close_serial_port()
 {
 	if (port == nullptr)
@@ -132,7 +130,7 @@ bool GCodeSender::init_serial_port(std::string _serial_port_file, int _baud_rate
 	dummy_read();
 
 	
-	
+	return true;
 }
 
 void GCodeSender::dummy_read()
@@ -193,7 +191,7 @@ std::string GCodeSender::read_string_from_serial()
 			}
 					
 		}
-		
+		//CHECK READ RESULT	
 		if (!complete.empty())
 		{
 			break;
@@ -239,61 +237,9 @@ bool GCodeSender::wait_for_ack() {
 			{
 				break;
 			}
-		}
-		
-		
+		}	
 	}
 	
-	
-	/* 
-	 volatile int wait_counter = 0;
-	 std::string read_data = "";
-	
-	 while (true) {
-	 	std::string resp = "";
-	 	//port->Read(resp);
-	 	if (!resp.empty())
-	 	{
-	 		read_data += resp;
-	 }
-	 else
-	 {
-	 	wait_counter++;
- 	}
-		
- 	if (read_data.rfind("ok") != std::string::npos)
- 	{
- 		break;
- }else if(read_data.rfind("echo:busy: processing") != std::string::npos){
- 	wait_counter = 0;
- 	read_data = "";
- 	std::cout << "wait_for_ack: busy_processing" << std::endl;
-}
-
-if (wait_counter > 10)
-{
-	break;
-}
-}
-std::cout << "wait_for_ack: " << read_data << std::endl;
-//SPLIT RESULT BY NEW LINE
-		
-	
-	//CHECK RESULT
-//	if(read_data.rfind("ok") != std::string::npos) {
-		
-//		}else if(read_data.rfind("echo:Unknown") != std::string::npos) {
-
-	//	}else if(read_data.rfind("echo:busy") != std::string::npos) {
-
-	    
-	
-    
-	if (wait_counter >= 5)
-	{
-		return false;
-	}
-   */
 	return true;
 }
 
@@ -339,11 +285,11 @@ void GCodeSender::set_speed_preset(int _feedrate) {
 	if (_feedrate < 0){_feedrate = 0; }
 	write_gcode("G0 F" + std::to_string(_feedrate));
 }
+
 void GCodeSender::configure_marlin() {
 	write_gcode("G21");      //SET UNIT TO MM
     write_gcode("G90");      //ABSOLUTE MODE
-  //  home_sync();
-//	disable_motors();
+	disable_motors();		//DISABLE MOTORD DIRECTLY
 }
 
 void GCodeSender::home_sync() {
@@ -351,20 +297,22 @@ void GCodeSender::home_sync() {
 }
 
 bool GCodeSender::setServo(int _index, int _pos) {
-	write_gcode("M280 P" + std::to_string(_index) + " S" + std::to_string(_pos));     //MOVE SERVO
+	return write_gcode("M280 P" + std::to_string(_index) + " S" + std::to_string(_pos));     //MOVE SERVO
 }
 
 void GCodeSender::disable_motors() {
 	write_gcode("M84");     //DISBBLE MOTOR
 }
 
-
 bool GCodeSender::write_gcode(std::string _gcode_line)
 {
-	write_gcode(_gcode_line, true);
+	return write_gcode(_gcode_line, true);
 }
 
-
+void GCodeSender::move_to_postion_mm_absolute(int _x, int _y) {
+	move_to_postion_mm_absolute(_x, _y, true);
+}
+	
 void GCodeSender::move_to_postion_mm_absolute(int _x, int _y, bool _blocking) {
 	write_gcode("G0 X" + std::to_string(_x) + " Y" + std::to_string(_y));     //HOME AXIS
 	current_pos_x = _x;
@@ -374,24 +322,15 @@ void GCodeSender::move_to_postion_mm_absolute(int _x, int _y, bool _blocking) {
 		write_gcode("M400");      //HOME AXIS
 		//is_target_position_reached();
 	}
+	
+	disable_motors();
 }
 
 bool GCodeSender::is_target_position_reached() {
 	if (port == nullptr) {
 		return false;
 	}
-	//	while (1) {
-		//	write_gcode("M114", -1, true);  //NO ACK CHECK 
-			//WAIT FOR REPONSE
-			std::string resp = "";
-	//	while (resp.empty()) {
-	//		port->Read(resp);
-	//	}
-		//PARSE RESILT
-		//x trirs
-	//}
-
-
-	//CHECK IF NOT EQUAL REPEAT
-
+	//IN THIS CASE WE DONT READ THE CURRENT POS (gcode M114) ONLY WAITING FOR FINISHING THE MOVE
+	//MORE IS NOT NEEDED FOR THIS APPLICATION
+	return write_gcode("M400", true); 		
 }

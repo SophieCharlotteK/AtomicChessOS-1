@@ -82,6 +82,9 @@ public:
 	
 	//GENERAL FUNCTIONS
 	bool check_hw_init_complete();
+	
+	
+	bool is_production_hardware();
 private:
 	
 	

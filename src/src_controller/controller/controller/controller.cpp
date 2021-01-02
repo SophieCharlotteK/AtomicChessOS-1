@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
 	//REGISTER SIGNAL HANDLER
 	signal(SIGINT, signal_callback_handler);
 	
+
 	//SETUP LOGGER
 	loguru::init(argc, argv);
 	loguru::add_file(LOG_FILE_PATH, loguru::Append, loguru::Verbosity_MAX);
@@ -148,14 +149,18 @@ int main(int argc, char *argv[])
 	//IF WE ARE ON THE DK HARDWARE THEN OVERRIDE THE DEFAULT CONFIG
 	if (hwid == "b827ebad862f")
 	{
+		LOG_F(WARNING, "DETECTED HWID WITH DK HARDWARE PATCHING CONFIG TO DK");	
 		//STORE ONLY IN DEBUG MODE PERSISTENT
-#ifdef DEBUG
 		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::HWARDWARE_REVISION, "DK", CONFIG_FILE_PATH);
-		ConfigParser::getInstance()->loadConfigFile(CONFIG_FILE_PATH);
-#else
-		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::HWARDWARE_REVISION, "DK", "");
-#endif
+		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::MECHANIC_DISBABLE_COILSIWTCH_USE_COIL_A_ONLY, "0", CONFIG_FILE_PATH);
 		
+		
+		
+	}else
+	{
+		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::HWARDWARE_REVISION, "PROD", CONFIG_FILE_PATH);
+		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::MECHANIC_DISBABLE_COILSIWTCH_USE_COIL_A_ONLY, "1", CONFIG_FILE_PATH);
+		LOG_F(INFO, "DETECTED HWID WITH PROD");	
 	}
 
 	
@@ -165,21 +170,6 @@ int main(int argc, char *argv[])
 		LOG_F(ERROR, "check_hw_init_complete failed");
 		std::raise(SIGINT);
 	}
-	
-	
-	//INIT SERIAL PORT
-	int baudrate = -1;
-	if (ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD, baudrate) && baudrate > 0)
-	{
-		GCodeSender gcs(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT), baudrate);	
-	}
-	else
-	{
-		GCodeSender gcs(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT));
-	}
-		
-	
-	
 	
 	
 		
@@ -545,6 +535,11 @@ int main(int argc, char *argv[])
 					LOG_F(ERROR, "GOT LOGIN_FAILED_HEARTBEAT START THREAD");
 					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 				}
+				
+#ifdef DEBUG
+				gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  
+#endif // DEBUG
+
 			
 			}else {
 				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED", 4000);
