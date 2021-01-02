@@ -10,7 +10,7 @@
 #include <vector>
 //3rd PARTY INCLUDES
 #include "SHARED/loguru-master/loguru.hpp"
-#include "SHARED/CppLinuxSerial-master/include/CppLinuxSerial/SerialPort.hpp"
+#include "SHARED/serialib-master/lib/serialib.h"
 
 
 #include "ConfigParser.h"
@@ -40,10 +40,10 @@ public:
 	
 	
 private:
-	mn::CppLinuxSerial::SerialPort*  port = nullptr;
+	serialib*  port = nullptr;
 	const int MARLIN_SERIAL_BAUD_RATE = 115200;
-	const int SERIAL_READ_DEFAULT_TIMEOUT = 200; //WAIT FOR 2000 aMS FOR DATA READ -1 IS INFITIE TIMEOUT
-	bool init_serial_port(std::string _serial_port_file, int _baud_rate, bool _blocking); //INIT (OR REINIT) THE SERIAL PORT AND OPENS IT
+	const unsigned int SERIAL_READ_DEFAULT_TIMEOUT = 500; //WAIT FOR 2000 aMS FOR DATA READ -1 IS INFITIE TIMEOUT
+	bool init_serial_port(std::string _serial_port_file, int _baud_rate); //INIT (OR REINIT) THE SERIAL PORT AND OPENS IT
 	bool close_serial_port(); //CLOSES THE SERIAL PORT
 	bool check_baud_rate(int _baudrate_to_check); //CHECKS A GIVEN BAUDRATE TO A STANDART VALID ONE
 	
@@ -56,12 +56,13 @@ private:
 	bool write_gcode(std::string _gcode_line);
     bool wait_for_ack(); //WAITS FOR A OK OR UNKNOWN KOMMENT ACK
 	void dummy_read();
+	std::string read_string_from_serial();
 	//TODO PREAMBE GCODE => ABS POS
 	//TODO WRITE SEND CODE
 	//WRITE SEND CODE WAIT FOR ACK (TIME)
 	
 	
-	mn::CppLinuxSerial::BaudRate get_baud_rate(int _baudrate_to_check);
+	
 	
 
 };

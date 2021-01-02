@@ -77,10 +77,10 @@
     <ClCompile Include="GCodeSender.cpp" />
     <ClCompile Include="HardwareInterface.cpp" />
     <ClCompile Include="IOController.cpp" />
-    <ClCompile Include="SHARED\CppLinuxSerial-master\src\SerialPort.cpp" />
     <ClCompile Include="SHARED\guicommunicator\guicommunicator.cpp" />
     <ClCompile Include="SHARED\json11-master\json11.cpp" />
     <ClCompile Include="SHARED\loguru-master\loguru.cpp" />
+    <ClCompile Include="SHARED\serialib-master\lib\serialib.cpp" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcNet.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcSerial.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\piHiPri.c" />
@@ -119,8 +119,8 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h" />
     <ClInclude Include="SHARED\CppLinuxSerial-master\include\CppLinuxSerial\Exception.hpp" />
-    <ClInclude Include="SHARED\CppLinuxSerial-master\include\CppLinuxSerial\SerialPort.hpp" />
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
+    <ClInclude Include="SHARED\serialib-master\lib\serialib.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcNet.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcSerial.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\pseudoPins.h" />
