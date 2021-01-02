@@ -130,16 +130,7 @@ bool GCodeSender::init_serial_port(std::string _serial_port_file, int _baud_rate
 	
 	
 	dummy_read();
-	//write_gcode("\n");
- 	//write_gcode("G28\n");
-	write_gcode("G1 X150 Y125.3 F3000");
-	write_gcode("G1 X50 Y25.3 F5000");
-	//PEROM A DUMMY READ
-	move_to_postion_mm_absolute(200, 400,true);
-		
-	
-	
-	
+
 	
 	
 }
@@ -356,7 +347,7 @@ void GCodeSender::configure_marlin() {
 }
 
 void GCodeSender::home_sync() {
-	write_gcode("G28");     //HOME AXIS
+	write_gcode("G28 X Y");     //HOME AXIS
 }
 
 bool GCodeSender::setServo(int _index, int _pos) {
