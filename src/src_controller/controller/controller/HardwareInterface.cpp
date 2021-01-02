@@ -77,8 +77,8 @@ bool HardwareInterface::init_hardware(HardwareInterface::HI_HARDWARE_REVISION _h
 				LOG_F(ERROR, "HardwareInterface::init_hardware iocontroller->isInitialized()");
 			}
 			//DISBALE COILS
-            setCoilState(IOController::COIL::COIL_A, false);
-            setCoilState(IOController::COIL::COIL_B, false);
+            setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+			setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 			///SET STATUS LED
 			iocontroller->setStatusLed(IOController::STAUS_LED_A, true);
 			///SET TURN STATE LIGHT
@@ -97,13 +97,13 @@ bool HardwareInterface::init_hardware(HardwareInterface::HI_HARDWARE_REVISION _h
 	}
 	else if (hwrev == HardwareInterface::HI_HARDWARE_REVISION::HI_HWREV_PROD)
 	{
-	    if(gcode_interface == null){
+	    if(gcode_interface == nullptr){
 	        int baud = 115200;
 	        ConfigParser::getInstance()->getInt(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_BAUD,baud);
             gcode_interface = new GCodeSender(ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::HARDWARE_MARLIN_BOARD_SERIAL_PORT),baud);
             gcode_interface->configure_marlin(); //CONFIGURE MARLIN FOR STARTUP
-            setCoilState(IOController::COIL::COIL_A, false);
-            setCoilState(IOController::COIL::COIL_B, false);
+            setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
+		    setCoilState(HardwareInterface::HI_COIL::HI_COIL_B, false);
 	    }
 
 	}
