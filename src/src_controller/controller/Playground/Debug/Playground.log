@@ -1,3 +1,0 @@
-﻿  Advanced build logging is enabled for this project. Use View->VisualGDB Build Results to see the detailed build log.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MakeFile.Targets(46,5): error MSB3073: Der Befehl "C:\Windows\System32\chcp.com 65001 >NUL 
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MakeFile.Targets(46,5): error MSB3073:  "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\Playground\Playground.vcxproj" "/solution:C:\Users\prodevmo\Desktop\AtomicChessOS\src\src_controller\controller\controller.sln"  "/config:Debug" "/platform:Win32"" wurde mit dem Code 1 beendet.

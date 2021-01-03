@@ -98,6 +98,8 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 		httplib::Client cli(EVENT_URL_COMPLETE);
 		cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");		
 	}
+    #ifdef USES_QT
+#else
 	//STORE IN EXTRA QUEUE FOR WEBSERVER GUI
 	webview_thread_mutex.lock();
 	webview_update_event_queue.push(tmp_event);
@@ -108,7 +110,7 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 	}
 		
 	webview_thread_mutex.unlock();
-
+#endif
 }
 
 
@@ -350,8 +352,8 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 		[_this](const Request& req, Response& res) {
 			res.set_content(_this->guievent2Json(_this->last_event_from_webserver), "application/json");
 		});
-	
-	
+
+#ifndef USES_QT
 	_this->svr.Get(WEBUI_EVENT_URL_GET_NEXT_EVENT,
 		[_this](const Request& req, Response& res) {
 			_this->webview_thread_mutex.lock();
@@ -368,7 +370,7 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 			_this->webview_thread_mutex.unlock();
 			
 		});
-	
+#endif
 	
 	_this->svr.Get(EVENT_URL_VERSION,
 		[_this](const Request& req, Response& res) {
@@ -469,4 +471,4 @@ guicommunicator::GUI_MESSAGE_BOX_RESULT guicommunicator::show_message_box(GUI_ME
 	}
 
 }
-#endif
+#endif
