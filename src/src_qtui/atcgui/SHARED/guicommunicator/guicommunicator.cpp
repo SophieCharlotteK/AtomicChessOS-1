@@ -3,24 +3,24 @@
 guicommunicator::guicommunicator()
 {
 	
-//    rpc::server srv(RPC_PORT);
-//    srv.bind(RPC_FKT_NAME, &guicommunicator::rpc_callback);
-//    ptrsrv = &srv;
-//    srv.async_run();
+	//    rpc::server srv(RPC_PORT);
+	//    srv.bind(RPC_FKT_NAME, &guicommunicator::rpc_callback);
+	//    ptrsrv = &srv;
+	//    srv.async_run();
 	
-	debug_output("guicommunicator started");
+		debug_output("guicommunicator started");
 }
 
 guicommunicator::~guicommunicator() {
 	//STOP REC THREAD IF RUNNING
 	    stop_recieve_thread();
 	
-//	if (ptrsrv)
-//	{
-//		ptrsrv->stop();
-//	}
-	//CLEAR PROTOBUF LIB
-	google::protobuf::ShutdownProtobufLibrary();
+	//	if (ptrsrv)
+	//	{
+	//		ptrsrv->stop();
+	//	}
+		//CLEAR PROTOBUF LIB
+	
 }
 
 void guicommunicator::debug_output(std::string _msg) {
@@ -45,10 +45,10 @@ void guicommunicator::debug_event(GUI_EVENT _event, bool _rec) {
 	debug_output("RAW: " + std::to_string((int)_event.event) + " " + std::to_string((int)_event.type) + " " + _event.value);
 	//https://stackoverflow.com/questions/47525238/why-is-there-no-implicit-conversion-from-stdstring-view-to-stdstring
 	std::string e = "";
-    e += magic_enum::enum_name(_event.event);
+	e += magic_enum::enum_name(_event.event);
 	debug_output("EVENT: " + e);
 	e = "";
-    e += magic_enum::enum_name(_event.type);
+	e += magic_enum::enum_name(_event.type);
 	debug_output("TYPE: " + e);
 	e = "";
 	debug_output("VALUE: " + _event.value);
@@ -61,85 +61,201 @@ void guicommunicator::debug_event(GUI_EVENT _event, bool _rec) {
 	}
 }
 
-guicommunicator::GUI_EVENT guicommunicator::parseEvent(std::string _event) {
-	guicommunicator::GUI_EVENT event;
-	//CHECK STRING
-	if(_event.empty()) {
-		debug_output("event string is empty");
-		event.is_event_valid = false;
-		return event;
-	}
-	//PARSE STRING TO PROTOBUF
-	protocolmsg::gui2backend_msg message;
-	message.ParseFromString(_event);
 
-	//CHECK IF PARSING FAILED
-	if(!message.IsInitialized()) {
-		debug_output("message not initilized");
-		event.is_event_valid = false;
-		return event;
-	}else {
-		event.is_event_valid = true;
-	}
-
-
-
-	//PARSE EVENT BACK
-    auto e = magic_enum::enum_cast<GUI_ELEMENT>(message.event());
-    if (e.has_value()) {
-        event.event = e.value();
-    }
-
-	//PARSE TYPE BACK
-    auto t = magic_enum::enum_cast<GUI_VALUE_TYPE>(message.type());
-    if (t.has_value()) {
-        event.type = t.value();
-    }
-	//PARSE OTHER BACK
-    event.value = message.value();
-
-    event.ack = message.ack();
-
-	event.ispageswitchevent = message.ispageswitchevent();
-
-	return event;
-}
 
 void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value) {
 
+	std::string tmp; //EVENT STRING
+	//CONVERT EVENT TO JSON
+	GUI_EVENT tmp_event;
+	
+	tmp_event.event = _event;
+	tmp_event.type = _type;
+	tmp_event.value = _value;
+	
+	
+	tmp_event.ispageswitchevent = false;
+	//HARDCODES STUFF TODO REMOVE
+	//HAHA IS A WOKRAROUND FOR THE SHITTY ENUM/STRUCT CONSTRUCTION
+	 std::string_view cfg_name = magic_enum::enum_name(_type);
+	if (std::string(cfg_name).rfind("_SCREEN", 0) == 0) {tmp_event.ispageswitchevent = true; }
+	else if (std::string(cfg_name) == "ERROR_MESSAGE") {tmp_event.ispageswitchevent = true; }
+	else if (std::string(cfg_name).rfind("MESSAGEBOX_", 0) == 0) {tmp_event.ispageswitchevent = true; }
+	
+	
+	
+#ifdef USES_QT
+	tmp_event.ack = 0;
+#else
+	tmp_event.ack = 1;
+#endif // USES_QT
 
-	//POPULATE THE PROTOBUF MESSAGE
-	protocolmsg::gui2backend_msg message;
-	//SET FIEDLS IM MESSAGE
-    message.set_event(magic_enum::enum_integer(_event));
-    message.set_type(magic_enum::enum_integer(_type));
-	message.set_value(_value);
+	tmp = guievent2Json(tmp_event);
+	
+	
+#ifdef DEBUG
+	debug_event(json2Guievent(tmp), false);			  
+#endif // DEBUG
+	
+	
+	
+	if (en_qt_communication)
+	{
+		//MAKE REQUEST
+		httplib::Client cli(EVENT_URL_COMPLETE);
+		cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");		
+	}
+		//TODO STORE IN EXTRA QUEUE FOR WEBSERVER GUI
 
-	//   message.set_ispageswitchevent(0);
-	//   message.set_ack(0);
-
-	   std::string tmp;
-	message.SerializeToString(&tmp);
- 
-	debug_event(parseEvent(tmp), false);
-
-    //MAKE REQUEST
-    httplib::Client cli(EVENT_URL_COMPLETE);
-    cli.Post(EVENT_URL_SETEVENT,tmp,"text/plain");
 
 }
 
-bool guicommunicator::check_guicommunicator_version(){
-            httplib::Client cli(EVENT_URL_COMPLETE);
-            httplib::Result res =  cli.Get(EVENT_URL_VERSION);
-            if(GUICOMMUNICATOR_VERSION == res->body){
-                debug_output("CHECK VERSION OK");
-                debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
-                return true;
-            }else{
-                debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
-                return false;
-            }
+
+
+std::string guicommunicator::guievent2Json(GUI_EVENT _ev)
+{
+	json11::Json::object root;
+	
+	root["event"] = magic_enum::enum_integer(_ev.event);
+	root["type"] = magic_enum::enum_integer(_ev.type);
+	root["value"] = _ev.value;
+	root["ack"] = _ev.ack;
+	root["ispageswitchevent"] = _ev.ispageswitchevent;
+	root["is_event_valid"] = _ev.is_event_valid;
+	
+	
+	std::string json_str = json11::Json(root).dump();
+	return json_str;
+}
+	
+	
+guicommunicator::GUI_EVENT guicommunicator::json2Guievent(std::string _jsonstring)
+{
+	
+
+	if (_jsonstring.empty()) {	
+		GUI_EVENT tmp;
+		tmp.is_event_valid = false;
+		return tmp;
+	}
+	//PARSE JSON STRING
+	std::string parse_err = "";
+	json11::Json json_root = json11::Json::parse(_jsonstring.c_str(), parse_err);
+	json11::Json::object root_obj = json_root.object_items();
+	//CHECK PARSE RESULT
+	if(!parse_err.empty() || json_root.is_null()) {
+			GUI_EVENT tmp;
+			tmp.is_event_valid = false;
+			return tmp;
+	}
+	
+	
+	return json2Guievent(root_obj);
+}
+
+guicommunicator::GUI_EVENT guicommunicator::json2Guievent(json11::Json::object _jsobj)
+{
+	GUI_EVENT tmp;
+	tmp.is_event_valid = true;
+	//EVENT
+	if(_jsobj.find("event") != _jsobj.end() && !_jsobj["event"].is_null()) {
+		auto enres =  magic_enum::enum_cast<guicommunicator::GUI_ELEMENT>(_jsobj["event"].int_value());
+		if (enres.has_value())
+		{
+			tmp.event = enres.value();
+		}
+		else
+		{
+			tmp.is_event_valid = false;
+		}
+			
+	}else
+	{
+		tmp.is_event_valid = false;
+	}
+	//TYPE
+	if(_jsobj.find("type") != _jsobj.end() && !_jsobj["type"].is_null()) {
+		auto enres =  magic_enum::enum_cast<guicommunicator::GUI_VALUE_TYPE>(_jsobj["type"].int_value());
+		if (enres.has_value())
+		{
+			tmp.type = enres.value();
+		}
+		else
+		{
+			tmp.is_event_valid = false;
+		}
+			
+	}
+	else
+	{
+		tmp.is_event_valid = false;
+	}
+	//VALUE
+	if(_jsobj.find("value") != _jsobj.end() && !_jsobj["value"].is_null()) {
+		tmp.value = _jsobj["value"].string_value();
+	}
+	else
+	{
+		tmp.is_event_valid = false;
+	}
+	
+	
+	//ACK
+	if(_jsobj.find("ack") != _jsobj.end() && !_jsobj["ack"].is_null()) {
+		tmp.ack = _jsobj["ack"].int_value();
+	}
+	else
+	{
+		tmp.is_event_valid = false;
+	}
+	
+	//ispageswitchevent
+	if(_jsobj.find("ispageswitchevent") != _jsobj.end() && !_jsobj["ispageswitchevent"].is_null()) {
+		tmp.ispageswitchevent = _jsobj["ispageswitchevent"].bool_value();
+	}
+	else
+	{
+		tmp.is_event_valid = false;
+	}
+	
+	return tmp;
+}
+
+void guicommunicator::enable_qt_communication(bool _en)
+{
+	en_qt_communication = _en;
+}
+
+
+bool guicommunicator::check_guicommunicator_version() {
+	httplib::Client cli(EVENT_URL_COMPLETE);
+
+	httplib::Result res =  cli.Get(EVENT_URL_VERSION);
+	if (GUICOMMUNICATOR_VERSION == res->body) {
+		debug_output("CHECK VERSION OK");
+		debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
+		return true;
+	}
+	else {
+		debug_output("GOT:" + res->body + " REQUIRED:" + GUICOMMUNICATOR_VERSION);
+		return false;
+	}
+}
+
+bool guicommunicator::check_guicommunicator_reachable() {
+	if (!en_qt_communication)
+	{
+		return true;
+	}
+		
+		
+	httplib::Client cli(EVENT_URL_COMPLETE);
+	httplib::Result res =  cli.Get(EVENT_URL_VERSION);
+	if (res->status >= 200 && res->status < 300) {
+		debug_output("CHECK check_guicommunicator_reachable OK");
+		return true;
+	}
+		return false;
 }
 
 
@@ -147,12 +263,12 @@ void guicommunicator::start_recieve_thread() {
   
 	thread_running = true;
 #ifdef USES_QT
-    update_thread = QThread::create([this]{ this->recieve_thread_function(this); });
-    update_thread->start();
+	update_thread = QThread::create([this]{ this->recieve_thread_function(this); });
+	update_thread->start();
 
-    if(update_thread->isRunning()){
-        debug_output("GUI_COM THREAD isRunning confirmed");
-    }
+	if (update_thread->isRunning()) {
+		debug_output("GUI_COM THREAD isRunning confirmed");
+	}
 #else
 	std::thread t1(recieve_thread_function, this);
 	t1.detach();
@@ -176,7 +292,7 @@ void guicommunicator::stop_recieve_thread() {
 }
 
 
-guicommunicator::GUI_EVENT guicommunicator::get_event(){
+guicommunicator::GUI_EVENT guicommunicator::get_event() {
 	return guicommunicator::get_gui_update_event();
 }
 guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
@@ -200,69 +316,85 @@ guicommunicator::GUI_EVENT guicommunicator::get_gui_update_event() {
 	return tmp;
 }
 
+void guicommunicator::clearPreviousEvents()
+{
+	update_thread_mutex.lock();
+	//SIMPLEST WAY TO CLEAN UP THE QUEUE
+	gui_update_event_queue = std::queue<GUI_EVENT>();
+	update_thread_mutex.unlock();
+}
 
 std::string guicommunicator::rpc_callback(std::string _msg)
 {
 	
 }
 
-std::string guicommunicator::event_to_json(GUI_EVENT _ev){
+std::string guicommunicator::event_to_json(GUI_EVENT _ev) {
 
-    return "{}";
-};
+	return "{}";
+}
+;
 
-void guicommunicator::enqueue_event(GUI_EVENT _ev){
-    update_thread_mutex.lock();
-    gui_update_event_queue.push(_ev);
-    update_thread_mutex.unlock();
+void guicommunicator::enqueue_event(GUI_EVENT _ev) {
+	update_thread_mutex.lock();
+	gui_update_event_queue.push(_ev);
+	update_thread_mutex.unlock();
 }
 
 void guicommunicator::recieve_thread_function(guicommunicator* _this) {
-    using namespace httplib;
+	using namespace httplib;
+	auto ret = _this->svr.set_mount_point("/public", WEBSERVER_STATIC_FILE_DIR);
+	if (!ret) {
+		_this->debug_output(WEBSERVER_STATIC_FILE_DIR);
+	}
+	_this->svr.set_file_extension_and_mimetype_mapping("qml", "application/qml");
+	//REGISTER WEBSERVER EVENTS
+	_this->svr.Get("/",
+		[](const Request& req, Response& res) {
+			res.set_redirect("/index.html", 302);
+		});
 
-    //REGISTER WEBSERVER EVENTS
-    _this->svr.Get("/", [](const Request& req, Response& res) {
-       res.set_content("<html><body>ATC_GUI WEBSERVER. <br>USE /status for last event.<br>USE /status as POST with the EVENT String to update the ui. </body><html>", "text/html");
-     });
+	_this->svr.Get(EVENT_URL_SETEVENT,
+		[_this](const Request& req, Response& res) {
+			res.set_content(_this->event_to_json(_this->last_event_from_webserver), "application/json");
+		});
 
-    _this->svr.Get(EVENT_URL_SETEVENT, [_this](const Request& req, Response& res) {
-       res.set_content(_this->event_to_json(_this->last_event_from_webserver),"application/json");
-     });
-
-    _this->svr.Get(EVENT_URL_VERSION, [_this](const Request& req, Response& res) {
-       res.set_content(GUICOMMUNICATOR_VERSION,"text/plain");
-     });
+	_this->svr.Get(EVENT_URL_VERSION,
+		[_this](const Request& req, Response& res) {
+			res.set_content(GUICOMMUNICATOR_VERSION, "text/plain");
+		});
 
 
 
-    _this->svr.Post(EVENT_URL_SETEVENT, [_this](const Request& req, Response& res) {
+	_this->svr.Post(EVENT_URL_SETEVENT,
+		[_this](const Request& req, Response& res) {
 
-        if(req.body.empty()){
-            res.set_content("{\"status\"\"body_is_empty\", \"err\":true}", "application/json");
-            return;
-        }
+			if (req.body.empty()) {
+				res.set_content("{\"status\"\"body_is_empty\", \"err\":true}", "application/json");
+				return;
+			}
 
-         GUI_EVENT ev = _this->parseEvent(req.body);
-         _this->last_event_from_webserver = ev;
-//        _this->debug_event(ev,false);
-         if(!ev.is_event_valid){
-             res.set_content("{\"status\"\"event_invalid\",\"err\":true}", "application/json");
-             return;
-         }
+			GUI_EVENT ev = _this->json2Guievent(req.body);
+			_this->last_event_from_webserver = ev;
+			//        _this->debug_event(ev,false);
+			         if(!ev.is_event_valid) {
+				res.set_content("{\"status\"\"event_invalid\",\"err\":true}", "application/json");
+				return;
+			}
 
-       _this->enqueue_event(ev);
-       res.set_content("{\"status\"\"success\",\"err\":false}", "application/json");
-       return;
-     });
+			_this->enqueue_event(ev);
+			res.set_content("{\"status\"\"success\",\"err\":false}", "application/json");
+			return;
+		});
 
-    //START WEBSERVER
-    _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
+	//START WEBSERVER
+	_this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
 
 	while (_this->thread_running) {
 	
 	}
-    _this->svr.stop();
-	}
+	_this->svr.stop();
+}
 
 
 	
@@ -273,18 +405,55 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 
 
 
-	//ADDING SOME VARIATIONS OF createEvent
-	void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type) {
-		guicommunicator::createEvent(_event, _type, (std::string)"");
-	}
+//ADDING SOME VARIATIONS OF createEvent
+void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type) {
+	guicommunicator::createEvent(_event, _type, (std::string)"");
+}
 #ifdef USES_QT 
-	void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value) {
-		guicommunicator::createEvent(_event, _type, _value.toStdString());
-	}
+void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value) {
+	guicommunicator::createEvent(_event, _type, _value.toStdString());
+}
 #endif
 
 
 void guicommunicator::show_error_message_on_gui(std::string _err)
 {
 	createEvent(guicommunicator::GUI_ELEMENT::ERROR, guicommunicator::GUI_VALUE_TYPE::ERROR_MESSAGE, _err);
+}
+
+
+guicommunicator::GUI_MESSAGE_BOX_RESULT guicommunicator::show_message_box(GUI_MESSAGE_BOX_TYPE _type, std::string _message, int _wait_time_ms)
+{
+	//SET MESSAGEBOX TEXT
+	createEvent(guicommunicator::GUI_ELEMENT::MESSAGEBOX_MESSAGE_TEXT, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, _message);
+	//SET TYPE (WITH OK BUTON AND CANCEL BUTTON,...)
+	if(_type == guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK)
+	{
+		createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_B);
+	}
+	else
+	{
+		createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MESSAGEBOX_TYPE_A);
+	}
+	
+	guicommunicator::GUI_MESSAGE_BOX_RESULT res = guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_NONE;	
+	while (true)
+	{
+		guicommunicator::GUI_EVENT tmp_ev = get_gui_update_event();
+		if (!tmp_ev.is_event_valid)
+		{
+			continue;
+		}
+		if (tmp_ev.event == guicommunicator::GUI_ELEMENT::MESSAGEBOX_OK_BTN && tmp_ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+		{
+			res = guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK;
+			break;
+		}
+		else if (tmp_ev.event == guicommunicator::GUI_ELEMENT::MESSAGEBOX_CANCEL_BTN && tmp_ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED)
+		{
+			res = guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_CANCEL;
+			break;
+		}
+	}
+
 }

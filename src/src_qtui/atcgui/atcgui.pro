@@ -1,5 +1,5 @@
-QT += core quick virtualkeyboard
-
+QT += core quick 
+# QT += virtualkeyboard
 
 DEFINES += USES_QT
 
@@ -17,8 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
-    SHARED/guicommunicator/guicommunicator.cpp \
+SOURCES += SHARED/guicommunicator/guicommunicator.cpp \
+    SHARED/json11-master/json11.cpp \
     main.cpp \
     menumanager.cpp
 
@@ -37,14 +37,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     SHARED/cpp-httplib-master/httplib.h \
-    SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
     SHARED/guicommunicator/guicommunicator.h \
-    SHARED/json-master/include/tao/json.hpp \
+    SHARED/json11-master/json11.hpp \
     SHARED/magic_enum-master/include/magic_enum.hpp \
     menumanager.h
 
-LIBS += -pthread -lprotobuf -lpthread
+LIBS += -pthread -lpthread
 
-DISTFILES += \
-    SHARED/guicommunicator/PROTOCOL_MSG.proto
+DISTFILES +=
 

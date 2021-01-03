@@ -136,42 +136,20 @@ Rectangle {
         visible: false
         Rectangle {
             id: mm_searching_for_players_box
-            x: 478
+            x: 47
             y: 31
-            width: 260
+            width: 691
             height: 343
             visible: true
             color: "#189694"
-            Switch {
-                id: sfp_searchenable_button
-                x: 14
-                y: 91
-                visible: true
-                text: qsTr("SEARCHING FOR GAME")
-                Connections {
-                    target: sfp_searchenable_button
-                    function onToggled(_state){
-                        print(sfp_searchenable_button.state)
-                        if (sfp_searchenable_button.state == "on"){
-                            sfp_searchenable_button.state = "off";
-                            main_menu.mm_search_for_players_toggled(false) //DONT KNOW WHY ITS INVERTED...
-                            sfp_indicator.visible = false;
-                        }else{
-                            sfp_searchenable_button.state = "on";
-                            main_menu.mm_search_for_players_toggled(true)
-                            sfp_indicator.visible = true;
-                        }
-                    }
-                }
-                state: "off"
-            }
+
 
             BusyIndicator {
                 id: sfp_indicator
-                x: 47
-                y: 162
-                width: 144
-                height: 144
+                x: 253
+                y: 132
+                width: 171
+                height: 171
                 visible: false
                 Connections {
                     target: sfp_indicator
@@ -179,16 +157,37 @@ Rectangle {
                 wheelEnabled: true
             }
 
-            Text {
-                id: spf_timer_text
-                x: 77
-                y: 25
-                width: 107
-                height: 50
-                text: qsTr("0:00")
-                font.pixelSize: 30
-                horizontalAlignment: Text.AlignHCenter
+            Button {
+                id: mm_en_sfg_btn
+                x: 29
+                y: 8
+                width: 207
+                height: 55
+                text: qsTr("START SEARCH FOR GAME")
+                Connections {
+                    target: mm_en_sfg_btn
+                    function onClicked(_mouse){
+                        main_menu.mm_start_ai_btn()
+                    }
+                }
             }
+
+            Button {
+                id: mm_dis_sfg_btn
+                x: 468
+                y: 8
+                width: 207
+                height: 55
+                text: qsTr("STOP SEARCH FOR GAME")
+                Connections {
+                    target: mm_dis_sfg_btn
+                    function onClicked(_mouse){
+                        main_menu.mm_start_ai_btn()
+                    }
+                }
+            }
+
+
         }
 
         Rectangle {
@@ -197,6 +196,7 @@ Rectangle {
             y: 31
             width: 253
             height: 343
+            visible: false
             color: "#1f8f8d"
             Button {
                 id: mm_show_playerlist_btn
@@ -204,11 +204,13 @@ Rectangle {
                 y: 151
                 width: 207
                 height: 55
+                visible: false
                 text: qsTr("SHOW AVARIABLE PLAYERS")
                 Connections {
                     target: mm_show_playerlist_btn
                     function onClicked(_mouse){
-                        main_menu.mm_player_list_btn()
+                        main_menu.mm_search_for_players_toggled(false) //DONT KNOW WHY ITS INVERTED...
+                        sfp_indicator.visible = true;
                     }
                 }
             }
@@ -219,12 +221,14 @@ Rectangle {
                 y: 183
                 width: 207
                 height: 55
+                visible: false
                 text: qsTr("START AI MATCH")
                 visible: false
                 Connections {
                     target: mm_start_random_btn
                     function onClicked(_mouse){
-                        main_menu.mm_start_ai_btn()
+                        main_menu.mm_search_for_players_toggled(true) //DONT KNOW WHY ITS INVERTED...
+                        sfp_indicator.visible = false;
                     }
                 }
             }
@@ -284,7 +288,7 @@ Rectangle {
                 id: ss_scan_board_btn
                 width: 200
                 height: 80
-                text: qsTr("SCAN BOARD")
+                text: qsTr("CALIBRATION WIZARD")
                 Connections {
                     target: ss_scan_board_btn
                     function onClicked(_mouse){
@@ -609,21 +613,34 @@ Rectangle {
             font.pixelSize: 30
         }
 
-        Grid {
-            id: debug_grid
-            x: 53
-            y: 86
-            width: 708
-            height: 299
-            rows: 2
-            columns: 4
-            spacing: 61
+        Button {
+            id: debug_back_btn
+            x: 685
+            y: 363
+            text: qsTr("BACK")
+            Connections {
+                target: debug_back_btn
+                function onClicked(_mouse){
+                    main_menu.lb_settings_btn()
+                }
+            }
+        }
+
+        Rectangle {
+            id: debug_bg_rect
+            x: 46
+            y: 31
+            width: 727
+            height: 315
+            color: "#189694"
 
             Button {
                 id: debug_fkt_a_btn
-                width: 130
+                x: 13
+                y: 14
+                width: 209
                 height: 60
-                text: qsTr("FKT_A")
+                text: qsTr("CALIBRATE_HOME_POS")
                 Connections {
                     target: debug_fkt_a_btn
                     function onClicked(_mouse){
@@ -634,9 +651,11 @@ Rectangle {
 
             Button {
                 id: debug_fkt_b_btn
-                width: 130
+                x: 259
+                y: 14
+                width: 209
                 height: 60
-                text: qsTr("FKT_B")
+                text: qsTr("LOAD_DEFAULT_CONFIG")
                 Connections {
                     target: debug_fkt_b_btn
                     function onClicked(_mouse){
@@ -647,9 +666,11 @@ Rectangle {
 
             Button {
                 id: debug_fkt_c_btn
-                width: 130
+                x: 510
+                y: 14
+                width: 209
                 height: 60
-                text: qsTr("FKT_C")
+                text: qsTr("MAKE_MOVE_TEST")
                 Connections {
                     target: debug_fkt_c_btn
                     function onClicked(_mouse){
@@ -660,9 +681,11 @@ Rectangle {
 
             Button {
                 id: debug_fkt_d_btn
-                width: 130
+                x: 13
+                y: 121
+                width: 209
                 height: 60
-                text: qsTr("FKT_D")
+                text: qsTr("G5 -> A2")
                 Connections {
                     target: debug_fkt_d_btn
                     function onClicked(_mouse){
@@ -673,9 +696,11 @@ Rectangle {
 
             Button {
                 id: debug_fkt_e_btn
-                width: 130
+                x: 259
+                y: 121
+                width: 209
                 height: 60
-                text: qsTr("FKT_E")
+                text: qsTr("UPLOAD CONFIG FILE")
                 Connections {
                     target: debug_fkt_e_btn
                     function onClicked(_mouse){
@@ -686,9 +711,11 @@ Rectangle {
 
             Button {
                 id: debug_fkt_f_btn
-                width: 130
+                x: 510
+                y: 121
+                width: 209
                 height: 60
-                text: qsTr("FKT_F")
+                text: qsTr("UPLOAD LOGFILE")
                 Connections {
                     target: debug_fkt_f_btn
                     function onClicked(_mouse){
@@ -699,7 +726,9 @@ Rectangle {
 
             Button {
                 id: debug_fkt_g_btn
-                width: 130
+                x: 13
+                y: 218
+                width: 209
                 height: 60
                 text: qsTr("FKT_G")
                 Connections {
@@ -712,7 +741,9 @@ Rectangle {
 
             Button {
                 id: debug_fkt_h_btn
-                width: 130
+                x: 259
+                y: 218
+                width: 209
                 height: 60
                 text: qsTr("FKT_H")
                 Connections {
@@ -722,19 +753,6 @@ Rectangle {
                     }
                 }
 
-            }
-        }
-
-        Button {
-            id: debug_back_btn
-            x: 685
-            y: 363
-            text: qsTr("BACK")
-            Connections {
-                target: debug_back_btn
-                function onClicked(_mouse){
-                    main_menu.lb_settings_btn()
-                }
             }
         }
     }
@@ -760,6 +778,7 @@ Rectangle {
             font.pixelSize: 30
         }
 
+
         Text {
             id: game_possible_move_label
             x: 8
@@ -771,7 +790,9 @@ Rectangle {
             font.pixelSize: 24
         }
 
-        DelayButton {
+
+        Button {
+
             id: game_abortgame_btn
             objectName: "game_abortgame_btn"
             x: 286

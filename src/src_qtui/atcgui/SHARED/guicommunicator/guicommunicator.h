@@ -1,14 +1,9 @@
 #ifndef GUICOMMUNICATOR_H
 #define GUICOMMUNICATOR_H
 
-#define GUICOMMUNICATOR_VERSION "1.2.4"
+#define GUICOMMUNICATOR_VERSION "1.3.0"
 
 
-#include "../magic_enum-master/include/magic_enum.hpp"
-
-
-
-#include "PROTOCOL_MSG.pb.h"
 
 #include <string>
 #include <queue>
@@ -20,9 +15,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../cpp-httplib-master/httplib.h"
-#include "../json-master/include/tao/json.hpp"
 
+
+
+
+#include "../magic_enum-master/include/magic_enum.hpp"
+#include "../cpp-httplib-master/httplib.h"
+#include "../json11-master/json11.hpp"
 
 
 //SOME DEBUGGING AND LOGGIN
@@ -41,6 +40,7 @@
 #ifdef USE_WEBSERVER_AS_IPC
 
 #define WEBSERVER_BIND_ADDR "127.0.0.1" //NOTE CHANGE TO LOCALHOST
+#define WEBSERVER_STATIC_FILE_DIR "./static"
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
 #define EVENT_CLIENT_PORT L"8001" // 1
@@ -108,8 +108,19 @@ enum class GUI_ELEMENT{
     GAMESCREEN_ABORT_GAME = 30
 };
 
-
-enum class GUI_VALUE_TYPE{
+	enum class GUI_MESSAGE_BOX_TYPE
+	{
+		MSGBOX_B_OK = 0,
+		MSGBOX_A_OK_CANCEL = 1
+	};
+	enum class GUI_MESSAGE_BOX_RESULT
+	{
+		MSGBOX_RES_NONE = 0,
+		MSGBOX_RES_OK = 1,
+		MSGBOX_RES_CANCEL =2
+		
+	};
+	enum class GUI_VALUE_TYPE{
 	CLICKED = 0,
 	SELECTED = 1,
 	USER_INPUT_STRING = 2,
@@ -161,11 +172,17 @@ enum class GUI_VALUE_TYPE{
     guicommunicator();
     ~guicommunicator();
 
-
+	std::string guievent2Json(GUI_EVENT _ev);
+	GUI_EVENT json2Guievent(std::string _jsonstring);
+	GUI_EVENT json2Guievent(json11::Json::object _jsobj);
+	
+	
+	
+	void enable_qt_communication(bool _en);
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value); //sends a event though ZeroMQ using protocol buffer
     //DERIVATIONS FRom createEvent
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type);
-
+	void clearPreviousEvents();
     #ifdef USES_QT
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, QString _value);
     #endif
@@ -177,11 +194,17 @@ enum class GUI_VALUE_TYPE{
     void stop_recieve_thread();
 
 
-    GUI_EVENT get_gui_update_event();
-	GUI_EVENT get_event();
+     GUI_EVENT get_gui_update_event();
+	 GUI_EVENT get_event();
      bool check_guicommunicator_version();
+	 bool check_guicommunicator_reachable();
 	
-	void show_error_message_on_gui(std::string _err);
+	//SOME FUNTIONS ARE ONLY FOR THE GUI SIDE
+#ifdef USES_QT
+#else
+	void show_error_message_on_gui(std::string _err);	//DISPLAYS A ERROR MESSAGE WITH OK BUTTONS
+	GUI_MESSAGE_BOX_RESULT show_message_box(GUI_MESSAGE_BOX_TYPE _type, std::string _message, int _wait_time_ms); //DISPLAY A MESSAGEBOX WITH OK/CANCEL BUTTON AND WAITS FOR THE USER INPUT
+#endif
 private:
 	  //zmq::context_t zmqctx;
 	// zsock_t* zmq_pull = nullptr;
@@ -201,10 +224,11 @@ private:
 	std::string rpc_callback(std::string _msg);
 	
 	bool thread_running = false;
+	bool en_qt_communication = true;
     httplib::Server svr;
 
     GUI_EVENT last_event_from_webserver;
-    GUI_EVENT parseEvent(std::string _event); //PARSES A EVENT TO struct GUIEVENT
+
 
     void enqueue_event(GUI_EVENT _ev);
      std::string event_to_json(GUI_EVENT _ev);
