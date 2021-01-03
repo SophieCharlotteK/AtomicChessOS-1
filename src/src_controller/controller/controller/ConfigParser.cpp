@@ -248,6 +248,7 @@ void ConfigParser::loadDefaults() {
 	
 	
 	config_store[ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH] = "1";
+	config_store[ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE] = "1";
 	
 
 }
