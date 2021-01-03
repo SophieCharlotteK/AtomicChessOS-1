@@ -331,7 +331,8 @@ int main(int argc, char *argv[])
 	
 	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 	
-	
+	//TOTO IF SET AUTO LOGIN AND AUTO EN MATCHMAKING
+	//USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE
 
 	
 	//INIT SYSTEM TIMER
