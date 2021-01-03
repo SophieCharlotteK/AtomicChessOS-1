@@ -5,23 +5,23 @@
 BINARYDIR := Release
 
 #Toolchain
-CC := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-gcc
-CXX := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++
+#CC := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-gcc
+#CXX := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-g++
 LD := $(CXX)
-AR := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-ar
-OBJCOPY := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-objcopy
+#AR := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-ar
+#OBJCOPY := /home/prodevmo/Desktop/host/bin/arm-buildroot-linux-gnueabihf-objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := NDEBUG=1 RELEASE=1
-INCLUDE_DIRS := 
-LIBRARY_DIRS := 
-LIBRARY_NAMES := 
-ADDITIONAL_LINKER_INPUTS := 
+INCLUDE_DIRS := SHARED/cpp-httplib-master
+LIBRARY_DIRS := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/target/usr/lib/
+LIBRARY_NAMES := c rt crypt m
+ADDITIONAL_LINKER_INPUTS := -pthread -lpthread -ldl
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
 
-CFLAGS := -ggdb -ffunction-sections -O3
-CXXFLAGS := -ggdb -ffunction-sections -O3
+CFLAGS := -ggdb -ffunction-sections -O3 -std=c++17
+CXXFLAGS := -ggdb -ffunction-sections -O3 -std=c++17
 ASFLAGS := 
 LDFLAGS := -Wl,-gc-sections
 COMMONFLAGS := 
