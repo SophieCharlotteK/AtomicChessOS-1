@@ -39,7 +39,6 @@ Rectangle {
             y: 18
             width: 164
             height: 34
-            text: qsTr("MAIN MENU")
             visible: true
             lineHeightMode: Text.ProportionalHeight
             fontSizeMode: Text.FixedSize
@@ -133,7 +132,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: true
+        visible: false
         Rectangle {
             id: mm_searching_for_players_box
             x: 47
@@ -380,11 +379,12 @@ Rectangle {
             id: is_hwid_label
             objectName: "is_hwid_label"
             x: 57
-            y: 54
+            y: 14
             width: 680
             height: 75
             color: "#ffffff"
-            text: qsTr("HWID")
+            text: qsTr("--- HWID PLACEHOLDER ---")
+            wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
         }
@@ -393,11 +393,12 @@ Rectangle {
             id: is_sessionid_label
             objectName: "is_sessionid_label"
             x: 57
-            y: 155
+            y: 103
             width: 680
             height: 78
             color: "#ffffff"
-            text: qsTr("SESSION_ID")
+            text: qsTr("-- SESSION_ID PLACEHOLDER --")
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
         }
@@ -406,11 +407,25 @@ Rectangle {
             id: is_version_label
             objectName: "is_version_label"
             x: 57
-            y: 246
+            y: 196
             width: 680
             height: 102
             color: "#ffffff"
-            text: qsTr("ATCOS_VERSION")
+            text: qsTr("-- VERSION INFO PLACEHOLDER --")
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 30
+        }
+        Text {
+            id: is_playerinfo_label
+            objectName: "is_playerinfo_label"
+            x: 57
+            y: 298
+            width: 680
+            height: 102
+            color: "#ffffff"
+            text: qsTr("-- PLAYER INFO PLACEHOLDER --")
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
         }
@@ -773,7 +788,7 @@ Rectangle {
             x: 308
             y: 34
             color: "#ffffff"
-            text: qsTr("GAME STATE")
+            text: qsTr("PLAYER TURN")
             horizontalAlignment: Text.AlignHCenter
             objectName: "game_headline_label"
             font.pixelSize: 30
@@ -811,53 +826,50 @@ Rectangle {
             }
         }
 
-        ListView {
-            id: game_possible_moves_list
-            objectName: "game_possible_moves_list"
-            x: 25
-            y: 132
-            width: 215
-            height: 271
-            model: ListModel {
-                ListElement {
-                    name: "E2 -> E4"
-
-                }
-
-                ListElement {
-                    name: "G6 -> A4"
-
-                }
-
-
-            }
-            delegate: Item {
-                x: 5
-                width: 80
-                height: 40
-                Row {
-                    id: row1
-
-
-                    Text {
-                        text: name
-                        font.bold: true
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    spacing: 10
-                }
-            }
-        }
-
         Text {
             id: game_statistics_headline_label1
-            x: 579
+            x: 602
             y: 85
             color: "#ffffff"
-            text: qsTr("GAME STATISTICS")
+            text: qsTr("YOUR COLOR")
             visible: true
             horizontalAlignment: Text.AlignHCenter
             objectName: "game_possible_move_label"
+            font.pixelSize: 24
+        }
+
+        Image {
+            id: gs_my_turn_color_image
+            objectName: "gs_my_turn_color_image"
+            x: 605
+            y: 119
+            width: 140
+            height: 140
+            fillMode: Image.PreserveAspectFit
+            source: "noun_Chess_3493083.png"
+        }
+
+        Image {
+            id: gs_current_turn_color_image
+            objectName: "gs_current_turn_color_image"
+            x: 306
+            y: 82
+            width: 200
+            height: 200
+            fillMode: Image.PreserveAspectFit
+            source: "noun_Chess_3493083(1).png"
+        }
+
+        Text {
+            id: game_possible_move_text
+            objectName: "game_possible_move_text"
+            x: 30
+            y: 119
+            width: 124
+            height: 15
+            text: qsTr("Text")
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 24
         }
 

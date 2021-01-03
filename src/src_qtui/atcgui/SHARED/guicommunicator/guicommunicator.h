@@ -85,7 +85,8 @@ public:
     INFOSCREEN_SESSIONID_LABEL = 11,
     INFOSCREEN_RANK_LABEL = 12,
     INFOSCREEN_VERSION = 13,
-    INFOSCREEN_RESERVED_2 = 14,
+
+    INFOSCREEN_PLAYERINFO_LABEL = 14,
 
     MAINMENU_START_AI_MATCH_BTN = 15,
     MAINMENU_MATCHMAKING_BTN = 16,
@@ -109,7 +110,10 @@ public:
     DEBUG_FUNCTION_H = 28,
 
 
-    GAMESCREEN_ABORT_GAME = 30
+    GAMESCREEN_ABORT_GAME = 30,
+    GAMESCREEN_PLAYER_COLOR = 31,
+    GAMESCREEN_POSSIBLE_MOVES = 32,
+    GAMESCREEN_PLAYER_TURN_COLOR = 33
 };
 
 	enum class GUI_MESSAGE_BOX_TYPE
@@ -157,8 +161,8 @@ public:
     MESSAGEBOX_TYPE_B = 24,
     PROCESSING_SCREEN = 25,
     DEBUG_SCREEN = 26,
-    //GAME_SCREEN = 27
-
+    CHESS_COLOR_WHITE = 27,
+    CHESS_COLOR_BLACK = 28
 };
 
     //KEEP IN SYNC WITH THE PROTOCOL_MSG.proto
@@ -181,6 +185,7 @@ public:
 	
 	
 	void enable_qt_communication(bool _en);
+
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std::string _value); //sends a event though ZeroMQ using protocol buffer
     //DERIVATIONS FRom createEvent
     void createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type);

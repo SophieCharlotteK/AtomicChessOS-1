@@ -146,37 +146,42 @@ void MenuManager::updateProgress()
     //SWITCH MAIN MENU REQUEST
     if(ev.event == guicommunicator::GUI_ELEMENT::SWITCH_MENU){
         switch_menu(ev.type);
-    }
-
-    else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL){
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_HWID_LABEL){
         set_label_text("is_container","is_hwid_label",QString::fromStdString(ev.value));
-    }
-    else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL){
         set_label_text("is_container","is_sessionid_label",QString::fromStdString(ev.value));
-    }
-
-    else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION){
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION){
         set_label_text("is_container","is_version_label",QString::fromStdString(ev.value));
-    }
-
-    else if(ev.event == guicommunicator::GUI_ELEMENT::ERROR){
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::INFOSCREEN_PLAYERINFO_LABEL){
+        set_label_text("is_container","is_playerinfo_label",QString::fromStdString(ev.value));
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::ERROR){
         switch_menu(ev.type);
         set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
-    }
-
-    else if(ev.event == guicommunicator::GUI_ELEMENT::NETWORK_STATUS){
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::NETWORK_STATUS){
         if(ev.type == guicommunicator::GUI_VALUE_TYPE::ONLINE){
             set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_online.png");
         }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::OFFLINE){
             set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_offline.png");
         }
         set_label_text("es_container","es_lasterr_label",QString::fromStdString(ev.value));
-    }
-
-
-    if(ev.event == guicommunicator::GUI_ELEMENT::MESSAGEBOX_MESSAGE_TEXT){
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::MESSAGEBOX_MESSAGE_TEXT){
         set_label_text("msgta_container","msgta_message_label",QString::fromStdString(ev.value));
         set_label_text("msgtb_container","msgtb_message_label",QString::fromStdString(ev.value));
+
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR){
+        if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE){
+            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/noun_Chess_3493083(1).png");
+        }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK){
+            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/noun_Chess_3493083.png");
+        }
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR){
+        if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE){
+            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/noun_Chess_3493083(1).png");
+        }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK){
+            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/noun_Chess_3493083.png");
+        }
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES){
+        set_label_text("game_container","game_possible_move_text",QString::fromStdString(ev.value));
     }
 
 }
