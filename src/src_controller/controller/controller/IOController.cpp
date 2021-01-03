@@ -23,8 +23,9 @@ IOController::IOController()
 	res = SPICommunication::getInstance()->spi_write(SPI_CS_DEVICE, buffer, 1);
 	//CHECK THE RESULT
 	if(res == 0 && buffer[0] == IOController::COMMANDS::STATUS_LED) {
-		board_init_success = true;
+		//TODO hmm ...
 	}
+	board_init_success = true;
 }
 
 void IOController::setCoilState(IOController::COIL _coil, bool _state)

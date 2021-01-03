@@ -70,6 +70,7 @@ bool HardwareInterface::init_hardware(HardwareInterface::HI_HARDWARE_REVISION _h
 		if(iocontroller == nullptr)
 		{
 			iocontroller = new IOController();
+			
 			if (!iocontroller->isInitialized())
 			{
 				LOG_F(ERROR, "HardwareInterface::init_hardware iocontroller->isInitialized()");

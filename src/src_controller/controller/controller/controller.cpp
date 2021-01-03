@@ -8,7 +8,7 @@
 #include <fstream>
 #include <streambuf>
 #include <regex>
-
+#include <algorithm>
 #include <thread>
 //#include <format> // FOR FORMAT STRING
 
@@ -91,7 +91,10 @@ std::string read_file_to_string(const std::string& _path) {
 
 
 
-
+bool cmdOptionExists(char** begin, char** end, const std::string& option)
+{
+	return std::find(begin, end, option) != end;
+}
 
 
 void signal_callback_handler(int signum)
@@ -117,7 +120,7 @@ int main(int argc, char *argv[])
 	//REGISTER SIGNAL HANDLER
 	signal(SIGINT, signal_callback_handler);
 	
-
+	
 	//SETUP LOGGER
 	loguru::init(argc, argv);
 	loguru::add_file(LOG_FILE_PATH, loguru::Append, loguru::Verbosity_MAX);
@@ -127,14 +130,22 @@ int main(int argc, char *argv[])
 	
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
-	ConfigParser::getInstance()->loadDefaults();        //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
+	
 	//GENERATE A DEFAULT CONFIG FILE IN DEBUG MODE TO TEST THE CONFIG GENERATION
-#ifdef DEBUG
-	ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
-#endif
+	if(cmdOptionExists(argv, argv + argc, "-writeconfig"))
+	{
+		LOG_F(WARNING, "ARGUMENT -writeconfig SET => CREATE NEW CONFIG FILE");
+		ConfigParser::getInstance()->loadDefaults();
+		ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
+	}
+	
+
 	//OVERWRITE WITH EXISTSING CONFIG FILE SETTINGS
 	if(!ConfigParser::getInstance()->loadConfigFile(CONFIG_FILE_PATH))
 	{
+		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
+		ConfigParser::getInstance()->loadDefaults();         //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
+		ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
 		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
 		return 1;
 	}
@@ -451,7 +462,7 @@ int main(int argc, char *argv[])
 						
 						
 						//ENABLE AUTO PLAY FEATURE
-						if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::GENERAL_ENABLE_RANDOM_MOVE_MATCH))
+						if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH))
 						{	
 							if (ps.game_state.legal_moves.size() > 0)
 							{
@@ -631,7 +642,7 @@ int main(int argc, char *argv[])
         }
         
 		//--------------------------------------------------------
-	   //----------------DEBUG - UPLOAD CONFIG BUTTON--------------
+	   //----------------DEBUG - UPLOAD LOG BUTTON--------------
 	   //--------------------------------------------------------
 	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 		   LOG_F(INFO, "MANUAL LOG UPLOAD");
@@ -648,7 +659,14 @@ int main(int argc, char *argv[])
         
 		
 		
-		
+		//--------------------------------------------------------
+        //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
+        //--------------------------------------------------------
+        if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			gamebackend.download_config(ConfigParser::getInstance(),true);
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "DOWNLOAD CONFIG FROM SERVER", 10000);
+ 
+		}
 		
          
 		
