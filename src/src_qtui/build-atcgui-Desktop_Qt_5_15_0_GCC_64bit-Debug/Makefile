@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUSES_QT -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_VIRTUALKEYBOARD_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DUSES_QT -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -std=c++17 -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../atcgui -I. -I/home/marcel/Qt_unified/5.15.0/gcc_64/include -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtVirtualKeyboard -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQmlModels -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtNetwork -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../atcgui -I. -I/home/marcel/Qt_unified/5.15.0/gcc_64/include -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQmlModels -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtNetwork -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/marcel/Qt_unified/5.15.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = atcgui1.0.0
 DISTDIR = /home/marcel/Desktop/atc_gui/src/src_qtui/build-atcgui-Desktop_Qt_5_15_0_GCC_64bit-Debug/.tmp/atcgui1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/marcel/Qt_unified/5.15.0/gcc_64/lib
-LIBS          = $(SUBLIBS) -pthread -lprotobuf /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5VirtualKeyboard.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Quick.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Gui.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5QmlModels.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Qml.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Network.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) -pthread /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Quick.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Gui.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5QmlModels.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Qml.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Network.so /home/marcel/Qt_unified/5.15.0/gcc_64/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,19 +52,18 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
-		../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+SOURCES       = ../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+		../atcgui/SHARED/json11-master/json11.cpp \
 		../atcgui/main.cpp \
 		../atcgui/menumanager.cpp qrc_qml.cpp \
 		moc_menumanager.cpp
-OBJECTS       = PROTOCOL_MSG.pb.o \
-		guicommunicator.o \
+OBJECTS       = guicommunicator.o \
+		json11.o \
 		main.o \
 		menumanager.o \
 		qrc_qml.o \
 		moc_menumanager.o
-DIST          = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.proto \
-		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/spec_pre.prf \
+DIST          = /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/common/unix.conf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/common/linux.conf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/common/sanitize.conf \
@@ -256,6 +255,7 @@ DIST          = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.proto \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/qt_config.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/spec_post.prf \
+		../atcgui/.qmake.stash \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/toolchain.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -276,12 +276,11 @@ DIST          = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.proto \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/yacc.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/lex.prf \
 		../atcgui/atcgui.pro ../atcgui/SHARED/cpp-httplib-master/httplib.h \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/menumanager.h ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
-		../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+		../atcgui/menumanager.h ../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+		../atcgui/SHARED/json11-master/json11.cpp \
 		../atcgui/main.cpp \
 		../atcgui/menumanager.cpp
 QMAKE_TARGET  = atcgui
@@ -487,6 +486,7 @@ Makefile: ../atcgui/atcgui.pro /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/lin
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/qt_config.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/toolchain.prf \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -701,6 +701,7 @@ Makefile: ../atcgui/atcgui.pro /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/lin
 /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/qt_config.prf:
 /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++/qmake.conf:
 /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/exclusive_builds.prf:
 /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/toolchain.prf:
 /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/default_pre.prf:
@@ -738,8 +739,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../atcgui/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../atcgui/SHARED/cpp-httplib-master/httplib.h ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h ../atcgui/SHARED/guicommunicator/guicommunicator.h ../atcgui/SHARED/json-master/include/tao/json.hpp ../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp ../atcgui/menumanager.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgui/main.cpp ../atcgui/menumanager.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../atcgui/SHARED/cpp-httplib-master/httplib.h ../atcgui/SHARED/guicommunicator/guicommunicator.h ../atcgui/SHARED/json11-master/json11.hpp ../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp ../atcgui/menumanager.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgui/SHARED/json11-master/json11.cpp ../atcgui/main.cpp ../atcgui/menumanager.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -902,7 +903,10 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qthread.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qdeadlinetimer.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QStack \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qstack.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QString \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMap \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/QGuiApplication \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/qguiapplication.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/qinputmethod.h \
@@ -948,323 +952,12 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml/qqmlcontext.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
 		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMutex \
 		moc_predefs.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/bin/moc
-	/home/marcel/Qt_unified/5.15.0/gcc_64/bin/moc $(DEFINES) --include /home/marcel/Desktop/atc_gui/src/src_qtui/build-atcgui-Desktop_Qt_5_15_0_GCC_64bit-Debug/moc_predefs.h -I/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++ -I/home/marcel/Desktop/atc_gui/src/src_qtui/atcgui -I/home/marcel/Qt_unified/5.15.0/gcc_64/include -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtVirtualKeyboard -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQmlModels -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtNetwork -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../atcgui/menumanager.h -o moc_menumanager.cpp
+	/home/marcel/Qt_unified/5.15.0/gcc_64/bin/moc $(DEFINES) --include /home/marcel/Desktop/atc_gui/src/src_qtui/build-atcgui-Desktop_Qt_5_15_0_GCC_64bit-Debug/moc_predefs.h -I/home/marcel/Qt_unified/5.15.0/gcc_64/mkspecs/linux-g++ -I/home/marcel/Desktop/atc_gui/src/src_qtui/atcgui -I/home/marcel/Qt_unified/5.15.0/gcc_64/include -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQmlModels -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtNetwork -I/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../atcgui/menumanager.h -o moc_menumanager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1280,324 +973,10 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-PROTOCOL_MSG.pb.o: ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PROTOCOL_MSG.pb.o ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc
-
 guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgui/SHARED/guicommunicator/guicommunicator.h \
 		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QString \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qstring.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qchar.h \
@@ -1670,6 +1049,9 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qelapsedtimer.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o guicommunicator.o ../atcgui/SHARED/guicommunicator/guicommunicator.cpp
+
+json11.o: ../atcgui/SHARED/json11-master/json11.cpp ../atcgui/SHARED/json11-master/json11.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o json11.o ../atcgui/SHARED/json11-master/json11.cpp
 
 main.o: ../atcgui/main.cpp /home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/QGuiApplication \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/qguiapplication.h \
@@ -1796,7 +1178,10 @@ main.o: ../atcgui/main.cpp /home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/Q
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qthread.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qdeadlinetimer.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QStack \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qstack.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QString \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMap \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick/QQuickView \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick/qquickview.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQuick/qquickwindow.h \
@@ -1834,319 +1219,8 @@ main.o: ../atcgui/main.cpp /home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/Q
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml/qqmlcontext.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
 		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../atcgui/main.cpp
 
@@ -2267,7 +1341,10 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qthread.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qdeadlinetimer.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QStack \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/qstack.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QString \
+		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMap \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/QGuiApplication \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/qguiapplication.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtGui/qinputmethod.h \
@@ -2313,319 +1390,8 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtQml/qqmlcontext.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
 		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/include/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menumanager.o ../atcgui/menumanager.cpp
 

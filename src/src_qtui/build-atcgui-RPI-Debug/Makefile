@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-gcc
 CXX           = /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-g++
-DEFINES       = -DUSES_QT -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_VIRTUALKEYBOARD_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DUSES_QT -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Os --sysroot=/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Os --sysroot=/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot -std=c++17 -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../atcgui -I. -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5 -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtVirtualKeyboard -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQmlModels -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtNetwork -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore -I. -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/devices/linux-buildroot-g++
+INCPATH       = -I../atcgui -I. -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5 -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQmlModels -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtNetwork -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore -I. -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include -I../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/devices/linux-buildroot-g++
 QMAKE         = /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = atcgui1.0.0
 DISTDIR = /home/marcel/Desktop/atc_gui/src/src_qtui/build-atcgui-RPI-Debug/.tmp/atcgui1.0.0
 LINK          = /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-g++
 LFLAGS        = --sysroot=/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot
-LIBS          = $(SUBLIBS) -latomic -pthread -lprotobuf /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5VirtualKeyboard.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Quick.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Gui.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5QmlModels.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Qml.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Network.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Core.so -L/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib -lGLESv2 -lpthread  -lrt -lpthread -ldl 
+LIBS          = $(SUBLIBS) -latomic -pthread /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Quick.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Gui.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5QmlModels.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Qml.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Network.so /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/libQt5Core.so -L/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib -lGLESv2 -lpthread  -lrt -lpthread -ldl 
 AR            = /home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,19 +52,18 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
-		../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+SOURCES       = ../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+		../atcgui/SHARED/json11-master/json11.cpp \
 		../atcgui/main.cpp \
 		../atcgui/menumanager.cpp qrc_qml.cpp \
 		moc_menumanager.cpp
-OBJECTS       = PROTOCOL_MSG.pb.o \
-		guicommunicator.o \
+OBJECTS       = guicommunicator.o \
+		json11.o \
 		main.o \
 		menumanager.o \
 		qrc_qml.o \
 		moc_menumanager.o
-DIST          = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.proto \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/features/spec_pre.prf \
+DIST          = ../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/features/spec_pre.prf \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/common/unix.conf \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/common/linux.conf \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/common/sanitize.conf \
@@ -227,12 +226,11 @@ DIST          = ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.proto \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/features/yacc.prf \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/features/lex.prf \
 		../atcgui/atcgui.pro ../atcgui/SHARED/cpp-httplib-master/httplib.h \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/menumanager.h ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc \
-		../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+		../atcgui/menumanager.h ../atcgui/SHARED/guicommunicator/guicommunicator.cpp \
+		../atcgui/SHARED/json11-master/json11.cpp \
 		../atcgui/main.cpp \
 		../atcgui/menumanager.cpp
 QMAKE_TARGET  = atcgui
@@ -591,8 +589,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../atcgui/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../atcgui/SHARED/cpp-httplib-master/httplib.h ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h ../atcgui/SHARED/guicommunicator/guicommunicator.h ../atcgui/SHARED/json-master/include/tao/json.hpp ../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp ../atcgui/menumanager.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgui/main.cpp ../atcgui/menumanager.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../atcgui/SHARED/cpp-httplib-master/httplib.h ../atcgui/SHARED/guicommunicator/guicommunicator.h ../atcgui/SHARED/json11-master/json11.hpp ../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp ../atcgui/menumanager.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgui/SHARED/json11-master/json11.cpp ../atcgui/main.cpp ../atcgui/menumanager.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -832,6 +830,7 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QStack \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstack.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMap \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/QGuiApplication \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
@@ -886,98 +885,13 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml/QQmlContext \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml/qqmlcontext.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
-		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_def.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_undef.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/coded_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/platform_macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/logging.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/strutil.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stringpiece.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/hash.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena_impl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arenastring.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/fastmem.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_table_driven.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/metadata_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/once.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_type_handler.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/parse_context.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/implicit_weak_message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/repeated_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/casts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/wire_format_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_entry_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/any.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/has_bits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_field_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/inlined_string_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/descriptor.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/unknown_field_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/callback.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stl_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/extension_set.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix_opt.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/environments.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/confname.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd_ext.h \
+		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/inet.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/netinet/in.h \
@@ -1003,8 +917,35 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/ifaddrs.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/netdb.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/rpc/netdb.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/netdb.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/resolv.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/nameser.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/nameser_compat.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/res_state.h \
@@ -1013,6 +954,17 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll2.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/errno.h \
@@ -1097,326 +1049,11 @@ moc_menumanager.cpp: ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/openssl/x509v3err.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zlib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zconf.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-map-flags-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-linux.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-shared.h \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMutex \
 		moc_predefs.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/bin/moc
-	/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/moc $(DEFINES) --include /home/marcel/Desktop/atc_gui/src/src_qtui/build-atcgui-RPI-Debug/moc_predefs.h -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/devices/linux-buildroot-g++ -I/home/marcel/Desktop/atc_gui/src/src_qtui/atcgui -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5 -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQmlModels -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtNetwork -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore -I. -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include/c++/9.3.0 -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include/c++/9.3.0/arm-buildroot-linux-gnueabihf -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include/c++/9.3.0/backward -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include-fixed -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include ../atcgui/menumanager.h -o moc_menumanager.cpp
+	/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/bin/moc $(DEFINES) --include /home/marcel/Desktop/atc_gui/src/src_qtui/build-atcgui-RPI-Debug/moc_predefs.h -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/mkspecs/devices/linux-buildroot-g++ -I/home/marcel/Desktop/atc_gui/src/src_qtui/atcgui -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5 -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQmlModels -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtNetwork -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore -I. -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include/c++/9.3.0 -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include/c++/9.3.0/arm-buildroot-linux-gnueabihf -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include/c++/9.3.0/backward -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/lib/gcc/arm-buildroot-linux-gnueabihf/9.3.0/include-fixed -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/include -I/home/marcel/Desktop/atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include ../atcgui/menumanager.h -o moc_menumanager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1432,176 +1069,8 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-PROTOCOL_MSG.pb.o: ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_def.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_undef.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/coded_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/assert.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/features.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/cdefs.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/wordsize.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/long-double.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs-hard.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/types.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timesize.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/typesizes.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time64.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/clock_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/clockid_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/time_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/timer_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdint-intn.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/endian.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endian.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endianness.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/uintn-identity.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/select.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigset_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigset_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_timeval.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_timespec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select2.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/thread-shared-types.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/struct_mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/struct_rwlock.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/limits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/libc-header-start.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix1_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/local_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/limits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix2_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/xopen_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/uio_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdlib.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitflags.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitstatus.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/floatn.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/floatn-common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/locale_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__locale_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/alloca.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-bsearch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-float.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-ldbl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/string.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/strings.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/strings_fortified.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/string_fortified.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/platform_macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/logging.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/strutil.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stringpiece.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/hash.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena_impl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arenastring.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/fastmem.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdio.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__fpos_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__mbstate_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__fpos64_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__FILE.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/FILE.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_FILE.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/cookie_io_functions_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sys_errlist.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/getopt_posix.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/getopt_core.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio2.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio-ldbl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_table_driven.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/metadata_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/once.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_type_handler.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/parse_context.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/implicit_weak_message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/repeated_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/casts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/wire_format_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_entry_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/any.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/has_bits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_field_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/inlined_string_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/descriptor.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/unknown_field_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/callback.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stl_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/extension_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/reflection_ops.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/wire_format.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PROTOCOL_MSG.pb.o ../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.cc
-
 guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgui/SHARED/guicommunicator/guicommunicator.h \
-		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_def.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_undef.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/coded_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/assert.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/features.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/cdefs.h \
@@ -1609,159 +1078,67 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/long-double.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs-hard.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/types.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timesize.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/typesizes.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time64.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/clock_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/clockid_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/time_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/timer_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdint-intn.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/endian.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endian.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endianness.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/uintn-identity.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/select.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigset_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigset_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_timeval.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_timespec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select2.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/thread-shared-types.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/struct_mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/struct_rwlock.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/limits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/libc-header-start.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix1_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/local_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/limits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix2_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/xopen_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/uio_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdlib.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitflags.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitstatus.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/floatn.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/floatn-common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/locale_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__locale_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/alloca.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-bsearch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-float.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-ldbl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/string.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/strings.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/strings_fortified.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/string_fortified.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/platform_macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/logging.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/strutil.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stringpiece.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/hash.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena_impl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arenastring.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/fastmem.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdio.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__fpos_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__mbstate_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__fpos64_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__FILE.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/FILE.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_FILE.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/cookie_io_functions_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio_lim.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sys_errlist.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/getopt_posix.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/getopt_core.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio2.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio-ldbl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_table_driven.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/metadata_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/once.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_type_handler.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/parse_context.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/implicit_weak_message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/repeated_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/casts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/wire_format_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_entry_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/any.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/has_bits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_field_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/inlined_string_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/descriptor.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/unknown_field_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/callback.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stl_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/extension_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix_opt.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/environments.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timesize.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/typesizes.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time64.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/confname.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/getopt_posix.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/getopt_core.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd_ext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdio.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/libc-header-start.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__fpos_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__mbstate_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__fpos64_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__FILE.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/FILE.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_FILE.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/cookie_io_functions_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio_lim.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sys_errlist.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio2.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio-ldbl.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdlib.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitflags.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitstatus.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/floatn.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/floatn-common.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/locale_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__locale_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/types.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/clock_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/clockid_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/time_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/timer_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdint-intn.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/endian.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endian.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endianness.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/uintn-identity.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/select.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigset_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigset_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_timeval.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_timespec.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select2.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/thread-shared-types.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/struct_mutex.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/struct_rwlock.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/alloca.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-bsearch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-float.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-ldbl.h \
+		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/inet.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/netinet/in.h \
@@ -1788,8 +1165,42 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/ifaddrs.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/netdb.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/rpc/netdb.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/netdb.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/resolv.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/limits.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix1_lim.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/local_lim.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/limits.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix2_lim.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/xopen_lim.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/uio_lim.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/nameser.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdint.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/wchar.h \
@@ -1800,6 +1211,17 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll2.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/errno.h \
@@ -1885,326 +1307,12 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/openssl/x509v3err.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zlib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zconf.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-map-flags-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-linux.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-shared.h \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstring.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qchar.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qglobal.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/assert.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qconfig-bootstrapped.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qconfig.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qtcore-config.h \
@@ -2229,6 +1337,10 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qrefcount.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qnamespace.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qarraydata.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/string.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/strings.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/strings_fortified.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/string_fortified.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstringliteral.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstringalgorithms.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstringview.h \
@@ -2273,6 +1385,9 @@ guicommunicator.o: ../atcgui/SHARED/guicommunicator/guicommunicator.cpp ../atcgu
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qelapsedtimer.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o guicommunicator.o ../atcgui/SHARED/guicommunicator/guicommunicator.cpp
+
+json11.o: ../atcgui/SHARED/json11-master/json11.cpp ../atcgui/SHARED/json11-master/json11.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o json11.o ../atcgui/SHARED/json11-master/json11.cpp
 
 main.o: ../atcgui/main.cpp ../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/QGuiApplication \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
@@ -2538,6 +1653,7 @@ main.o: ../atcgui/main.cpp ../../../../atc_buildroot/src/src_buildroot/buildroot
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QStack \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstack.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMap \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick/QQuickView \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick/qquickview.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQuick/qquickwindow.h \
@@ -2583,71 +1699,13 @@ main.o: ../atcgui/main.cpp ../../../../atc_buildroot/src/src_buildroot/buildroot
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml/QQmlContext \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml/qqmlcontext.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
-		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_def.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_undef.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/coded_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/platform_macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/logging.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/strutil.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stringpiece.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/hash.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena_impl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arenastring.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/fastmem.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_table_driven.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/metadata_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/once.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_type_handler.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/parse_context.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/implicit_weak_message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/repeated_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/casts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/wire_format_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_entry_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/any.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/has_bits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_field_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/inlined_string_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/descriptor.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/unknown_field_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/callback.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stl_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/extension_set.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix_opt.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/environments.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/confname.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd_ext.h \
+		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/inet.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/ifaddrs.h \
@@ -2662,6 +1720,17 @@ main.o: ../atcgui/main.cpp ../../../../atc_buildroot/src/src_buildroot/buildroot
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll2.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/errno.h \
@@ -2746,322 +1815,7 @@ main.o: ../atcgui/main.cpp ../../../../atc_buildroot/src/src_buildroot/buildroot
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/openssl/x509v3err.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zlib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zconf.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-map-flags-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-linux.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-shared.h \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../atcgui/main.cpp
 
@@ -3259,6 +2013,7 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QStack \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/qstack.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QString \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMap \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/QGuiApplication \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
@@ -3313,98 +2068,13 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml/QQmlContext \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtQml/qqmlcontext.h \
 		../atcgui/SHARED/guicommunicator/guicommunicator.h \
-		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
-		../atcgui/SHARED/guicommunicator/PROTOCOL_MSG.pb.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_def.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port_undef.inc \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/coded_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/common.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/platform_macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/byteswap.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/macros.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/logging.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/strutil.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stringpiece.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/hash.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/port.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arena_impl.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/arenastring.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/fastmem.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_table_driven.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/metadata_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/once.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_type_handler.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/parse_context.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/implicit_weak_message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/repeated_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/casts.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/wire_format_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_entry_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/any.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/has_bits.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/map_field_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/inlined_string_field.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_message_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/descriptor.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/mutex.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/generated_enum_reflection.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/unknown_field_set.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/callback.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/stubs/stl_util.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/message.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/google/protobuf/extension_set.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/posix_opt.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/environments.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/confname.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/unistd_ext.h \
+		../atcgui/SHARED/magic_enum-master/include/magic_enum.hpp \
 		../atcgui/SHARED/cpp-httplib-master/httplib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/inet.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/netinet/in.h \
@@ -3430,8 +2100,35 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/ifaddrs.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/netdb.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/rpc/netdb.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigevent_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/__sigval_t.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/netdb.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/resolv.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/signal.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signum-generic.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sig_atomic_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/siginfo_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/siginfo-consts-arch.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/sigval_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigevent-consts.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigaction.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigcontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/sigcontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/stack_t.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/ucontext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigstack.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/ss_flags.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sigstack.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/signal_ext.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm-generic/param.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/nameser.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arpa/nameser_compat.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/res_state.h \
@@ -3440,6 +2137,17 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/poll2.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/pthread.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/timex.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_tm.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_itimerspec.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sched.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types/struct_sched_param.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/cpu-set.h \
+		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/setjmp.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/errno.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/linux/errno.h \
@@ -3524,322 +2232,7 @@ menumanager.o: ../atcgui/menumanager.cpp ../atcgui/menumanager.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/openssl/x509v3err.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zlib.h \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/zconf.h \
-		../atcgui/SHARED/json-master/include/tao/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/basic_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_base.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary_view.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/span.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/escape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/message_extension.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/identity.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/type_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/type_list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/config.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/pointer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/apply_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/normal.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/demangle.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/nothing.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/require_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rewind_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_unwind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/missing_apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/parse_error.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/position.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/iterator.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/has_match.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/version.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/ascii.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/dependent_false.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/result_on_found.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/seq.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/any.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_char.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/input_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/apply0_single.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bytes.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/disable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/enable.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eof.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/eolf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/ranges.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/one.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump_help.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/range.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_apply.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_must_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/if_then_else.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/not_at.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/sor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istring.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/list_tail_pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/minus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rematch.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/memory_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/eol_pair.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cr_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_crlf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/lf_eol.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/tracking_mode.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/action_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/bump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/until.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pad_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/plus.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/raise.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_min_max.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/rep_opt.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/require.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/star_must.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/try_catch_type.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/pegtl_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/rules.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/peek_utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/argv_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/buffer_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/cstream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/cstream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/istream_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/istream_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/read_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/string_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_reader.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/path_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/file_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/mmap_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_posix.hpp \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-map-flags-generic.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-linux.h \
-		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/mman-shared.h \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/internal/file_mapper_win32.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_action_and_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_control.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/change_states.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/disable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/enable_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_failure.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/discard_input_on_success.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/must_if.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/visit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/operators.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/virtual_ref.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/string_t.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/abnf.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/number_state.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/double.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/unescape.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/transformer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/analyze_traits.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/forward.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/pegtl/contrib/json.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/itoa.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/external/ryu.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/self_contained.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/constant.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/element.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member_kind.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/type_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/factory.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_nothing_value.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/for_unknown_key.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/member.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/versions.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/array.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/inherit.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/binding/internal/object.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/produce.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/discard.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/utf8.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/internal/major.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_win.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/endian_gcc.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/parse_util.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/cbor/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/bunescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/unescape_action.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/integer.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/internal/errors.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_pretty_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/hexdump.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/is_identifier.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/jaxn/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/format.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/msgpack/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/parts_parser.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/grammar.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/internal/marker.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/consume_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_file.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_input.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/from_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_null.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_stream.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/ubjson/events/to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/base64url.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/binary_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_binary.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/invalid_string_to_hex.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_camel_case_to_snake_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/key_snake_case_to_camel_case.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_nesting_depth.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/limit_value_count.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_exception.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/non_finite_to_string.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_signed.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/prefer_unsigned.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/debug.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/hash.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/internal/sha256.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/tee.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_event_order.hpp \
-		../atcgui/SHARED/json-master/include/tao/json/events/validate_keys.hpp \
+		../atcgui/SHARED/json11-master/json11.hpp \
 		../../../../atc_buildroot/src/src_buildroot/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include/qt5/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menumanager.o ../atcgui/menumanager.cpp
 

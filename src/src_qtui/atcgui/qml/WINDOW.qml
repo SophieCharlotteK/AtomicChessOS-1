@@ -133,7 +133,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: false
+        visible: true
         Rectangle {
             id: mm_searching_for_players_box
             x: 47
@@ -167,7 +167,8 @@ Rectangle {
                 Connections {
                     target: mm_en_sfg_btn
                     function onClicked(_mouse){
-                        main_menu.mm_start_ai_btn()
+                        main_menu.mm_search_for_players_toggled(true);
+                        sfp_indicator.visible = true;
                     }
                 }
             }
@@ -182,7 +183,8 @@ Rectangle {
                 Connections {
                     target: mm_dis_sfg_btn
                     function onClicked(_mouse){
-                        main_menu.mm_start_ai_btn()
+                        main_menu.mm_search_for_players_toggled(false);
+                        sfp_indicator.visible = false;
                     }
                 }
             }
@@ -223,7 +225,6 @@ Rectangle {
                 height: 55
                 visible: false
                 text: qsTr("START AI MATCH")
-                visible: false
                 Connections {
                     target: mm_start_random_btn
                     function onClicked(_mouse){
@@ -730,7 +731,7 @@ Rectangle {
                 y: 218
                 width: 209
                 height: 60
-                text: qsTr("FKT_G")
+                text: qsTr("DOWNLOAD CONFIG FILE")
                 Connections {
                     target: debug_fkt_g_btn
                     function onClicked(_mouse){
