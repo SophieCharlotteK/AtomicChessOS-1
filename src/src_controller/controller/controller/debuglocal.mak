@@ -27,8 +27,8 @@ LDFLAGS := -Wl,-gc-sections
 COMMONFLAGS := 
 LINKER_SCRIPT := 
 
-START_GROUP := -Wl,--start-group
-END_GROUP := -Wl,--end-group
+START_GROUP := 
+END_GROUP := 
 
 #Additional options detected from testing the toolchain
 IS_LINUX_PROJECT := 1
