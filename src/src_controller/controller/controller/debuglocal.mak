@@ -7,7 +7,7 @@ BINARYDIR := Debug
 #Toolchain
 #CC := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-gcc
 #CXX := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-g++
-#LD := $(CXX)
+LD := $(CXX)
 #AR := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-ar
 #OBJCOPY := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-objcopy
 
@@ -16,7 +16,7 @@ PREPROCESSOR_MACROS := DEBUG=1
 INCLUDE_DIRS := SHARED/cpp-httplib-master
 LIBRARY_DIRS := /var/jenkins/workspace/ATC_BUILDROOT/src/src_buildroot/buildroot/output/target/usr/lib/
 LIBRARY_NAMES := c rt crypt m
-ADDITIONAL_LINKER_INPUTS := -pthread -lpthread -ldl
+ADDITIONAL_LINKER_INPUTS := -lpthread -ldl
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
 
