@@ -48,7 +48,7 @@ bool ConfigParser::loadFromJson(json11::Json::object _jsobj, bool load_only_user
 
     if(!load_only_user_data){
         //CHECK
-        if(_jsobj.find(INI_SETTINGS_CATEGORY_TOKEN) != _jsobj.end() && _jsobj[INI_SETTINGS_CATEGORY_TOKEN].is_object() && !_jsobj[INI_SETTINGS_CATEGORY_TOKEN].is_null()) {
+        if(!_jsobj[INI_SETTINGS_CATEGORY_TOKEN].is_null() && _jsobj.find(INI_SETTINGS_CATEGORY_TOKEN) != _jsobj.end() && _jsobj[INI_SETTINGS_CATEGORY_TOKEN].is_object()) {
             json11::Json::object settings_obj = _jsobj[INI_SETTINGS_CATEGORY_TOKEN].object_items();
             //GET SINGLE ITEMS
             for (size_t i = 0; i < entries.size(); i++)
@@ -66,7 +66,7 @@ bool ConfigParser::loadFromJson(json11::Json::object _jsobj, bool load_only_user
     }
 
     //FOR KEY USER_DATA
-    if(_jsobj.find(INI_USER_DATA_CATEGORY_TOKEN) != _jsobj.end() && _jsobj[INI_USER_DATA_CATEGORY_TOKEN].is_object()) {
+    if(!_jsobj[INI_USER_DATA_CATEGORY_TOKEN].is_null() && _jsobj.find(INI_USER_DATA_CATEGORY_TOKEN) != _jsobj.end() && _jsobj[INI_USER_DATA_CATEGORY_TOKEN].is_object()) {
         json11::Json::object settings_obj = _jsobj[INI_USER_DATA_CATEGORY_TOKEN].object_items();
         //GET SINGLE ITEMS
         for (size_t i = 0; i < entries.size(); i++)
@@ -198,7 +198,7 @@ bool ConfigParser::writeConfigFile(std::string _file)
 
 void ConfigParser::loadDefaults() {
 	//DEFAULT CONFIG HARD CODED :)
-	config_store[ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL] = "http://atomicchess.de:3000";
+	config_store[ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL] = "http://192.168.178.24:3000";
 	config_store[ConfigParser::CFG_ENTRY::NETWORK_HEARTBEAT_INTERVAL_SECS] = "5";
 	
 	
@@ -249,6 +249,8 @@ void ConfigParser::loadDefaults() {
 	
 	config_store[ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH] = "1";
 	config_store[ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE] = "1";
+	config_store[ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTOLOGIN] = "1";
+	config_store[ConfigParser::CFG_ENTRY::USER_RESERVED_SKIP_CHESS_PLACEMENT_DIALOG] = "1";
 	
 
 }

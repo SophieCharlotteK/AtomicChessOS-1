@@ -52,10 +52,16 @@ bool BackendConnector::download_config(ConfigParser* __parser_instance, bool _us
         if(!parse_err.empty()){
             return false;
         }
+	    bool f = json_root.is_null();
+	    bool t = root_obj.count("cfg");
+	    bool h = root_obj["cfg"].is_object();
        //CHECK FOR cfg OBJ
-        if(root_obj.find("cfg") != root_obj.end() && root_obj["cfg"].is_object()) {
+        if(root_obj.find("cfg") != root_obj.end() && !root_obj["cfg"].is_null() && root_obj["cfg"].is_object()) {
             return __parser_instance->loadFromJson(root_obj["cfg"].object_items(), _userdata_only);
-        }
+        }else
+	    {
+		    return false;
+	    }
     }
 
 

@@ -135,6 +135,7 @@ int main(int argc, char *argv[])
 	if(cmdOptionExists(argv, argv + argc, "-writeconfig"))
 	{
 		LOG_F(WARNING, "ARGUMENT -writeconfig SET => CREATE NEW CONFIG FILE");
+		//TODO
 		ConfigParser::getInstance()->loadDefaults();
 		ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
 	}
@@ -229,7 +230,7 @@ int main(int argc, char *argv[])
 	std::string fwver = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_VERSION_FILE_PATH);
 	std::string hwrev = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_HWREV_FILE_PATH);
 	std::string bootpart = ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::GENERAL_BOOT_PARTION_INFO_FILE_PATH);
-	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, fwver + "|" + hwrev + "|" + bootpart);
+	gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_RANK_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, fwver + "|" + hwrev + "|" + bootpart);
 	LOG_F(INFO, (const char*)fwver.c_str());
 	
 	
@@ -248,14 +249,28 @@ int main(int argc, char *argv[])
 	//=> HOME, SETUP COILS
 	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_WHITE_TURN);
 	bool board_scan = true;
-	if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK)
+	//ASKS THE USER TO PLACE THE FIGURE CORRECTLY
+	if(cmdOptionExists(argv, argv + argc, "-skipplacementdialog") || ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_RESERVED_SKIP_CHESS_PLACEMENT_DIALOG))
 	{
 		board_scan = false;
 	}
-	else if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_CANCEL)
+	else
 	{
-		board_scan = true;
+		if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK)
+		{
+			board_scan = false;
+		}
+		else if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "CHESS FIGURES PLACED IN PARKING POSITIONS?", 10000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_CANCEL)
+		{
+			board_scan = true;
+		}
 	}
+		
+		
+	
+	
+	
+	
 	HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PRECCESSING);
 	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 	while (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
@@ -329,11 +344,48 @@ int main(int argc, char *argv[])
 
 	}
 	
-	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+	//AUTOLOGIN => IF SET PERFORM AN AUTOLOGIN AND GOTO THE MAIN MENU
+	if (ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTOLOGIN))
+	{	
+		
+		if (gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
+		{
+			//LOAD USER CONFIG FROM SERVER (MAYBE)
+			//IF NOT EXISTS UPLOAD THEM
+			if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
+				gamebackend.upload_config(ConfigParser::getInstance());
+			}
+			//START HEARTBEAT THREAD
+			if(gamebackend.start_heartbeat_thread()) {
+				//SWITCH TO MAIN MENU
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
+				//PLACE THE GOT SESSION ID ON THE INFO SCREEN
+				gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
+				//SHOW PLAYERNAME ON INFO SCREEN
+				gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "Playername: " + gamebackend.getPlayerProfile().friendly_name + " | " + gamebackend.getPlayerProfile().elo_rank_readable);
+				
+				
+				//SET USER TO AUTO SEARCHING
+				if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
+				{
+					gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  	
+				}
+				
+				
+			}else {
+				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED_HEARTBEAT", 4000);
+				LOG_F(ERROR, "GOT LOGIN_FAILED_HEARTBEAT START THREAD");
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+			}
+		}
+		
+		
+	}
+	else {
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+	}
 	
-	//TOTO IF SET AUTO LOGIN AND AUTO EN MATCHMAKING
-	//USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE
-
+	
 	
 	//INIT SYSTEM TIMER
 	TimePoint t1 = Clock::now();
@@ -533,7 +585,10 @@ int main(int argc, char *argv[])
 			if(gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
 			{
                 //LOAD USER CONFIG FROM SERVER (MAYBE)
-                gamebackend.download_config(ConfigParser::getInstance(),true);
+			//IF NOT EXISTS UPLOAD THEM
+				if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
+					gamebackend.upload_config(ConfigParser::getInstance());
+				}
 				//START HEARTBEAT THREAD
 				if(gamebackend.start_heartbeat_thread()) {
 					//SWITCH TO MAIN MENU
@@ -548,9 +603,16 @@ int main(int argc, char *argv[])
 					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 				}
 				
-#ifdef DEBUG
-				gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  
-#endif // DEBUG
+				
+				
+				//SET USER TO AUTO SEARCHING
+				if (ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
+				{
+					gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  	
+				}
+
+				
+
 
 			
 			}else {
@@ -677,7 +739,8 @@ int main(int argc, char *argv[])
 		if(ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 			//LOGOUT AND GOTO LOGIN SCREEN
-			if(gamebackend.stop_heartbeat_thread() && gamebackend.logout()) {
+			if(gamebackend.stop_heartbeat_thread()) {
+				gamebackend.logout();
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 			}
 		}
