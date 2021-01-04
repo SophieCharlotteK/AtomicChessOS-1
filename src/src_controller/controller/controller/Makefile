@@ -16,7 +16,7 @@ macros-to-preprocessor-directives = $(foreach __macro, $(strip $1), \
 		--pd "$(firstword $(subst =, ,$(__macro))) SETA $(subst ",\",$(lastword $(subst =, ,$(__macro))))", \
 		--pd "$(__macro) SETA 1")) \
 
-CONFIG ?= RELEASE
+CONFIG ?= DEBUGLOCAL
 
 CONFIGURATION_FLAGS_FILE := $(call to_lowercase,$(CONFIG)).mak
 TOOLCHAIN_ROOT ?= $(toolchain_root)
