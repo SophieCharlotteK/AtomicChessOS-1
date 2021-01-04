@@ -100,7 +100,7 @@ LIBRARY_LDFLAGS = $(addprefix -l,$(LIBRARY_NAMES))
 ifeq ($(IS_LINUX_PROJECT),1)
 	RPATH_PREFIX := -Wl,--rpath='$$ORIGIN/../
 	LIBRARY_LDFLAGS += $(EXTERNAL_LIBS)
-	LIBRARY_LDFLAGS += -Wl,--rpath='$$ORIGIN'
+	#LIBRARY_LDFLAGS += -Wl,--rpath='$$ORIGIN'
 	LIBRARY_LDFLAGS += $(addsuffix ',$(addprefix $(RPATH_PREFIX),$(dir $(EXTERNAL_LIBS))))
 	
 	ifeq ($(TARGETTYPE),SHARED)
