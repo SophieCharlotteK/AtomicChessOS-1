@@ -673,7 +673,7 @@ Rectangle {
                 y: 14
                 width: 209
                 height: 60
-                text: qsTr("CALIBRATE_HOME_POS")
+                text: qsTr("MAKE MOVE MANUAL")
                 Connections {
                     target: debug_fkt_a_btn
                     function onClicked(_mouse){
@@ -778,7 +778,7 @@ Rectangle {
                 y: 218
                 width: 209
                 height: 60
-                text: qsTr("ENTER MOVE")
+                text: qsTr("---")
                 Connections {
                     target: debug_fkt_h_btn
                     function onClicked(_mouse){
