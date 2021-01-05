@@ -128,5 +128,7 @@ public:
 	
 	static ChessField::CHESS_FILEDS get_field_from_board_index(int _board_index);
 	static int get_board_index_from_field(ChessField::CHESS_FILEDS _field);
+	
+	static bool is_row_over_row(ChessField::CHESS_FILEDS _a, ChessField::CHESS_FILEDS _b); //THIS FUNCTIONS RETURNS TRUE IF FIELD A IS (SEEN BY Y AXIS) OVER THE FIELD B; ITS USED TO DECIED WHET TO TRAVEL UP/DOWN TO GET AWAY TO THE CENTER FIELD
 };
 

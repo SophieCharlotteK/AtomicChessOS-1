@@ -11,6 +11,26 @@ ChessField::CHESS_FILEDS ChessField::Index2Field(int _field){
 }
 
 
+bool ChessField::is_row_over_row(ChessField::CHESS_FILEDS _a, ChessField::CHESS_FILEDS _b)
+{
+	int heigth_a = field2Index(_a) / 8;
+	int heigth_b = field2Index(_b) / 8;
+	
+	
+	//CHECK FOR PARK POS
+	if (heigth_a < 64 && heigth_b < 64)
+	{
+		if (heigth_a > heigth_b)
+		{
+		
+			return true;
+		}
+		return false;	
+	}
+	
+	
+}
+
 int ChessField::get_board_index_from_field(ChessField::CHESS_FILEDS _field)
 {
 	const int LUT[96] = { 

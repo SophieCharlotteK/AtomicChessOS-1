@@ -348,7 +348,13 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 		EN_END_WORKAROUND = true;
 		INVERT_FIELD_OFFSET_END = -1;
 	}
-	
+	//
+	if (ChessField::is_row_over_row(_move.from_field, _move.to_field))
+	{
+		EN_END_WORKAROUND = true;
+		INVERT_FIELD_OFFSET_END = -1;
+	}
+		
 	//FIST GET THE MOTOR COORINATES
 	if(isFieldParkPosition(_move.from_field))
 	{

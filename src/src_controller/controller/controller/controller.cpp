@@ -131,6 +131,8 @@ int main(int argc, char *argv[])
 	LOG_SCOPE_F(INFO, "ATC CONTROLLER STARTED");
 	
 	
+	bool i = ChessField::is_row_over_row(ChessField::CHESS_FILEDS::CHESS_FIELD_A7, ChessField::CHESS_FILEDS::CHESS_FIELD_D7);
+	bool ij = ChessField::is_row_over_row(ChessField::CHESS_FILEDS::CHESS_FIELD_D7, ChessField::CHESS_FILEDS::CHESS_FIELD_C7);
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
 	
