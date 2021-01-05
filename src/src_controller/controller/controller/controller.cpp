@@ -61,7 +61,8 @@ std::string readHWID(std::string _file)
 
 
 int mainloop_running = 0;
-BackendConnector* gamebackend_logupload = nullptr; //USED ONLY FOR UPLOADING THE LOGS
+bool make_move_mode = false;
+BackendConnector* gamebackend_logupload = nullptr;  //USED ONLY FOR UPLOADING THE LOGS
 
 std::string get_interface_mac_address(const string& _ifname) {
 	ifstream iface("/sys/class/net/" + _ifname + "/address");
@@ -131,8 +132,7 @@ int main(int argc, char *argv[])
 	LOG_SCOPE_F(INFO, "ATC CONTROLLER STARTED");
 	
 	
-	bool i = ChessField::is_row_over_row(ChessField::CHESS_FILEDS::CHESS_FIELD_A7, ChessField::CHESS_FILEDS::CHESS_FIELD_D7);
-	bool ij = ChessField::is_row_over_row(ChessField::CHESS_FILEDS::CHESS_FIELD_D7, ChessField::CHESS_FILEDS::CHESS_FIELD_C7);
+	
 	//READ CONFIG FILE
 	LOG_SCOPE_F(INFO, "LOADING CONFIG FILE ./atccontrollerconfig.ini");
 	
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
 	if(!ConfigParser::getInstance()->loadConfigFile(CONFIG_FILE_PATH))
 	{
 		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
-		ConfigParser::getInstance()->loadDefaults();         //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
+		ConfigParser::getInstance()->loadDefaults();          //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
 		ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
 		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
 		return 1;
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 	LOG_F(INFO, (const char*)hwid.c_str());
 
 	//IF WE ARE ON THE DK HARDWARE THEN OVERRIDE THE DEFAULT CONFIG
-	if (hwid == "b827ebad862f")
+	if(hwid == "b827ebad862f")
 	{
 		LOG_F(WARNING, "DETECTED HWID WITH DK HARDWARE PATCHING CONFIG TO DK");	
 		//STORE ONLY IN DEBUG MODE PERSISTENT
@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
 	//SARTING GUI COMMUNICATOR PROCESS
 	LOG_F(INFO, "guicommunicator startig ipc thread");
 	guicommunicator gui;
-	gui.start_recieve_thread(); //START RECEIEVE WEBSERVER
+	gui.start_recieve_thread();  //START RECEIEVE WEBSERVER
 	
 	//USER_GENERAL_EN_ATCGUI_COMMUNICATION
 	bool cfg_res = false;
@@ -296,7 +296,7 @@ int main(int argc, char *argv[])
 	gamebackend.setHearbeatCallInterval(gamebackend_heartbeat_interval);
 	
 	//NOW TRY TO CONNECT TO THE SERVER
-	std::string ALTERNATIVE_BACKEND_URL[] = { "http://192.168.178.125:3000", "http://192.168.178.24:3000", "http://atomicchess.de:3000", "http://marcelochsendorf.com:3000", "http://marcelochsendorf.com:3001", "http://marcelochsendorf.com:3002", "http://prodevmo.com:3001", "http://prodevmo.com:3002", "http://127.0.0.1:3000" };	
+	std::string ALTERNATIVE_BACKEND_URL[] = { "http://192.168.178.24:3000", "http://atomicchess.de:3000", "http://marcelochsendorf.com:3000", "http://marcelochsendorf.com:3001", "http://marcelochsendorf.com:3002", "http://prodevmo.com:3001", "http://prodevmo.com:3002", "http://127.0.0.1:3000" };	
 	//CHECK IF GAMESERVER IS REACHABLE ELSE USE A OTHER PREDEFINED URL
 	volatile int abu_counter = 0;
 	volatile bool abu_result = true;
@@ -351,7 +351,7 @@ int main(int argc, char *argv[])
 	}
 	
 	//AUTOLOGIN => IF SET PERFORM AN AUTOLOGIN AND GOTO THE MAIN MENU
-	if (ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTOLOGIN))
+	if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTOLOGIN))
 	{	
 		
 		if (gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
@@ -537,7 +537,7 @@ int main(int argc, char *argv[])
 								LOG_F(ERROR, "LEGAL_MOVES_EMPTY - CANCEL GAME");
 							}
 						
-						//READ HUMAN PLAYER INPUT
+							//READ HUMAN PLAYER INPUT
 						}else
 						{
 						}
@@ -592,7 +592,7 @@ int main(int argc, char *argv[])
 			//PERFORM A LOGIN AS HUMAN
 			if(gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
 			{
-                //LOAD USER CONFIG FROM SERVER (MAYBE)
+				//LOAD USER CONFIG FROM SERVER (MAYBE)
 			//IF NOT EXISTS UPLOAD THEM
 				if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
 					LOG_F(WARNING, "download_config failed - upload current config");
@@ -615,7 +615,7 @@ int main(int argc, char *argv[])
 				
 				
 				//SET USER TO AUTO SEARCHING
-				if (ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
+				if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
 				{
 					gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  	
 				}
@@ -655,7 +655,7 @@ int main(int argc, char *argv[])
 		//--------------------------------------------------------
 		//----------------SCAN BOARD BTN--------------------------
 		//--------------------------------------------------------
-		if((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN || ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		if((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 			if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
 			{
@@ -705,28 +705,28 @@ int main(int argc, char *argv[])
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
 		}
 			
-        //--------------------------------------------------------
-        //----------------DEBUG - UPLOAD CONFIG BUTTON--------------
-        //--------------------------------------------------------
-        if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-            gamebackend.upload_config(ConfigParser::getInstance()); 
-        }
+		//--------------------------------------------------------
+		//----------------DEBUG - UPLOAD CONFIG BUTTON--------------
+		//--------------------------------------------------------
+		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			gamebackend.upload_config(ConfigParser::getInstance()); 
+		}
         
 		//--------------------------------------------------------
 	   //----------------DEBUG - UPLOAD LOG BUTTON--------------
 	   //--------------------------------------------------------
 	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-		   LOG_F(WARNING, "MANUAL LOG UPLOAD");
-		   LOG_F(WARNING, LOG_FILE_PATH_ERROR);
-		   loguru::flush();
-		   //IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
-		   std::string log = read_file_to_string(LOG_FILE_PATH_ERROR);
-		   if (!log.empty())
-		   {
-			   gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			   gamebackend.upload_logfile(log);
-			   gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
-		   } 
+			LOG_F(WARNING, "MANUAL LOG UPLOAD");
+			LOG_F(WARNING, LOG_FILE_PATH_ERROR);
+			loguru::flush();
+			//IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
+			std::string log = read_file_to_string(LOG_FILE_PATH_ERROR);
+			if (!log.empty())
+			{
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+				gamebackend.upload_logfile(log);
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+			} 
 		}
         
 		
@@ -734,12 +734,29 @@ int main(int argc, char *argv[])
 		//--------------------------------------------------------
         //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
         //--------------------------------------------------------
-        if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-	        LOG_F(WARNING, "DEBUG - DOWNLOAD CONFIG BUTTON TRIGGERED ");
-			gamebackend.download_config(ConfigParser::getInstance(),true); 
+        if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_H && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			LOG_F(WARNING, "DEBUG -SHOW MAKE MOVE SCREEN ");
+	        make_move_mode = true;
+	        
+	        gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN); 
+		}
+		if (ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT && ev.type == guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING && make_move_mode) {
+			make_move_mode = false;
+			ChessBoard::MovePiar mvpair = board.StringToMovePair(ev.value);
+			if (mvpair.is_valid) {
+				board.makeMoveSync(mvpair, false, false, false);
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN); 
+			}
+			
 		}
 		
-         
+		//--------------------------------------------------------
+	   //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
+	   //--------------------------------------------------------
+	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+			LOG_F(WARNING, "DEBUG - DOWNLOAD CONFIG BUTTON TRIGGERED ");
+			gamebackend.download_config(ConfigParser::getInstance(), true); 
+		}
 		
 		//--------------------------------------------------------
 		//----------------LOGOUT BUTTON --------------------------
