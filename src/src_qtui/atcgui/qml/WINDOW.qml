@@ -39,6 +39,8 @@ Rectangle {
             y: 18
             width: 164
             height: 34
+            text: "Atomic Chess OS"
+            horizontalAlignment: Text.AlignHCenter
             visible: true
             lineHeightMode: Text.ProportionalHeight
             fontSizeMode: Text.FixedSize
@@ -52,6 +54,8 @@ Rectangle {
             width: 164
             height: 34
             text: qsTr("ATC")
+            visible: false
+            horizontalAlignment: Text.AlignLeft
             font.pixelSize: 30
             fontSizeMode: Text.FixedSize
             lineHeightMode: Text.ProportionalHeight
@@ -127,6 +131,7 @@ Rectangle {
     Rectangle {
         id: mm_container
         objectName: "mm_container"
+        property var headline_bar_name:"Main Menu"
         x: 0
         y: 69
         width: 800
@@ -238,6 +243,7 @@ Rectangle {
     Rectangle {
         id: ls_container
         objectName: "ls_container"
+        property var headline_bar_name:"Login"
         x: 0
         y: 69
         width: 800
@@ -264,12 +270,13 @@ Rectangle {
     Rectangle {
         id: ss_container
         objectName: "ss_container"
+        property var headline_bar_name:"Settings"
         x: 0
         y: 68
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: false
+        visible: true
         Grid {
             id: ss_manual_function_buttons_grid
             x: 0
@@ -327,8 +334,10 @@ Rectangle {
 
         Button {
             id: sm_back_btn
-            x: 686
-            y: 363
+            x: 571
+            y: 323
+            width: 200
+            height: 80
             text: qsTr("BACK")
             Connections {
                 target: sm_back_btn
@@ -340,9 +349,11 @@ Rectangle {
 
         Button {
             id: sm_dbg_btn
-            x: 686
+            x: 571
             y: 8
-            text: qsTr("DBG")
+            width: 200
+            height: 80
+            text: qsTr("ADV OPTIONS")
             Connections {
                 target: sm_dbg_btn
                 function onClicked(_mouse){
@@ -361,6 +372,7 @@ Rectangle {
         color: "#07a8a5"
         visible: false
         objectName: "is_container"
+        property var headline_bar_name:"Information"
 
         Button {
             id: is_back_btn
@@ -439,6 +451,7 @@ Rectangle {
         height: 411
         color: "#07a8a5"
         objectName: "es_container"
+        property var headline_bar_name:"System Error"
         Button {
             id: es_back_btn
             x: 686
@@ -470,6 +483,7 @@ Rectangle {
     Rectangle {
         id: msgta_container
         objectName: "msgta_container"
+        property var headline_bar_name:"Alert Message"
         x: 2
         y: 70
         width: 800
@@ -535,6 +549,7 @@ Rectangle {
     Rectangle {
         id: msgtb_container
         objectName: "msgtb_container"
+        property var headline_bar_name:"Alert Message"
         x: 2
         y: 70
         width: 800
@@ -584,6 +599,7 @@ Rectangle {
     Rectangle {
         id: processing_container
         objectName: "processing_container"
+        property var headline_bar_name:"-- PLEASE WAIT --"
         x: 0
         y: 70
         width: 800
@@ -619,6 +635,7 @@ Rectangle {
         color: "#07a8a5"
         visible: false
         objectName: "debug_container"
+        property var headline_bar_name:"Advanced Options"
         Text {
             id: debug_headline_label
             x: 351
@@ -783,6 +800,7 @@ Rectangle {
         border.color: "#000100"
         visible: false
         objectName: "game_container"
+        property var headline_bar_name:"Game Status"
         Text {
             id: game_headline_label
             x: 308
@@ -878,6 +896,7 @@ Rectangle {
     Rectangle {
         id: showavariableplayer_container
         objectName: "showavariableplayer_container"
+        property var headline_bar_name:"Player Lobby"
         x: 0
         y: 70
         width: 800

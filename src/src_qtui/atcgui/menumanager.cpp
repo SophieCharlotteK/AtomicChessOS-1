@@ -39,6 +39,11 @@ guiconnection.start_recieve_thread();
 guiconnection.createEvent(guicommunicator::GUI_ELEMENT::QI_START_EVENT,guicommunicator::GUI_VALUE_TYPE::ENABLED);
 }
 
+
+void MenuManager::set_headline_text(QString _name){
+set_label_text("hb_container","hb_headline_text",_name);
+}
+
 void MenuManager::set_icon_image(QString _container_name, QString _image_name, QString _path){
     QObject* recht1 = this->parent()->findChild<QObject*>(_container_name);
     if(recht1){
@@ -115,6 +120,19 @@ void MenuManager::switch_menu(QString _screen){
     set_visible_element("showavariableplayer_container",false);
     //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
+
+    //SET HEADLINE TEXT => READ PROPERTY FROM RECT ELEMENT
+    QObject* recht1 = this->parent()->findChild<QObject*>(_screen);
+    if(recht1){
+         QString name = (QString)recht1->property("headline_bar_name").toString();
+         if(!name.isEmpty()){
+            set_headline_text(name);
+         }
+
+    }else{
+        qInfo()<< "cant get element" << _screen;
+    }
+
 }
 //ENABLES A SPECIFIC MENU 
 void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){

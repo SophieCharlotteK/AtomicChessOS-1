@@ -76,6 +76,7 @@ private:
     void switch_menu(guicommunicator::GUI_VALUE_TYPE _screen);
     void switch_menu(QString _screen);
     void set_visible_element(QString _name, bool _state);
+    void set_headline_text(QString _name);
     void updateProgress();
     QString last_menu_opened = "";
     QString current_menu_opened = "";
