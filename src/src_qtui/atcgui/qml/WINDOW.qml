@@ -276,7 +276,7 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: true
+        visible: false
         Grid {
             id: ss_manual_function_buttons_grid
             x: 0
@@ -778,7 +778,7 @@ Rectangle {
                 y: 218
                 width: 209
                 height: 60
-                text: qsTr("FKT_H")
+                text: qsTr("ENTER MOVE")
                 Connections {
                     target: debug_fkt_h_btn
                     function onClicked(_mouse){
@@ -919,6 +919,347 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id: mmem_container
+        objectName: "mmem_container"
+        property var headline_bar_name:"Enter Move Manually"
+        x: 0
+        y: 70
+        width: 800
+        height: 411
+        color: "#07a8a5"
+        visible: false
+
+        Text {
+            id: mmem_chosen_move_label
+            objectName: "mmem_chosen_move_label"
+            x: 304
+            y: 109
+            width: 192
+            height: 57
+            text: qsTr("----")
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 50
+        }
+
+        Text {
+            id: mmem_move_headline
+            x: 315
+            y: 68
+            width: 173
+            height: 35
+            text: qsTr("Entered Move")
+            font.pixelSize: 20
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Button {
+            id: memm_mi_a_btn
+            x: 28
+            y: 25
+            width: 70
+            height: 70
+            text: qsTr("A")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_a_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("a")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_b_btn
+            x: 182
+            y: 25
+            width: 70
+            height: 70
+            text: qsTr("B")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_b_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("b")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_d_btn
+            x: 182
+            y: 122
+            width: 70
+            height: 70
+            text: qsTr("D")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_d_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("d")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_f_btn
+            x: 182
+            y: 219
+            width: 70
+            height: 70
+            text: qsTr("F")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_f_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("f")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_c_btn
+            x: 28
+            y: 122
+            width: 70
+            height: 70
+            text: qsTr("C")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_c_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("c")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_e_btn
+            x: 28
+            y: 219
+            width: 70
+            height: 70
+            text: qsTr("E")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_e_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("e")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_g_btn
+            x: 28
+            y: 316
+            width: 70
+            height: 70
+            text: qsTr("G")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_g_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("g")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_h_btn
+            x: 182
+            y: 316
+            width: 70
+            height: 70
+            text: qsTr("H")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_h_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("h")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_1_btn
+            x: 538
+            y: 25
+            width: 70
+            height: 70
+            text: qsTr("1")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_1_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("1")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_2_btn
+            x: 696
+            y: 25
+            width: 70
+            height: 70
+            text: qsTr("2")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_2_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("2")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_4_btn
+            x: 696
+            y: 122
+            width: 70
+            height: 70
+            text: qsTr("4")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_4_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("4")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_6_btn
+            x: 696
+            y: 219
+            width: 70
+            height: 70
+            text: qsTr("6")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_6_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("6")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_3_btn
+            x: 538
+            y: 122
+            width: 70
+            height: 70
+            text: qsTr("3")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_3_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("3")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_5_btn
+            x: 538
+            y: 219
+            width: 70
+            height: 70
+            text: qsTr("5")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_5_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("5")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_7_btn
+            x: 538
+            y: 316
+            width: 70
+            height: 70
+            text: qsTr("7")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_7_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("7")
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_8_btn
+            x: 696
+            y: 316
+            width: 70
+            height: 70
+            text: qsTr("8")
+            font.pointSize: 20
+            font.bold: true
+            Connections {
+                            target: memm_mi_8_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_user_input("8")
+                            }
+            }
+        }
+
+        Button {
+            id: memm_mi_ok_btn
+            x: 304
+            y: 244
+            width: 184
+            height: 69
+            text: qsTr("OK")
+            font.pointSize: 15
+            font.bold: true
+            Connections {
+                            target: memm_mi_ok_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_ok()
+                            }
+                        }
+        }
+
+        Button {
+            id: memm_mi_rest_btn
+            x: 304
+            y: 341
+            width: 184
+            height: 45
+            text: qsTr("RESET")
+            font.pointSize: 15
+            Connections {
+                            target: memm_mi_rest_btn
+                            function onClicked(_mouse){
+                                main_menu.memm_enter_move_reset()
+                            }
+                        }
+        }
+
+
+    }
 
 
 }

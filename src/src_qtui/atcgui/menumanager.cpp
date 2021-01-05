@@ -31,6 +31,8 @@ menu_levels["ss_container"] = 2;
 menu_levels["debug_container"] = 3;
 menu_levels["is_container"] = 4;
 
+menu_levels["mmem_container"] = 4;
+
 
 
 //switch_menu(guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
@@ -118,6 +120,8 @@ void MenuManager::switch_menu(QString _screen){
     set_visible_element("debug_container",false);
     set_visible_element("game_container",false);
     set_visible_element("showavariableplayer_container",false);
+    set_visible_element("mmem_container",false);
+
     //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
 
@@ -148,7 +152,7 @@ void MenuManager::switch_menu(guicommunicator::GUI_VALUE_TYPE _screen){
         case guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN:{switch_menu("debug_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN:{switch_menu("game_container");break;}
         case guicommunicator::GUI_VALUE_TYPE::PLAYER_SEARCH_SCREEN:{switch_menu("showavariableplayer_container");break;}
-        
+        case guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN:{switch_menu("mmem_container");break;}
 
         default:break;
     }
@@ -200,8 +204,18 @@ void MenuManager::updateProgress()
         }
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES){
         set_label_text("game_container","game_possible_move_text",QString::fromStdString(ev.value));
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_LABEL){
+        set_label_text("mmem_container","mmem_chosen_move_label",QString::fromStdString(ev.value));
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT){
+        user_entered_move =  QString::fromStdString(ev.value);
+        set_label_text("mmem_container","mmem_chosen_move_label",user_entered_move);
     }
 
+
+    /*
+     * user_entered_move = "";
+    set_label_text("mmem_container","mmem_chosen_move_label",user_entered_move);
+     * */
 }
 
 
@@ -314,4 +328,52 @@ void MenuManager::debug_screen_fkt(int _id){
 void MenuManager::gs_abort_game(){
     qInfo() <<"gs_abort_game";
     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_ABORT_GAME, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+}
+
+
+void MenuManager::memm_enter_move_ok(){
+    qInfo() <<"memm_enter_move_ok";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_OK, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,user_entered_move);
+}
+
+void MenuManager::memm_enter_move_reset(){
+    qInfo() <<"memm_enter_move_reset";
+    guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_RESET, guicommunicator::GUI_VALUE_TYPE::CLICKED);
+    user_entered_move = "";
+    set_label_text("mmem_container","mmem_chosen_move_label",user_entered_move);
+}
+
+bool MenuManager::is_number(QChar _char){
+    return QString(_char).contains(QRegExp("^[1-8]*$"));
+}
+bool MenuManager::is_alpha(QChar _char){
+    return QString(_char).contains(QRegExp("^[a-h]*$"));
+}
+
+void MenuManager::memm_enter_move_user_input(QString _charakter){
+
+
+     qInfo() <<"memm_enter_move_user_input " << _charakter;
+     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT_RAW, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,_charakter);
+
+     if(_charakter.size() == 1){
+
+         if(is_alpha(_charakter.at(0)) && user_entered_move.size() > 0 && is_alpha(user_entered_move.at(user_entered_move.size()-1))){
+            return;
+         }
+         if(is_number(_charakter.at(0)) && user_entered_move.size() > 0 && is_number(user_entered_move.at(user_entered_move.size()-1))){
+            return;
+         }
+
+         user_entered_move += _charakter;
+          qInfo() <<"memm_enter_move_user_input user_entered_move" << user_entered_move;
+         if(user_entered_move.size() == 4){
+            guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,user_entered_move);
+            user_entered_move = "";
+         }
+         set_label_text("mmem_container","mmem_chosen_move_label",user_entered_move);
+     }
+
+
 }

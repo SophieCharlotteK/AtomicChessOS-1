@@ -69,6 +69,10 @@ public slots:
     //---- GAME SCREEN---- //
     void gs_abort_game();
 
+   //----- PLAYER ENTER MOVE MANUAL SCREEN --- //
+    void memm_enter_move_reset();
+    void memm_enter_move_ok();
+    void memm_enter_move_user_input(QString _charakter);
 
 private:
     void show_error(QString _err);
@@ -80,11 +84,14 @@ private:
     void updateProgress();
     QString last_menu_opened = "";
     QString current_menu_opened = "";
-
+    QString user_entered_move ="";
     QStack<QString> menu_visist_history;
     QMap<QString, int> menu_levels;
     void set_label_text(QString _container_name, QString _labelname,QString _text);
     void set_icon_image(QString _container_name, QString _image_name, QString _path);
+
+    bool is_number(QChar _char);
+    bool is_alpha(QChar _char);
 };
 
 #endif // MAINMENU_H
