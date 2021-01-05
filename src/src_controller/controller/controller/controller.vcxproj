@@ -81,8 +81,6 @@
     <ClCompile Include="SHARED\json11-master\json11.cpp" />
     <ClCompile Include="SHARED\loguru-master\loguru.cpp" />
     <ClCompile Include="SHARED\serialib-master\lib\serialib.cpp" />
-    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcNet.c" />
-    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcSerial.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\piHiPri.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\piThread.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\pseudoPins.c" />
@@ -121,8 +119,6 @@
     <ClInclude Include="SHARED\CppLinuxSerial-master\include\CppLinuxSerial\Exception.hpp" />
     <ClInclude Include="SHARED\guicommunicator\guicommunicator.h" />
     <ClInclude Include="SHARED\serialib-master\lib\serialib.h" />
-    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcNet.h" />
-    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcSerial.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\pseudoPins.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\softPwm.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\softServo.h" />

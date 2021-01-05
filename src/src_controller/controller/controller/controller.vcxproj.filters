@@ -51,9 +51,6 @@
     <ClCompile Include="SHARED\json11-master\json11.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcNet.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPi.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringShift.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="SHARED\WiringPi-master\wiringPi\drcSerial.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\piHiPri.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -143,9 +137,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\cpp-httplib-master\httplib.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcNet.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPi.h">
@@ -191,9 +182,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringShift.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\WiringPi-master\wiringPi\drcSerial.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\pseudoPins.h">

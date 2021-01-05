@@ -42,7 +42,7 @@ typedef std::chrono::system_clock::time_point TimePoint;
 //---------------------- CONFIG DEFINED --------------------------- //
 #define CONFIG_FILE_PATH "./atccontrollerconfig.ini"
 #define LOG_FILE_PATH "/tmp/atc_controller_log.log"
-
+#define LOG_FILE_PATH_ERROR "/tmp/atc_controller_error_log.log"
 using namespace std;
 
 //!Reads the system HWID File from the location
@@ -104,7 +104,7 @@ void signal_callback_handler(int signum)
 	LOG_F(ERROR, "Caught signal %d\n", signum);
 	loguru::flush();
 	//IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
-	std::string log = read_file_to_string(LOG_FILE_PATH);
+	std::string log = read_file_to_string(LOG_FILE_PATH_ERROR);
 	if (!log.empty() && gamebackend_logupload)
 	{
 		gamebackend_logupload->upload_logfile(log);
@@ -123,7 +123,10 @@ int main(int argc, char *argv[])
 	
 	//SETUP LOGGER
 	loguru::init(argc, argv);
-	loguru::add_file(LOG_FILE_PATH, loguru::Append, loguru::Verbosity_MAX);
+	loguru::add_file(LOG_FILE_PATH, loguru::Truncate, loguru::Verbosity_MAX);
+	loguru::add_file(LOG_FILE_PATH_ERROR, loguru::Truncate, loguru::Verbosity_WARNING);
+	
+	
 	loguru::g_stderr_verbosity = 1;
 	LOG_SCOPE_F(INFO, "ATC CONTROLLER STARTED");
 	
@@ -253,6 +256,7 @@ int main(int argc, char *argv[])
 	if(cmdOptionExists(argv, argv + argc, "-skipplacementdialog") || ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_RESERVED_SKIP_CHESS_PLACEMENT_DIALOG))
 	{
 		board_scan = false;
+		LOG_F(WARNING, "USER_RESERVED_SKIP_CHESS_PLACEMENT_DIALOG IS SET skip board scan");
 	}
 	else
 	{
@@ -296,8 +300,8 @@ int main(int argc, char *argv[])
 	volatile bool abu_result = true;
 	while (!gamebackend.check_connection()) {
 		gamebackend.set_backend_base_url(ALTERNATIVE_BACKEND_URL[abu_counter]);
-		LOG_F(INFO, "gamebackend - change backendurl due prev not abariable");
-		LOG_F(INFO, "%s", ALTERNATIVE_BACKEND_URL[abu_counter].c_str());
+		LOG_F(WARNING, "gamebackend - change backendurl due prev not abariable");
+		LOG_F(WARNING, "%s", ALTERNATIVE_BACKEND_URL[abu_counter].c_str());
 #ifdef DEBUG
 		gui.show_error_message_on_gui("" + gamebackend.get_backend_base_url() + "");
 #endif
@@ -317,7 +321,7 @@ int main(int argc, char *argv[])
 		//SHOW MESSAGEBOX IF THE CURRENT URL IS A DIFFERENT THAN IN THE CONFIG
 		if(gamebackend.get_backend_base_url() != ConfigParser::getInstance()->get(ConfigParser::CFG_ENTRY::NETWORK_BACKEND_URL))
 		{
-			if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "GAME_SERVER_URL_CHANGED:" + gamebackend.get_backend_base_url(), 1000) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
+			if (gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "GAME_SERVER_URL_CHANGED:" + gamebackend.get_backend_base_url(), 100) != guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 			}
 		}
@@ -353,6 +357,7 @@ int main(int argc, char *argv[])
 			//LOAD USER CONFIG FROM SERVER (MAYBE)
 			//IF NOT EXISTS UPLOAD THEM
 			if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
+				LOG_F(WARNING, "download_config failed - upload current config");
 				gamebackend.upload_config(ConfigParser::getInstance());
 			}
 			//START HEARTBEAT THREAD
@@ -368,6 +373,7 @@ int main(int argc, char *argv[])
 				//SET USER TO AUTO SEARCHING
 				if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
 				{
+					LOG_F(WARNING, "USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE IS SET call set_player_state");
 					gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  	
 				}
 				
@@ -587,6 +593,7 @@ int main(int argc, char *argv[])
                 //LOAD USER CONFIG FROM SERVER (MAYBE)
 			//IF NOT EXISTS UPLOAD THEM
 				if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
+					LOG_F(WARNING, "download_config failed - upload current config");
 					gamebackend.upload_config(ConfigParser::getInstance());
 				}
 				//START HEARTBEAT THREAD
@@ -636,6 +643,7 @@ int main(int argc, char *argv[])
 			if (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
 			{
 				gui.show_error_message_on_gui("board.initBoard() FAILED");
+				
 			}
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 		}
@@ -699,25 +707,24 @@ int main(int argc, char *argv[])
         //----------------DEBUG - UPLOAD CONFIG BUTTON--------------
         //--------------------------------------------------------
         if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-            gamebackend.upload_config(ConfigParser::getInstance());
-            gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "UPLOAD CONFIG TO SERVER", 10000);
- 
+            gamebackend.upload_config(ConfigParser::getInstance()); 
         }
         
 		//--------------------------------------------------------
 	   //----------------DEBUG - UPLOAD LOG BUTTON--------------
 	   //--------------------------------------------------------
 	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-		   LOG_F(INFO, "MANUAL LOG UPLOAD");
+		   LOG_F(WARNING, "MANUAL LOG UPLOAD");
+		   LOG_F(WARNING, LOG_FILE_PATH_ERROR);
 		   loguru::flush();
 		   //IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
-		   std::string log = read_file_to_string(LOG_FILE_PATH);
+		   std::string log = read_file_to_string(LOG_FILE_PATH_ERROR);
 		   if (!log.empty())
 		   {
+			   gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 			   gamebackend.upload_logfile(log);
-		   }
-			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "UPLOAD LOG", 10000);
- 
+			   gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+		   } 
 		}
         
 		
@@ -726,9 +733,8 @@ int main(int argc, char *argv[])
         //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
         //--------------------------------------------------------
         if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gamebackend.download_config(ConfigParser::getInstance(),true);
-			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "DOWNLOAD CONFIG FROM SERVER", 10000);
- 
+	        LOG_F(WARNING, "DEBUG - DOWNLOAD CONFIG BUTTON TRIGGERED ");
+			gamebackend.download_config(ConfigParser::getInstance(),true); 
 		}
 		
          
@@ -753,6 +759,7 @@ int main(int argc, char *argv[])
 			//SET PLAYERSTATE TO OPEN FO A MATCH
 			if(!gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING)) {
 				gui.show_error_message_on_gui("ENABLE MATCHMAKING FAILED");
+				LOG_F(WARNING, "ENABLE MATCHMAKING FAILED TRIGGERED BY USER BUTTON");
 			}
 		}
 		//--------------------------------------------------------
@@ -762,6 +769,7 @@ int main(int argc, char *argv[])
 			//SET PLAYERSTATE TO OPEN FO A MATCH
 			if(!gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE)) {
 				gui.show_error_message_on_gui("DISBALE MATCHMAKING FAILED");
+				LOG_F(WARNING, "DISBALE MATCHMAKING FAILED TRIGGERED BY USER BUTTON");
 			}
 		}	
 			
@@ -772,6 +780,7 @@ int main(int argc, char *argv[])
 			//SET PLAYERSTATE TO OPEN FO A MATCH
 			if(gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE)) {
 				gui.show_error_message_on_gui("GAME STOPPED");
+				LOG_F(WARNING, "GAME STOPPED TRIGGERED BY USER BUTTON");
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
 			}
 		}	
@@ -785,7 +794,8 @@ int main(int argc, char *argv[])
 	
 	//UPLOAD LOGILES
 	loguru::flush();
-	gamebackend.upload_logfile(read_file_to_string(LOG_FILE_PATH));
+	gamebackend.upload_logfile(read_file_to_string(LOG_FILE_PATH_ERROR));
+	gamebackend.logout();
 	
 	return 0;
 }

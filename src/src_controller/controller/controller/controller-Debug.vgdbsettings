@@ -13,7 +13,7 @@
       <UserName>prodevmo</UserName>
     </BuildHost>
     <DeploymentHost>
-      <HostName>192.168.178.131</HostName>
+      <HostName>192.168.178.150</HostName>
       <Transport>SSH</Transport>
       <UserName>root</UserName>
     </DeploymentHost>
@@ -219,7 +219,7 @@
     <LaunchGDBSettings xsi:type="GDBLaunchParametersNewInstance">
       <DebuggedProgram>$(TargetPath)</DebuggedProgram>
       <GDBServerPort>2000</GDBServerPort>
-      <ProgramArguments>-writeconfig</ProgramArguments>
+      <ProgramArguments>-writeconfig -skipplacementdialog</ProgramArguments>
       <ArgumentEscapingMode>Auto</ArgumentEscapingMode>
     </LaunchGDBSettings>
     <GenerateCtrlBreakInsteadOfCtrlC>false</GenerateCtrlBreakInsteadOfCtrlC>

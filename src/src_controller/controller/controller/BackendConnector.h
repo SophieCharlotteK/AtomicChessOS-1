@@ -223,9 +223,10 @@ private:
 	
 	request_result make_request(std::string _url_path);
     request_result make_request_post(std::string _url_path, std::string _post_body_json_data);
-
+	request_result make_request_post_raw(std::string _url_path, std::string _post_body_json_data);
     static void heartbeat_thread_function(BackendConnector* _this);
 	
+	void sanitize(std::string& stringValue);
 	
 	
 };

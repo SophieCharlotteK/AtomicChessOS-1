@@ -7,9 +7,44 @@ BackendConnector::~BackendConnector()
 }
 
 
+
+//https://stackoverflow.com/questions/34221156/c-sanitize-string-function
+void BackendConnector::sanitize(std::string &stringValue)
+{
+	// Add backslashes.
+	for(auto i = stringValue.begin() ;  ;) {
+		auto const pos = std::find_if(
+		    i,
+			stringValue.end(),
+			[](char const c) { return '\\' == c || '\'' == c || '"' == c; });
+		if (pos == stringValue.end()) {
+			break;
+		}
+		i = std::next(stringValue.insert(pos, '\\'), 2);
+	}
+
+	// Removes others.
+	stringValue.erase(
+	    std::remove_if(
+	        stringValue.begin(),
+			stringValue.end(),
+			[](char const c) {
+				return '\n' == c || '\r' == c || '\0' == c || '\x1A' == c;
+			}),
+		stringValue.end());
+}
+
+
 bool BackendConnector::upload_logfile(std::string _log_string)
 {
-	request_result tmp = make_request_post(URL_UPLOAD_LOG + "?hwid=" + hwid + "&sid=" + session_id, _log_string);
+	//SANTIZE LOG
+	sanitize(_log_string);
+	json11::Json::object root;
+	root["log"] = _log_string;
+	
+	std::string json_str = json11::Json(root).dump();
+	size_t count = json_str.size();
+	request_result tmp = make_request_post(URL_UPLOAD_LOG + "?hwid=" + hwid + "&sid=" + session_id, json_str); //POST AS TEXT/PLAIN TO AVOID NODEJS PARING LIMITS WITH A POST REQUEST
 	if (tmp.request_failed) {
 		return false;
 	}
@@ -379,6 +414,39 @@ BackendConnector::request_result BackendConnector::make_request_post(std::string
     return req_res;
 }
 
+BackendConnector::request_result BackendConnector::make_request_post_raw(std::string _url_path, std::string _post_body_json_data)
+{
+	//PORT AND PROTOCOL IS ALREADY INCLUDED IN BASE URL LIKE http://127.0.0.1:3000
+	httplib::Client cli(backend_base_url.c_str());
+	cli.set_connection_timeout(10);
+	cli.set_follow_location(true);    //AUTO REDIRECT IF GOT AN 300
+	//SEND REQUEST OVER SELECTED INTERFACE
+	if(!interface_name.empty())
+	{
+		cli.set_interface(interface_name.c_str());
+	}
+	//SET CLIENT CERTIFICATE FOR HTTP SERVER
+	if(!ca_client_path.empty())
+	{
+		//cli.set_(ca_client_path.c_str());
+	}
+
+	request_result req_res;
+	req_res.uri =  backend_base_url + _url_path;
+	req_res.request_failed = false;
+	//PERFORM REQUEST
+	if(auto res = cli.Post(_url_path.c_str(), _post_body_json_data, "text/plain")) {
+		req_res.status_code = res->status;
+		//CHECK STATUS CODE 200 IS VALID
+		req_res.body = res->body;
+	}
+	else {
+		req_res.error = res.error();
+		req_res.request_failed = true;
+	}
+
+	return req_res;
+}
 void BackendConnector::set_backend_base_url(std::string _url)
 {
 	backend_base_url = _url;
