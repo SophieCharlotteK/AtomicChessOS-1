@@ -461,14 +461,20 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 	MoveWaypointsAlong(position_queue);
 	
 	//HOME BOARD AFTER MOVE
-	bool HOME_BOARD = false;
-	if (!ConfigParser::getInstance()->getBool(ConfigParser::CFG_ENTRY::MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE, HOME_BOARD))
+	
+	if (ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::MECHANIC_BOARD_HOME_AFTER_MAKE_MOVE))
 	{
-		HOME_BOARD = true;
-	}
-	if (HOME_BOARD) {
 		home_board();
+	//WORKAROUND FOR FIRST DK HARDWARE THAT IS NOT ABLE TO GET PO PARK POSITIONS WITHOUT LOSING STEPS
+		//THEN AFTER EACH MOVE THE MECHANIC RUNS A HOME CYCLE TO ENSURE THAT THE MECHANIC IS FOR THE NEXT MOVE IN THE CORRET POSITION
+	}else
+	{
+		if (!HardwareInterface::getInstance()->is_production_hardware() && (isFieldParkPosition(_move.to_field) || isFieldParkPosition(_move.from_field)))
+		{
+			home_board();
+		}
 	}
+	
 	
 	
 	return ChessBoard::BOARD_ERROR::NO_ERROR;

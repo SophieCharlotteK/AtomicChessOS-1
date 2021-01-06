@@ -578,7 +578,8 @@ int main(int argc, char *argv[])
 						}else
 						{
 							//TODO SHOW MOVE UI
-
+							gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN);	
+							make_move_mode = false;
 						}
 						
 						

@@ -293,7 +293,7 @@ bool ConfigParser::getInt(ConfigParser::CFG_ENTRY _entry, int& _ret)
 {
 	
 	if (!ConfigParser::getInstance()->get(_entry).empty()) {
-		_ret = atoi(get(_entry).c_str());
+		_ret = std::atoi(get(_entry).c_str());
 		return true;
 	}
 	return false;

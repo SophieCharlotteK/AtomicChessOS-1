@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BackendConnector.cpp BoardUserMoveWatcher.cpp ChessBoard.cpp ChessField.cpp ChessPiece.cpp ConfigParser.cpp controller.cpp GCodeSender.cpp HardwareInterface.cpp IOController.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/serialib-master/lib/serialib.cpp SHARED/WiringPi-master/wiringPi/drcNet.c SHARED/WiringPi-master/wiringPi/drcSerial.c SHARED/WiringPi-master/wiringPi/piHiPri.c SHARED/WiringPi-master/wiringPi/piThread.c SHARED/WiringPi-master/wiringPi/pseudoPins.c SHARED/WiringPi-master/wiringPi/softPwm.c SHARED/WiringPi-master/wiringPi/softServo.c SHARED/WiringPi-master/wiringPi/softTone.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wiringSerial.c SHARED/WiringPi-master/wiringPi/wiringShift.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp StateMachine.cpp TMC5160.cpp
+SOURCEFILES := BackendConnector.cpp BoardUserMoveWatcher.cpp ChessBoard.cpp ChessField.cpp ChessPiece.cpp ConfigParser.cpp controller.cpp GCodeSender.cpp HardwareInterface.cpp IOController.cpp SHARED/guicommunicator/guicommunicator.cpp SHARED/json11-master/json11.cpp SHARED/loguru-master/loguru.cpp SHARED/serialib-master/lib/serialib.cpp SHARED/WiringPi-master/wiringPi/piHiPri.c SHARED/WiringPi-master/wiringPi/piThread.c SHARED/WiringPi-master/wiringPi/pseudoPins.c SHARED/WiringPi-master/wiringPi/softPwm.c SHARED/WiringPi-master/wiringPi/softServo.c SHARED/WiringPi-master/wiringPi/softTone.c SHARED/WiringPi-master/wiringPi/wiringPi.c SHARED/WiringPi-master/wiringPi/wiringPiI2C.c SHARED/WiringPi-master/wiringPi/wiringPiSPI.c SHARED/WiringPi-master/wiringPi/wiringSerial.c SHARED/WiringPi-master/wiringPi/wiringShift.c SHARED/WiringPi-master/wiringPi/wpiExtensions.c SPICommunication.cpp StateMachine.cpp TMC5160.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -100,7 +100,7 @@ LIBRARY_LDFLAGS = $(addprefix -l,$(LIBRARY_NAMES))
 ifeq ($(IS_LINUX_PROJECT),1)
 	RPATH_PREFIX := -Wl,--rpath='$$ORIGIN/../
 	LIBRARY_LDFLAGS += $(EXTERNAL_LIBS)
-	LIBRARY_LDFLAGS += -Wl,--rpath='$$ORIGIN'
+	#LIBRARY_LDFLAGS += -Wl,--rpath='$$ORIGIN'
 	LIBRARY_LDFLAGS += $(addsuffix ',$(addprefix $(RPATH_PREFIX),$(dir $(EXTERNAL_LIBS))))
 	
 	ifeq ($(TARGETTYPE),SHARED)
@@ -243,14 +243,6 @@ $(BINARYDIR)/loguru.o : SHARED/loguru-master/loguru.cpp $(all_make_files) |$(BIN
 
 $(BINARYDIR)/serialib.o : SHARED/serialib-master/lib/serialib.cpp $(all_make_files) |$(BINARYDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
-
-
-$(BINARYDIR)/drcNet.o : SHARED/WiringPi-master/wiringPi/drcNet.c $(all_make_files) |$(BINARYDIR)
-	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
-
-
-$(BINARYDIR)/drcSerial.o : SHARED/WiringPi-master/wiringPi/drcSerial.c $(all_make_files) |$(BINARYDIR)
-	$(CC) $(CFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 
 $(BINARYDIR)/piHiPri.o : SHARED/WiringPi-master/wiringPi/piHiPri.c $(all_make_files) |$(BINARYDIR)
