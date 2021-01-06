@@ -192,15 +192,19 @@ void MenuManager::updateProgress()
 
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR){
         if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE){
-            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/noun_Chess_3493083(1).png");
+            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_white.png");
         }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK){
-            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/noun_Chess_3493083.png");
+            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_black.png");
+        }else{
+            set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_unknown.png");
         }
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR){
         if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE){
-            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/noun_Chess_3493083(1).png");
+            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_white.png");
         }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK){
-            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/noun_Chess_3493083.png");
+            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_black.png");
+        }else{
+            set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_unknown.png");
         }
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES){
         set_label_text("game_container","game_possible_move_text",QString::fromStdString(ev.value));

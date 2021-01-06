@@ -798,7 +798,7 @@ Rectangle {
         height: 411
         color: "#07a8a5"
         border.color: "#000100"
-        visible: false
+        visible: true
         objectName: "game_container"
         property var headline_bar_name:"Game Status"
         Text {
@@ -864,7 +864,7 @@ Rectangle {
             width: 140
             height: 140
             fillMode: Image.PreserveAspectFit
-            source: "noun_Chess_3493083.png"
+            source: "player_color_unknown.png"
         }
 
         Image {
@@ -875,7 +875,7 @@ Rectangle {
             width: 200
             height: 200
             fillMode: Image.PreserveAspectFit
-            source: "noun_Chess_3493083(1).png"
+            source: "player_color_unknown.png"
         }
 
         Text {
