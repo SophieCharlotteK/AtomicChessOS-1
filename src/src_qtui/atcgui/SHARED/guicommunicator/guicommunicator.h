@@ -54,7 +54,9 @@
 #else
 #define WEBSERVER_STAUTS_PORT 8001 //1
 #define EVENT_CLIENT_PORT L"8000"
+#define EVENT_CLIENT_PORT_WEBGL L"8002"
 #define EVENT_URL_COMPLETE "http://127.0.0.1:8000"
+#define EVENT_URL_COMPLETE_WEBGL "http://127.0.0.1:8002"
 #endif
 
 #define EVENT_URL_SETEVENT "/status"

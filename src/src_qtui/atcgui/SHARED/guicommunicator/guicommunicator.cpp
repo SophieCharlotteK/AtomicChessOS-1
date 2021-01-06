@@ -103,18 +103,13 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 		httplib::Client cli(EVENT_URL_COMPLETE);
 		cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");		
 	}
-    #ifdef USES_QT
-#else
-	//STORE IN EXTRA QUEUE FOR WEBSERVER GUI
-	webview_thread_mutex.lock();
-	webview_update_event_queue.push(tmp_event);
-	//STORE THE LAST OPENED PAGE FOR THE WEBVIEW
-	if (tmp_event.ispageswitchevent && tmp_event.is_event_valid)
-	{
-		webview_last_screen_switch_event = tmp_event;
-	}
-		
-	webview_thread_mutex.unlock();
+    #ifndef USES_QT
+    //MAKE REQUEST TO THE WEBAPPLICATION
+    httplib::Client cli(EVENT_URL_COMPLETE_WEBGL);
+    cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");
+
+
+
 #endif
 }
 
