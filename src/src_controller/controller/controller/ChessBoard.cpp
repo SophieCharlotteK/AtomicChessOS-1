@@ -478,6 +478,7 @@ ChessBoard::BOARD_ERROR ChessBoard::makeMoveSync(ChessBoard::MovePiar _move, boo
 ChessBoard::MovePiar ChessBoard::StringToMovePair(std::string _mv)
 {
 	MovePiar tmp;
+	tmp.is_valid = true;
 	//CHECK STRING POPULATES
 	if(_mv.empty())
 	{
@@ -488,12 +489,22 @@ ChessBoard::MovePiar ChessBoard::StringToMovePair(std::string _mv)
 	{
 		tmp.is_valid = false;
 	}
-	
 	//STRING TO LOWER CASE	
-	transform(_mv.begin(), _mv.end(), _mv.begin(), ::tolower);
+	transform(_mv.begin(), _mv.end(), _mv.begin(),::tolower);
 	
-	int ft = std::atoi(&_mv.at(1)) + (_mv.at(0) - 97) * 8;
-	int tf = std::atoi(&_mv.at(3)) + (_mv.at(2) - 97) * 8;
+	//CHECK FORMAT BY REGEX
+	if(!std::regex_match(_mv, std::regex(STRING_MOVE_REGEX))) {
+		tmp.is_valid = false;
+	}
+	
+	int fca = _mv.at(0);
+	int fcb =  _mv.at(2);
+	int fta = fca - 97;
+	int ftb = fcb - 97;
+	int ffa = _mv.at(1)-48-1;
+	int ffb = _mv.at(3)-48-1;
+	int ft = ffa + (fta * 8);
+	int tf = ffb + (ftb * 8) ;
 	
 	
 	

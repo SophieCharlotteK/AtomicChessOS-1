@@ -448,6 +448,40 @@ int main(int argc, char *argv[])
 					LOG_F(ERROR, "GOT err_query_paramter_hwid_or_sid_or_not_set");
 				}
 				
+				//IF A GAME IS RUNNING UPDATE THE UI
+				if(ps.game_state.game_running) {
+					if (ps.game_state.im_white_player)
+					{
+						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
+					}
+					else
+					{
+						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
+					}
+					if (ps.game_state.is_my_turn && ps.game_state.im_white_player)
+					{
+						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
+					}
+					else if (ps.game_state.is_my_turn && !ps.game_state.im_white_player)
+					{
+						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
+					}
+					
+					if (ps.game_state.legal_moves.size() > 0)
+					{
+						std::string tmp_lm = "";
+						for (size_t i = 0; ps.game_state.legal_moves.size(); i++)
+						{
+							tmp_lm += ps.game_state.legal_moves.at(0) + "\n";
+						}
+						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, tmp_lm);
+					}
+					else
+					{
+						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,"");
+					}
+				}
+				
 				//FOR ALL OTHER EVENTS USE THE STATE MACHINE HANDLING CLASS
 				//WHICH HANDLES THE GAME LOGIC STATES
 				//THE CALL DETERMS THE CURRENT STATE
@@ -458,6 +492,9 @@ int main(int argc, char *argv[])
 				{
 					//IN THIS SECIONT THE IMMEDIATES STATE WILL BE HANDLED
 					//EG FROM NO_GAME_RUNNING TO GAME_RUNNING, THE SCREEN HAVE TO BE SWITCHED, ...
+					
+					
+					
 					
 					
 					//NOW THE NEW GAME HAS STARTED AND THE HARDWARE HAS TO INITILIZES TO THE GIVEN BOARD
@@ -540,6 +577,8 @@ int main(int argc, char *argv[])
 							//READ HUMAN PLAYER INPUT
 						}else
 						{
+							//TODO SHOW MOVE UI
+
 						}
 						
 						

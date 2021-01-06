@@ -10,7 +10,7 @@
 #include <vector>
 #include <cmath> // sqrtl
 #include <queue>
-
+#include <regex> //FOR StringToMovePair => to parse a1b2 into fields
 
 #include <chrono>
 #include <stdlib.h>
@@ -43,6 +43,7 @@
 #define DEFAULT_BOARD_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 #define WAITITME_FOR_MOTORS_TO_ARRIVE 100 //[ms] to check if motor target position is reached
 #define WAITIME_MULTIPLIER_AXIS_ARRIVAL 20 //check x times if target postion is reached
+#define STRING_MOVE_REGEX "[abcdefgh][12345678][abcdefgh][12345678]" //FOR CHECKING a1b3 h1e3
 class ChessBoard
 {
 	
