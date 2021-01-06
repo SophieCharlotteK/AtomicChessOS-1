@@ -44,7 +44,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;SHARED\cpp-httplib-master;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\10.2.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\10.2.0\arm-buildroot-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\10.2.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0008\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0009\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0005\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.178.125\0004\include\c++\9.3.0\arm-buildroot-linux-gnueabihf;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -92,7 +92,6 @@
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringSerial.c" />
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringShift.c" />
-    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c" />
     <ClCompile Include="SPICommunication.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="TMC5160.cpp" />
@@ -128,7 +127,6 @@
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringSerial.h" />
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringShift.h" />
-    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h" />
     <ClInclude Include="SPICommunication.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="TMC5160.h" />

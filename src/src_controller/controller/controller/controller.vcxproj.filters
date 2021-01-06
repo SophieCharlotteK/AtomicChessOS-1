@@ -60,9 +60,6 @@
     <ClCompile Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="IOController.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -146,9 +143,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="SHARED\WiringPi-master\wiringPi\wiringPiSPI.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED\WiringPi-master\wiringPi\wpiExtensions.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="IOController.h">
