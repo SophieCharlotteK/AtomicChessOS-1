@@ -650,13 +650,20 @@ bool BackendConnector::stop_heartbeat_thread()
 		return false;
 	}
 	heartbeat_thread_running = false;
-	heartbeat_thread->join();
-	return false;
+	//while (!heartbeat_thread->joinable()) {
+	//	std::cout << "." << std::endl;
+	//}
+	//heartbeat_thread->join();
+	return true;
 }
 
 
 bool BackendConnector::get_heartbeat(BackendConnector::HB_THREAD_DATA _data)
 {
+	if (_data.sid.empty()) {
+		return false;
+	}
+		
 	request_result tmp = make_request(URL_HEARTBEAT + "?hwid=" + _data.hwid + "&sid=" + _data.sid);
 	if (!tmp.body.empty())
 	{
@@ -695,7 +702,7 @@ void BackendConnector::heartbeat_thread_function(BackendConnector* _this)
 	
 	while (_this->heartbeat_thread_running) {
 		
-		bool res = _this->get_heartbeat(thread_data);
+		bool res = _this->get_heartbeat(_this->heartbeat_thread_data);
 		
 	
 		sleep_until(system_clock::now() + seconds(thread_data.heartbeat_interval));

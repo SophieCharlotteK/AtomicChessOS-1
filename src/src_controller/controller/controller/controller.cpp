@@ -61,7 +61,7 @@ std::string readHWID(std::string _file)
 
 
 int mainloop_running = 0;
-bool make_move_mode = false;
+int make_move_mode = 0; //TO DETERM FOR WHICH PURPOSE THE PLAYER_MAKE_MANUAL_MOVE_SCREEN WAS OPENED 0=NOT OPEN 1=TEST 2=RUNNING GAME MOVE
 BackendConnector* gamebackend_logupload = nullptr;  //USED ONLY FOR UPLOADING THE LOGS
 
 std::string get_interface_mac_address(const string& _ifname) {
@@ -448,39 +448,8 @@ int main(int argc, char *argv[])
 					LOG_F(ERROR, "GOT err_query_paramter_hwid_or_sid_or_not_set");
 				}
 				
-				//IF A GAME IS RUNNING UPDATE THE UI
-				if(ps.game_state.game_running) {
-					if (ps.game_state.im_white_player)
-					{
-						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
-					}
-					else
-					{
-						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
-					}
-					if (ps.game_state.is_my_turn && ps.game_state.im_white_player)
-					{
-						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
-					}
-					else if (ps.game_state.is_my_turn && !ps.game_state.im_white_player)
-					{
-						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
-					}
-					
-					if (ps.game_state.legal_moves.size() > 0)
-					{
-						std::string tmp_lm = "";
-						for (size_t i = 0; ps.game_state.legal_moves.size(); i++)
-						{
-							tmp_lm += ps.game_state.legal_moves.at(0) + "\n";
-						}
-						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, tmp_lm);
-					}
-					else
-					{
-						gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,"");
-					}
-				}
+				//TODO STATE MACHINE NEU !!!! --------------------
+			
 				
 				//FOR ALL OTHER EVENTS USE THE STATE MACHINE HANDLING CLASS
 				//WHICH HANDLES THE GAME LOGIC STATES
@@ -490,15 +459,56 @@ int main(int argc, char *argv[])
 				//IF STATE SWITCHED
 				if(current_state != previous_state)
 				{
+					
 					//IN THIS SECIONT THE IMMEDIATES STATE WILL BE HANDLED
 					//EG FROM NO_GAME_RUNNING TO GAME_RUNNING, THE SCREEN HAVE TO BE SWITCHED, ...
 					
+					//IF A GAME IS RUNNING UPDATE THE UI
+				if(ps.game_state.game_running) {
+					//gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+						if (ps.game_state.im_white_player)
+						{
+							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
+						}
+						else
+						{
+							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
+						}
+						if (ps.game_state.is_my_turn && ps.game_state.im_white_player)
+						{
+							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
+						}
+						else if (ps.game_state.is_my_turn && !ps.game_state.im_white_player)
+						{
+							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
+						}
 					
+						if (ps.game_state.legal_moves.size() > 0)
+						{
+							std::string tmp_lm = "";
+							size_t max_items = 10;
+							if (ps.game_state.legal_moves.size() < max_items)
+							{
+								max_items = ps.game_state.legal_moves.size();
+							}
+								
+							for (size_t i = 0; i < ps.game_state.legal_moves.size(); i++)
+							{
+								tmp_lm += ps.game_state.legal_moves.at(i) + "\n";
+							}
+							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, tmp_lm);
+						}
+						else
+						{
+							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "");
+						}
+					}
 					
 					
 					
 					//NOW THE NEW GAME HAS STARTED AND THE HARDWARE HAS TO INITILIZES TO THE GIVEN BOARD
 					//AND MOVE THE CHESS FIGURES TO THE INIT BOARD GIVEN BY THE SERVER
+					
 					if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING) {
 						//SHOW THE PROCESSING SCREEN
 						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
@@ -579,7 +589,7 @@ int main(int argc, char *argv[])
 						{
 							//TODO SHOW MOVE UI
 							gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN);	
-							make_move_mode = false;
+							make_move_mode = 2;
 						}
 						
 						
@@ -615,6 +625,7 @@ int main(int argc, char *argv[])
 				}
 				
 			}
+			
 		}
 		
 		
@@ -776,16 +787,34 @@ int main(int argc, char *argv[])
         //--------------------------------------------------------
         if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_H && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 			LOG_F(WARNING, "DEBUG -SHOW MAKE MOVE SCREEN ");
-	        make_move_mode = true;
+	        make_move_mode = 1;
 	        
 	        gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN); 
 		}
+
+
+
+		//----------------- PLAYER MOVE RESPOMSE ---------------------- //
 		if (ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT && ev.type == guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING && make_move_mode) {
-			make_move_mode = false;
+			
 			ChessBoard::MovePiar mvpair = board.StringToMovePair(ev.value);
 			if (mvpair.is_valid) {
-				board.makeMoveSync(mvpair, false, false, false);
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN); 
+				//FOR TEST
+				if (make_move_mode == 1) {
+					board.makeMoveSync(mvpair, false, false, false);
+					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+					make_move_mode = 0;
+				}
+				else if (make_move_mode == 2) { //FOR RUNNING GAME
+					if(!gamebackend.set_make_move(ev.value))
+					{
+					}else
+					{
+						make_move_mode = 0;
+					}
+				}
+
+				 
 			}
 			
 		}
@@ -804,10 +833,10 @@ int main(int argc, char *argv[])
 		if(ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 			//LOGOUT AND GOTO LOGIN SCREEN
-			if(gamebackend.stop_heartbeat_thread()) {
+			//if(gamebackend.stop_heartbeat_thread()) {
 				gamebackend.logout();
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-			}
+			//}
 		}
 		
 		

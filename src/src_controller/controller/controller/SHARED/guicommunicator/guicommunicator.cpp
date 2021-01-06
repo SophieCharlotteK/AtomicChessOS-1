@@ -101,15 +101,15 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
     #ifdef USES_QT
 #else
 	//STORE IN EXTRA QUEUE FOR WEBSERVER GUI
-	webview_thread_mutex.lock();
-	webview_update_event_queue.push(tmp_event);
+	//webview_thread_mutex.lock();
+	//webview_update_event_queue.push(tmp_event);
 	//STORE THE LAST OPENED PAGE FOR THE WEBVIEW
-	if (tmp_event.ispageswitchevent && tmp_event.is_event_valid)
-	{
-		webview_last_screen_switch_event = tmp_event;
-	}
+	//if (tmp_event.ispageswitchevent && tmp_event.is_event_valid)
+	//{
+	//	webview_last_screen_switch_event = tmp_event;
+	//}
 		
-	webview_thread_mutex.unlock();
+	//webview_thread_mutex.unlock();
 #endif
 }
 
