@@ -770,14 +770,19 @@ compiler_rcc_clean:
 qrc_qml.cpp: ../atcgui/qml.qrc \
 		/home/marcel/Qt_unified/5.15.0/gcc_64/bin/rcc \
 		../atcgui/qml/noun_Cloud_online.png \
+		../atcgui/qml/player_turn_white.png \
+		../atcgui/qml/player_turn_black.png \
 		../atcgui/qml/noun_Chess_1376847.png \
+		../atcgui/qml/player_turn_unknown.png \
 		../atcgui/qml/noun_Settings_56313.png \
 		../atcgui/qml/player_color_unknown.png \
 		../atcgui/qml/noun_Match_3203208.png \
 		../atcgui/qml/player_color_white.png \
 		../atcgui/qml/WINDOW.qml \
 		../atcgui/qml/player_color_black.png \
-		../atcgui/qml/noun_Cloud_offline.png
+		../atcgui/qml/info_icon_2.png \
+		../atcgui/qml/noun_Cloud_offline.png \
+		../atcgui/qml/info_icon.png
 	/home/marcel/Qt_unified/5.15.0/gcc_64/bin/rcc -name qml ../atcgui/qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

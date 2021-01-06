@@ -3,13 +3,37 @@
 #include <rpc/rpc.h>
 #include <rpcsvc/rusers.h>
 #include <stdio.h>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 #include "menumanager.h"
+#include "SHARED/guicommunicator/guicommunicator.h"
 int main(int argc, char *argv[])
 {
+
+
+
   //  qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+    qInfo() << argc;
+    QCommandLineParser parser;
+    parser.setApplicationDescription("use -platform webgl:port=1337 to start application in webgl mode with different control server interface");
+    parser.addHelpOption();
+    parser.addOption(QCommandLineOption("platform"));
+    parser.process(app);
+    const QStringList args = parser.positionalArguments();
+    qInfo()<< args;
+    QString iswebgl = parser.value("platform");
+    if(iswebgl.contains("webgl")){
+        qInfo()<< "WEBGL";
+        guicommunicator::IS_PLATTFORM_WEB = true;
+    }else{
+        guicommunicator::IS_PLATTFORM_WEB = false;
+    }
+
+
+
     QWindow window;
     window.setBaseSize(QSize(800,480));
 

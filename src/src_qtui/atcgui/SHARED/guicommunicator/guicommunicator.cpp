@@ -1,8 +1,13 @@
 #include "guicommunicator.h"
 
+#ifdef USES_QT
+bool guicommunicator::IS_PLATTFORM_WEB = false;
+#endif
 guicommunicator::guicommunicator()
 {
-	
+    #ifdef USES_QT
+
+    #endif
 	//    rpc::server srv(RPC_PORT);
 	//    srv.bind(RPC_FKT_NAME, &guicommunicator::rpc_callback);
 	//    ptrsrv = &srv;
@@ -401,7 +406,21 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 		});
 
 	//START WEBSERVER
-	_this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
+#ifdef USES_QT
+
+
+    if(guicommunicator::IS_PLATTFORM_WEB){
+        _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_WEBQT_STATUS_PORT); //START AS WEBAPP
+    }else{
+        _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT); //REGUALAR DISPLAY PORT
+
+    }
+
+
+#else
+    _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
+#endif
+
 
 	while (_this->thread_running) {
 	

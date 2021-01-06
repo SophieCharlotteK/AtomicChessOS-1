@@ -31,8 +31,9 @@
     #include<QDebug>
     #include <QThread>
     #include <QMutex>
-#else
-
+    #include <QGuiApplication>
+    #include <QQmlApplicationEngine>
+    #include <QCommandLineParser>
 #endif
 
 //IF RUNNING AS CONTROLLER => BIND TO EVERYTHING TO ALLOW COMMUNICATION WITH THE WEBUI
@@ -47,6 +48,7 @@
 #define WEBSERVER_STATIC_FILE_DIR "./static"
 #ifdef USES_QT
 #define WEBSERVER_STAUTS_PORT 8000
+#define WEBSERVER_WEBQT_STATUS_PORT 8002
 #define EVENT_CLIENT_PORT L"8001" // 1
 #define EVENT_URL_COMPLETE "http://127.0.0.1:8001" //1
 #else
@@ -213,13 +215,14 @@ public:
 	 GUI_EVENT get_event();
      bool check_guicommunicator_version();
 	 bool check_guicommunicator_reachable();
-	
-	//SOME FUNTIONS ARE ONLY FOR THE GUI SIDE
 #ifdef USES_QT
-#else
-	void show_error_message_on_gui(std::string _err);	//DISPLAYS A ERROR MESSAGE WITH OK BUTTONS
-	GUI_MESSAGE_BOX_RESULT show_message_box(GUI_MESSAGE_BOX_TYPE _type, std::string _message, int _wait_time_ms); //DISPLAY A MESSAGEBOX WITH OK/CANCEL BUTTON AND WAITS FOR THE USER INPUT
+     static bool IS_PLATTFORM_WEB;
 #endif
+	//SOME FUNTIONS ARE ONLY FOR THE GUI SIDE
+    #ifndef USES_QT
+        void show_error_message_on_gui(std::string _err);	//DISPLAYS A ERROR MESSAGE WITH OK BUTTONS
+        GUI_MESSAGE_BOX_RESULT show_message_box(GUI_MESSAGE_BOX_TYPE _type, std::string _message, int _wait_time_ms); //DISPLAY A MESSAGEBOX WITH OK/CANCEL BUTTON AND WAITS FOR THE USER INPUT
+    #endif
 private:
 
 	

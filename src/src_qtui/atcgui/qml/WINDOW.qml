@@ -113,7 +113,7 @@ Rectangle {
                 width: 61
                 height: 61
                 fillMode: Image.PreserveAspectFit
-                source: "noun_Chess_1376847.png"
+                source: "info_icon_2.png"
 
             }
 
@@ -124,6 +124,28 @@ Rectangle {
                 }
             }
 
+        }
+
+        Image {
+            id: hb_is_player_move_icon
+            objectName: "hb_is_player_move_icon"
+            x: 84
+            y: 6
+            width: 61
+            height: 61
+            source: "player_turn_unknown.png"
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Image {
+            id: hb_player_color_icon
+            objectName: "hb_player_color_icon"
+            x: 611
+            y: 4
+            width: 61
+            height: 61
+            source: "player_color_unknown.png"
+            fillMode: Image.PreserveAspectFit
         }
 
     }
@@ -144,7 +166,7 @@ Rectangle {
             y: 28
             width: 691
             height: 79
-            visible: true
+            visible: false
             color: "#189694"
 
 
@@ -227,7 +249,7 @@ Rectangle {
             y: 163
             width: 171
             height: 171
-            visible: true
+            visible: false
             Connections {
                 target: sfp_indicator
             }

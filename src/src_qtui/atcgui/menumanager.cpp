@@ -198,18 +198,24 @@ void MenuManager::updateProgress()
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR){
         if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE){
             set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_white.png");
+            set_icon_image("hb_container","hb_player_color_icon","qrc:/qml/player_color_white.png");
         }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK){
             set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_black.png");
+            set_icon_image("hb_container","hb_player_color_icon","qrc:/qml/player_color_black.png");
         }else{
             set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_unknown.png");
+            set_icon_image("hb_container","hb_player_color_icon","qrc:/qml/player_color_unknown.png");
         }
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR){
         if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE){
             set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_white.png");
+            set_icon_image("hb_container","hb_is_player_move_icon","qrc:/qml/player_turn_white.png");
         }else if(ev.type == guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK){
             set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_black.png");
+            set_icon_image("hb_container","hb_is_player_move_icon","qrc:/qml/player_turn_black.png");
         }else{
             set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_unknown.png");
+            set_icon_image("hb_container","hb_is_player_move_icon","qrc:/qml/player_turn_unknown.png");
         }
     }else if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES){
         set_label_text("game_container","game_possible_move_text",QString::fromStdString(ev.value));
@@ -259,6 +265,8 @@ void MenuManager::general_ui_reset(){
     set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_unknown.png");
     set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_unknown.png");
     set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_offline.png");
+    set_icon_image("hb_container","hb_player_color_icon","qrc:/qml/player_color_unknown.png");
+    set_icon_image("hb_container","hb_is_player_move_icon","qrc:/qml/player_turn_unknown.png");
     //RESET TEXT
     set_label_text("is_container","is_hwid_label","");
     set_label_text("is_container","is_sessionid_label","");

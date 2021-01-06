@@ -9,5 +9,10 @@
         <file>qml/player_color_black.png</file>
         <file>qml/player_color_unknown.png</file>
         <file>qml/player_color_white.png</file>
+        <file>qml/info_icon.png</file>
+        <file>qml/info_icon_2.png</file>
+        <file>qml/player_turn_black.png</file>
+        <file>qml/player_turn_unknown.png</file>
+        <file>qml/player_turn_white.png</file>
     </qresource>
 </RCC>
