@@ -1,7 +1,5 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <rpc/rpc.h>
-#include <rpcsvc/rusers.h>
 #include <stdio.h>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
