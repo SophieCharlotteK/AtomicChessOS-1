@@ -159,14 +159,14 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: true
+        visible: false
         Rectangle {
             id: mm_searching_for_players_box
             x: 47
             y: 28
             width: 691
             height: 79
-            visible: false
+            visible: true
             color: "#189694"
 
 
