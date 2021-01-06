@@ -125,6 +125,11 @@ void MenuManager::switch_menu(QString _screen){
     //ENABLE THE SELECTED MENU
     set_visible_element(_screen,true);
 
+    if(_screen.isEmpty()){
+         set_headline_text("---");
+         return;
+    }
+
     //SET HEADLINE TEXT => READ PROPERTY FROM RECT ELEMENT
     QObject* recht1 = this->parent()->findChild<QObject*>(_screen);
     if(recht1){
@@ -213,7 +218,11 @@ void MenuManager::updateProgress()
     }else if(ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT){
         user_entered_move =  QString::fromStdString(ev.value);
         set_label_text("mmem_container","mmem_chosen_move_label",user_entered_move);
+    }else if(ev.event == guicommunicator::GUI_ELEMENT::QT_UI_RESET){
+        general_ui_reset();
     }
+
+
 
 
     /*
@@ -229,6 +238,40 @@ MenuManager::~MenuManager(){
     guiconnection.stop_recieve_thread();
 }
 
+
+void MenuManager::set_progress_indicator(QString _container_name, QString _ic_name, bool _state){
+    QObject* recht1 = this->parent()->findChild<QObject*>(_container_name);
+    if(recht1){
+        QObject* recht2 = recht1->findChild<QObject*>(_ic_name);
+        if(recht2){
+            recht2->setProperty("visible",_state);
+        }else{
+            qInfo()<< "cant get element" << _ic_name;
+        }
+    }else{
+        qInfo()<< "cant get element" << _container_name;
+    }
+}
+
+
+void MenuManager::general_ui_reset(){
+    //RESET ICONS
+    set_icon_image("game_container","gs_current_turn_color_image","qrc:/qml/player_color_unknown.png");
+    set_icon_image("game_container","gs_my_turn_color_image","qrc:/qml/player_color_unknown.png");
+    set_icon_image("hb_container","hb_connection_icon","qrc:/qml/noun_Cloud_offline.png");
+    //RESET TEXT
+    set_label_text("is_container","is_hwid_label","");
+    set_label_text("is_container","is_sessionid_label","");
+    set_label_text("is_container","is_version_label","");
+    set_label_text("is_container","is_playerinfo_label","");
+    set_label_text("es_container","es_lasterr_label","No Error");
+    set_label_text("msgta_container","msgta_message_label","");
+    set_label_text("msgtb_container","msgtb_message_label","");
+    //REST PROGRESS THINGS
+    set_progress_indicator("mm_container","sfp_indicator",false);
+    //DISBALE SCREEN
+    switch_menu(""); //SHOW NO SCREEN
+}
 
 void MenuManager::show_error(QString _err){
     qInfo() << _err;
@@ -315,7 +358,7 @@ void MenuManager::message_screen_cancel_btn(){
 void MenuManager::debug_screen_fkt(int _id){
     switch (_id)
     {
-    case 0: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
+    case 0: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_A, guicommunicator::GUI_VALUE_TYPE::CLICKED);general_ui_reset();break;
     case 1: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_B, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
     case 2: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_C, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
     case 3: guiconnection.createEvent(guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_D, guicommunicator::GUI_VALUE_TYPE::CLICKED);break;
@@ -359,7 +402,7 @@ void MenuManager::memm_enter_move_user_input(QString _charakter){
 
 
      qInfo() <<"memm_enter_move_user_input " << _charakter;
-     guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT_RAW, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,_charakter);
+     //guiconnection.createEvent(guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT_RAW, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING,_charakter);
 
      if(_charakter.size() == 1){
 

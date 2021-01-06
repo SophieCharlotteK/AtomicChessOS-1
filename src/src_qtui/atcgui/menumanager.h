@@ -73,7 +73,8 @@ public slots:
     void memm_enter_move_reset();
     void memm_enter_move_ok();
     void memm_enter_move_user_input(QString _charakter);
-
+    //---- GENERAL FUNCTIONS --- //
+    void general_ui_reset(); //RESET THE UI TO INITIAL STATE
 private:
     void show_error(QString _err);
     guicommunicator guiconnection;
@@ -89,7 +90,7 @@ private:
     QMap<QString, int> menu_levels;
     void set_label_text(QString _container_name, QString _labelname,QString _text);
     void set_icon_image(QString _container_name, QString _image_name, QString _path);
-
+    void set_progress_indicator(QString _container_name, QString _ic_name, bool _state);
     bool is_number(QChar _char);
     bool is_alpha(QChar _char);
 };

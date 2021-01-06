@@ -137,50 +137,22 @@ Rectangle {
         width: 800
         height: 411
         color: "#07a8a5"
-        visible: false
+        visible: true
         Rectangle {
             id: mm_searching_for_players_box
             x: 47
-            y: 31
+            y: 28
             width: 691
-            height: 343
+            height: 79
             visible: true
             color: "#189694"
 
 
-            BusyIndicator {
-                id: sfp_indicator
-                x: 253
-                y: 132
-                width: 171
-                height: 171
-                visible: false
-                Connections {
-                    target: sfp_indicator
-                }
-                wheelEnabled: true
-            }
-
-            Button {
-                id: mm_en_sfg_btn
-                x: 29
-                y: 8
-                width: 207
-                height: 55
-                text: qsTr("START SEARCH FOR GAME")
-                Connections {
-                    target: mm_en_sfg_btn
-                    function onClicked(_mouse){
-                        main_menu.mm_search_for_players_toggled(true);
-                        sfp_indicator.visible = true;
-                    }
-                }
-            }
 
             Button {
                 id: mm_dis_sfg_btn
                 x: 468
-                y: 8
+                y: 12
                 width: 207
                 height: 55
                 text: qsTr("STOP SEARCH FOR GAME")
@@ -194,19 +166,42 @@ Rectangle {
             }
 
 
-        }
+            Button {
+                id: mm_start_random_btn
+                x: 40
+                y: 183
+                width: 207
+                height: 55
+                visible: false
+                text: qsTr("START AI MATCH")
+                Connections {
+                    target: mm_start_random_btn
+                    function onClicked(_mouse){
+                        main_menu.mm_search_for_players_toggled(true) //DONT KNOW WHY ITS INVERTED...
+                        sfp_indicator.visible = false;
+                    }
+                }
+            }
 
-        Rectangle {
-            id: mm_sart_game_box
-            x: 61
-            y: 31
-            width: 253
-            height: 343
-            visible: false
-            color: "#1f8f8d"
+            Button {
+                id: mm_en_sfg_btn
+                x: 29
+                y: 12
+                width: 207
+                height: 55
+                text: qsTr("START SEARCH FOR GAME")
+                Connections {
+                    target: mm_en_sfg_btn
+                    function onClicked(_mouse){
+                        main_menu.mm_search_for_players_toggled(true);
+                        sfp_indicator.visible = true;
+                    }
+                }
+            }
+
             Button {
                 id: mm_show_playerlist_btn
-                x: 26
+                x: 40
                 y: 151
                 width: 207
                 height: 55
@@ -221,22 +216,22 @@ Rectangle {
                 }
             }
 
-            Button {
-                id: mm_start_random_btn
-                x: 26
-                y: 183
-                width: 207
-                height: 55
-                visible: false
-                text: qsTr("START AI MATCH")
-                Connections {
-                    target: mm_start_random_btn
-                    function onClicked(_mouse){
-                        main_menu.mm_search_for_players_toggled(true) //DONT KNOW WHY ITS INVERTED...
-                        sfp_indicator.visible = false;
-                    }
-                }
+
+
+        }
+
+        BusyIndicator {
+            id: sfp_indicator
+            objectName: "sfp_indicator"
+            x: 300
+            y: 163
+            width: 171
+            height: 171
+            visible: true
+            Connections {
+                target: sfp_indicator
             }
+            wheelEnabled: true
         }
     }
 
@@ -277,60 +272,6 @@ Rectangle {
         height: 411
         color: "#07a8a5"
         visible: false
-        Grid {
-            id: ss_manual_function_buttons_grid
-            x: 0
-            y: 0
-            width: 230
-            height: 411
-            layoutDirection: Qt.LeftToRight
-            verticalItemAlignment: Grid.AlignVCenter
-            horizontalItemAlignment: Grid.AlignHCenter
-            padding: 17
-            spacing: 68
-            rows: 5
-            columns: 1
-
-            Button {
-                id: ss_scan_board_btn
-                width: 200
-                height: 80
-                text: qsTr("CALIBRATION WIZARD")
-                Connections {
-                    target: ss_scan_board_btn
-                    function onClicked(_mouse){
-                        main_menu.sm_scan_board_btn()
-                    }
-                }
-            }
-
-            Button {
-                id: ss_init_board_btn
-                width: 200
-                height: 80
-                text: qsTr("INIT BOARD")
-                Connections {
-                    target: ss_init_board_btn
-                    function onClicked(_mouse){
-                        main_menu.sm_init_btn()
-                    }
-                }
-            }
-
-            Button {
-                id: ss_log_out_btn
-                width: 200
-                height: 80
-                text: qsTr("LOGOUT")
-                Connections {
-                    target: ss_log_out_btn
-                    function onClicked(_mouse){
-                        main_menu.sm_logout_btn()
-
-                    }
-                }
-            }
-        }
 
         Button {
             id: sm_back_btn
@@ -361,6 +302,54 @@ Rectangle {
                 }
             }
         }
+
+        Button {
+            id: ss_log_out_btn
+            x: 17
+            y: 313
+            width: 200
+            height: 80
+            text: qsTr("LOGOUT")
+            Connections {
+                target: ss_log_out_btn
+                function onClicked(_mouse){
+                    main_menu.sm_logout_btn()
+
+                }
+            }
+        }
+
+        Button {
+            id: ss_init_board_btn
+            x: 17
+            y: 165
+            width: 200
+            height: 80
+            text: qsTr("INIT BOARD")
+            Connections {
+                target: ss_init_board_btn
+                function onClicked(_mouse){
+                    main_menu.sm_init_btn()
+                }
+            }
+        }
+
+        Button {
+            id: ss_scan_board_btn
+            x: 17
+            y: 17
+            width: 200
+            height: 80
+            text: qsTr("CALIBRATION WIZARD")
+            Connections {
+                target: ss_scan_board_btn
+                function onClicked(_mouse){
+                    main_menu.sm_scan_board_btn()
+                }
+            }
+        }
+
+
     }
 
     Rectangle {
@@ -617,6 +606,7 @@ Rectangle {
 
         BusyIndicator {
             id: busyIndicator
+            objectName: "pc_indicator"
             x: 223
             y: 85
             width: 355
@@ -673,7 +663,7 @@ Rectangle {
                 y: 14
                 width: 209
                 height: 60
-                text: qsTr("MAKE MOVE MANUAL")
+                text: qsTr("RESET_GUI")
                 Connections {
                     target: debug_fkt_a_btn
                     function onClicked(_mouse){
@@ -778,7 +768,7 @@ Rectangle {
                 y: 218
                 width: 209
                 height: 60
-                text: qsTr("---")
+                text: qsTr("MAKE MOVE MANUAL")
                 Connections {
                     target: debug_fkt_h_btn
                     function onClicked(_mouse){
@@ -798,7 +788,7 @@ Rectangle {
         height: 411
         color: "#07a8a5"
         border.color: "#000100"
-        visible: true
+        visible: false
         objectName: "game_container"
         property var headline_bar_name:"Game Status"
         Text {
@@ -963,11 +953,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_a_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("a")
-                            }
-                        }
+                target: memm_mi_a_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("a")
+                }
+            }
         }
 
         Button {
@@ -980,11 +970,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_b_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("b")
-                            }
-                        }
+                target: memm_mi_b_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("b")
+                }
+            }
         }
 
         Button {
@@ -997,11 +987,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_d_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("d")
-                            }
-                        }
+                target: memm_mi_d_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("d")
+                }
+            }
         }
 
         Button {
@@ -1014,11 +1004,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_f_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("f")
-                            }
-                        }
+                target: memm_mi_f_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("f")
+                }
+            }
         }
 
         Button {
@@ -1031,11 +1021,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_c_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("c")
-                            }
-                        }
+                target: memm_mi_c_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("c")
+                }
+            }
         }
 
         Button {
@@ -1048,11 +1038,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_e_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("e")
-                            }
-                        }
+                target: memm_mi_e_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("e")
+                }
+            }
         }
 
         Button {
@@ -1065,11 +1055,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_g_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("g")
-                            }
-                        }
+                target: memm_mi_g_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("g")
+                }
+            }
         }
 
         Button {
@@ -1082,11 +1072,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_h_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("h")
-                            }
-                        }
+                target: memm_mi_h_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("h")
+                }
+            }
         }
 
         Button {
@@ -1099,11 +1089,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_1_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("1")
-                            }
-                        }
+                target: memm_mi_1_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("1")
+                }
+            }
         }
 
         Button {
@@ -1116,11 +1106,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_2_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("2")
-                            }
-                        }
+                target: memm_mi_2_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("2")
+                }
+            }
         }
 
         Button {
@@ -1133,11 +1123,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_4_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("4")
-                            }
-                        }
+                target: memm_mi_4_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("4")
+                }
+            }
         }
 
         Button {
@@ -1150,11 +1140,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_6_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("6")
-                            }
-                        }
+                target: memm_mi_6_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("6")
+                }
+            }
         }
 
         Button {
@@ -1167,11 +1157,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_3_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("3")
-                            }
-                        }
+                target: memm_mi_3_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("3")
+                }
+            }
         }
 
         Button {
@@ -1184,11 +1174,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_5_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("5")
-                            }
-                        }
+                target: memm_mi_5_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("5")
+                }
+            }
         }
 
         Button {
@@ -1201,11 +1191,11 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_7_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("7")
-                            }
-                        }
+                target: memm_mi_7_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("7")
+                }
+            }
         }
 
         Button {
@@ -1218,10 +1208,10 @@ Rectangle {
             font.pointSize: 20
             font.bold: true
             Connections {
-                            target: memm_mi_8_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_user_input("8")
-                            }
+                target: memm_mi_8_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_user_input("8")
+                }
             }
         }
 
@@ -1235,11 +1225,11 @@ Rectangle {
             font.pointSize: 15
             font.bold: true
             Connections {
-                            target: memm_mi_ok_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_ok()
-                            }
-                        }
+                target: memm_mi_ok_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_ok()
+                }
+            }
         }
 
         Button {
@@ -1251,11 +1241,11 @@ Rectangle {
             text: qsTr("RESET")
             font.pointSize: 15
             Connections {
-                            target: memm_mi_rest_btn
-                            function onClicked(_mouse){
-                                main_menu.memm_enter_move_reset()
-                            }
-                        }
+                target: memm_mi_rest_btn
+                function onClicked(_mouse){
+                    main_menu.memm_enter_move_reset()
+                }
+            }
         }
 
 
