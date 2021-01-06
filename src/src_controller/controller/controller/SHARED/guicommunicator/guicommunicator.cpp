@@ -1,8 +1,13 @@
 #include "guicommunicator.h"
 
+#ifdef USES_QT
+bool guicommunicator::IS_PLATTFORM_WEB = false;
+#endif
 guicommunicator::guicommunicator()
 {
-	
+    #ifdef USES_QT
+
+    #endif
 	//    rpc::server srv(RPC_PORT);
 	//    srv.bind(RPC_FKT_NAME, &guicommunicator::rpc_callback);
 	//    ptrsrv = &srv;
@@ -98,18 +103,13 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 		httplib::Client cli(EVENT_URL_COMPLETE);
 		cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");		
 	}
-    #ifdef USES_QT
-#else
-	//STORE IN EXTRA QUEUE FOR WEBSERVER GUI
-	//webview_thread_mutex.lock();
-	//webview_update_event_queue.push(tmp_event);
-	//STORE THE LAST OPENED PAGE FOR THE WEBVIEW
-	//if (tmp_event.ispageswitchevent && tmp_event.is_event_valid)
-	//{
-	//	webview_last_screen_switch_event = tmp_event;
-	//}
-		
-	//webview_thread_mutex.unlock();
+    #ifndef USES_QT
+    //MAKE REQUEST TO THE WEBAPPLICATION
+    httplib::Client cli(EVENT_URL_COMPLETE_WEBGL);
+    cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");
+
+
+
 #endif
 }
 
@@ -401,7 +401,21 @@ void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 		});
 
 	//START WEBSERVER
-	_this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
+#ifdef USES_QT
+
+
+    if(guicommunicator::IS_PLATTFORM_WEB){
+        _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_WEBQT_STATUS_PORT); //START AS WEBAPP
+    }else{
+        _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT); //REGUALAR DISPLAY PORT
+
+    }
+
+
+#else
+    _this->svr.listen(WEBSERVER_BIND_ADDR, WEBSERVER_STAUTS_PORT);
+#endif
+
 
 	while (_this->thread_running) {
 	
