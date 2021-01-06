@@ -885,7 +885,7 @@ Rectangle {
             y: 119
             width: 124
             height: 15
-            text: qsTr("Text")
+            text: qsTr("---")
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 24
