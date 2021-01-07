@@ -61,8 +61,8 @@ std::string readHWID(std::string _file)
 
 
 int mainloop_running = 0;
-int make_move_mode = 0; //TO DETERM FOR WHICH PURPOSE THE PLAYER_MAKE_MANUAL_MOVE_SCREEN WAS OPENED 0=NOT OPEN 1=TEST 2=RUNNING GAME MOVE
-BackendConnector* gamebackend_logupload = nullptr;  //USED ONLY FOR UPLOADING THE LOGS
+int make_move_mode = 0;   //TO DETERM FOR WHICH PURPOSE THE PLAYER_MAKE_MANUAL_MOVE_SCREEN WAS OPENED 0=NOT OPEN 1=TEST 2=RUNNING GAME MOVE
+BackendConnector* gamebackend_logupload = nullptr;    //USED ONLY FOR UPLOADING THE LOGS
 
 std::string get_interface_mac_address(const string& _ifname) {
 	ifstream iface("/sys/class/net/" + _ifname + "/address");
@@ -95,6 +95,50 @@ std::string read_file_to_string(const std::string& _path) {
 bool cmdOptionExists(char** begin, char** end, const std::string& option)
 {
 	return std::find(begin, end, option) != end;
+}
+
+
+void update_gamescreen_with_player_state(BackendConnector::PLAYER_STATUS _ps, guicommunicator& _gui)
+{
+	if (_ps.game_state.game_running) {
+		//gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+		if(_ps.game_state.im_white_player)
+		{
+			_gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
+		}
+		else
+		{
+			_gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
+		}
+		if (_ps.game_state.is_my_turn && _ps.game_state.im_white_player)
+		{
+			_gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
+		}
+		else if (_ps.game_state.is_my_turn && !_ps.game_state.im_white_player)
+		{
+			_gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
+		}
+					
+		if (_ps.game_state.legal_moves.size() > 0)
+		{
+			std::string tmp_lm = "";
+			size_t max_items = 10;
+			if (_ps.game_state.legal_moves.size() < max_items)
+			{
+				max_items = _ps.game_state.legal_moves.size();
+			}
+								
+			for (size_t i = 0; i < max_items; i++)
+			{
+				tmp_lm += _ps.game_state.legal_moves.at(i) + "\n";
+			}
+			_gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, tmp_lm);
+		}
+		else
+		{
+			_gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "");
+		}
+	}
 }
 
 
@@ -150,7 +194,7 @@ int main(int argc, char *argv[])
 	if(!ConfigParser::getInstance()->loadConfigFile(CONFIG_FILE_PATH))
 	{
 		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
-		ConfigParser::getInstance()->loadDefaults();          //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
+		ConfigParser::getInstance()->loadDefaults();            //LOAD (PUPULATE) ALL CONFIG ENTRIES WITH THE DEFAULT CONFIG
 		ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, false);
 		LOG_F(ERROR, "Failed to load atccontrollerconfig.ini");
 		return 1;
@@ -193,7 +237,7 @@ int main(int argc, char *argv[])
 	//SARTING GUI COMMUNICATOR PROCESS
 	LOG_F(INFO, "guicommunicator startig ipc thread");
 	guicommunicator gui;
-	gui.start_recieve_thread();  //START RECEIEVE WEBSERVER
+	gui.start_recieve_thread();    //START RECEIEVE WEBSERVER
 	
 	//USER_GENERAL_EN_ATCGUI_COMMUNICATION
 	bool cfg_res = false;
@@ -219,7 +263,7 @@ int main(int argc, char *argv[])
 		std::raise(SIGINT);
 	}
 	
-	
+	gui.createEvent(guicommunicator::GUI_ELEMENT::QT_UI_RESET, guicommunicator::GUI_VALUE_TYPE::ENABLED);
 	gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
 	//CHECK VERSION ON GUI SIDE
 	if(gui.check_guicommunicator_version())
@@ -428,12 +472,12 @@ int main(int argc, char *argv[])
 			{
 				//THE THE PLAYER STATUS
 				//WHICH CONTAINS ALL INFORMATION ABOUT THE CURRENT STATE OF GAME / MATCHMAKING / GENERAL STATE OF THE CLIENT
-				BackendConnector::PLAYER_STATUS ps = gamebackend.get_player_state();
+				BackendConnector::PLAYER_STATUS current_player_state = gamebackend.get_player_state();
 				
 				
 				//BASIC ERROR HANDLING
 				//HANDLING LOGOUT / INVALID SESSION
-				if(ps.err == "err_session_key_sid_check_failed" || ps.err == "err_session_check_failed" || ps.err == "err_session_key_sid_check_failed") {
+				if(current_player_state.err == "err_session_key_sid_check_failed" || current_player_state.err == "err_session_check_failed" || current_player_state.err == "err_session_key_sid_check_failed") {
 					if (gamebackend.stop_heartbeat_thread())
 					{
 						gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGOUT_FAILED_HEARTBEAT_STOP", 4000);
@@ -442,7 +486,7 @@ int main(int argc, char *argv[])
 						
 					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
 					
-				}else if(ps.err == "err_query_paramter_hwid_or_sid_or_not_set")
+				}else if(current_player_state.err == "err_query_paramter_hwid_or_sid_or_not_set")
 				{
 					gui.show_error_message_on_gui("get_player_state - ERROR err_query_paramter_hwid_or_sid_or_not_set");
 					LOG_F(ERROR, "GOT err_query_paramter_hwid_or_sid_or_not_set");
@@ -454,128 +498,76 @@ int main(int argc, char *argv[])
 				//FOR ALL OTHER EVENTS USE THE STATE MACHINE HANDLING CLASS
 				//WHICH HANDLES THE GAME LOGIC STATES
 				//THE CALL DETERMS THE CURRENT STATE
-				StateMachine::SM_STATE current_state = state_machiene.determ_state(ps);
-				StateMachine::SM_STATE previous_state = state_machiene.get_prev_state();
+				//StateMachine::SM_STATE current_state = state_machiene.determ_state(current_player_state);
+				//StateMachine::SM_STATE previous_state = state_machiene.get_prev_state();
 				//IF STATE SWITCHED
-				if(current_state != previous_state)
+				if(current_player_state.game_state.game_running)
 				{
 					
 					//IN THIS SECIONT THE IMMEDIATES STATE WILL BE HANDLED
 					//EG FROM NO_GAME_RUNNING TO GAME_RUNNING, THE SCREEN HAVE TO BE SWITCHED, ...
 					
 					//IF A GAME IS RUNNING UPDATE THE UI
-				if(ps.game_state.game_running) {
-					//gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
-						if (ps.game_state.im_white_player)
-						{
-							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
-						}
-						else
-						{
-							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
-						}
-						if (ps.game_state.is_my_turn && ps.game_state.im_white_player)
-						{
-							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_WHITE);
-						}
-						else if (ps.game_state.is_my_turn && !ps.game_state.im_white_player)
-						{
-							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_PLAYER_TURN_COLOR, guicommunicator::GUI_VALUE_TYPE::CHESS_COLOR_BLACK);
-						}
+					update_gamescreen_with_player_state(current_player_state, gui);
 					
-						if (ps.game_state.legal_moves.size() > 0)
-						{
-							std::string tmp_lm = "";
-							size_t max_items = 10;
-							if (ps.game_state.legal_moves.size() < max_items)
-							{
-								max_items = ps.game_state.legal_moves.size();
-							}
-								
-							for (size_t i = 0; i < ps.game_state.legal_moves.size(); i++)
-							{
-								tmp_lm += ps.game_state.legal_moves.at(i) + "\n";
-							}
-							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, tmp_lm);
-						}
-						else
-						{
-							gui.createEvent(guicommunicator::GUI_ELEMENT::GAMESCREEN_POSSIBLE_MOVES, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "");
-						}
-					}
-					
-					
-					
-					//NOW THE NEW GAME HAS STARTED AND THE HARDWARE HAS TO INITILIZES TO THE GIVEN BOARD
-					//AND MOVE THE CHESS FIGURES TO THE INIT BOARD GIVEN BY THE SERVER
-					
-					if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_INITILIZEING) {
+					//IF BOARD IS IN SYNC PHASE => SETUP BOARD BIECES
+					if (current_player_state.game_state.is_syncing_phase)
+					{
+						make_move_mode = 0;
 						//SHOW THE PROCESSING SCREEN
-						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+						//gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);
 						HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PRECCESSING);
-						//NOW INIT THE GAME BOARD
-						if(!ps.game_state.current_board_fen.empty()) {
-							//LOAD THE FEN TO THE TARGET BOARD
-							//IF RETURNS FALSE => THE FEN IS INVALID
-							if(!board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD))
+						//LOAD THE FEN TO THE TARGET BOARD
+						//IF RETURNS FALSE => THE FEN IS INVALID
+						if(!board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD))
+						{
+							gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "INVALID BOARD FEN - CANCEL GAME", 4000);
+							LOG_F(ERROR, current_player_state.game_state.current_board_fen.c_str());
+							gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE);
+							gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
+						}
+						//NOW SYNC THE TWO BOARDS => THE TARGET CHESS POSITIONS WITH THE REAL WORLD MECHANICAL POSTIONS
+						if(board.syncRealWithTargetBoard())
+						{
+							//BOARD SYNCED => UPDATE STATE ON SERVER THAT BOARD IS SYNCED
+							gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
+							gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+						}else{
+							//BOARD INIT FAILED => SHOW OPTION TO CONTIOUE
+							if(gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD SETUP FAILED? CONTINUE", 4000) == guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK)
 							{
-								gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "INVALID BOARD FEN - CANCEL GAME", 4000);
-								LOG_F(ERROR, ps.game_state.current_board_fen.c_str());
-								gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE);
-								gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
-							}
-								
-							//NOW SYNC THE TWO BOARDS => THE TARGET CHESS POSITIONS WITH THE REAL WORLD MECHANICAL POSTIONS
-							if(board.syncRealWithTargetBoard())
-							{
-								//BOARD SYNCED => UPDATE STATE ON SERVER THAT BOARD IS SYNCED
+								//SEND BOARD INIT COMPLETE CALL
 								gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
 								gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
-							}else
-							{
-								//BOARD INIT FAILED => SHOW OPTION TO CONTIOUE
-								if(gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_A_OK_CANCEL, "BOARD SETUP FAILED? CONTINUE", 4000) == guicommunicator::GUI_MESSAGE_BOX_RESULT::MSGBOX_RES_OK) {
-									//SEND BOARD INIT COMPLETE CALL
-									gamebackend.set_player_setup_confirmation(BackendConnector::PLAYER_SETUP_STATE::PSP_READY);
-									gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
-								}else
-								{
-									//RESET PLAYER STATE => ABORTS GAME
-									gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE);
-									//GO BACK TO MAIN_MENU SCREEN
-									gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
-								}
+							}else{
+								//RESET PLAYER STATE => ABORTS GAME
+								gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE);
+								//GO BACK TO MAIN_MENU SCREEN
+								gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
 							}
 						}
 						
 						
-						//INIT FINÍSHED AND GAME RUNNING => SWITCH TO GAME SCREEN
-					}else if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_INITILIZED) {
-						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
+					}
 					
-					}else if(current_state == StateMachine::SM_STATE::SMS_GAME_RUNNING_WAITING_FOR_OTHER_TURN) {
-						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
-						if (!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard())
-						{
+					if (!current_player_state.game_state.is_my_turn) {
+						make_move_mode = 0;
+					}
+					//IS MY TURN TRIGGER DIALOG
+					if (current_player_state.game_state.is_my_turn) {
+						//SYNC BOARDS
+						if (board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()) {
 								
 						}
-						//UPDATE UI
-						//UPDATE BOARD
-					}else if(current_state == StateMachine::SM_STATE::SMS_GANE_RUNNIGN_WAITING_FOR_OWN_TURN) {
-						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);	
-						//UPDATE BOARD TO CURRENT FEN
-						if(!ps.game_state.current_board_fen.empty() && board.boardFromFen(ps.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()) {
-								
-						}
-						
 						
 						//ENABLE AUTO PLAY FEATURE
-						if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH))
-						{	
-							if (ps.game_state.legal_moves.size() > 0)
+						if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH)){	
+							if (current_player_state.game_state.legal_moves.size() > 0)
 							{
-								const int rnd_idnex = (rand() % (ps.game_state.legal_moves.size() - 1));
-								gamebackend.set_make_move(ps.game_state.legal_moves.at(rnd_idnex));
+								const int rnd_idnex = (rand() % (current_player_state.game_state.legal_moves.size() - 1));
+								if(!gamebackend.set_make_move(current_player_state.game_state.legal_moves.at(rnd_idnex))){
+								}
 						
 							}
 							else
@@ -585,307 +577,310 @@ int main(int argc, char *argv[])
 							}
 						
 							//READ HUMAN PLAYER INPUT
-						}else
-						{
+						}else{
 							//TODO SHOW MOVE UI
-							gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN);	
-							make_move_mode = 2;
+							if (make_move_mode != 2)
+							{
+								gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN);
+								make_move_mode = 2;
+							}
+								
+							
 						}
-						
-						
-						
-						
-						//TODO LIST MOVE ON UI
-						//TODO MAKE MOVE ON BOARD
-						//TODO CREATE QT MADE MOVE UI WITH ONE BUTTON
+					}
 					
-						//INIT FINÍSHED AND GAME RUNNING => SWITCH TO GAME SCREEN
-						//UPDATE BOARD
-					}else if(current_state == StateMachine::SM_STATE::SMS_GAME_ABORTED || current_state == StateMachine::SM_STATE::SMS_UNKNOWN)
-					{
+					//IS GAME OVER => ABORT GAME TO SERVER AND  GOTO MAIN MENU
+					if(current_player_state.game_state.is_game_over) {
+						gamebackend.set_abort_game();
 						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);	
 					}
-			
 					
+					//SYNC THE TWO BORDS
+					board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD);
+					board.syncRealWithTargetBoard();
+
 				
 					
+				
+						
+			
+
+			
+			}else
+			{
+				//TODO REFRESH THE GAME SCREEN 
+			}
+				
+		}
+			
+	}
+		
+		
+	//HANDLE UI EVENTS UI LOOP
+	guicommunicator::GUI_EVENT ev = gui.get_gui_update_event();
+	if (!ev.is_event_valid){continue;}
+				
+	gui.debug_event(ev, true);	
+
+		
+	//--------------------------------------------------------
+	//----------------LOGIN BUTTON ---------------------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		//PERFORM A LOGIN AS HUMAN
+		if(gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
+		{
+			//LOAD USER CONFIG FROM SERVER (MAYBE)
+//IF NOT EXISTS UPLOAD THEM
+	if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
+				LOG_F(WARNING, "download_config failed - upload current config");
+				gamebackend.upload_config(ConfigParser::getInstance());
+			}
+			//START HEARTBEAT THREAD
+			if(gamebackend.start_heartbeat_thread()) {
+				//SWITCH TO MAIN MENU
+					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
+				//PLACE THE GOT SESSION ID ON THE INFO SCREEN
+				gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
+				//SHOW PLAYERNAME ON INFO SCREEN
+				gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "Playername: " + gamebackend.getPlayerProfile().friendly_name + " | " + gamebackend.getPlayerProfile().elo_rank_readable);
+			}else {
+				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED_HEARTBEAT", 4000);
+				LOG_F(ERROR, "GOT LOGIN_FAILED_HEARTBEAT START THREAD");
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+			}
+				
+				
+				
+			//SET USER TO AUTO SEARCHING
+			if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
+			{
+				gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  	
+			}
+
+				
+
+
+			
+		}else {
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED", 4000);
+			LOG_F(ERROR, "GOT LOGIN FAILED");
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+		}
+	}
+		
+		
+		
+		
+		
+		
+		
+	//--------------------------------------------------------
+	//----------------BOARD INIT BUTTON-----------------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+		if (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
+		{
+			gui.show_error_message_on_gui("board.initBoard() FAILED");
+				
+		}
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+	}
+				
+		
+		
+	//--------------------------------------------------------
+	//----------------SCAN BOARD BTN--------------------------
+	//--------------------------------------------------------
+	if((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+		if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
+		{
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "TABLE REACHED HOME POSITION", 10000);
+		}
+		else
+		{
+			gui.show_error_message_on_gui("board.initBoard() FAILED");
+		}
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+	}
 					
-					
-					//FINALLY SWITCH TO THE NEW STATE
-					state_machiene.switch_to_next_state(ps);
-					
-					
-					
-					
-					//THE PREVIOUS IF ARE ONLY FOR STATE TRANSITION LIKE FROM GAME_INIT TO GAME RUNNING
-					//THE ELSE IS USED TO UPDATE THE GAME SCREEN WITH CHANGES (like the turn of the other player)
+		
+		
+	//--------------------------------------------------------
+	//----------------DEBUG - LOAD CONFIG BUTTON--------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_B && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+		ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, true);
+		gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOADED DEFAULT CONFIG", 10000);
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
+	}
+		
+		
+	//--------------------------------------------------------
+	//----------------DEBUG - LOAD CONFIG BUTTON--------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_C && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "RUN MAKE_MOVE FKT", 10000);
+		std::string test_text = "";
+		int test_id = 0;
+		while (test_id >= 0) {
+			board.test_make_move_func(test_text, test_id);
+			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, test_text, 10000);
+		}
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+	}
+		
+	//--------------------------------------------------------
+	//----------------DEBUG - LOAD CONFIG BUTTON--------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_D && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "G5 -> A2", 10000);
+		std::string test_text = "";
+		board.test_make_move_static();
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+	}
+			
+	//--------------------------------------------------------
+	//----------------DEBUG - UPLOAD CONFIG BUTTON--------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gamebackend.upload_config(ConfigParser::getInstance()); 
+	}
+        
+	//--------------------------------------------------------
+   //----------------DEBUG - UPLOAD LOG BUTTON--------------
+   //--------------------------------------------------------
+   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		LOG_F(WARNING, "MANUAL LOG UPLOAD");
+		LOG_F(WARNING, LOG_FILE_PATH_ERROR);
+		loguru::flush();
+		//IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
+		std::string log = read_file_to_string(LOG_FILE_PATH_ERROR);
+		if (!log.empty())
+		{
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+			gamebackend.upload_logfile(log);
+			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+		} 
+	}
+        
+		
+		
+	//--------------------------------------------------------
+	//----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_H && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		LOG_F(WARNING, "DEBUG -SHOW MAKE MOVE SCREEN ");
+		make_move_mode = 1;
+	        
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN); 
+	}
+
+
+
+	//----------------- PLAYER MOVE RESPOMSE ---------------------- //
+	if(ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT && ev.type == guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING && make_move_mode) {
+			
+		ChessBoard::MovePiar mvpair = board.StringToMovePair(ev.value);
+		if (mvpair.is_valid) {
+			//FOR TEST
+			if(make_move_mode == 1) {
+				board.makeMoveSync(mvpair, false, false, false);
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
+				make_move_mode = 0;
+			}
+			else if(make_move_mode == 2) {
+				//FOR RUNNING GAME
+				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::GAME_SCREEN);
+			   if(gamebackend.set_make_move(ev.value))
+				{
+						
+					make_move_mode = 0;
 				}else
 				{
-					//TODO REFRESH THE GAME SCREEN 
+					make_move_mode = 2;
+					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN); 
 				}
-				
 			}
-			
-		}
-		
-		
-		//HANDLE UI EVENTS UI LOOP
-		guicommunicator::GUI_EVENT ev = gui.get_gui_update_event();
-		if (!ev.is_event_valid){continue;}
-				
-		gui.debug_event(ev, true);	
-
-		
-		//--------------------------------------------------------
-		//----------------LOGIN BUTTON ---------------------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::BEGIN_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			//PERFORM A LOGIN AS HUMAN
-			if(gamebackend.login(BackendConnector::PLAYER_TYPE::PT_HUMAN) && !gamebackend.get_session_id().empty())
-			{
-				//LOAD USER CONFIG FROM SERVER (MAYBE)
-			//IF NOT EXISTS UPLOAD THEM
-				if(!gamebackend.download_config(ConfigParser::getInstance(), true)) {
-					LOG_F(WARNING, "download_config failed - upload current config");
-					gamebackend.upload_config(ConfigParser::getInstance());
-				}
-				//START HEARTBEAT THREAD
-				if(gamebackend.start_heartbeat_thread()) {
-					//SWITCH TO MAIN MENU
-						gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
-					//PLACE THE GOT SESSION ID ON THE INFO SCREEN
-					gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_SESSIONID_LABEL, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, gamebackend.get_session_id());
-					//SHOW PLAYERNAME ON INFO SCREEN
-					gui.createEvent(guicommunicator::GUI_ELEMENT::INFOSCREEN_VERSION, guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING, "Playername: " + gamebackend.getPlayerProfile().friendly_name + " | " + gamebackend.getPlayerProfile().elo_rank_readable);
-				}else {
-					gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED_HEARTBEAT", 4000);
-					LOG_F(ERROR, "GOT LOGIN_FAILED_HEARTBEAT START THREAD");
-					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-				}
-				
-				
-				
-				//SET USER TO AUTO SEARCHING
-				if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_AUTO_MATCHMAKING_ENABLE))
-				{
-					gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING);	  	
-				}
-
-				
-
-
-			
-			}else {
-				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOGIN_FAILED", 4000);
-				LOG_F(ERROR, "GOT LOGIN FAILED");
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-			}
-		}
-		
-		
-		
-		
-		
-		
-		
-		//--------------------------------------------------------
-		//----------------BOARD INIT BUTTON-----------------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::INIT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			if (board.initBoard(board_scan) != ChessBoard::BOARD_ERROR::INIT_COMPLETE)
-			{
-				gui.show_error_message_on_gui("board.initBoard() FAILED");
-				
-			}
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
-		}
-				
-		
-		
-		//--------------------------------------------------------
-		//----------------SCAN BOARD BTN--------------------------
-		//--------------------------------------------------------
-		if((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			if (board.calibrate_home_pos() == ChessBoard::BOARD_ERROR::NO_ERROR)
-			{
-				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "TABLE REACHED HOME POSITION", 10000);
-			}
-			else
-			{
-				gui.show_error_message_on_gui("board.initBoard() FAILED");
-			}
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
-		}
-					
-		
-		
-		//--------------------------------------------------------
-		//----------------DEBUG - LOAD CONFIG BUTTON--------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_B && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			ConfigParser::getInstance()->createConfigFile(CONFIG_FILE_PATH, true);
-			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "LOADED DEFAULT CONFIG", 10000);
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
-		}
-		
-		
-		//--------------------------------------------------------
-		//----------------DEBUG - LOAD CONFIG BUTTON--------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_C && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "RUN MAKE_MOVE FKT", 10000);
-			std::string test_text = "";
-			int test_id = 0;
-			while (test_id >= 0) {
-				board.test_make_move_func(test_text, test_id);
-				gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, test_text, 10000);
-			}
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
-		}
-		
-		//--------------------------------------------------------
-		//----------------DEBUG - LOAD CONFIG BUTTON--------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_D && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "G5 -> A2", 10000);
-			std::string test_text = "";
-			board.test_make_move_static();
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
-		}
-			
-		//--------------------------------------------------------
-		//----------------DEBUG - UPLOAD CONFIG BUTTON--------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_E && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gamebackend.upload_config(ConfigParser::getInstance()); 
-		}
-        
-		//--------------------------------------------------------
-	   //----------------DEBUG - UPLOAD LOG BUTTON--------------
-	   //--------------------------------------------------------
-	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_F && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			LOG_F(WARNING, "MANUAL LOG UPLOAD");
-			LOG_F(WARNING, LOG_FILE_PATH_ERROR);
-			loguru::flush();
-			//IF GOT A SIGNAL READ LOGFILE AND UPLOAD THEM
-			std::string log = read_file_to_string(LOG_FILE_PATH_ERROR);
-			if (!log.empty())
-			{
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-				gamebackend.upload_logfile(log);
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
-			} 
-		}
-        
-		
-		
-		//--------------------------------------------------------
-        //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
-        //--------------------------------------------------------
-        if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_H && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			LOG_F(WARNING, "DEBUG -SHOW MAKE MOVE SCREEN ");
-	        make_move_mode = 1;
-	        
-	        gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PLAYER_ENTER_MANUAL_MOVE_SCREEN); 
-		}
-
-
-
-		//----------------- PLAYER MOVE RESPOMSE ---------------------- //
-		if (ev.event == guicommunicator::GUI_ELEMENT::PLAYER_EMM_INPUT && ev.type == guicommunicator::GUI_VALUE_TYPE::USER_INPUT_STRING && make_move_mode) {
-			
-			ChessBoard::MovePiar mvpair = board.StringToMovePair(ev.value);
-			if (mvpair.is_valid) {
-				//FOR TEST
-				if (make_move_mode == 1) {
-					board.makeMoveSync(mvpair, false, false, false);
-					gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
-					make_move_mode = 0;
-				}
-				else if (make_move_mode == 2) { //FOR RUNNING GAME
-					if(!gamebackend.set_make_move(ev.value))
-					{
-					}else
-					{
-						make_move_mode = 0;
-					}
-				}
 
 				 
-			}
+		}
 			
-		}
-		
-		//--------------------------------------------------------
-	   //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
-	   //--------------------------------------------------------
-	   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			LOG_F(WARNING, "DEBUG - DOWNLOAD CONFIG BUTTON TRIGGERED ");
-			gamebackend.download_config(ConfigParser::getInstance(), true); 
-		}
-		
-		//--------------------------------------------------------
-		//----------------LOGOUT BUTTON --------------------------
-		//--------------------------------------------------------	
-		if(ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
-			//LOGOUT AND GOTO LOGIN SCREEN
-			//if(gamebackend.stop_heartbeat_thread()) {
-				gamebackend.logout();
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
-			//}
-		}
-		
-		
-		//--------------------------------------------------------
-		//----------------ENABLE MATCHMAKING BUTTON --------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::ENABLED) {
-			//SET PLAYERSTATE TO OPEN FO A MATCH
-			if(!gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING)) {
-				gui.show_error_message_on_gui("ENABLE MATCHMAKING FAILED");
-				LOG_F(WARNING, "ENABLE MATCHMAKING FAILED TRIGGERED BY USER BUTTON");
-			}
-		}
-		//--------------------------------------------------------
-		//----------------DISBALE MATCHMAKING BUTTON --------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::DISBALED) {
-			//SET PLAYERSTATE TO OPEN FO A MATCH
-			if(!gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE)) {
-				gui.show_error_message_on_gui("DISBALE MATCHMAKING FAILED");
-				LOG_F(WARNING, "DISBALE MATCHMAKING FAILED TRIGGERED BY USER BUTTON");
-			}
-		}	
-			
-		//--------------------------------------------------------
-		//----------------DISBALE MATCHMAKING BUTTON --------------
-		//--------------------------------------------------------
-		if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_ABORT_GAME && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-			//SET PLAYERSTATE TO OPEN FO A MATCH
-			if(gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE)) {
-				gui.show_error_message_on_gui("GAME STOPPED");
-				LOG_F(WARNING, "GAME STOPPED TRIGGERED BY USER BUTTON");
-				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::MAIN_MENU_SCREEN);
-			}
-		}	
-		
-		
-		
 	}
+		
+	//--------------------------------------------------------
+   //----------------DEBUG - DOWNLOAD CONFIG BUTTON--------------
+   //--------------------------------------------------------
+   if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_G && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		LOG_F(WARNING, "DEBUG - DOWNLOAD CONFIG BUTTON TRIGGERED ");
+		gamebackend.download_config(ConfigParser::getInstance(), true); 
+	}
+		
+	//--------------------------------------------------------
+	//----------------LOGOUT BUTTON --------------------------
+	//--------------------------------------------------------	
+	if(ev.event == guicommunicator::GUI_ELEMENT::LOGOUT_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
+		//LOGOUT AND GOTO LOGIN SCREEN
+		//if(gamebackend.stop_heartbeat_thread()) {
+			gamebackend.logout();
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+		//}
+	}
+		
+		
+	//--------------------------------------------------------
+	//----------------ENABLE MATCHMAKING BUTTON --------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::ENABLED) {
+		//SET PLAYERSTATE TO OPEN FO A MATCH
+		if(!gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_SEARCHING)) {
+			gui.show_error_message_on_gui("ENABLE MATCHMAKING FAILED");
+			LOG_F(WARNING, "ENABLE MATCHMAKING FAILED TRIGGERED BY USER BUTTON");
+		}
+	}
+	//--------------------------------------------------------
+	//----------------DISBALE MATCHMAKING BUTTON --------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::MAINMENU_START_AI_MATCH_BTN && ev.type == guicommunicator::GUI_VALUE_TYPE::DISBALED) {
+		//SET PLAYERSTATE TO OPEN FO A MATCH
+		if(!gamebackend.set_player_state(BackendConnector::PLAYER_STATE::PS_IDLE)) {
+			gui.show_error_message_on_gui("DISBALE MATCHMAKING FAILED");
+			LOG_F(WARNING, "DISBALE MATCHMAKING FAILED TRIGGERED BY USER BUTTON");
+		}
+	}	
+			
+	//--------------------------------------------------------
+	//----------------ABORT GAME BUTTON --------------
+	//--------------------------------------------------------
+	if(ev.event == guicommunicator::GUI_ELEMENT::GAMESCREEN_ABORT_GAME && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
+		//SET PLAYERSTATE TO OPEN FO A MATCH
+		//if(gamebackend.set_abort_game()) {
+			
+		//}
+		//gui.show_error_message_on_gui("GAME STOPPED");
+		LOG_F(WARNING, "GAME STOPPED TRIGGERED BY USER BUTTON");
+		gamebackend.logout();
+		gui.createEvent(guicommunicator::GUI_ELEMENT::QT_UI_RESET, guicommunicator::GUI_VALUE_TYPE::ENABLED);
+		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::LOGIN_SCREEN);
+	}	
+		
+		
+		
+}
 	
 	
 	
 	
-	//UPLOAD LOGILES
-	loguru::flush();
-	gamebackend.upload_logfile(read_file_to_string(LOG_FILE_PATH_ERROR));
-	gamebackend.logout();
+//UPLOAD LOGILES
+loguru::flush();
+gamebackend.upload_logfile(read_file_to_string(LOG_FILE_PATH_ERROR));
+gamebackend.logout();
 	
-	return 0;
+return 0;
 }
 
 

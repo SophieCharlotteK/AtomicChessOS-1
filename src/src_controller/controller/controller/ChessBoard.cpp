@@ -967,7 +967,11 @@ int ChessBoard::get_figure_type_count(ChessPiece::FIGURE* _board_pointer, char _
 
 bool ChessBoard::boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board) {
 	
-	
+	if (_fen.empty())
+	{
+		return false;
+	}
+		
 	_fen += " ";  //THE BOARD BLOCK (CONTAINING FROM START OF THE STRING) TO THE FIRST WHITESPACE => EVERYTHING AFTER IS NOT IMPORTANT
 	//CREATE AN EMPTY FIGURE
 	

@@ -105,8 +105,8 @@ void guicommunicator::createEvent(GUI_ELEMENT _event, GUI_VALUE_TYPE _type, std:
 	}
     #ifndef USES_QT
     //MAKE REQUEST TO THE WEBAPPLICATION
-    httplib::Client cli(EVENT_URL_COMPLETE_WEBGL);
-    cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");
+    //httplib::Client cli(EVENT_URL_COMPLETE_WEBGL);
+    //cli.Post(EVENT_URL_SETEVENT, tmp, "application/json");
 
 
 

@@ -322,6 +322,25 @@ bool BackendConnector::set_make_move(std::string _move)
 }
 
 
+bool BackendConnector::set_abort_game()
+{
+	request_result tmp = make_request(URL_ABORT_GAME + "?hwid=" + hwid + "&sid=" + session_id);
+	if (!tmp.body.empty())
+	{
+		//PARSE JSON
+		std::string jp_err = "";
+		json11::Json t = json11::Json::parse(tmp.body.c_str(), jp_err);
+		if (jp_err.empty())
+		{
+			if (((json11::Json::object)t.object_items())["status"].string_value() == "ok")
+			{
+				return true;
+			}	
+		}
+	}
+	return false;
+}
+
 
 bool BackendConnector::set_player_state(PLAYER_STATE _ps)
 {

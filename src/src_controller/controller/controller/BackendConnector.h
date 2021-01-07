@@ -136,7 +136,7 @@ public:
 	bool set_player_setup_confirmation(PLAYER_SETUP_STATE _state);
 	bool start_match_with_player(std::string _virtual_player_id);
 	
-	
+	bool set_abort_game();
 	bool set_make_move(std::string _move);
 	std::list<PLAYER_AVARIABLE> get_players_avariable();
 	//DATA STRUCT SEND TO THE HEARTBEAT THREAD FUNCTION
@@ -199,7 +199,7 @@ private:
     const std::string URL_DOWNLOAD_CONFIG = "/rest/get_user_config";
 	
 	const std::string URL_UPLOAD_LOG = "/rest/store_user_log";
-	
+	const std::string URL_ABORT_GAME = "/rest/abort_game";
 	
 	std::string ca_client_path = "";
 	
