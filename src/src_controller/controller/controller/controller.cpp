@@ -723,7 +723,7 @@ int main(int argc, char *argv[])
 	//----------------DEBUG - LOAD CONFIG BUTTON--------------
 	//--------------------------------------------------------
 	if(ev.event == guicommunicator::GUI_ELEMENT::DEBUG_FUNCTION_C && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
-		gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "RUN MAKE_MOVE FKT", 10000);
+		gui.show_message_box(guicommunicator::GUI_MESSAGE_BOX_TYPE::MSGBOX_B_OK, "RUN MAKE_MOVE FKT\nh1h5\ng2a2\npb1-pw10\ng8-pw10", 10000);
 		std::string test_text = "";
 		int test_id = 0;
 		while (test_id >= 0) {

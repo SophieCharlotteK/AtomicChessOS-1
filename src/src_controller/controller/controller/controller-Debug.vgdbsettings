@@ -13,7 +13,7 @@
       <UserName>prodevmo</UserName>
     </BuildHost>
     <DeploymentHost>
-      <HostName>192.168.178.150</HostName>
+      <HostName>192.168.178.134</HostName>
       <Transport>SSH</Transport>
       <UserName>root</UserName>
     </DeploymentHost>
