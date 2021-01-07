@@ -337,15 +337,10 @@ void guicommunicator::enqueue_event(GUI_EVENT _ev) {
 
 void guicommunicator::recieve_thread_function(guicommunicator* _this) {
 	using namespace httplib;
-	auto ret = _this->svr.set_mount_point("/public", WEBSERVER_STATIC_FILE_DIR);
-	if (!ret) {
-		_this->debug_output(WEBSERVER_STATIC_FILE_DIR);
-	}
-	_this->svr.set_file_extension_and_mimetype_mapping("qml", "application/qml");
 	//REGISTER WEBSERVER EVENTS
 	_this->svr.Get("/",
 		[](const Request& req, Response& res) {
-			res.set_redirect("/public/index.html", 302);
+			res.set_redirect(EVENT_URL_VERSION, 302);
 		});
 
 	_this->svr.Get(EVENT_URL_SETEVENT,
