@@ -513,6 +513,7 @@ int main(int argc, char *argv[])
 					//IF BOARD IS IN SYNC PHASE => SETUP BOARD BIECES
 					if (current_player_state.game_state.is_syncing_phase)
 					{
+						
 						make_move_mode = 0;
 						//SHOW THE PROCESSING SCREEN
 						//gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
@@ -553,9 +554,26 @@ int main(int argc, char *argv[])
 					
 					if (!current_player_state.game_state.is_my_turn) {
 						make_move_mode = 0;
+						
+						if (current_player_state.game_state.im_white_player)
+						{
+							HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_BLACK_TURN);
+						}
+						else
+						{
+							HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_WHITE_TURN);
+						}
 					}
 					//IS MY TURN TRIGGER DIALOG
 					if (current_player_state.game_state.is_my_turn) {
+						if (current_player_state.game_state.im_white_player)
+						{
+							HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_WHITE_TURN);
+						}
+						else
+						{
+							HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_BLACK_TURN);
+						}
 						//SYNC BOARDS
 						if (board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard()) {
 								
@@ -608,7 +626,7 @@ int main(int argc, char *argv[])
 			
 			}else
 			{
-				//TODO REFRESH THE GAME SCREEN 
+			
 			}
 				
 		}
