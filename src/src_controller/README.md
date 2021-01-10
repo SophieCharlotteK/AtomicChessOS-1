@@ -189,7 +189,7 @@ In the following table, the Vendor/Product-IDs from some tested boards are liste
 |---------------------------------|-----------|-----------|------------|------------|--------------------|
 | Bigtreetech SKR 1.4 Turbo       | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
 | Bigtreetech SKE 1.3             | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
-| Arduino Due [Programming Port]  | tty       | 2341      | 003d       | ttyUBCProg | User-Move-Detector |
+| Arduino Due [Programming Port]  | tty       | 2341      | 003d       | ttyUBC     | User-Move-Detector |
 | Arduino Due [Native SAMX3 Port] | tty       | 2341      | 003e       | ttyUBC     | User-Move-Detector |
 | CH340                           | tty       | 1a86      | 7523       | ttyUBC     | User-Move-Detector |
 | STM32F411                       | tty       | 0483      | 5740       | ttyUBC     | User-Move-Detector |
