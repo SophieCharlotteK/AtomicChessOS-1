@@ -188,7 +188,7 @@ In the following table, the Vendor/Product-IDs from some tested boards are liste
 | Product                         | SUBSYSTEM | Vendor-ID | Product-ID | SYMLINK    | Board-Type         |
 |---------------------------------|-----------|-----------|------------|------------|--------------------|
 | Bigtreetech SKR 1.4 Turbo       | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
-| Bigtreetech SKE 1.3             | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
+| Bigtreetech SKR 1.3             | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
 | Arduino Due [Programming Port]  | tty       | 2341      | 003d       | ttyUBC     | User-Move-Detector |
 | Arduino Due [Native SAMX3 Port] | tty       | 2341      | 003e       | ttyUBC     | User-Move-Detector |
 | CH340                           | tty       | 1a86      | 7523       | ttyUBC     | User-Move-Detector |
@@ -201,5 +201,17 @@ $ cat /etc/udev/rules.d/50-usb.rules
 ...
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="6029", SYMLINK+="ttySKR"
 ...
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", SYMLINK+="ttyUBC"
+...
 ```
 This configuration archieves, that any type (of supported) Stepper-Controller-Boards are accessable over the `/dev/ttySKR` symblink.
+
+After the installation of the rules and connection of a SKR1.3 and a STM32F411 (known as STM32-BlackPill), the device directory contains the following entires:
+
+```
+ls /dev/tty*
+
+/dev/ttyS27  /dev/ttyS6
+/dev/ttyUSB0  /dev/ttyACMA0  /dev/tty25  /dev/tty32  /dev/tty4  /dev/ttyprintk  /dev/ttySKR  /dev/ttyUBC
+```
+The in the configutation file of the controller file, these tty paths are set and no reconfiguration for different hardware configuration is needed.
