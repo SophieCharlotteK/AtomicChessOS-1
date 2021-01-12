@@ -156,3 +156,62 @@ In order to calibrate the mechanic, several entries in the config file has to be
 
 ### MOVEMENT SPEED COMARPISION HARDWARE V1 / V2
 * gocde slower nicht
+
+
+
+
+#### [LINUX] HANDLING DIFFERENT 
+The simplified hardware design of the projects uses two USB2Serial adapters to connect the SKR1.3 Stepper Driver Board and the User-Move Dector with the Embedded System. All serial deives will be mount under the `/dev/ttyXXX` path and the the squence can be differ after each reboot. In order to prevent this, it is possible to mount a usb device with a Vendor and Product-ID to a specified path using a custom udev roule.
+For each rule, the Vendor and Product-ID is needed, for this commands like `lsub` or `usb-devices` and output the relevant information for each usb device attached.
+```
+$ usb-devices
+
+T:  Bus=03 Lev=02 Prnt=02 Port=02 Cnt=03 Dev#= 11 Spd=12  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1d50 ProdID=6029 Rev=01.00
+S:  Manufacturer=marlinfw.org 
+S:  Product=Marlin USB Device
+S:  SerialNumber=06FF800AAF3D08075C664F58F50020C3
+C:  #Ifs= 3 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=02 Prot=00 Driver=cdc_acm
+I:  If#=0x1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_acm
+I:  If#=0x2 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
+```
+During development, several different board are used to control the different hardware sections.
+These can be divided into two main groups :
+
+* `Stepper-Controller` - For controlling the Stpper-Drivers, Endstop, Coils/Servo
+* `User-Move-Detector` - To interface the hall-sensor array, to detect a manual move of the figures.
+
+In the following table, the Vendor/Product-IDs from some tested boards are listed below:
+
+| Product                         | SUBSYSTEM | Vendor-ID | Product-ID | SYMLINK    | Board-Type         |
+|---------------------------------|-----------|-----------|------------|------------|--------------------|
+| Bigtreetech SKR 1.4 Turbo       | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
+| Bigtreetech SKR 1.3             | tty       | 1d50      | 6029       | ttySKR     | Stepper-Controller |
+| Arduino Due [Programming Port]  | tty       | 2341      | 003d       | ttyUBC     | User-Move-Detector |
+| Arduino Due [Native SAMX3 Port] | tty       | 2341      | 003e       | ttyUBC     | User-Move-Detector |
+| CH340                           | tty       | 1a86      | 7523       | ttyUBC     | User-Move-Detector |
+| STM32F411                       | tty       | 0483      | 5740       | ttyUBC     | User-Move-Detector |
+
+With these information, is is possible to generate the needed udev rules.
+```
+$ cat /etc/udev/rules.d/50-usb.rules
+
+...
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="6029", SYMLINK+="ttySKR"
+...
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", SYMLINK+="ttyUBC"
+...
+```
+This configuration archieves, that any type (of supported) Stepper-Controller-Boards are accessable over the `/dev/ttySKR` symblink.
+
+After the installation of the rules and connection of a SKR1.3 and a STM32F411 (known as STM32-BlackPill), the device directory contains the following entires:
+
+```
+ls /dev/tty*
+
+/dev/ttyS27  /dev/ttyS6
+/dev/ttyUSB0  /dev/ttyACMA0  /dev/tty25  /dev/tty32  /dev/tty4  /dev/ttyprintk  /dev/ttySKR  /dev/ttyUBC
+```
+The in the configutation file of the controller file, these tty paths are set and no reconfiguration for different hardware configuration is needed.
