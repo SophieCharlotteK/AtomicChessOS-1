@@ -60,6 +60,7 @@ public:
 		
 		
 		std::string current_board_fen; //CURRENT BOARD FEN STRING
+		std::string current_board_move;
 		bool  is_initial_board;
 		bool is_board_valid;
 		bool is_game_over;

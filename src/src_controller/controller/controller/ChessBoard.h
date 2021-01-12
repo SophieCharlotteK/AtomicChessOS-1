@@ -101,6 +101,21 @@ public:
 	{
 		ChessField::CHESS_FILEDS field;
 		ChessPiece::FIGURE figure;
+		FigureField()
+		{
+		}
+		FigureField(ChessField::CHESS_FILEDS _field, ChessPiece::FIGURE _figure)
+		{
+			field = _field;
+			figure = _figure;
+		}
+	};
+	
+	struct FigureFieldPair
+	{
+		FigureField field_curr;
+		FigureField field_target;
+		bool processed; //IS TRUE IF THIS FIELS IS ALREADY PROCESSED BY THE SYNC BOARD ALGORITHM
 	};
 	
 	struct MovePiar
@@ -108,6 +123,17 @@ public:
 		ChessField::CHESS_FILEDS from_field;
 		ChessField::CHESS_FILEDS to_field;
 		bool is_valid;
+		
+		MovePiar(ChessField::CHESS_FILEDS _from, ChessField::CHESS_FILEDS _to)
+		{
+			from_field = _from;
+			to_field = _to;
+			is_valid = true;
+		}
+		MovePiar()
+		{
+			is_valid = false;
+		}
 	};
 		
 	bool test_make_move_func(std::string& _descr, int& _test_no);
@@ -118,10 +144,11 @@ public:
 	MovePiar StringToMovePair(std::string _mv);
 	std::string board2FEN(ChessBoard::BOARD_TPYE _type); //RETURNS A FEN REPRESENTATION OF THE BOARD
 	bool boardFromFen(std::string _fen, ChessBoard::BOARD_TPYE _target_board); //LOADS A BOARD BY FEN
-	bool syncRealWithTargetBoard(); ///SNYC THE RealBoard with the Target board and move the figures
+	bool syncRealWithTargetBoard(); ///SNYC THE RealBoard with the Target board and move the 
+	bool syncRealWithTargetBoard(MovePiar _ecevute_move);   ///SNYC THE RealBoard with the Target board and move the figures
 	void printBoard(ChessBoard::BOARD_TPYE _target_board);   ///PRINT BOARD TO CONSOLE CURRENT AND TARGET
 	ChessBoard::BOARD_ERROR scanBoard(bool _include_park_postion);     ///SCANS THE BOARD WITH THE NFC READER AND STORE THE RESULT IN THE GIVEN REFERENCE BOARD
-	std::list<FigureField> compareBoards();  ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
+	std::vector<FigureFieldPair> compareBoards(ChessPiece::FIGURE* _board_a, ChessPiece::FIGURE* _board_b, bool _include_park_pos);     ///COMPARE THE REAL AND TARGET BOARD AND GET THE DIFFERENCES
 	ChessBoard::BOARD_ERROR initBoard(bool _with_scan);   ///INIT THE MECHANICS AND SCANS THE BOARD
 	void loadBoardPreset(ChessBoard::BOARD_TPYE _target_board, ChessBoard::BOARD_PRESET _preset);
 	ChessBoard::BOARD_ERROR makeMoveSync(MovePiar _move, bool _with_scan, bool _directly, bool _occupy_check); ///MOVES A FIGURE FROM TO AN FIELD TO AN OTHER _with_scan_scans the figure on start field first; _directly moves figure on direct way, occupy_check ches if target field is alreadey occupied
@@ -165,6 +192,15 @@ private:
 	ChessField::CHESS_FILEDS getNextHalfFieldFromParkPos(ChessField::CHESS_FILEDS _board_field);
 	bool makeMoveFromBoardToParkPosition(ChessField::CHESS_FILEDS _park_pos, std::queue<MV_POSITION>& _generated_waypoint_list, int _current_x, int _current_y);
 	
+	void initBoardArray(ChessPiece::FIGURE* _board); //INITS THE GIVEN BOARD ARRAY TO A COMPLETE EMPTY FIELD
+	
+	bool isBoardFieldOccupied(ChessPiece::FIGURE* _board,ChessField::CHESS_FILEDS _field);
+	ChessPiece::FIGURE getFigureOnField(ChessPiece::FIGURE* _board, ChessField::CHESS_FILEDS _field);
+	
+	std::vector<ChessBoard::FigureFieldPair>::iterator getFigureInDiffListPlacedOnEmptpy(std::vector<ChessBoard::FigureFieldPair>& _figlist, ChessPiece::FIGURE _fig);
+	
+	bool syncRealWithTargetBoard_add_remove_empty(); //CALCULCATES ONLY ADD/REMOVE FIGURE FROM/TO FIELS MOVES => RETURNS TRUE IF A CHANGE/MOVE WAS MADE
+	bool syncRealWithTargetBoard_not_empty();
 };
 
 #endif //__CHESSBOARD_H__

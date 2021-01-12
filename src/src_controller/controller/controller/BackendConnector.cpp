@@ -201,9 +201,16 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 			if (gs_simplified.find("current_board") != gs_simplified.end() && gs_simplified["current_board"].is_object()) {
 				json11::Json::object  gs_board = gs_simplified["current_board"].object_items();
 				
-				if (gs_board.find("fen") != gs_board.end() && gs_board["fen"].is_string()) {
+				if (gs_board.find("fen") != gs_board.end() && gs_board["fen"].is_string())
+				{
 					status.game_state.current_board_fen = gs_board["fen"].string_value();
 				}
+				else
+				{
+					status.game_state.current_board_fen = "";
+				}
+				
+				
 				if (gs_board.find("initial_board") != gs_board.end() && gs_board["initial_board"].is_bool()) {
 					status.game_state.is_initial_board = gs_board["initial_board"].bool_value();
 				}
@@ -216,6 +223,16 @@ BackendConnector::PLAYER_STATUS BackendConnector::get_player_state()
 				if (gs_board.find("is_game_over") != gs_board.end() && gs_board["is_game_over"].is_bool()) {
 					status.game_state.is_game_over = gs_board["is_game_over"].bool_value();
 				}
+				
+				if (gs_board.find("move") != gs_board.end() && gs_board["move"].is_string())
+				{
+					status.game_state.current_board_move = gs_board["move"].string_value();
+				}
+				else
+				{
+					status.game_state.current_board_move = "";
+				}
+				
 				if (gs_board.find("legal_moves") != gs_board.end() && gs_board["legal_moves"].is_array()) {
 					for (int i = 0; i < gs_board["legal_moves"].array_items().size(); i++)
 					{

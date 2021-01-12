@@ -563,6 +563,13 @@ int main(int argc, char *argv[])
 						{
 							HardwareInterface::getInstance()->setTurnStateLight(HardwareInterface::HI_TURN_STATE_LIGHT::HI_TSL_PLAYER_WHITE_TURN);
 						}
+						
+						//SYNC BOARDS
+						if(board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard(board.StringToMovePair(current_player_state.game_state.current_board_move))) {
+								
+						}
+						
+						
 					}
 					//IS MY TURN TRIGGER DIALOG
 					if (current_player_state.game_state.is_my_turn) {

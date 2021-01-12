@@ -45,7 +45,7 @@ bool ChessPiece::IsFigureValid(ChessPiece::FIGURE _figure)
 
 bool ChessPiece:: compareFigures(FIGURE _a, FIGURE _b)
 {
-	if (_a.color == _b.color && _a.type == _b.type)
+	if (_a.color == _b.color && _a.type == _b.type && _a.is_empty == _b.is_empty)
 	{
 		return true;
 	}
