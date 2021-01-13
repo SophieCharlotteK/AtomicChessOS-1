@@ -86,7 +86,7 @@ public:
 		CHESS_FIELD_H7                    = 62,
 		CHESS_FIELD_H8                    = 63,
 		
-		
+		//------------ NOTE CHANGES HERE ? => EDIT parkpos2IDIndex() AND ChessBoard::getSpecificFigureTypeForParkpostion, copyParkPostionsToBoard----------------- //
 		CHESS_FIELD_PARK_POSTION_WHITE_1  = 64,
 		CHESS_FIELD_PARK_POSTION_WHITE_2  = 65,
 		CHESS_FIELD_PARK_POSTION_WHITE_3  = 66,
@@ -103,7 +103,7 @@ public:
 		CHESS_FIELD_PARK_POSTION_WHITE_14 = 77,
 		CHESS_FIELD_PARK_POSTION_WHITE_15 = 78,
 		CHESS_FIELD_PARK_POSTION_WHITE_16 = 79,
-		
+		//------------ NOTE CHANGES HERE ? => EDIT parkpos2IDIndex() ADN ChessBoard::getSpecificFigureTypeForParkpostion, copyParkPostionsToBoard----------------- //
 		CHESS_FIELD_PARK_POSTION_BLACK_1  = 80,
 		CHESS_FIELD_PARK_POSTION_BLACK_2  = 81,
 		CHESS_FIELD_PARK_POSTION_BLACK_3  = 82,
@@ -119,9 +119,12 @@ public:
 		CHESS_FIELD_PARK_POSTION_BLACK_13 = 92,
 		CHESS_FIELD_PARK_POSTION_BLACK_14 = 93,
 		CHESS_FIELD_PARK_POSTION_BLACK_15 = 94,
-		CHESS_FIELD_PARK_POSTION_BLACK_16 = 95
+		CHESS_FIELD_PARK_POSTION_BLACK_16 = 95,
+		
+		CHESS_FIELD_END = 96
 		
 	};
+	static int parkpos2IDIndex(ChessField::CHESS_FILEDS _field); //RETURNS A UPCOUNTING INDEX FROM A PARK POSITION CHESS_FIELD_PARK_POSTION_WHITE_1 => 0 CHESS_FIELD_PARK_POSTION_WHITE_2 => 1
 	
 	static int field2Index(ChessField::CHESS_FILEDS _field);
 	static ChessField::CHESS_FILEDS Index2Field(int _field);

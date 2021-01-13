@@ -43,8 +43,8 @@ int ChessField::get_board_index_from_field(ChessField::CHESS_FILEDS _field)
 		92,80,68,56,44,32,20,8, //G
 		93,81,69,57,45,33,21,9, //H
 		
-		0,1,12,13,24,25,36,37,49,49,60,61,72,73,84,85, //PARK POSITION WHITE
-		10,11,22,23,34,35,446,47,58,59,70,71,82,83,94,95	 //PARK POSITION BLACK
+		0,1,12,13,24,25,36,37,48,49,60,61,72,73,84,85, //PARK POSITION WHITE
+		10,11,22,23,34,35,46,47,58,59,70,71,82,83,94,95	 //PARK POSITION BLACK
 		};
 	
 	
@@ -52,6 +52,26 @@ int ChessField::get_board_index_from_field(ChessField::CHESS_FILEDS _field)
 	
 }
 
+int ChessField::parkpos2IDIndex(ChessField::CHESS_FILEDS _field)
+{
+	
+
+	int index = field2Index(_field);
+	
+	if (index >= field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1) && index  <= field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_16))
+	{
+		return index - field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1);
+	}
+	else 
+	if (index >= field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1) && index  <= field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_16))
+	{
+		return index - field2Index(ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1);
+	}
+	
+	
+	return -1;
+	
+}
 
 ChessField::CHESS_FILEDS ChessField::get_field_from_board_index(int _board_index)
 {

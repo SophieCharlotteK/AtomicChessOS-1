@@ -67,6 +67,9 @@ public:
 	static char Figure2Charakter(ChessPiece::FIGURE _figure);
 	
 	static bool IsFigureValid(ChessPiece::FIGURE _figure);
+	
+	
+	
 };
 #endif
 

@@ -207,7 +207,7 @@ std::string GCodeSender::read_string_from_serial()
 		}
 		
 	}
-	std::cout << complete.c_str() << std::endl;
+	//std::cout << complete.c_str() << std::endl;
 	return complete;
 }
 	
@@ -218,7 +218,7 @@ bool GCodeSender::wait_for_ack() {
 	
 	while (true) {
 		std::string resp = read_string_from_serial();
-		std::cout << "wait_for_ack" << resp << std::endl;
+		
 		
 		
 		if (resp.rfind("ok") != std::string::npos)
@@ -233,6 +233,7 @@ bool GCodeSender::wait_for_ack() {
 			std::cout << "wait_for_ack: busy_processing" << std::endl;
 		}else {
 			wait_counter++;
+			std::cout << "wait_for_ack" << resp << std::endl;
 			if (wait_counter > 3)
 			{
 				break;

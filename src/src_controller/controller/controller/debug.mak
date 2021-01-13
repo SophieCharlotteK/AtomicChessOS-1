@@ -23,12 +23,12 @@ LINUX_PACKAGES :=
 CFLAGS := -ggdb -ffunction-sections -O0 -std=c++17
 CXXFLAGS := -ggdb -ffunction-sections -O0 -std=c++17
 ASFLAGS := 
-LDFLAGS := 
+LDFLAGS := -Wl,-gc-sections
 COMMONFLAGS := 
 LINKER_SCRIPT := 
 
-START_GROUP := 
-END_GROUP := 
+START_GROUP := -Wl,--start-group
+END_GROUP := -Wl,--end-group
 
 #Additional options detected from testing the toolchain
 IS_LINUX_PROJECT := 1

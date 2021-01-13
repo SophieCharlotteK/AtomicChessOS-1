@@ -201,6 +201,10 @@ private:
 	
 	bool syncRealWithTargetBoard_add_remove_empty(); //CALCULCATES ONLY ADD/REMOVE FIGURE FROM/TO FIELS MOVES => RETURNS TRUE IF A CHANGE/MOVE WAS MADE
 	bool syncRealWithTargetBoard_not_empty();
+	
+	ChessPiece::TYPE getSpecificFigureTypeForParkpostion(ChessField::CHESS_FILEDS _field); //THIS FUNCTIONS DETERM THE SPECIFIC TYPE THE PARKS POSITION IS DESIGNED FOR => PARKPOS 1 TO 8 ARE THE PAWNS
+	
+	bool copyBoard(ChessPiece::FIGURE* _from, ChessPiece::FIGURE* _to);
 };
 
 #endif //__CHESSBOARD_H__
