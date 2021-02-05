@@ -225,6 +225,17 @@ int main(int argc, char *argv[])
 	}
 
 	
+	
+	if (cmdOptionExists(argv, argv + argc, "-autoplayer"))
+	{
+		LOG_F(WARNING, "ARGUMENT -autoplayer SET");
+		//TODO
+		ConfigParser::getInstance()->set(ConfigParser::CFG_ENTRY::GENERAL_ENABLE_RANDOM_MOVE_MATCH, "1", CONFIG_FILE_PATH);
+	}
+	
+	
+	
+	
 	//INIT HARDWARE
 	if(!HardwareInterface::getInstance()->check_hw_init_complete())
 	{
@@ -232,7 +243,8 @@ int main(int argc, char *argv[])
 		std::raise(SIGINT);
 	}
 	
-	
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL_A, true);
+	HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL_A, false);	
 		
 	//SARTING GUI COMMUNICATOR PROCESS
 	LOG_F(INFO, "guicommunicator startig ipc thread");
@@ -565,8 +577,10 @@ int main(int argc, char *argv[])
 						}
 						
 						//SYNC BOARDS
-						if(board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && board.syncRealWithTargetBoard(board.StringToMovePair(current_player_state.game_state.current_board_move))) {
-								
+						if(board.boardFromFen(current_player_state.game_state.current_board_fen, ChessBoard::BOARD_TPYE::TARGET_BOARD) && !current_player_state.game_state.current_board_move.empty()) {
+								if(board.syncRealWithTargetBoard(board.StringToMovePair(current_player_state.game_state.current_board_move))){
+									
+								}
 						}
 						
 						
@@ -587,11 +601,12 @@ int main(int argc, char *argv[])
 						}
 						
 						//ENABLE AUTO PLAY FEATURE
-						if(ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH)){	
+						if(cmdOptionExists(argv, argv + argc, "-autoplayer") || ConfigParser::getInstance()->getBool_nocheck(ConfigParser::CFG_ENTRY::USER_GENERAL_ENABLE_RANDOM_MOVE_MATCH)) {	
 							if (current_player_state.game_state.legal_moves.size() > 0)
 							{
 								const int rnd_idnex = (rand() % (current_player_state.game_state.legal_moves.size() - 1));
 								if(!gamebackend.set_make_move(current_player_state.game_state.legal_moves.at(rnd_idnex))){
+									
 								}
 						
 							}
@@ -716,7 +731,7 @@ int main(int argc, char *argv[])
 		
 		
 	//--------------------------------------------------------
-	//----------------SCAN BOARD BTN--------------------------
+	//----------------CALIBRATE BOARD BTN--------------------------
 	//--------------------------------------------------------
 	if((ev.event == guicommunicator::GUI_ELEMENT::SCAN_BOARD_BTN) && ev.type == guicommunicator::GUI_VALUE_TYPE::CLICKED) {
 		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::PROCESSING_SCREEN);
@@ -728,6 +743,7 @@ int main(int argc, char *argv[])
 		{
 			gui.show_error_message_on_gui("board.initBoard() FAILED");
 		}
+		HardwareInterface::getInstance()->setCoilState(HardwareInterface::HI_COIL::HI_COIL_A, false);
 		gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::SETTINGS_SCREEN);
 	}
 					
@@ -814,6 +830,7 @@ int main(int argc, char *argv[])
 			//FOR TEST
 			if(make_move_mode == 1) {
 				board.makeMoveSync(mvpair, false, false, false);
+				board.syncRealWithTargetBoard();
 				gui.createEvent(guicommunicator::GUI_ELEMENT::SWITCH_MENU, guicommunicator::GUI_VALUE_TYPE::DEBUG_SCREEN);
 				make_move_mode = 0;
 			}
