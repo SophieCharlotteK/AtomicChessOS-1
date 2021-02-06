@@ -38,31 +38,31 @@ bool ChessBoard::test_make_move_func(std::string& _descr, int& _test_no)
 	
 	switch (_test_no)
 	{
-	case 0: {
-			_descr = "H1 -> F5";
+	case 2: {
+		_descr = "H1 -> PARK_WHITE_1";
 			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H1;
-			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_F5;
+			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_1;
 			makeMoveSync(tmp_pair, false, false, false); 
 			break;
 		}
-	case 1: {
-			_descr = "G2 -> A2";
-			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G2;
-			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_A2;
-			makeMoveSync(tmp_pair, false, false, false);
-			break;
-		}
-	case 2: {
-			_descr = "PARK_BLACK_1 -> PARK_WHITE_10";
-			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1;
-			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_10;
-			makeMoveSync(tmp_pair, false, false, false);
-			break;
-		}
 	case 3: {
-			_descr = "G8 -> PARK_WHITE_10";
-			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_G8;
-			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_10;
+			_descr = "H2 -> PARK_WHITE_16";
+			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H2;
+			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_WHITE_16;
+			makeMoveSync(tmp_pair, false, false, false);
+			break;
+		}
+	case 0: {
+		_descr = "H3 -> PARK_BLACK_1";
+			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H3;
+			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_1;
+			makeMoveSync(tmp_pair, false, false, false);
+			break;
+		}
+	case 1: {
+		_descr = "H4 -> PARK_BLACK_16";
+			tmp_pair.from_field = ChessField::CHESS_FILEDS::CHESS_FIELD_H4;
+			tmp_pair.to_field =  ChessField::CHESS_FILEDS::CHESS_FIELD_PARK_POSTION_BLACK_16;
 			makeMoveSync(tmp_pair, false, false, false); 
 			break;
 		}
@@ -883,32 +883,14 @@ bool ChessBoard::syncRealWithTargetBoard_add_remove_empty() {
 		
 		
 		
-		//ONE TARGET FIELD IS NOT EMPTY AND ONE OTHER FIELD THE CURRENT FIELD IS NOT EMPTY
-		//AND THE FIGURE ARE THE SAME
-		if(diff.at(it).field_curr.figure.is_empty && !diff.at(it).field_target.figure.is_empty && !ChessPiece::compareFigures(diff.at(it).field_curr.figure, diff.at(it).field_target.figure))
-		{
-			
-			int found = -1;
-			for (size_t itd = 0; itd < diff.size(); itd++) {
-				if (!diff.at(itd).field_curr.figure.is_empty &&  diff.at(itd).field_target.figure.is_empty && ChessPiece::compareFigures(diff.at(it).field_target.figure, diff.at(itd).field_curr.figure)) {
-					found = itd;
-					break; //FOUND A FIGURE
-				}
-			}
-			if (found >= 0 && found < diff.size())
-			{
-				move_list.push_back(MovePiar(diff.at(found).field_curr.field, diff.at(it).field_target.field));
-				diff.at(it).processed = true;
-				break;
-			}
-		}
+		
 		
 		//
 		//1. FIELDS ARE NOT EMPTY
 		if(!diff.at(it).field_curr.figure.is_empty && !diff.at(it).field_target.figure.is_empty)
 		{
 			//2. FIELDS ARE THE SAME => SO FIGURE HAS CHANGES ON FIELD
-			if(diff.at(it).field_curr.field == diff.at(it).field_target.field) {
+		//	if(diff.at(it).field_curr.field == diff.at(it).field_target.field) {
 				//TARGET FIGURE IS THE CURRENT FIGURE OF THE FIELD
 				if(!ChessPiece::compareFigures(diff.at(it).field_curr.figure, diff.at(it).field_target.figure)) {
 						
@@ -939,11 +921,30 @@ bool ChessBoard::syncRealWithTargetBoard_add_remove_empty() {
 							break;
 						}
 					}			
-				}
+				//}
 			}
 		}
 		
 		
+		//ONE TARGET FIELD IS NOT EMPTY AND ONE OTHER FIELD THE CURRENT FIELD IS NOT EMPTY
+		//AND THE FIGURE ARE THE SAME
+		if(diff.at(it).field_curr.figure.is_empty && !diff.at(it).field_target.figure.is_empty && !ChessPiece::compareFigures(diff.at(it).field_curr.figure, diff.at(it).field_target.figure))
+		{
+			
+			int found = -1;
+			for (size_t itd = 0; itd < diff.size(); itd++) {
+				if (!diff.at(itd).field_curr.figure.is_empty &&  diff.at(itd).field_target.figure.is_empty && ChessPiece::compareFigures(diff.at(it).field_target.figure, diff.at(itd).field_curr.figure)) {
+					found = itd;
+					break; //FOUND A FIGURE
+				}
+			}
+			if (found >= 0 && found < diff.size())
+			{
+				move_list.push_back(MovePiar(diff.at(found).field_curr.field, diff.at(it).field_target.field));
+				diff.at(it).processed = true;
+				break;
+			}
+		}
 		
 		//MOVE FIGURE OUT OF THE FIELD
 		if(!diff.at(it).field_curr.figure.is_empty && diff.at(it).field_target.figure.is_empty)

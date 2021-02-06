@@ -349,8 +349,8 @@ void HardwareInterface::set_speed_preset(HardwareInterface::HI_TRAVEL_SPEED_PRES
 		{
 			switch (_preset)
 			{
-			case HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_MOVE : gcode_interface->set_speed_preset(3000); break; //MM per MINUTE
-			case HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_TRAVEL : gcode_interface->set_speed_preset(8000); break;
+			case HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_MOVE : gcode_interface->set_speed_preset(8000); break; //MM per MINUTE
+			case HardwareInterface::HI_TRAVEL_SPEED_PRESET::HI_TSP_TRAVEL : gcode_interface->set_speed_preset(15000); break;
 			default:
 				break;
 			}
