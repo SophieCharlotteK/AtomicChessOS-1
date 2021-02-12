@@ -192,7 +192,9 @@ In the following table, the Vendor/Product-IDs from some tested boards are liste
 | Arduino Due [Programming Port]  | tty       | 2341      | 003d       | ttyUBC     | User-Move-Detector |
 | Arduino Due [Native SAMX3 Port] | tty       | 2341      | 003e       | ttyUBC     | User-Move-Detector |
 | CH340                           | tty       | 1a86      | 7523       | ttyUBC     | User-Move-Detector |
+| HL-340                          | tty      | 1a86     | 7523      | ttyUBC    | User-Move-Detector |
 | STM32F411                       | tty       | 0483      | 5740       | ttyUBC     | User-Move-Detector |
+
 
 With these information, is is possible to generate the needed udev rules.
 ```
